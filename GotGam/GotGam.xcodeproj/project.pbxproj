@@ -24,6 +24,7 @@
 		4269388824306B68007B60FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42693893243079EC007B60FD /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GotGam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70114836B2FC2821FD2E0CE /* Pods-GotGam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.release.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +75,7 @@
 		62AFB48D4871BAFB44D8BB0E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42693893243079EC007B60FD /* Alamofire.framework */,
 				62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */,
 			);
 			name = Frameworks;
