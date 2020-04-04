@@ -9,21 +9,43 @@
 /* Begin PBXBuildFile section */
 		2273802A6EF7CEC60DFA2E9F /* Pods_GotGam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
-		4269388424306B66007B60FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269388324306B66007B60FD /* ViewController.swift */; };
+		4269388424306B66007B60FD /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269388324306B66007B60FD /* BaseViewController.swift */; };
 		4269388724306B66007B60FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388524306B66007B60FD /* Main.storyboard */; };
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
+		4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037D92438C9330093E39D /* ViewModelBindableType.swift */; };
+		4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DC2438CA590093E39D /* GotStorageType.swift */; };
+		4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DE2438CA780093E39D /* GotStorage.swift */; };
+		4CE037E12438CA930093E39D /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037E02438CA930093E39D /* Transition.swift */; };
+		4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037E22438CAF20093E39D /* CommonViewModel.swift */; };
+		4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037E42438CB0B0093E39D /* SceneCoordinatorType.swift */; };
+		4CE037E72438CB310093E39D /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037E62438CB310093E39D /* Scene.swift */; };
+		4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037E82438CBD40093E39D /* SceneCoordinator.swift */; };
+		4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037EA2438CD470093E39D /* MapViewController.swift */; };
+		4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037ED2438CD810093E39D /* MapViewModel.swift */; };
+		4CE037F02438D6990093E39D /* Got.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037EF2438D6990093E39D /* Got.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		12F3319E806996FEAD031C42 /* Pods-GotGam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.debug.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.debug.xcconfig"; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4269387F24306B66007B60FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4269388324306B66007B60FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4269388324306B66007B60FD /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		4269388624306B66007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4269388824306B68007B60FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		4CE037D92438C9330093E39D /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
+		4CE037DC2438CA590093E39D /* GotStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorageType.swift; sourceTree = "<group>"; };
+		4CE037DE2438CA780093E39D /* GotStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorage.swift; sourceTree = "<group>"; };
+		4CE037E02438CA930093E39D /* Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		4CE037E22438CAF20093E39D /* CommonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewModel.swift; sourceTree = "<group>"; };
+		4CE037E42438CB0B0093E39D /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
+		4CE037E62438CB310093E39D /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		4CE037E82438CBD40093E39D /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
+		4CE037EA2438CD470093E39D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		4CE037ED2438CD810093E39D /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		4CE037EF2438D6990093E39D /* Got.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Got.swift; sourceTree = "<group>"; };
 		62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GotGam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70114836B2FC2821FD2E0CE /* Pods-GotGam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.release.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,14 +83,105 @@
 		4269387E24306B66007B60FD /* GotGam */ = {
 			isa = PBXGroup;
 			children = (
-				4269387F24306B66007B60FD /* AppDelegate.swift */,
-				4269388324306B66007B60FD /* ViewController.swift */,
-				4269388524306B66007B60FD /* Main.storyboard */,
-				4269388824306B68007B60FD /* Assets.xcassets */,
-				4269388A24306B68007B60FD /* LaunchScreen.storyboard */,
-				4269388D24306B68007B60FD /* Info.plist */,
+				4CE037CD2438BDD10093E39D /* Resources */,
+				4CE037CE2438BDD80093E39D /* Sources */,
+				4CE037CF2438BDDE0093E39D /* Supporting Files */,
 			);
 			path = GotGam;
+			sourceTree = "<group>";
+		};
+		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4269388324306B66007B60FD /* BaseViewController.swift */,
+				4CE037D92438C9330093E39D /* ViewModelBindableType.swift */,
+				4CE037EA2438CD470093E39D /* MapViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4CE037CB2438BCB50093E39D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4CE037CC2438BCB70093E39D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4CE037EF2438D6990093E39D /* Got.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4CE037CD2438BDD10093E39D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4269388824306B68007B60FD /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4CE037CE2438BDD80093E39D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				4CE037D32438C5640093E39D /* Scene */,
+				4CE037DB2438CA3E0093E39D /* Services */,
+				4CE037CC2438BCB70093E39D /* Models */,
+				4CE037D22438C5550093E39D /* ViewModels */,
+				4CE037CA2438BCAC0093E39D /* ViewControllers */,
+				4CE037D12438C5340093E39D /* Storyboards */,
+				4CE037CB2438BCB50093E39D /* Views */,
+				4269387F24306B66007B60FD /* AppDelegate.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		4CE037CF2438BDDE0093E39D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4269388D24306B68007B60FD /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4CE037D12438C5340093E39D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				4269388524306B66007B60FD /* Main.storyboard */,
+				4269388A24306B68007B60FD /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		4CE037D22438C5550093E39D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4CE037E22438CAF20093E39D /* CommonViewModel.swift */,
+				4CE037ED2438CD810093E39D /* MapViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		4CE037D32438C5640093E39D /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				4CE037E02438CA930093E39D /* Transition.swift */,
+				4CE037E62438CB310093E39D /* Scene.swift */,
+				4CE037E42438CB0B0093E39D /* SceneCoordinatorType.swift */,
+				4CE037E82438CBD40093E39D /* SceneCoordinator.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		4CE037DB2438CA3E0093E39D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4CE037DC2438CA590093E39D /* GotStorageType.swift */,
+				4CE037DE2438CA780093E39D /* GotStorage.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		62AFB48D4871BAFB44D8BB0E /* Frameworks */ = {
@@ -203,8 +316,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4269388424306B66007B60FD /* ViewController.swift in Sources */,
+				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
+				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
+				4CE037F02438D6990093E39D /* Got.swift in Sources */,
+				4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */,
+				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
+				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
+				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
+				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
+				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
+				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
+				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
+				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,8 +474,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XP7L9S8XEN;
-				INFOPLIST_FILE = GotGam/Info.plist;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "GotGam/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -369,8 +493,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XP7L9S8XEN;
-				INFOPLIST_FILE = GotGam/Info.plist;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "GotGam/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
