@@ -31,10 +31,25 @@
                     <view key="view" contentMode="scaleToFill" id="iF0-sO-KaY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Igo-gY-vFv" customClass="MTMapView">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="VhR-GU-OFr" firstAttribute="bottom" secondItem="Igo-gY-vFv" secondAttribute="bottom" id="ME0-Un-vXq"/>
+                            <constraint firstItem="Igo-gY-vFv" firstAttribute="leading" secondItem="VhR-GU-OFr" secondAttribute="leading" id="Oqk-uC-fnS"/>
+                            <constraint firstItem="VhR-GU-OFr" firstAttribute="trailing" secondItem="Igo-gY-vFv" secondAttribute="trailing" id="czS-r2-7pF"/>
+                            <constraint firstItem="Igo-gY-vFv" firstAttribute="top" secondItem="VhR-GU-OFr" secondAttribute="top" id="ofT-Rv-UBn"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="VhR-GU-OFr"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="t1t-de-8Uh"/>
+                    <connections>
+                        <outlet property="mapView" destination="Igo-gY-vFv" id="9D5-u3-OoP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ec-kg-Jcy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

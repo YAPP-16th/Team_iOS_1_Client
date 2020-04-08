@@ -10,21 +10,33 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MapViewController: BaseViewController, ViewModelBindableType {
+class MapViewController: BaseViewController, ViewModelBindableType, MTMapViewDelegate {
     
     // MARK: - Properties
     
     var viewModel: MapViewModel!
     
-
+    // MARK: - Views
+    
+    @IBOutlet var mapView: MTMapView!
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        configureMapView()
     }
     
     // MARK: - Initializing
+    
+    func configureMapView() {
+        
+        mapView = MTMapView()
+        mapView.delegate = self
+        mapView.baseMapType = .standard
+
+    }
     
     func bindViewModel() {
         
