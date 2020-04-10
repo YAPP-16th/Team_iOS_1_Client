@@ -13,6 +13,9 @@
 		4269388724306B66007B60FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388524306B66007B60FD /* Main.storyboard */; };
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
+		4273DC692439CAF500F2C593 /* Map.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4273DC682439CAF500F2C593 /* Map.gpx */; };
+		4273DC6B2439CBEE00F2C593 /* Map (1).gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4273DC6A2439CBEE00F2C593 /* Map (1).gpx */; };
+		4273DC6D2439CE4D00F2C593 /* Map (2).gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4273DC6C2439CE4D00F2C593 /* Map (2).gpx */; };
 		42A605F42438DFE30059DFC6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A605F32438DFE30059DFC6 /* LocationManager.swift */; };
 		42A605F62438DFEF0059DFC6 /* LocationManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A605F52438DFEF0059DFC6 /* LocationManagerType.swift */; };
 		4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037D92438C9330093E39D /* ViewModelBindableType.swift */; };
@@ -37,6 +40,11 @@
 		4269388824306B68007B60FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		4273DC662439B7B800F2C593 /* Pangyo.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Pangyo.gpx; sourceTree = "<group>"; };
+		4273DC672439B8D400F2C593 /* Hyundae.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Hyundae.gpx; sourceTree = "<group>"; };
+		4273DC682439CAF500F2C593 /* Map.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Map.gpx; sourceTree = "<group>"; };
+		4273DC6A2439CBEE00F2C593 /* Map (1).gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Map (1).gpx"; sourceTree = "<group>"; };
+		4273DC6C2439CE4D00F2C593 /* Map (2).gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Map (2).gpx"; sourceTree = "<group>"; };
 		42A605F32438DFE30059DFC6 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		42A605F52438DFEF0059DFC6 /* LocationManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerType.swift; sourceTree = "<group>"; };
 		4CE037D92438C9330093E39D /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
@@ -138,6 +146,11 @@
 				4CE037D12438C5340093E39D /* Storyboards */,
 				4CE037CB2438BCB50093E39D /* Views */,
 				4269387F24306B66007B60FD /* AppDelegate.swift */,
+				4273DC6A2439CBEE00F2C593 /* Map (1).gpx */,
+				4273DC662439B7B800F2C593 /* Pangyo.gpx */,
+				4273DC672439B8D400F2C593 /* Hyundae.gpx */,
+				4273DC6C2439CE4D00F2C593 /* Map (2).gpx */,
+				4273DC682439CAF500F2C593 /* Map.gpx */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -269,6 +282,9 @@
 			files = (
 				4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */,
 				4269388924306B68007B60FD /* Assets.xcassets in Resources */,
+				4273DC6B2439CBEE00F2C593 /* Map (1).gpx in Resources */,
+				4273DC6D2439CE4D00F2C593 /* Map (2).gpx in Resources */,
+				4273DC692439CAF500F2C593 /* Map.gpx in Resources */,
 				4269388724306B66007B60FD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,7 +498,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 97C96KP84G;
 				INFOPLIST_FILE = "GotGam/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -501,7 +517,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 97C96KP84G;
 				INFOPLIST_FILE = "GotGam/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

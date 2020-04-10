@@ -9,75 +9,126 @@
 import CoreLocation
 import UIKit
 @objc protocol LocationManagerDelegate: class{
-  func locationAuthenticationChanged(location: CLAuthorizationStatus)
-  @objc optional func locationUpdated(coordinate: CLLocationCoordinate2D)
+    func locationAuthenticationChanged(location: CLAuthorizationStatus)
+    @objc optional func locationUpdated(coordinate: CLLocationCoordinate2D)
 }
 
 
 class LocationManager: NSObject, LocationManagerType{
-  
-  static let shared = LocationManager()
-  private let manager: CLLocationManager
-  private override init() {
-    manager = CLLocationManager()
-    super.init()
-    manager.delegate = self
-  }
-  weak var delegate: LocationManagerDelegate?
-  
-  var currentLocation: CLLocationCoordinate2D?
-  var settingLocationURL: URL? {
-    guard let url = URL(string: "App-Prefs:root=Privacy&path=LOCATION") else { return nil }
-    return url
-  }
-  
-  func requestAuthorization(){
-    manager.requestAlwaysAuthorization()
-  }
-  
-  func startUpdatingLocation(){
-    manager.startUpdatingLocation()
-  }
-  
-  func startBackgroundUpdates(){
-    if !CLLocationManager.significantLocationChangeMonitoringAvailable() {
-        return
+    
+    static let shared = LocationManager()
+    private let manager: CLLocationManager
+    private override init() {
+        manager = CLLocationManager()
+        super.init()
+        manager.delegate = self
     }
-    manager.startMonitoringSignificantLocationChanges()
-    manager.startMonitoringVisits()
-  }
-  deinit {
-    print("deinit", #function)
-  }
+    weak var delegate: LocationManagerDelegate?
+    
+    var currentLocation: CLLocationCoordinate2D?
+    var settingLocationURL: URL? {
+        guard let url = URL(string: "App-Prefs:root=Privacy&path=LOCATION") else { return nil }
+        return url
+    }
+    
+    func requestAuthorization(){
+        manager.requestWhenInUseAuthorization()
+    }
+    
+    func startUpdatingLocation(){
+        manager.startUpdatingLocation()
+    }
+    
+    func addRegionToMinotir(region: CLCircularRegion){
+        if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+            // Register the region
+            manager.startMonitoring(for: region)
+        }
+         
+    }
+    
+    func startBackgroundUpdates(){
+        if !CLLocationManager.significantLocationChangeMonitoringAvailable() {
+            return
+        }
+        manager.allowsBackgroundLocationUpdates = true
+        manager.pausesLocationUpdatesAutomatically = false
+        UIApplication.shared.beginBackgroundTask(expirationHandler: {
+          UIApplication.shared.endBackgroundTask(.invalid)
+        })
+        manager.startMonitoringSignificantLocationChanges()
+    }
+    deinit {
+        print("deinit", #function)
+    }
+    
 }
 
 extension LocationManager: CLLocationManagerDelegate{
-  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    self.delegate?.locationAuthenticationChanged(location: status)
-    switch status{
-    case .authorizedAlways, .authorizedWhenInUse:
-      //위치 접근을 허용한 상태
-      print("authorized")
-    case .notDetermined:
-      // 앱 처음 실행시, 한번만 허용했을 경우 앱을 재실행하면 해당 상태
-      print("NotDetermined")
-//      requestAuthorization()
-    case .denied:
-      // 사용자가 위치서비스 자체를 꺼놓고있거나, 사용을 동의하지 않았을경우
-      print("denied")
-//      if let url = settingLocationURL, UIApplication.shared.canOpenURL(url){
-//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//      }
-    case .restricted:
-      print("restricted")
-    @unknown default:
-    break
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        self.delegate?.locationAuthenticationChanged(location: status)
+        switch status{
+        case .authorizedAlways, .authorizedWhenInUse:
+            //위치 접근을 허용한 상태
+            print("authorized")
+        case .notDetermined:
+            // 앱 처음 실행시, 한번만 허용했을 경우 앱을 재실행하면 해당 상태
+            print("NotDetermined")
+        //      requestAuthorization()
+        case .denied:
+            // 사용자가 위치서비스 자체를 꺼놓고있거나, 사용을 동의하지 않았을경우
+            print("denied")
+            //      if let url = settingLocationURL, UIApplication.shared.canOpenURL(url){
+            //        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        //      }
+        case .restricted:
+            print("restricted")
+        @unknown default:
+            break
+        }
     }
-  }
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    if let coordinate = locations.last?.coordinate{
-      self.delegate?.locationUpdated?(coordinate: coordinate)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let coordinate = locations.last?.coordinate{
+            self.delegate?.locationUpdated?(coordinate: coordinate)
+        }
     }
-  }
-  
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        if let region = region as? CLCircularRegion {
+            let identifier = region.identifier
+            addNotification(regionID: identifier)
+        }
+    }
+    func addNotification(regionID: String){
+        var title = "기본 타이틀"
+        var body = "기본 바디"
+        if regionID == "enterHome"{
+            title = "집"
+            body = "집에 접근합니다,"
+        }else if regionID == "enterOther"{
+            title = "다른곳"
+            body = "집밖에 접근합니다,"
+        }
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
+            let content = UNMutableNotificationContent()
+            content.title = title
+            content.body = body
+            content.sound = .default
+            
+            // Create the trigger as a repeating event.
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3.0, repeats: false)
+            let uuidString = UUID().uuidString
+            let request = UNNotificationRequest(identifier: uuidString,
+                                                content: content, trigger: trigger)
+            
+            // Schedule the request with the system.
+            let notificationCenter = UNUserNotificationCenter.current()
+            notificationCenter.add(request) { (error) in
+                if error != nil {
+                    // Handle any errors.
+                }
+            }
+        }
+    }
 }
