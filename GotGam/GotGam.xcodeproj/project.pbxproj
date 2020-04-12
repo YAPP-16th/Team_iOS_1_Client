@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2273802A6EF7CEC60DFA2E9F /* Pods_GotGam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */; };
+		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
+		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
 		4269388424306B66007B60FD /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269388324306B66007B60FD /* BaseViewController.swift */; };
 		4269388724306B66007B60FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388524306B66007B60FD /* Main.storyboard */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		12F3319E806996FEAD031C42 /* Pods-GotGam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.debug.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.debug.xcconfig"; sourceTree = "<group>"; };
+		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
+		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4269387F24306B66007B60FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4269388324306B66007B60FD /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +91,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		425836B52442FE5300EC9C76 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				425836B62442FE6C00EC9C76 /* Map.storyboard */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		425836B82442FEBA00EC9C76 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				425836B92442FEC300EC9C76 /* Setting.storyboard */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		4269387324306B66007B60FD = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +196,8 @@
 		4CE037D12438C5340093E39D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				425836B82442FEBA00EC9C76 /* Setting */,
+				425836B52442FE5300EC9C76 /* Map */,
 				4269388524306B66007B60FD /* Main.storyboard */,
 				4269388A24306B68007B60FD /* LaunchScreen.storyboard */,
 			);
@@ -297,7 +319,9 @@
 			files = (
 				4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */,
 				4269388924306B68007B60FD /* Assets.xcassets in Resources */,
+				425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */,
 				4269388724306B66007B60FD /* Main.storyboard in Resources */,
+				425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Map-->
+        <scene sceneID="iDK-gr-kjY">
+            <objects>
+                <viewController storyboardIdentifier="MapVC" id="KGN-0W-myJ" customClass="MapViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lcW-sk-zKN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7kY-t5-4NG" customClass="MTMapView">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="7kY-t5-4NG" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="MzZ-Vu-hHZ"/>
+                            <constraint firstItem="7kY-t5-4NG" firstAttribute="top" secondItem="OqC-QT-JzJ" secondAttribute="top" id="OMz-SF-DSb"/>
+                            <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="7kY-t5-4NG" secondAttribute="trailing" id="tl2-WV-BLQ"/>
+                            <constraint firstItem="OqC-QT-JzJ" firstAttribute="bottom" secondItem="7kY-t5-4NG" secondAttribute="bottom" id="ueI-pE-OR2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="OqC-QT-JzJ"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" id="b6x-MW-9zU"/>
+                    <connections>
+                        <outlet property="mapView" destination="7kY-t5-4NG" id="IUl-YH-eeb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aCl-hk-Fex" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="994" y="-882"/>
+        </scene>
+    </scenes>
+</document>
