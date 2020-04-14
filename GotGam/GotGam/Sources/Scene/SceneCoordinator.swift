@@ -31,7 +31,11 @@ class SceneCoordinator: SceneCoordinatorType {
     func transition(to scene: Scene, using style: Transition, animated: Bool) -> Completable {
         
         let subject = PublishSubject<Void>()
-        let target = scene.instantiate()
+        var target: UIViewController
+        switch scene{
+        case .map:
+            target = scene.instantiate(from: "Map")
+        }
         
         switch style {
         case .root:
