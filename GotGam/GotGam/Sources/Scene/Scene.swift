@@ -10,7 +10,7 @@ import UIKit
 
 enum Scene {
     case map(MapViewModel)
-    //case list
+    case list(ListViewModel)
 }
 
 extension Scene {
@@ -26,6 +26,15 @@ extension Scene {
             mapVC.bind(viewModel: viewModel)
             
             return mapVC
+            
+        case .list(let viewModel):
+            guard var listVC = storyboard.instantiateViewController(withIdentifier: "ListVC") as? ListViewController else {
+                fatalError()
+            }
+            
+            listVC.bind(viewModel: viewModel)
+            
+            return listVC
         }
     }
 }

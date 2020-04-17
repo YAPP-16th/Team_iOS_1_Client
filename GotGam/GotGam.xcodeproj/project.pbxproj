@@ -34,6 +34,9 @@
 		4CF1D092243E0EED00B45751 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D091243E0EE700B45751 /* libc++.tbd */; };
 		4CF1D094243E0EFC00B45751 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D093243E0EF700B45751 /* libxml2.tbd */; };
 		4CF1D096243E0F0F00B45751 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D095243E0F0700B45751 /* libsqlite3.tbd */; };
+		4CF1D0A924499ED200B45751 /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CF1D0A824499ED100B45751 /* List.storyboard */; };
+		4CF1D0AB24499F1B00B45751 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0AA24499F1B00B45751 /* ListViewController.swift */; };
+		4CF1D0AD24499F4200B45751 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0AC24499F4200B45751 /* ListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +70,9 @@
 		4CF1D093243E0EF700B45751 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		4CF1D095243E0F0700B45751 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4CF1D097243E0F7200B45751 /* Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridging_Header.h; sourceTree = "<group>"; };
+		4CF1D0A824499ED100B45751 /* List.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = List.storyboard; sourceTree = "<group>"; };
+		4CF1D0AA24499F1B00B45751 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		4CF1D0AC24499F4200B45751 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GotGam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70114836B2FC2821FD2E0CE /* Pods-GotGam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.release.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +147,7 @@
 				4269388324306B66007B60FD /* BaseViewController.swift */,
 				4CE037D92438C9330093E39D /* ViewModelBindableType.swift */,
 				4CE037EA2438CD470093E39D /* MapViewController.swift */,
+				4CF1D0AA24499F1B00B45751 /* ListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -196,6 +203,7 @@
 		4CE037D12438C5340093E39D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				4CF1D0A624499E5000B45751 /* List */,
 				425836B82442FEBA00EC9C76 /* Setting */,
 				425836B52442FE5300EC9C76 /* Map */,
 				4269388524306B66007B60FD /* Main.storyboard */,
@@ -209,6 +217,7 @@
 			children = (
 				4CE037E22438CAF20093E39D /* CommonViewModel.swift */,
 				4CE037ED2438CD810093E39D /* MapViewModel.swift */,
+				4CF1D0AC24499F4200B45751 /* ListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -231,6 +240,14 @@
 				4CE037DE2438CA780093E39D /* GotStorage.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		4CF1D0A624499E5000B45751 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				4CF1D0A824499ED100B45751 /* List.storyboard */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 		62AFB48D4871BAFB44D8BB0E /* Frameworks */ = {
@@ -321,6 +338,7 @@
 				4269388924306B68007B60FD /* Assets.xcassets in Resources */,
 				425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */,
 				4269388724306B66007B60FD /* Main.storyboard in Resources */,
+				4CF1D0A924499ED200B45751 /* List.storyboard in Resources */,
 				425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,7 +395,9 @@
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
+				4CF1D0AB24499F1B00B45751 /* ListViewController.swift in Sources */,
 				4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */,
+				4CF1D0AD24499F4200B45751 /* ListViewModel.swift in Sources */,
 				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,

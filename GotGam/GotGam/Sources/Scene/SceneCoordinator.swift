@@ -32,9 +32,12 @@ class SceneCoordinator: SceneCoordinatorType {
         
         let subject = PublishSubject<Void>()
         var target: UIViewController
+        
         switch scene{
         case .map:
             target = scene.instantiate(from: "Map")
+        case .list:
+            target = scene.instantiate(from: "List")
         }
         
         switch style {
