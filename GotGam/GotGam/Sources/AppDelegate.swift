@@ -16,14 +16,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
+//    let storage = GotStorage()
+//    let coordinator = SceneCoordinator(window: window!)
+//    coordinator.createTabBar(gotService: storage)
+//
+//    let mapViewModel = MapViewModel(sceneCoordinator: coordinator, storage: storage)
+//
+//    let mapScene = Scene.map(mapViewModel)
+//
+//    coordinator.transition(to: mapScene, using: .root, animated: false)
+    
+    
     let storage = GotStorage()
     let coordinator = SceneCoordinator(window: window!)
+    coordinator.createTabBar(gotService: storage)
     
-    let mapViewModel = MapViewModel(sceneCoordinator: coordinator, storage: storage)
+    let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, storage: storage)
+
+    coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
     
-    let mapScene = Scene.map(mapViewModel)
     
-    coordinator.transition(to: mapScene, using: .root, animated: false)
+    
+    
+    
+    
     
     return true
   }

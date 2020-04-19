@@ -15,6 +15,8 @@
 		4269388724306B66007B60FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388524306B66007B60FD /* Main.storyboard */; };
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
+		4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */; };
+		4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */; };
 		4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037D92438C9330093E39D /* ViewModelBindableType.swift */; };
 		4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DC2438CA590093E39D /* GotStorageType.swift */; };
 		4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DE2438CA780093E39D /* GotStorage.swift */; };
@@ -34,6 +36,11 @@
 		4CF1D092243E0EED00B45751 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D091243E0EE700B45751 /* libc++.tbd */; };
 		4CF1D094243E0EFC00B45751 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D093243E0EF700B45751 /* libxml2.tbd */; };
 		4CF1D096243E0F0F00B45751 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D095243E0F0700B45751 /* libsqlite3.tbd */; };
+		4CF1D0A924499ED200B45751 /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CF1D0A824499ED100B45751 /* List.storyboard */; };
+		4CF1D0AB24499F1B00B45751 /* GotListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */; };
+		4CF1D0AD24499F4200B45751 /* GotListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0AC24499F4200B45751 /* GotListViewModel.swift */; };
+		4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0AE244AA41D00B45751 /* Tab.swift */; };
+		4CF1D0B3244AABC000B45751 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0B2244AABC000B45751 /* TabBarViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +54,8 @@
 		4269388824306B68007B60FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab+ViewController.swift"; sourceTree = "<group>"; };
 		4CE037D92438C9330093E39D /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		4CE037DC2438CA590093E39D /* GotStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorageType.swift; sourceTree = "<group>"; };
 		4CE037DE2438CA780093E39D /* GotStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorage.swift; sourceTree = "<group>"; };
@@ -67,6 +76,11 @@
 		4CF1D093243E0EF700B45751 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		4CF1D095243E0F0700B45751 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		4CF1D097243E0F7200B45751 /* Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridging_Header.h; sourceTree = "<group>"; };
+		4CF1D0A824499ED100B45751 /* List.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = List.storyboard; sourceTree = "<group>"; };
+		4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotListViewController.swift; sourceTree = "<group>"; };
+		4CF1D0AC24499F4200B45751 /* GotListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotListViewModel.swift; sourceTree = "<group>"; };
+		4CF1D0AE244AA41D00B45751 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		4CF1D0B2244AABC000B45751 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GotGam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70114836B2FC2821FD2E0CE /* Pods-GotGam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.release.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,7 +154,9 @@
 			children = (
 				4269388324306B66007B60FD /* BaseViewController.swift */,
 				4CE037D92438C9330093E39D /* ViewModelBindableType.swift */,
+				4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */,
 				4CE037EA2438CD470093E39D /* MapViewController.swift */,
+				4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -196,6 +212,7 @@
 		4CE037D12438C5340093E39D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				4CF1D0A624499E5000B45751 /* List */,
 				425836B82442FEBA00EC9C76 /* Setting */,
 				425836B52442FE5300EC9C76 /* Map */,
 				4269388524306B66007B60FD /* Main.storyboard */,
@@ -209,6 +226,8 @@
 			children = (
 				4CE037E22438CAF20093E39D /* CommonViewModel.swift */,
 				4CE037ED2438CD810093E39D /* MapViewModel.swift */,
+				4CF1D0AC24499F4200B45751 /* GotListViewModel.swift */,
+				4CF1D0B2244AABC000B45751 /* TabBarViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -220,6 +239,8 @@
 				4CE037E62438CB310093E39D /* Scene.swift */,
 				4CE037E42438CB0B0093E39D /* SceneCoordinatorType.swift */,
 				4CE037E82438CBD40093E39D /* SceneCoordinator.swift */,
+				4CF1D0AE244AA41D00B45751 /* Tab.swift */,
+				4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -231,6 +252,14 @@
 				4CE037DE2438CA780093E39D /* GotStorage.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		4CF1D0A624499E5000B45751 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				4CF1D0A824499ED100B45751 /* List.storyboard */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 		62AFB48D4871BAFB44D8BB0E /* Frameworks */ = {
@@ -321,6 +350,7 @@
 				4269388924306B68007B60FD /* Assets.xcassets in Resources */,
 				425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */,
 				4269388724306B66007B60FD /* Main.storyboard in Resources */,
+				4CF1D0A924499ED200B45751 /* List.storyboard in Resources */,
 				425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,12 +407,18 @@
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
+				4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */,
+				4CF1D0AB24499F1B00B45751 /* GotListViewController.swift in Sources */,
 				4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */,
+				4CF1D0B3244AABC000B45751 /* TabBarViewModel.swift in Sources */,
+				4CF1D0AD24499F4200B45751 /* GotListViewModel.swift in Sources */,
 				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
+				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
+				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
