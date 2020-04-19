@@ -38,19 +38,14 @@ class SceneCoordinator: SceneCoordinatorType {
             target = scene.instantiate(from: "Map")
         case .list:
             target = scene.instantiate(from: "List")
+        case .tabBar:
+            target = scene.instantiate(from: "Main")
         }
         
         switch style {
         case .root:
-            guard let tabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBar") as? UITabBarController else {
-                fatalError()
-            }
-            
             currentVC = target.sceneViewController
-            
-            tabBar.viewControllers?[0] = currentVC
-            
-            window.rootViewController = tabBar
+            window.rootViewController = target
             subject.onCompleted()
             
         case .push:
@@ -102,4 +97,19 @@ class SceneCoordinator: SceneCoordinatorType {
 
         return subject.ignoreElements()
     }
+    
+    @discardableResult
+    func createTabBar(gotService: GotStorageType) -> Completable {
+        
+        let mapViewModel = MapViewModel(sceneCoordinator: self, storage: gotService)
+        let gotListViewModel = GotListViewModel(sceneCoordinator: self, storage: gotService)
+        
+        let mapTab = Tab.map(viewModel: mapViewModel)
+        let listTab = Tab.list(viewModel: gotListViewModel)
+        
+        Tab.tabs.append(contentsOf: [mapTab, listTab])
+        
+        return Completable.empty()
+    }
+    
 }
