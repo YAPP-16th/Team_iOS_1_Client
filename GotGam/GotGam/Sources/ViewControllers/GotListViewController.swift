@@ -37,16 +37,25 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        viewModel.outputs.gotList
-            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { index, got, cell in
-                print(got.title)
-                cell.textLabel?.text = got.title
-            }
-            .disposed(by: disposeBag)
+//        viewModel.outputs.gotList
+//            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { index, got, cell in
+//                print(got.title)
+//                cell.textLabel?.text = got.title
+//            }
+//            .disposed(by: disposeBag)
+      viewModel.memoList
+                 .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { row, got, cell in
+                       //print(got.title)
+                        cell.textLabel?.text = got.title
+                }
+      .disposed(by: disposeBag)
+           
 
-    }
+      }
+
+   }
     
-}
+
 
 extension GotListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

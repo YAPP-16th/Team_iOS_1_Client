@@ -10,15 +10,17 @@ import Foundation
 import RxSwift
 
 protocol GotStorageType {
-    @discardableResult
-    func createMemo(title: String) -> Observable<GotGam>
+   
+      @discardableResult
+      func createMemo(title: String) -> Observable<Got>
+      
+      @discardableResult
+      func memoList() -> Observable<[Got]>
+      
+      @discardableResult
+      func update(title: Got, updatedtitle: String) -> Observable<Got>
+      
+      @discardableResult
+      func delete(title: Got) -> Observable<Got>
     
-    @discardableResult
-    func memoList() -> Observable<[GotGam]>
-    
-    @discardableResult
-    func update(title: GotGam, updatedtitle: String) -> Observable<GotGam>
-    
-    @discardableResult
-    func delete(title: GotGam) -> Observable<GotGam>
 }

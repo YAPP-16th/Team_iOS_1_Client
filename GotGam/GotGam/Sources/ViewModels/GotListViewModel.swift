@@ -45,4 +45,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
         return Observable.just(gotArr)
     }
     
+   var memoList: Observable<[Got]> {
+       return storage.memoList()
+   }
 }
