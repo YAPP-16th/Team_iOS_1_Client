@@ -12,7 +12,7 @@ import CoreData
 
 class GotStorage: GotStorageType {
    
-    private var list = [
+   private var list = [
       GotGam(title:"1번", latitude: 100.0 , longitude: 100.0 , isDone: false,  insertDate: Date().addingTimeInterval(-10))
         ]
         
@@ -20,7 +20,7 @@ class GotStorage: GotStorageType {
        
         
         @discardableResult
-        func createMemo(content: String) -> Observable<GotGam> {
+        func createMemo(title: String) -> Observable<GotGam> {
             let memo = GotGam(title: title)
             list.insert(memo, at: 0)
             
