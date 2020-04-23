@@ -26,7 +26,7 @@ struct GotGam: Equatable  {
        self.title = title
        self.insertDate = insertDate.timeIntervalSinceReferenceDate
       //수정필요
-       self.id = insertData.timeIntervalSinceReferenceDate.Int64
+       self.id = insertDate.timeIntervalSinceReferenceDate.Int64
        self.createDate = createDate
        self.content = content
        self.tag = tag
@@ -35,9 +35,19 @@ struct GotGam: Equatable  {
        self.isDone = false
    }
    
+   init(title: String, latitude: Double, longitude: Double, isDone: Bool){
+       self.title = title
+       self.insertDate = insertDate.timeIntervalSinceReferenceDate
+       self.id = insertData.timeIntervalSinceReferenceDate.Int64
+       self.latitude = latitude
+       self.longitude = longitude
+       self.isDone = false
+   }
    
-   init(original: GotGam, updatedContent: String){
+   
+   //타이틀만 바꿀 때
+   init(original: GotGam, updatedTitle: String){
        self = original
-       self.content = updatedContent
+       self.title = updatedTitle
    }
 }
