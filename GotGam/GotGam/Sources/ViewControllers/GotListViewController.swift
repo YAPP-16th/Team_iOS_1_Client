@@ -15,6 +15,8 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     var viewModel: GotListViewModel!
     
     let searchController = UISearchController(searchResultsController: nil)
+  
+    var memos = [Gotgam]()
     
     // MARK: - Views
     @IBOutlet weak var gotListTableView: UITableView!
@@ -25,6 +27,11 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSearchController()
+    }
+  
+    override func viewWillAppear(_ animated: Bool) {
+        memos = DBManager.share.fetchGotgam()
+        gotListTableView.reloadData()
     }
     
     // MARK: - Initializing
@@ -37,19 +44,41 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        viewModel.outputs.gotList
-            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { index, got, cell in
-                print(got.title)
-                cell.textLabel?.text = got.title
-            }
-            .disposed(by: disposeBag)
+//        viewModel.outputs.gotList
+//            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { index, got, cell in
+//                print(got.title)
+//                cell.textLabel?.text = got.title
+//            }
+//            .disposed(by: disposeBag)
+      viewModel.memoList
+                 .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { row, got, cell in
+                       //print(got.title)
+                        cell.textLabel?.text = got.title
+                }
+      .disposed(by: disposeBag)
+           
 
-    }
+      }
+
+   }
     
-}
+
 
 extension GotListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         // filter
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return memos.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath)
+        let amemos = memos[indexPath.row]
+        cell.textLabel?.text = amemos.title
+
+        return cell
+        
     }
 }
