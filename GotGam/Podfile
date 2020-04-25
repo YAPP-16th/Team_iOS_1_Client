@@ -9,4 +9,5 @@ target 'GotGam' do
   pod 'Alamofire'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'CenteredCollectionView'
 end

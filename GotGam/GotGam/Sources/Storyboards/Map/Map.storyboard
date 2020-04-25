@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Spoqa Han Sans Bold.ttf">
+            <string>SpoqaHanSans-Bold</string>
+        </array>
+        <array key="Spoqa Han Sans Regular.ttf">
+            <string>SpoqaHanSans-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Map-->
         <scene sceneID="iDK-gr-kjY">
@@ -103,15 +112,22 @@
                                     <outlet property="delegate" destination="KGN-0W-myJ" id="IHS-kk-M4a"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLe-wS-YdH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLe-wS-YdH">
                                 <rect key="frame" x="350" y="795" width="48" height="48"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="7id-ez-eGw"/>
                                     <constraint firstAttribute="height" constant="48" id="QuI-wI-J4O"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <state key="normal" title="+">
-                                    <color key="titleColor" red="1" green="0.65098039215686276" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="icBtnAdd">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="selected" title="+">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ei-Ux-SvZ">
@@ -125,16 +141,127 @@
                                     <color key="titleColor" red="1" green="0.65098039220000004" blue="0.031372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lWX-nJ-lVC">
+                                <rect key="frame" x="0.0" y="692" width="414" height="170"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="170" id="g3F-85-AAM"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kWb-k8-ixn">
+                                    <size key="itemSize" width="169" height="155"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MapCardCollectionViewCell" id="HxD-Qd-aV0" customClass="MapCardCollectionViewCell" customModule="GotGam" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="195" height="158"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nbG-JQ-IuW">
+                                            <rect key="frame" x="0.0" y="0.0" width="195" height="158"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="케이블사기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vp2-6v-xZj">
+                                                    <rect key="frame" x="19" y="15" width="74" height="24"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r35-lJ-7h0">
+                                                    <rect key="frame" x="101" y="20" width="14" height="14"/>
+                                                    <color key="backgroundColor" name="veryLightPink"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="14" id="9aD-OO-hkS"/>
+                                                        <constraint firstAttribute="width" constant="14" id="PBf-2g-pww"/>
+                                                    </constraints>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP5-Rq-eDF">
+                                                    <rect key="frame" x="170" y="17" width="8" height="8"/>
+                                                    <color key="backgroundColor" red="0.99740535019999998" green="0.71073418860000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="8" id="SSL-At-Ct4"/>
+                                                        <constraint firstAttribute="height" constant="8" id="aCI-uB-tUq"/>
+                                                    </constraints>
+                                                    <color key="tintColor" name="saffron"/>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="서울특별시 강남구 역삼72" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
+                                                    <rect key="frame" x="19" y="47" width="130.5" height="18"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                                    <color key="textColor" name="brownGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="마감 일시 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23O-JI-yYF">
+                                                    <rect key="frame" x="19" y="81" width="83" height="18"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="메모 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VfK-3O-Idv">
+                                                    <rect key="frame" x="19" y="103" width="58" height="18"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wG2-5e-Ypr">
+                                                    <rect key="frame" x="115" y="108" width="66" height="34"/>
+                                                    <color key="backgroundColor" red="0.99740535019999998" green="0.71073418860000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="66" id="DzK-Xk-rXe"/>
+                                                        <constraint firstAttribute="height" constant="34" id="HUi-Uq-S98"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="14"/>
+                                                    <state key="normal" title="감">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="KP5-Rq-eDF" firstAttribute="top" secondItem="nbG-JQ-IuW" secondAttribute="top" constant="17" id="7b5-Jf-07v"/>
+                                                <constraint firstItem="23O-JI-yYF" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="BXt-mc-wdd"/>
+                                                <constraint firstAttribute="trailing" secondItem="wG2-5e-Ypr" secondAttribute="trailing" constant="14" id="EQ6-u3-Eng"/>
+                                                <constraint firstItem="VfK-3O-Idv" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="I2t-nO-xkY"/>
+                                                <constraint firstItem="vp2-6v-xZj" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="KPc-RC-O5E"/>
+                                                <constraint firstItem="23O-JI-yYF" firstAttribute="top" secondItem="SG7-0v-hEX" secondAttribute="bottom" constant="16" id="PYi-3a-hkT"/>
+                                                <constraint firstItem="r35-lJ-7h0" firstAttribute="centerY" secondItem="vp2-6v-xZj" secondAttribute="centerY" id="XoL-GX-aei"/>
+                                                <constraint firstItem="SG7-0v-hEX" firstAttribute="top" secondItem="vp2-6v-xZj" secondAttribute="bottom" constant="8" id="ZRN-fV-XAo"/>
+                                                <constraint firstAttribute="bottom" secondItem="wG2-5e-Ypr" secondAttribute="bottom" constant="16" id="ZTs-jr-e8J"/>
+                                                <constraint firstItem="SG7-0v-hEX" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="dtf-0o-c2P"/>
+                                                <constraint firstAttribute="trailing" secondItem="KP5-Rq-eDF" secondAttribute="trailing" constant="17" id="mk7-Iu-ca3"/>
+                                                <constraint firstItem="VfK-3O-Idv" firstAttribute="top" secondItem="23O-JI-yYF" secondAttribute="bottom" constant="4" id="suA-nr-B47"/>
+                                                <constraint firstItem="vp2-6v-xZj" firstAttribute="top" secondItem="nbG-JQ-IuW" secondAttribute="top" constant="15" id="uX8-pb-fx1"/>
+                                                <constraint firstItem="r35-lJ-7h0" firstAttribute="leading" secondItem="vp2-6v-xZj" secondAttribute="trailing" constant="8" id="wV1-g8-8uT"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="195" height="158"/>
+                                        <connections>
+                                            <outlet property="addressLabel" destination="SG7-0v-hEX" id="Nbw-x9-vJy"/>
+                                            <outlet property="cancelButton" destination="KP5-Rq-eDF" id="Knj-zf-VXa"/>
+                                            <outlet property="doneButton" destination="wG2-5e-Ypr" id="XID-cp-xTD"/>
+                                            <outlet property="dueDateLabel" destination="23O-JI-yYF" id="dN3-3p-wlF"/>
+                                            <outlet property="memoLabel" destination="VfK-3O-Idv" id="gIc-eI-FvM"/>
+                                            <outlet property="tagView" destination="r35-lJ-7h0" id="epM-8D-uh3"/>
+                                            <outlet property="titleLabel" destination="vp2-6v-xZj" id="Qct-eD-CR4"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="KGN-0W-myJ" id="zqB-Lg-7na"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="lLe-wS-YdH" secondAttribute="trailing" constant="16" id="75O-Zl-HRV"/>
+                            <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="lWX-nJ-lVC" secondAttribute="trailing" id="MH8-Uq-Shu"/>
                             <constraint firstItem="7kY-t5-4NG" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="MzZ-Vu-hHZ"/>
                             <constraint firstItem="7kY-t5-4NG" firstAttribute="top" secondItem="OqC-QT-JzJ" secondAttribute="top" id="OMz-SF-DSb"/>
                             <constraint firstItem="BsL-sj-hgP" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="Y6g-h8-NoC"/>
+                            <constraint firstItem="lWX-nJ-lVC" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="beA-wr-QBB"/>
                             <constraint firstItem="BsL-sj-hgP" firstAttribute="top" secondItem="n2t-Q7-lmx" secondAttribute="bottom" id="eHS-wS-aln"/>
                             <constraint firstItem="lLe-wS-YdH" firstAttribute="top" secondItem="1Ei-Ux-SvZ" secondAttribute="bottom" constant="10" id="eZZ-2X-fuu"/>
                             <constraint firstItem="n2t-Q7-lmx" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="g2b-xe-B0I"/>
+                            <constraint firstItem="OqC-QT-JzJ" firstAttribute="bottom" secondItem="lWX-nJ-lVC" secondAttribute="bottom" id="pdc-Gr-TBI"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="1Ei-Ux-SvZ" secondAttribute="trailing" constant="16" id="piD-fZ-n67"/>
                             <constraint firstItem="n2t-Q7-lmx" firstAttribute="top" secondItem="OqC-QT-JzJ" secondAttribute="top" id="r5Z-Ik-AEO"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="n2t-Q7-lmx" secondAttribute="trailing" id="szv-fM-Bqq"/>
@@ -149,7 +276,9 @@
                     <connections>
                         <outlet property="button1" destination="lLe-wS-YdH" id="NgR-ZN-NsZ"/>
                         <outlet property="button2" destination="1Ei-Ux-SvZ" id="rrr-hr-7Iv"/>
+                        <outlet property="cardCollectionView" destination="lWX-nJ-lVC" id="bGj-ak-lx0"/>
                         <outlet property="mapView" destination="7kY-t5-4NG" id="IUl-YH-eeb"/>
+                        <outlet property="tagCollectionView" destination="BsL-sj-hgP" id="Rnh-P6-5DU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCl-hk-Fex" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -157,4 +286,19 @@
             <point key="canvasLocation" x="992.75362318840587" y="-882.58928571428567"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icBtnAdd" width="6" height="6"/>
+        <namedColor name="brownGrey">
+            <color red="0.6589999794960022" green="0.6589999794960022" blue="0.6589999794960022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="brownishGrey">
+            <color red="0.3919999897480011" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="saffron">
+            <color red="1" green="0.65100002288818359" blue="0.030999999493360519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="veryLightPink">
+            <color red="0.80800002813339233" green="0.80800002813339233" blue="0.80800002813339233" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

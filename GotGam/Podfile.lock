@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.0.2)
+  - CenteredCollectionView (2.2.2)
   - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -9,22 +10,25 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - CenteredCollectionView
   - RxCocoa
   - RxSwift
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CenteredCollectionView
     - RxCocoa
     - RxRelay
     - RxSwift
 
 SPEC CHECKSUMS:
   Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
+  CenteredCollectionView: a9217908a698c386cbb98af11b596da48900b908
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
 
-PODFILE CHECKSUM: 0cb9a56888791f80042c3eaf6b480b8302355913
+PODFILE CHECKSUM: d97c21800f2aa9eb2f019e3ddc8a221734e53b00
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
