@@ -11,8 +11,8 @@ import Foundation
 struct Got : Equatable{
    
     var title: String
-    var insertDate: Date
-    var createDate: Date?
+    var insertedDate: Date?
+    var createedDate: Date
     var id: Int64?
     var content : String?
     var tag : String?
@@ -22,14 +22,14 @@ struct Got : Equatable{
      
      
     
-     init(title: String, createDate: Date = Date(), content: String, tag: String,
+     init(title: String, createedDate: Date = Date(), content: String, tag: String,
           latitude: Double, longitude: Double, isDone: Bool){
         self.title = title
         //수정필요
-        self.insertDate = Date(timeIntervalSinceNow: 0)
+        self.insertedDate = nil
         self.id = nil
       
-        self.createDate = createDate
+        self.createedDate = Date()
         self.content = content
         self.tag = tag
         self.latitude = latitude
@@ -39,9 +39,9 @@ struct Got : Equatable{
     
     init(title: String, latitude: Double, longitude: Double, isDone: Bool){
         self.title = title
-        self.insertDate = Date(timeIntervalSinceNow: 0)
+        self.insertedDate = nil
         self.id = nil
-        self.createDate = nil
+        self.createedDate = Date()
         self.content = nil
         self.tag = nil
         self.latitude = latitude
@@ -51,9 +51,9 @@ struct Got : Equatable{
    
    init(title: String){
           self.title = title
-          self.insertDate = Date(timeIntervalSinceNow: 0)
+          self.insertedDate = nil
           self.id = nil
-          self.createDate = nil
+          self.createedDate = Date()
           self.content = nil
           self.tag = nil
           self.latitude = nil

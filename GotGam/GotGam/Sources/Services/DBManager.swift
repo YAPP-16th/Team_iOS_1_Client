@@ -36,7 +36,7 @@ class DBManager {
            
            do{
                memo = try context.fetch(fetchRequest) as! [Gotgam]
-               print("core data~~~")
+               print("core data~~~ \(memo)")
            }
            catch{
                print("fetching error")
