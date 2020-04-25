@@ -21,7 +21,7 @@ class GotStorage: GotStorageType {
         @discardableResult
         func createMemo(title: String) -> Observable<Got> {
             let memo = Got(title: title)
-            list.insert(memo, at: 0)
+          list.append(memo)
             
             store.onNext(list)
             

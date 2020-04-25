@@ -17,13 +17,13 @@ extension Gotgam {
     }
 
     @NSManaged public var content: String?
-    @NSManaged public var insertdate: Date?
+    @NSManaged public var insertedDate: Date?
     @NSManaged public var id: Int64
     @NSManaged public var isDone: Bool
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
     @NSManaged public var tag: String?
     @NSManaged public var title: String?
-    @NSManaged public var createdate: Date?
+    @NSManaged public var createdDate: Date?
 
 }

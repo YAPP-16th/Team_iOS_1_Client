@@ -14,7 +14,7 @@ protocol GotListViewModelInputs {
 }
 
 protocol GotListViewModelOutputs {
-    var gotList: Observable<[God]> { get }
+    var gotList: Observable<[Got]> { get }
 }
 
 protocol GotListViewModelType {
@@ -23,11 +23,6 @@ protocol GotListViewModelType {
 }
 
 
-struct God {
-    var title: String
-}
- 
-
 class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelInputs, GotListViewModelOutputs {
     
     var inputs: GotListViewModelInputs { return self }
@@ -35,17 +30,8 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     // Outputs
     
-    let gotArr = [
-        God(title: "곳감"),
-        God(title: "땡감"),
-        God(title: "밀감")
-    ]
-    
-    var gotList: Observable<[God]> {
-        return Observable.just(gotArr)
+    var gotList: Observable<[Got]> {
+        return storage.memoList()
     }
     
-   var memoList: Observable<[Got]> {
-       return storage.memoList()
-   }
 }
