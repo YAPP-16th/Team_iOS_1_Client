@@ -156,5 +156,99 @@
             </objects>
             <point key="canvasLocation" x="992.75362318840587" y="-882.58928571428567"/>
         </scene>
+        <!--Title-->
+        <scene sceneID="xwa-ip-OSW">
+            <objects>
+                <viewController storyboardIdentifier="AddVC" id="9o4-1I-vlQ" customClass="AddViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RV1-gH-Au6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tvn-px-jfx">
+                                <rect key="frame" x="0.0" y="88" width="414" height="100"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cge-2P-ReM">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="cge-2P-ReM" secondAttribute="height" multiplier="1:1" id="C68-Qr-oDO"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="5lv-AR-bWD">
+                                        <rect key="frame" x="100" y="0.0" width="314" height="100"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DBF-oP-83M">
+                                                <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6Zd-mb-HsH">
+                                                <rect key="frame" x="0.0" y="50" width="314" height="50"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="5lv-AR-bWD" secondAttribute="bottom" id="31g-ua-USj"/>
+                                    <constraint firstItem="cge-2P-ReM" firstAttribute="top" secondItem="tvn-px-jfx" secondAttribute="top" id="JWy-Vo-kZp"/>
+                                    <constraint firstAttribute="bottom" secondItem="cge-2P-ReM" secondAttribute="bottom" id="Y5l-wJ-gYx"/>
+                                    <constraint firstAttribute="height" constant="100" id="ZeK-kv-Whu"/>
+                                    <constraint firstItem="5lv-AR-bWD" firstAttribute="top" secondItem="tvn-px-jfx" secondAttribute="top" id="ew9-Q6-tiU"/>
+                                    <constraint firstItem="cge-2P-ReM" firstAttribute="leading" secondItem="tvn-px-jfx" secondAttribute="leading" id="lxk-6C-4nH"/>
+                                    <constraint firstAttribute="trailing" secondItem="5lv-AR-bWD" secondAttribute="trailing" id="orh-VC-GJD"/>
+                                    <constraint firstItem="5lv-AR-bWD" firstAttribute="leading" secondItem="cge-2P-ReM" secondAttribute="trailing" id="tXN-yz-oRL"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ONd-Cp-AX0">
+                                <rect key="frame" x="0.0" y="188" width="414" height="269"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="FBO-QS-FrG" firstAttribute="trailing" secondItem="tvn-px-jfx" secondAttribute="trailing" id="Ndk-cI-5FI"/>
+                            <constraint firstItem="tvn-px-jfx" firstAttribute="leading" secondItem="FBO-QS-FrG" secondAttribute="leading" id="RsA-s8-5i3"/>
+                            <constraint firstItem="ONd-Cp-AX0" firstAttribute="top" secondItem="tvn-px-jfx" secondAttribute="bottom" id="UGy-oT-tay"/>
+                            <constraint firstItem="ONd-Cp-AX0" firstAttribute="leading" secondItem="FBO-QS-FrG" secondAttribute="leading" id="Usz-kl-rpq"/>
+                            <constraint firstItem="tvn-px-jfx" firstAttribute="top" secondItem="FBO-QS-FrG" secondAttribute="top" id="ZiL-yV-frf"/>
+                            <constraint firstItem="FBO-QS-FrG" firstAttribute="trailing" secondItem="ONd-Cp-AX0" secondAttribute="trailing" id="byk-O6-RCh"/>
+                            <constraint firstItem="ONd-Cp-AX0" firstAttribute="height" secondItem="RV1-gH-Au6" secondAttribute="height" multiplier="0.3" id="wxc-eC-Fdd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FBO-QS-FrG"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="YmK-s7-WN8">
+                        <barButtonItem key="leftBarButtonItem" title="취소" id="Utf-dX-ju4"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="hjn-bF-KUB"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="41C-cp-0Sd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2652" y="-883"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="QES-eD-tsS">
+            <objects>
+                <navigationController storyboardIdentifier="AddNav" automaticallyAdjustsScrollViewInsets="NO" id="oIx-h9-zwm" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xkv-pG-TeB">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9o4-1I-vlQ" kind="relationship" relationship="rootViewController" id="lWe-nX-W0c"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X9i-AW-abp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1924.6376811594205" y="-883.25892857142856"/>
+        </scene>
     </scenes>
 </document>

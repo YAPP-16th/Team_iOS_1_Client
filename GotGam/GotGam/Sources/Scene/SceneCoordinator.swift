@@ -38,6 +38,8 @@ class SceneCoordinator: SceneCoordinatorType {
             target = scene.instantiate(from: "Map")
         case .list:
             target = scene.instantiate(from: "List")
+        case .add:
+            target = scene.instantiate(from: "Map")
         case .tabBar:
             target = scene.instantiate(from: "Main")
         }
@@ -80,7 +82,7 @@ class SceneCoordinator: SceneCoordinatorType {
 
         if let presentingVC = currentVC.presentingViewController {
             currentVC.dismiss(animated: animated) {
-                self.currentVC = presentingVC
+                self.currentVC = presentingVC.sceneViewController
                 subject.onCompleted()
             }
         } else if let nav = currentVC.navigationController {
