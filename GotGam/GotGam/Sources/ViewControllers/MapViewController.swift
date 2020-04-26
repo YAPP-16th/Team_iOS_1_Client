@@ -23,6 +23,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var cardCollectionView: UICollectionView!
     @IBOutlet weak var seedButton: UIButton!
     @IBOutlet weak var myLocationButton: UIButton!
+    @IBOutlet weak var quickAddView: MapQuickAddView!
     
     // MARK: - Constraints
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
@@ -122,8 +123,13 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             switch state{
             case .none:
                 self.seedButton.backgroundColor = .white
+                self.seedButton.isEnabled = true
             case .seeding:
                 self.seedButton.backgroundColor = .orange
+                self.seedButton.isEnabled = true
+            case .adding:
+                self.seedButton.isEnabled = false
+                break
             }
             }).disposed(by: disposeBag)
         
@@ -134,18 +140,23 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.viewModel.seedState.onNext(.seeding)
             case .seeding:
                 self.viewModel.seedState.onNext(.none)
+            case .adding:
+                break
             }
             
         }).disposed(by: disposeBag)
         self.myLocationButton.rx.tap.subscribe(onNext: { [weak self] in
             self?.setMyLocation()
-        })
+            }).disposed(by: disposeBag)
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         LocationManager.shared.startUpdatingLocation()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -155,16 +166,18 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     @objc func keyboardWillShow(noti: Notification){
         if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height
+            if self.quickAddViewBottomConstraint.constant == 0{
+                self.quickAddViewBottomConstraint.constant = keyboardSize.height - self.view.safeAreaInsets.bottom
+                self.view.layoutIfNeeded()
             }
         }
     }
     
     @objc func keyboardWillHide(noti: Notification){
         if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y += keyboardSize.height
+            if self.quickAddViewBottomConstraint.constant != 0 {
+                self.quickAddViewBottomConstraint.constant = keyboardSize.height - self.view.safeAreaInsets.bottom
+                self.view.layoutIfNeeded()
             }
         }
     }
@@ -187,7 +200,18 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 }
 
 extension MapViewController: MTMapViewDelegate{
+    func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
+        if self.quickAddView.addField.isFirstResponder{
+            self.quickAddView.addField.resignFirstResponder()
+        }
+    }
+    func mapView(_ mapView: MTMapView!, doubleTapOn mapPoint: MTMapPoint!) {
+        if self.quickAddView.addField.isFirstResponder{
+            self.quickAddView.addField.resignFirstResponder()
+        }
+    }
 }
+
 
 
 extension MapViewController: UICollectionViewDataSource{
@@ -211,7 +235,7 @@ extension MapViewController: UICollectionViewDataSource{
 }
 
 extension MapViewController: UICollectionViewDelegate{
-    
+
 }
 
 extension MapViewController: UICollectionViewDelegateFlowLayout{
