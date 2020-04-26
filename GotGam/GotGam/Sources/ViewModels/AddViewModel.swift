@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol AddViewModelInputs {
-    
+    func close()
 }
 
 protocol AddViewModelOutputs {
@@ -23,11 +23,13 @@ protocol AddViewModelType {
 }
 
 
-class AddViewModel: AddViewModelType, AddViewModelInputs, AddViewModelOutputs {
+class AddViewModel: CommonViewModel, AddViewModelType, AddViewModelInputs, AddViewModelOutputs {
     
     var inputs: AddViewModelInputs { return self }
     var outputs: AddViewModelOutputs { return self }
     
-    
+    func close() {
+        sceneCoordinator.close(animated: true)
+    }
     
 }

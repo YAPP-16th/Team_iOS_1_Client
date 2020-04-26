@@ -113,6 +113,9 @@
                                 <state key="normal" title="+">
                                     <color key="titleColor" red="1" green="0.65098039215686276" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapAddButton:" destination="KGN-0W-myJ" eventType="touchUpInside" id="lsy-8w-mzh"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ei-Ux-SvZ">
                                 <rect key="frame" x="350" y="737" width="48" height="48"/>
@@ -224,7 +227,11 @@
                         <viewLayoutGuide key="safeArea" id="FBO-QS-FrG"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="YmK-s7-WN8">
-                        <barButtonItem key="leftBarButtonItem" title="취소" id="Utf-dX-ju4"/>
+                        <barButtonItem key="leftBarButtonItem" title="취소" id="Utf-dX-ju4">
+                            <connections>
+                                <action selector="didTapCancelButton:" destination="9o4-1I-vlQ" id="6Dp-YS-0YY"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="hjn-bF-KUB"/>
                     </navigationItem>
                 </viewController>

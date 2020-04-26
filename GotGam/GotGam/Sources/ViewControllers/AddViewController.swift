@@ -10,15 +10,22 @@ import UIKit
 
 class AddViewController: BaseViewController, ViewModelBindableType {
     
+    // MARK: - Properties
+    
     var viewModel: AddViewModel!
 
+    // MARK: - Methods
+    
+    @IBAction func didTapCancelButton(_ sender: UIBarButtonItem) {
+        viewModel.inputs.close()
+    }
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        navigationController?.presentationController?.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -31,6 +38,10 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     }
     
     // MARK: - Views
-    
+}
 
+extension AddViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        self.viewModel.close()
+    }
 }
