@@ -113,7 +113,7 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLe-wS-YdH">
-                                <rect key="frame" x="350" y="795" width="48" height="48"/>
+                                <rect key="frame" x="350" y="625" width="48" height="48"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="7id-ez-eGw"/>
@@ -131,7 +131,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ei-Ux-SvZ">
-                                <rect key="frame" x="350" y="737" width="48" height="48"/>
+                                <rect key="frame" x="350" y="567" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="YVi-Tu-TxS"/>
                                     <constraint firstAttribute="height" constant="48" id="oAq-ba-hTv"/>
@@ -162,13 +162,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="케이블사기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vp2-6v-xZj">
-                                                    <rect key="frame" x="19" y="15" width="69.5" height="19"/>
+                                                    <rect key="frame" x="19" y="15" width="74" height="24"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r35-lJ-7h0">
-                                                    <rect key="frame" x="96.5" y="17.5" width="14" height="14"/>
+                                                    <rect key="frame" x="101" y="20" width="14" height="14"/>
                                                     <color key="backgroundColor" name="veryLightPink"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="9aD-OO-hkS"/>
@@ -185,19 +185,19 @@
                                                     <color key="tintColor" name="saffron"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 강남구 역삼72" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
-                                                    <rect key="frame" x="19" y="42" width="124" height="14"/>
+                                                    <rect key="frame" x="19" y="47" width="130.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감 일시 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23O-JI-yYF">
-                                                    <rect key="frame" x="19" y="72" width="79.5" height="14"/>
+                                                    <rect key="frame" x="19" y="81" width="83" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메모 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VfK-3O-Idv">
-                                                    <rect key="frame" x="19" y="90" width="55.5" height="14"/>
+                                                    <rect key="frame" x="19" y="103" width="58" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
@@ -260,6 +260,7 @@
                             <constraint firstItem="lWX-nJ-lVC" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="beA-wr-QBB"/>
                             <constraint firstItem="BsL-sj-hgP" firstAttribute="top" secondItem="n2t-Q7-lmx" secondAttribute="bottom" id="eHS-wS-aln"/>
                             <constraint firstItem="lLe-wS-YdH" firstAttribute="top" secondItem="1Ei-Ux-SvZ" secondAttribute="bottom" constant="10" id="eZZ-2X-fuu"/>
+                            <constraint firstItem="lLe-wS-YdH" firstAttribute="bottom" secondItem="lWX-nJ-lVC" secondAttribute="top" constant="-19" id="ex1-SK-KXb"/>
                             <constraint firstItem="n2t-Q7-lmx" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="g2b-xe-B0I"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="bottom" secondItem="lWX-nJ-lVC" secondAttribute="bottom" id="pdc-Gr-TBI"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="1Ei-Ux-SvZ" secondAttribute="trailing" constant="16" id="piD-fZ-n67"/>
@@ -267,17 +268,17 @@
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="n2t-Q7-lmx" secondAttribute="trailing" id="szv-fM-Bqq"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="7kY-t5-4NG" secondAttribute="trailing" id="tl2-WV-BLQ"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="BsL-sj-hgP" secondAttribute="trailing" id="uTO-ue-qjm"/>
-                            <constraint firstItem="OqC-QT-JzJ" firstAttribute="bottom" secondItem="lLe-wS-YdH" secondAttribute="bottom" constant="19" id="udG-lz-OsA"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="bottom" secondItem="7kY-t5-4NG" secondAttribute="bottom" id="ueI-pE-OR2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OqC-QT-JzJ"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="b6x-MW-9zU"/>
                     <connections>
-                        <outlet property="button1" destination="lLe-wS-YdH" id="NgR-ZN-NsZ"/>
-                        <outlet property="button2" destination="1Ei-Ux-SvZ" id="rrr-hr-7Iv"/>
                         <outlet property="cardCollectionView" destination="lWX-nJ-lVC" id="bGj-ak-lx0"/>
+                        <outlet property="cardCollectionViewHeightConstraint" destination="g3F-85-AAM" id="4o2-9t-W3Z"/>
                         <outlet property="mapView" destination="7kY-t5-4NG" id="IUl-YH-eeb"/>
+                        <outlet property="myLocationButton" destination="1Ei-Ux-SvZ" id="CFd-Sw-S28"/>
+                        <outlet property="seedButton" destination="lLe-wS-YdH" id="xnc-Ow-3Gm"/>
                         <outlet property="tagCollectionView" destination="BsL-sj-hgP" id="Rnh-P6-5DU"/>
                     </connections>
                 </viewController>

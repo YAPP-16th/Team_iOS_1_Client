@@ -10,10 +10,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 import CenteredCollectionView
-class MapViewController: BaseViewController, ViewModelBindableType, MTMapViewDelegate {
+
+class MapViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Properties
-    
     var viewModel: MapViewModel!
     
     // MARK: - Views
@@ -21,26 +21,25 @@ class MapViewController: BaseViewController, ViewModelBindableType, MTMapViewDel
     @IBOutlet var mapView: MTMapView!
     @IBOutlet weak var tagCollectionView: UICollectionView!
     @IBOutlet weak var cardCollectionView: UICollectionView!
-    @IBOutlet weak var button1: UIButton!
-    @IBOutlet weak var button2: UIButton!
+    @IBOutlet weak var seedButton: UIButton!
+    @IBOutlet weak var myLocationButton: UIButton!
     
     // MARK: - Constraints
-    @IBOutlet weak var addButtonBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
     
     
     var centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
     var poiItem1: MTMapPOIItem!
+    
+    var state: MapViewModel.SeedState = .none
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureMapView()
-        setSomePins()
 //        setCircle()
-        self.button1.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         
         configureCardCollectionView()
         
@@ -48,24 +47,24 @@ class MapViewController: BaseViewController, ViewModelBindableType, MTMapViewDel
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.button1.layer.shadowColor = UIColor.black.cgColor
-        self.button1.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.button1.layer.shadowRadius = 5.0
-        self.button1.layer.shadowOpacity = 0.3
-        self.button1.layer.cornerRadius = 4.0
-        self.button1.layer.masksToBounds = false
+        self.seedButton.layer.shadowColor = UIColor.black.cgColor
+        self.seedButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.seedButton.layer.shadowRadius = 5.0
+        self.seedButton.layer.shadowOpacity = 0.3
+        self.seedButton.layer.cornerRadius = 4.0
+        self.seedButton.layer.masksToBounds = false
         
-        self.button1.layer.cornerRadius = self.button1.frame.height / 2
+        self.seedButton.layer.cornerRadius = self.seedButton.frame.height / 2
         
-        self.button2.layer.shadowColor = UIColor.black.cgColor
-        self.button2.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.button2.layer.shadowRadius = 5.0
-        self.button2.layer.shadowOpacity = 0.3
-        self.button2.layer.cornerRadius = 4.0
-        self.button2.layer.masksToBounds = false
+        self.myLocationButton.layer.shadowColor = UIColor.black.cgColor
+        self.myLocationButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.myLocationButton.layer.shadowRadius = 5.0
+        self.myLocationButton.layer.shadowOpacity = 0.3
+        self.myLocationButton.layer.cornerRadius = 4.0
+        self.myLocationButton.layer.masksToBounds = false
         
-        self.button2.layer.cornerRadius = self.button1.frame.height / 2
-        self.button2.backgroundColor = .white
+        self.myLocationButton.layer.cornerRadius = self.seedButton.frame.height / 2
+        self.myLocationButton.backgroundColor = .white
     }
     
     
@@ -75,6 +74,7 @@ class MapViewController: BaseViewController, ViewModelBindableType, MTMapViewDel
         
         mapView = MTMapView.init(frame: mapView.frame)
         mapView.delegate = self
+        mapView.currentLocationTrackingMode = .onWithoutHeadingWithoutMapMoving
         mapView.baseMapType = .standard
 
     }
@@ -111,18 +111,32 @@ class MapViewController: BaseViewController, ViewModelBindableType, MTMapViewDel
         
         centeredCollectionViewFlowLayout.itemSize = CGSize (width: 195, height: 158)
         centeredCollectionViewFlowLayout.minimumLineSpacing = 10
-//        self.cardCollectionView.isHidden = true
+        self.cardCollectionViewHeightConstraint.constant = 0
+        self.cardCollectionView.isHidden = true
     }
     
     func bindViewModel() {
+        viewModel.seedState.subscribe(onNext:{ [weak self] state in
+            guard let self = self else { return }
+            self.state = state
+            switch state{
+            case .none:
+                self.seedButton.backgroundColor = .white
+            case .seeding:
+                self.seedButton.backgroundColor = .orange
+            }
+            }).disposed(by: disposeBag)
         
-    }
-    
-    func mapView(_ mapView: MTMapView!, openAPIKeyAuthenticationResultCode resultCode: Int32, resultMessage: String!) {
-        print(resultCode)
-    }
-  
-    @objc func addButtonTapped(){
+        self.seedButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            switch self.state{
+            case .none:
+                self.viewModel.seedState.onNext(.seeding)
+            case .seeding:
+                self.viewModel.seedState.onNext(.none)
+            }
+            
+        }).disposed(by: disposeBag)
         
     }
     
@@ -152,6 +166,15 @@ class MapViewController: BaseViewController, ViewModelBindableType, MTMapViewDel
         }
     }
 }
+
+extension MapViewController: MTMapViewDelegate{
+    func mapView(_ mapView: MTMapView!, updateCurrentLocation location: MTMapPoint!, withAccuracy accuracy: MTMapLocationAccuracy) {
+        let coordinates = location.mapPointGeo()
+        
+        mapView.setMapCenter(MTMapPoint(geoCoord: coordinates), animated: true)
+    }
+}
+
 extension MapViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.tag.count

@@ -1,34 +1,50 @@
 PODS:
+  - Action (4.0.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - Alamofire (5.0.2)
   - CenteredCollectionView (2.2.2)
+  - Differentiator (4.0.1)
   - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - RxRelay (5.0.1):
     - RxSwift (~> 5)
   - RxSwift (5.0.1)
 
 DEPENDENCIES:
+  - Action
   - Alamofire
   - CenteredCollectionView
   - RxCocoa
+  - RxDataSources
   - RxSwift
 
 SPEC REPOS:
   trunk:
+    - Action
     - Alamofire
     - CenteredCollectionView
+    - Differentiator
     - RxCocoa
+    - RxDataSources
     - RxRelay
     - RxSwift
 
 SPEC CHECKSUMS:
+  Action: 0d14986aad0f1330aa27ce65d0cdeaacbb63d91c
   Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
   CenteredCollectionView: a9217908a698c386cbb98af11b596da48900b908
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
 
-PODFILE CHECKSUM: d97c21800f2aa9eb2f019e3ddc8a221734e53b00
+PODFILE CHECKSUM: f0096ff7389af2f7b29ffc2b9bb0eb0e1f089efd
 
 COCOAPODS: 1.9.1
