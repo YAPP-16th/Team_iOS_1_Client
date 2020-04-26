@@ -250,7 +250,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pep-Z7-O3k" customClass="MapQuickAddView" customModule="GotGam" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="810" width="414" height="52"/>
+                                <rect key="frame" x="16" y="810" width="382" height="52"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="cam-KY-OTX"/>
@@ -265,13 +265,13 @@
                             <constraint firstItem="7kY-t5-4NG" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="MzZ-Vu-hHZ"/>
                             <constraint firstItem="7kY-t5-4NG" firstAttribute="top" secondItem="OqC-QT-JzJ" secondAttribute="top" id="OMz-SF-DSb"/>
                             <constraint firstItem="BsL-sj-hgP" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="Y6g-h8-NoC"/>
-                            <constraint firstItem="Pep-Z7-O3k" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="ZHP-eM-2Mc"/>
+                            <constraint firstItem="Pep-Z7-O3k" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" constant="16" id="ZHP-eM-2Mc"/>
                             <constraint firstItem="lWX-nJ-lVC" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="beA-wr-QBB"/>
                             <constraint firstItem="BsL-sj-hgP" firstAttribute="top" secondItem="n2t-Q7-lmx" secondAttribute="bottom" id="eHS-wS-aln"/>
                             <constraint firstItem="lLe-wS-YdH" firstAttribute="top" secondItem="1Ei-Ux-SvZ" secondAttribute="bottom" constant="10" id="eZZ-2X-fuu"/>
                             <constraint firstItem="lLe-wS-YdH" firstAttribute="bottom" secondItem="lWX-nJ-lVC" secondAttribute="top" constant="-19" id="ex1-SK-KXb"/>
                             <constraint firstItem="n2t-Q7-lmx" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="g2b-xe-B0I"/>
-                            <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="Pep-Z7-O3k" secondAttribute="trailing" id="iLs-9o-785"/>
+                            <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="Pep-Z7-O3k" secondAttribute="trailing" constant="16" id="iLs-9o-785"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="bottom" secondItem="lWX-nJ-lVC" secondAttribute="bottom" id="pdc-Gr-TBI"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="1Ei-Ux-SvZ" secondAttribute="trailing" constant="16" id="piD-fZ-n67"/>
                             <constraint firstItem="n2t-Q7-lmx" firstAttribute="top" secondItem="OqC-QT-JzJ" secondAttribute="top" id="r5Z-Ik-AEO"/>

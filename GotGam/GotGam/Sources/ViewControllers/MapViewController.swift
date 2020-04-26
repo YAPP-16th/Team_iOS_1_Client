@@ -43,7 +43,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 //        setCircle()
         
         configureCardCollectionView()
-        
+        self.quickAddView.isHidden = true
+        self.quickAddView.addAction = { text in
+            self.quickAddView.addField.resignFirstResponder()
+            self.viewModel.seedState.onNext(.none)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -124,11 +128,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             case .none:
                 self.seedButton.backgroundColor = .white
                 self.seedButton.isEnabled = true
+                self.quickAddView.isHidden = true
             case .seeding:
                 self.seedButton.backgroundColor = .orange
                 self.seedButton.isEnabled = true
             case .adding:
                 self.seedButton.isEnabled = false
+                self.quickAddView.isHidden = false
+                self.quickAddView.addField.becomeFirstResponder()
                 break
             }
             }).disposed(by: disposeBag)
@@ -139,9 +146,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             case .none:
                 self.viewModel.seedState.onNext(.seeding)
             case .seeding:
-                self.viewModel.seedState.onNext(.none)
+                self.viewModel.seedState.onNext(.adding)
             case .adding:
-                break
+                self.viewModel.seedState.onNext(.none)
             }
             
         }).disposed(by: disposeBag)
@@ -176,7 +183,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @objc func keyboardWillHide(noti: Notification){
         if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.quickAddViewBottomConstraint.constant != 0 {
-                self.quickAddViewBottomConstraint.constant = keyboardSize.height - self.view.safeAreaInsets.bottom
+                self.quickAddViewBottomConstraint.constant = 0
                 self.view.layoutIfNeeded()
             }
         }

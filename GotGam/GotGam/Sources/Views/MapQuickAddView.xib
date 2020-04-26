@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M2F-Lu-jM9">
-                    <rect key="frame" x="25" y="10" width="292" height="31"/>
+                    <rect key="frame" x="20" y="10" width="297" height="31"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="sVz-WI-p3V"/>
                     </constraints>
@@ -38,15 +38,18 @@
                     <state key="normal" title="빠른심기">
                         <color key="titleColor" name="white"/>
                     </state>
+                    <connections>
+                        <action selector="quickAddAction" destination="-1" eventType="touchUpInside" id="kCI-xy-eOX"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="R14-mb-WoR" firstAttribute="leading" secondItem="M2F-Lu-jM9" secondAttribute="trailing" constant="5" id="AvK-WK-5Yy"/>
                 <constraint firstItem="M2F-Lu-jM9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="OCH-47-T51"/>
-                <constraint firstItem="M2F-Lu-jM9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="PaE-lE-Q2w"/>
+                <constraint firstItem="M2F-Lu-jM9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="PaE-lE-Q2w"/>
                 <constraint firstItem="R14-mb-WoR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="bXN-25-syQ"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="R14-mb-WoR" secondAttribute="trailing" constant="8" id="gbL-Ky-7PT"/>
+                <constraint firstAttribute="trailing" secondItem="R14-mb-WoR" secondAttribute="trailing" constant="8" id="gbL-Ky-7PT"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>

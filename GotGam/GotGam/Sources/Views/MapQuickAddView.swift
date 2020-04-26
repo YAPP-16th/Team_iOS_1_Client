@@ -19,20 +19,29 @@ class MapQuickAddView: UIView{
     var contentView: UIView!
     var viewModel: MapQuickAddViewModel!
     
+    var addAction: ((String?) -> Void)? = { _ in }
+    
     @IBAction func quickAddAction(){
-        
+        addAction?(self.addField.text)
+        addField.text = ""
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         if let cv = Bundle.main.loadNibNamed("MapQuickAddView", owner: self, options: nil)?.first as? UIView{
+            cv.frame = self.bounds
             self.contentView = cv
             
             self.addSubview(cv)
         }
     }
     
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        roundCorners(corners: [.topLeft, .topRight], radius: 20.0)
+        addButotn.layer.cornerRadius = addButotn.bounds.size.height / 2
+        addButotn.layer.masksToBounds = true
+    }
     func bindViewModel(){
         
     }
