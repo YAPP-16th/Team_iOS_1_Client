@@ -44,6 +44,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         configureCardCollectionView()
         
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -74,7 +75,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
         mapView = MTMapView.init(frame: mapView.frame)
         mapView.delegate = self
-        mapView.currentLocationTrackingMode = .onWithoutHeadingWithoutMapMoving
         mapView.baseMapType = .standard
 
     }
@@ -137,11 +137,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
             
         }).disposed(by: disposeBag)
-        
+        self.myLocationButton.rx.tap.subscribe(onNext: { [weak self] in
+            self?.setMyLocation()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        LocationManager.shared.startUpdatingLocation()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
@@ -165,15 +168,27 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
         }
     }
+    func setMyLocation(){
+        LocationManager.shared.requestAuthorization()
+        if LocationManager.shared.locationServicesEnabled {
+            let status = LocationManager.shared.authorizationStatus
+            switch status{
+            case .denied:
+              print("거부됨")
+            case .notDetermined, .restricted:
+                print("성정으로 이동시키기")
+            case .authorizedWhenInUse, .authorizedAlways:
+                self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: LocationManager.shared.currentLocation!.latitude, longitude: LocationManager.shared.currentLocation!.longitude)), animated: true)
+            }
+            
+        }else{
+        }
+    }
 }
 
 extension MapViewController: MTMapViewDelegate{
-    func mapView(_ mapView: MTMapView!, updateCurrentLocation location: MTMapPoint!, withAccuracy accuracy: MTMapLocationAccuracy) {
-        let coordinates = location.mapPointGeo()
-        
-        mapView.setMapCenter(MTMapPoint(geoCoord: coordinates), animated: true)
-    }
 }
+
 
 extension MapViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

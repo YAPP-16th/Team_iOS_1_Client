@@ -26,10 +26,16 @@ class LocationManager: NSObject, LocationManagerType{
     weak var delegate: LocationManagerDelegate?
     
     var currentLocation: CLLocationCoordinate2D?
+    
     var settingLocationURL: URL? {
         guard let url = URL(string: "App-Prefs:root=Privacy&path=LOCATION") else { return nil }
         return url
     }
+    var locationServicesEnabled: Bool {
+      return CLLocationManager.locationServicesEnabled()
+    }
+    
+    var authorizationStatus: CLAuthorizationStatus = .notDetermined
     
     func requestAuthorization(){
         manager.requestWhenInUseAuthorization()
@@ -67,29 +73,15 @@ class LocationManager: NSObject, LocationManagerType{
 extension LocationManager: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.delegate?.locationAuthenticationChanged(location: status)
-        switch status{
-        case .authorizedAlways, .authorizedWhenInUse:
-            //위치 접근을 허용한 상태
-            print("authorized")
-        case .notDetermined:
-            // 앱 처음 실행시, 한번만 허용했을 경우 앱을 재실행하면 해당 상태
-            print("NotDetermined")
-        //      requestAuthorization()
-        case .denied:
-            // 사용자가 위치서비스 자체를 꺼놓고있거나, 사용을 동의하지 않았을경우
-            print("denied")
-            //      if let url = settingLocationURL, UIApplication.shared.canOpenURL(url){
-            //        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        //      }
-        case .restricted:
-            print("restricted")
-        @unknown default:
-            break
-        }
+        authorizationStatus = status
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let coordinate = locations.last?.coordinate{
             self.delegate?.locationUpdated?(coordinate: coordinate)
+        }
+        if let location = manager.location {
+            self.currentLocation = location.coordinate
+          UserDefaults.standard.set(location.coordinate.asDictionary, forDefines: .location)
         }
     }
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
