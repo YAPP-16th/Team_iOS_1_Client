@@ -18,13 +18,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Views
     
-    @IBOutlet var mapView: MTMapView!
+    var mapView: MTMapView!
     @IBOutlet weak var tagCollectionView: UICollectionView!
     @IBOutlet weak var cardCollectionView: UICollectionView!
     @IBOutlet weak var seedButton: UIButton!
     @IBOutlet weak var myLocationButton: UIButton!
     @IBOutlet weak var quickAddView: MapQuickAddView!
-    
+    @IBOutlet weak var seedImageView: UIImageView!
+  
     // MARK: - Constraints
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
@@ -44,9 +45,15 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
         configureCardCollectionView()
         self.quickAddView.isHidden = true
+        self.seedImageView.isHidden = true
         self.quickAddView.addAction = { text in
+            let centerPoint = self.mapView.mapCenterPoint
+            //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
             self.viewModel.seedState.onNext(.none)
+            self.cardCollectionViewHeightConstraint.constant = 170
+            self.cardCollectionView.isHidden = false
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -78,10 +85,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     func configureMapView() {
         
-        mapView = MTMapView.init(frame: mapView.frame)
+      mapView = MTMapView.init(frame: self.view.frame)
         mapView.delegate = self
         mapView.baseMapType = .standard
-
+        self.view.addSubview(mapView)
+      self.view.sendSubviewToBack(mapView)
     }
     func setSomePins(){
         poiItem1 = MTMapPOIItem()
@@ -99,15 +107,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
     }
     
-    func setCircle(){
+    func setCircle(point: MTMapPoint){
+        mapView.removeAllCircles()
         let circle = MTMapCircle()
-        circle.circleCenterPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: 37.541889, longitude: 127.095388))
-        circle.circleLineColor = .red
-        circle.circleFillColor = UIColor.green.withAlphaComponent(0.5)
+        circle.circleCenterPoint = point
+        circle.circleLineColor = .saffron
+        circle.circleFillColor = UIColor.saffron.withAlphaComponent(0.17)
         circle.tag = 1234
-        circle.circleRadius = 500
-        mapView.addCircle(circle)
-        mapView.fitArea(toShow: circle)
+        circle.circleRadius = 100
     }
     
     private func configureCardCollectionView(){
@@ -129,14 +136,16 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.seedButton.backgroundColor = .white
                 self.seedButton.isEnabled = true
                 self.quickAddView.isHidden = true
+                self.seedImageView.isHidden = true
             case .seeding:
                 self.seedButton.backgroundColor = .orange
                 self.seedButton.isEnabled = true
+                self.seedImageView.isHidden = false
             case .adding:
                 self.seedButton.isEnabled = false
                 self.quickAddView.isHidden = false
+                self.seedImageView.isHidden = false
                 self.quickAddView.addField.becomeFirstResponder()
-                break
             }
             }).disposed(by: disposeBag)
         
@@ -217,6 +226,24 @@ extension MapViewController: MTMapViewDelegate{
             self.quickAddView.addField.resignFirstResponder()
         }
     }
+  func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
+    switch self.state{
+    case .adding, .seeding:
+      setCircle(point: mapCenterPoint)
+      break
+    case .none:
+      break
+    }
+  }
+  func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
+    switch self.state{
+    case .adding, .seeding:
+      setCircle(point: mapCenterPoint)
+      break
+    case .none:
+      break
+    }
+  }
 }
 
 
