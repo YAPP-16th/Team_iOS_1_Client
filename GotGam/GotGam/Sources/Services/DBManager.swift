@@ -11,7 +11,7 @@ import UIKit
 import CoreData
 
 class DBManager {
-  static let share = DBManager()
+    static let share = DBManager()
     
     lazy var persistentContainer: NSPersistentContainer = {
            
@@ -26,14 +26,28 @@ class DBManager {
        }()
 
        // MARK: - Core Data Saving support
+	
+	lazy var context = persistentContainer.viewContext
+	func saveContext () {
+		
+		if context.hasChanges {
+			do {
+				try context.save()
+			} catch {
+				let nserror = error as NSError
+				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 
-    lazy var context = persistentContainer.viewContext
-  
+			}
+		}
+	}
+
+		
+	
     func fetchGotgam() -> [Gotgam]{
            var memo = [Gotgam]()
-           
+
            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Gotgam.description())
-           
+
            do{
                memo = try context.fetch(fetchRequest) as! [Gotgam]
                print("core data~~~ \(memo)")
@@ -43,5 +57,5 @@ class DBManager {
            }
            return memo
        }
-  
+
 }

@@ -22,12 +22,12 @@ struct Got : Equatable{
      
      
     
-     init(title: String, createedDate: Date = Date(), content: String, tag: String,
+	init(title: String, id: Int64, createedDate: Date = Date(), content: String, tag: String,
           latitude: Double, longitude: Double, isDone: Bool){
         self.title = title
         //수정필요
         self.insertedDate = nil
-        self.id = nil
+        self.id = id
       
         self.createedDate = Date()
         self.content = content

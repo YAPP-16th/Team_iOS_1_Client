@@ -21,9 +21,10 @@ class GotStorage: GotStorageType {
         @discardableResult
         func createMemo(title: String) -> Observable<Got> {
             let memo = Got(title: title)
-          list.append(memo)
+            list.append(memo)
             
             store.onNext(list)
+			DBManager.share.saveContext()
             
             return Observable.just(memo)
         }
