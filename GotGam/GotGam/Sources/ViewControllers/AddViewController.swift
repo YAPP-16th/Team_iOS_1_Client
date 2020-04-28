@@ -9,8 +9,8 @@
 import UIKit
 import CoreLocation
 
-enum InputItem: CaseIterable {
-    case tag
+enum InputItem: Int, CaseIterable {
+    case tag = 0
     case endDate
     case alramMsg
     
@@ -25,9 +25,17 @@ enum InputItem: CaseIterable {
     var placeholder: String {
         switch self {
         case .tag:     return "미지정"
-        case .endDate:  return "언제까지 가야할지 알려주세요"
+        case .endDate:  return "언제까지 가야 할지 알려주세요"
         case .alramMsg: return "알려줄 내용을 적어주세요"
         }
+    }
+    
+    
+}
+
+extension Hashable where Self : CaseIterable {
+    var index: Self.AllCases.Index {
+        return type(of: self).allCases.firstIndex(of: self)!
     }
 }
 
@@ -130,6 +138,18 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     @IBAction func didTapEditMapButton(_ sender: UIButton) {
     }
     
+    @objc func didTapDatePickerDone() {
+        view.endEditing(true)
+    }
+    @objc func didTapDatePickerCancel() {
+        guard
+            let index: Int = InputItem.allCases.firstIndex(of: .endDate),
+            let cell = inputTableView.cellForRow(at: .init(row: index, section: 0)) as? AddItemTableViewCell
+            else { return }
+        cell.detailTextField.text = ""
+        view.endEditing(true)
+    }
+    
     
     // MARK: - View Life Cycle
     
@@ -147,6 +167,11 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
     }
     
     func setupViews() {
@@ -182,6 +207,23 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var inputTableView: UITableView!
     @IBOutlet var mapOutsideView: UIView!
     @IBOutlet var titleTextField: UITextField!
+    let datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .dateAndTime
+        return datePicker
+    }()
+    let toolBar: UIToolbar = {
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        let cancelButton = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(didTapDatePickerCancel))
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(didTapDatePickerDone))
+        toolBar.setItems([cancelButton, space, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        toolBar.sizeToFit()
+        return toolBar
+    }()
     
     
 }
@@ -212,7 +254,15 @@ extension AddViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "addDetailItemCell", for: indexPath) as? AddItemTableViewCell else {return UITableViewCell()}
         
         let item = InputItem.allCases[indexPath.row]
+        
+        if item == .endDate {
+            cell.datePicker = datePicker
+            cell.toolBar = toolBar
+        }
+        
         cell.item = item
+        
+        
         
         return cell
     }
@@ -222,12 +272,16 @@ extension AddViewController: UITableViewDelegate {
     // MARK: - UITableView Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let cell = tableView.cellForRow(at: indexPath) as? AddItemTableViewCell else { return }
+        
         let item = InputItem.allCases[indexPath.row]
         switch item {
         case .tag: ""
             // transition tag set VC
-        case .endDate: ""
+        case .endDate:
             // show datePicker
+            cell.detailTextField.becomeFirstResponder()
         case .alramMsg: ""
             // turn textField
         
