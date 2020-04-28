@@ -32,6 +32,8 @@
 		4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037EA2438CD470093E39D /* MapViewController.swift */; };
 		4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037ED2438CD810093E39D /* MapViewModel.swift */; };
 		4CE037F02438D6990093E39D /* Got.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037EF2438D6990093E39D /* Got.swift */; };
+		4CE3B6F82458709800A53BF8 /* UIView+line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6F72458709800A53BF8 /* UIView+line.swift */; };
+		4CE3B6FA2458744D00A53BF8 /* AddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6F92458744D00A53BF8 /* AddItemTableViewCell.swift */; };
 		4CF1D088243E0E6500B45751 /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D087243E0E6500B45751 /* DaumMap.framework */; };
 		4CF1D08A243E0EC700B45751 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D089243E0EC700B45751 /* OpenGLES.framework */; };
 		4CF1D08C243E0ECF00B45751 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D08B243E0ECF00B45751 /* SystemConfiguration.framework */; };
@@ -77,6 +79,8 @@
 		4CE037EA2438CD470093E39D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		4CE037ED2438CD810093E39D /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		4CE037EF2438D6990093E39D /* Got.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Got.swift; sourceTree = "<group>"; };
+		4CE3B6F72458709800A53BF8 /* UIView+line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+line.swift"; sourceTree = "<group>"; };
+		4CE3B6F92458744D00A53BF8 /* AddItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewCell.swift; sourceTree = "<group>"; };
 		4CF1D087243E0E6500B45751 /* DaumMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DaumMap.framework; sourceTree = "<group>"; };
 		4CF1D089243E0EC700B45751 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		4CF1D08B243E0ECF00B45751 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -175,6 +179,7 @@
 		4CE037CB2438BCB50093E39D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4CE3B6F92458744D00A53BF8 /* AddItemTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,13 +206,14 @@
 		4CE037CE2438BDD80093E39D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4CE3B6F62458708B00A53BF8 /* Extensions */,
 				4CE037D32438C5640093E39D /* Scene */,
 				4CE037DB2438CA3E0093E39D /* Services */,
 				4CE037CC2438BCB70093E39D /* Models */,
 				4CE037D22438C5550093E39D /* ViewModels */,
+				4CE037CB2438BCB50093E39D /* Views */,
 				4CE037CA2438BCAC0093E39D /* ViewControllers */,
 				4CE037D12438C5340093E39D /* Storyboards */,
-				4CE037CB2438BCB50093E39D /* Views */,
 				4269387F24306B66007B60FD /* AppDelegate.swift */,
 			);
 			path = Sources;
@@ -268,6 +274,14 @@
 				29C81E8E24538A5200BBDE20 /* DBManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		4CE3B6F62458708B00A53BF8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4CE3B6F72458709800A53BF8 /* UIView+line.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		4CF1D0A624499E5000B45751 /* List */ = {
@@ -420,6 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CE3B6F82458709800A53BF8 /* UIView+line.swift in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
@@ -430,6 +445,7 @@
 				4CF1D0AD24499F4200B45751 /* GotListViewModel.swift in Sources */,
 				4CA155AC2455B482005D2444 /* AddViewModel.swift in Sources */,
 				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
+				4CE3B6FA2458744D00A53BF8 /* AddItemTableViewCell.swift in Sources */,
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
