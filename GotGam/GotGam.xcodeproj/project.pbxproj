@@ -76,6 +76,7 @@
 		A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */; };
 		A159DBFA2459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */; };
 		A159DBFB2459C1DD004FCA66 /* Gotgam+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */; };
+		A159DBFD2459C360004FCA66 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBFC2459C360004FCA66 /* AddViewController.swift */; };
 		A16439712454001100C740F4 /* MapCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164396F2454001100C740F4 /* MapCardCollectionViewCell.swift */; };
 		A16439722454001100C740F4 /* MapTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16439702454001100C740F4 /* MapTagCell.swift */; };
 		A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16439732454002300C740F4 /* MapQuickAddView.xib */; };
@@ -170,6 +171,7 @@
 		A159DBF62459C1DD004FCA66 /* Gotgam.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gotgam.xcdatamodel; sourceTree = "<group>"; };
 		A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gotgam+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gotgam+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A159DBFC2459C360004FCA66 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		A164396F2454001100C740F4 /* MapCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		A16439702454001100C740F4 /* MapTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTagCell.swift; sourceTree = "<group>"; };
 		A16439732454002300C740F4 /* MapQuickAddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapQuickAddView.xib; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A159DBFC2459C360004FCA66 /* AddViewController.swift */,
 				4269388324306B66007B60FD /* BaseViewController.swift */,
 				4CE037D92438C9330093E39D /* ViewModelBindableType.swift */,
 				4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */,
@@ -654,6 +657,7 @@
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
+				A159DBFD2459C360004FCA66 /* AddViewController.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
 				A159DBFA2459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift in Sources */,
 				A157E118245572F4001E310D /* LocationManagerType.swift in Sources */,
