@@ -112,9 +112,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         let circle = MTMapCircle()
         circle.circleCenterPoint = point
         circle.circleLineColor = .saffron
+      circle.circleLineWidth = 2.0
         circle.circleFillColor = UIColor.saffron.withAlphaComponent(0.17)
         circle.tag = 1234
         circle.circleRadius = 100
+      mapView.addCircle(circle)
     }
     
     private func configureCardCollectionView(){
