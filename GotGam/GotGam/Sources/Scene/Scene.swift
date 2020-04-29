@@ -11,6 +11,7 @@ import UIKit
 enum Scene {
     case map(MapViewModel)
     case list(GotListViewModel)
+    case add(AddViewModel)
     case tabBar(TabBarViewModel)
 }
 
@@ -40,6 +41,16 @@ extension Scene {
             listVC.bind(viewModel: viewModel)
             
             return listNav
+            
+        case .add(let viewModel):
+            guard let addNav = storyboard.instantiateViewController(withIdentifier: "AddNav") as? UINavigationController else {
+                fatalError()
+            }
+            guard var addVC = addNav.viewControllers.first as? AddViewController else {
+                fatalError()
+            }
+            addVC.bind(viewModel: viewModel)
+            return addNav
             
         case .tabBar(let viewModel):
             guard var tabBar = storyboard.instantiateViewController(withIdentifier: "TabBar") as? TabBarController else {
