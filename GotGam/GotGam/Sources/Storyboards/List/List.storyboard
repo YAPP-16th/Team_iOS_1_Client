@@ -40,8 +40,35 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="poV-NH-Nao"/>
                     </view>
-                    <navigationItem key="navigationItem" title="목록" id="6Kq-0m-LlA"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <toolbarItems>
+                        <barButtonItem style="plain" id="wVe-WB-GeQ">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="m5f-SV-qhk">
+                                <rect key="frame" x="20" y="5" width="374" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Group 81" backgroundImage="Group -1">
+                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="목록" id="Aob-tN-Jph">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="PKt-2d-Jcu">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="H5D-cm-Ue4">
+                                <rect key="frame" x="320" y="0.0" width="74" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Group 81" backgroundImage="Group -1">
+                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Wqd-vw-mRE" kind="show" id="5pz-ae-AXV"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <segue destination="Wqd-vw-mRE" kind="show" id="qhZ-hq-hbe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="gotListTableView" destination="aUQ-7b-rLD" id="K1b-Sm-Nz8"/>
                     </connections>
@@ -50,6 +77,55 @@
             </objects>
             <point key="canvasLocation" x="926.08695652173924" y="17.410714285714285"/>
         </scene>
+        <!--Add-->
+        <scene sceneID="gIO-N2-3az">
+            <objects>
+                <viewController title="Add" id="Wqd-vw-mRE" customClass="AddViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ank-IO-oLG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M50-St-Tyv">
+                                <rect key="frame" x="159" y="289" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cyx-6i-9mH">
+                                <rect key="frame" x="159" y="354" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hid-4x-O78">
+                                <rect key="frame" x="159" y="431" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCq-Hu-tOW">
+                                <rect key="frame" x="184" y="536" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="onClickAdd:" destination="Wqd-vw-mRE" eventType="touchUpInside" id="cuV-7c-JHx"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Lvf-gD-Idx"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="BsR-6f-WQJ"/>
+                    <connections>
+                        <outlet property="txtLocation" destination="cyx-6i-9mH" id="OXo-gY-D7c"/>
+                        <outlet property="txtMemo" destination="Hid-4x-O78" id="1IW-7W-AUM"/>
+                        <outlet property="txtTitle" destination="M50-St-Tyv" id="TgG-y6-eZM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="78z-gQ-BvE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1642" y="17"/>
+        </scene>
         <!--List-->
         <scene sceneID="s95-Xm-Hnu">
             <objects>
@@ -57,7 +133,7 @@
                     <tabBarItem key="tabBarItem" title="List" id="rCL-sY-IjC"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="3t0-a7-JGk">
-                        <rect key="frame" x="0.0" y="44" width="414" height="103.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -70,4 +146,11 @@
             <point key="canvasLocation" x="15.942028985507248" y="17.410714285714285"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Group -1" width="22" height="22"/>
+        <image name="Group 81" width="6" height="6"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="qhZ-hq-hbe"/>
+    </inferredMetricsTieBreakers>
 </document>

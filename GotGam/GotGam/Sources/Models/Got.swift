@@ -22,11 +22,11 @@ struct Got : Equatable{
      
      
     
-	init(title: String, id: Int64, createedDate: Date = Date(), content: String, tag: String,
+	init(title: String, id: Int64, insertedDate: Date = Date(), content: String, tag: String,
           latitude: Double, longitude: Double, isDone: Bool){
         self.title = title
         //수정필요
-        self.insertedDate = nil
+        self.insertedDate = insertedDate
         self.id = id
       
         self.createedDate = Date()
@@ -37,10 +37,10 @@ struct Got : Equatable{
         self.isDone = false
     }
     
-    init(title: String, latitude: Double, longitude: Double, isDone: Bool){
+    init(title: String, id: Int64, latitude: Double, longitude: Double, isDone: Bool){
         self.title = title
         self.insertedDate = nil
-        self.id = nil
+        self.id = id
         self.createedDate = Date()
         self.content = nil
         self.tag = nil
@@ -49,10 +49,10 @@ struct Got : Equatable{
         self.isDone = false
     }
    
-   init(title: String){
+   init(title: String, id: Int64){
           self.title = title
           self.insertedDate = nil
-          self.id = nil
+          self.id = id
           self.createedDate = Date()
           self.content = nil
           self.tag = nil

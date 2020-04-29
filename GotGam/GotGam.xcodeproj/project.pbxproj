@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2273802A6EF7CEC60DFA2E9F /* Pods_GotGam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */; };
+		2943AEB22459633B00E4723F /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2943AEB12459633B00E4723F /* AddViewController.swift */; };
 		296FAB7E2450A2CD00F43853 /* Gotgam.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 296FAB7C2450A2CD00F43853 /* Gotgam.xcdatamodeld */; };
 		29C81E8F24538A5200BBDE20 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C81E8E24538A5200BBDE20 /* DBManager.swift */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		12F3319E806996FEAD031C42 /* Pods-GotGam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.debug.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.debug.xcconfig"; sourceTree = "<group>"; };
+		2943AEB12459633B00E4723F /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		296FAB7D2450A2CD00F43853 /* Gotgam.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gotgam.xcdatamodel; sourceTree = "<group>"; };
 		29C81E812451784600BBDE20 /* Gotgam+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Gotgam+CoreDataProperties.swift"; path = "../../../Gotgam+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		29C81E822451784600BBDE20 /* Gotgam+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Gotgam+CoreDataClass.swift"; path = "../../../Gotgam+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */,
 				4CE037EA2438CD470093E39D /* MapViewController.swift */,
 				4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */,
+				2943AEB12459633B00E4723F /* AddViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				29C81E8F24538A5200BBDE20 /* DBManager.swift in Sources */,
+				2943AEB22459633B00E4723F /* AddViewController.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
