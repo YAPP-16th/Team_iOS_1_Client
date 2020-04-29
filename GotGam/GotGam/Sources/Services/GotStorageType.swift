@@ -12,13 +12,14 @@ import RxSwift
 protocol GotStorageType {
    
       @discardableResult
-      func createMemo(title: String) -> Observable<Got>
+	func createMemo(title: String, id: Int64, insertedDate: Date, content: String, tag: String,
+	latitude: Double, longitude: Double, isDone: Bool) -> Observable<Got>
       
       @discardableResult
       func memoList() -> Observable<[Got]>
       
       @discardableResult
-      func update(title: Got, updatedtitle: String) -> Observable<Got>
+	func update(title: Got, updatedtitle: String, id:Int64) -> Observable<Got>
       
       @discardableResult
       func delete(title: Got) -> Observable<Got>
