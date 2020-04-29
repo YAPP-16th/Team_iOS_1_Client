@@ -11,23 +11,35 @@ import UIKit
 class AddItemTableViewCell: UITableViewCell {
 
     
-    
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var detailView: UIView!
-    @IBOutlet var placeholderLabel: UILabel!
-    @IBOutlet var tagView: UIView!
-    
     var item: InputItem? {
         didSet {
             guard let item = item else { return }
             titleLabel.text = item.title
-            placeholderLabel.text = item.placeholder
-            if item == .tag {
-                tagView.isHidden = false
-                placeholderLabel.textColor = .darkText
-            }
+            detailTextField.placeholder = item.placeholder
+            setup(item)
             
         }
+    }
+    
+    func setup(_ item: InputItem) {
+        
+        switch item {
+        case .tag:
+            tagView.isHidden = false
+            detailTextField.text = item.placeholder
+        case .endDate:
+            datePicker?.addTarget(self, action: #selector(onChangeEndDate), for: .valueChanged)
+            detailTextField.inputView = datePicker
+            detailTextField.inputAccessoryView = toolBar
+            detailTextField.isEnabled = true
+        case .alramMsg:
+            detailTextField.isEnabled = true
+            detailTextField.tintColor = .orange
+        }
+    }
+    
+    @objc func onChangeEndDate() {
+        detailTextField.text = datePicker?.date.endDate
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -45,6 +57,24 @@ class AddItemTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         tagView.layer.cornerRadius = tagView.bounds.height / 2
+        print(accessoryView?.frame)
     }
+    
+    // MARK: - Views
+    
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var detailView: UIView!
+    @IBOutlet var detailTextField: UITextField!
+    @IBOutlet var tagView: UIView!
+    var datePicker: UIDatePicker?
+    var toolBar: UIToolbar?
 
+}
+
+extension Date {
+    var endDate: String {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy.MM.dd.E"
+        return df.string(from: self)
+    }
 }

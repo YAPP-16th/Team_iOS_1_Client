@@ -56,32 +56,30 @@ class AddViewController: BaseViewController, ViewModelBindableType {
         let circle = MTMapCircle()
         circle.circleCenterPoint = center
         circle.circleLineColor = .orange
-        //circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
-        circle.circleFillColor = .clear
+        circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
+        //circle.circleFillColor = .clear
         circle.circleRadius = radius
-        
-        
         
         mapOutsideView.isHidden = true
         
         print(radius, CGFloat(radius))
         //mapOutsideView.backgroundColor = UIColor.b
         
-        let shape = CAShapeLayer()
-        let path = UIBezierPath(rect: mapOutsideView.bounds)
-        path.addArc(withCenter: mapOutsideView.center, radius: CGFloat(radius), startAngle: 0, endAngle: CGFloat.pi*2, clockwise: true)
-        shape.path = path.cgPath
-        
-        //shape.fillColor = UIColor.black.withAlphaComponent(0.1).cgColor
-        shape.fillRule = .evenOdd
-        
-        mapOutsideView.layer.mask = shape
-        //mapOutsideView.clipsToBounds = true
-        mapOutsideView.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
-        
+//        let backgroundLayer = CAShapeLayer()
+//        let bgPath = UIBezierPath(rect: <#T##CGRect#>)
+//
+//        let circleLayer = CAShapeLayer()
+//        let circlePath = UIBezierPath(rect: mapOutsideView.bounds)
+//        circlePath.addArc(withCenter: mapOutsideView.center, radius: CGFloat(radius), startAngle: 0, endAngle: CGFloat.pi*2, clockwise: true)
+//        circleLayer.path = circlePath.cgPath
+//
+//        circleLayer.fillColor = UIColor.orange.withAlphaComponent(0.1).cgColor
+//        circleLayer.fillRule = .evenOdd
+//
+//        mapView.layer.addSublayer(circleLayer)
+//        mapView.addCircle(circle)
         
         mapView.addCircle(circle)
-        
         mapView.fitArea(toShow: circle)
     }
     
@@ -106,21 +104,21 @@ class AddViewController: BaseViewController, ViewModelBindableType {
         mapView.add(seed)
         
         //latitude: 37.42447813219592, longitude: 126.74313983219017
-        let current = CLLocation(latitude: currentCenterLocation.latitude, longitude: currentCenterLocation.longitude)
-        let radius = CLLocation(latitude: 37.42447813219592, longitude: 126.74316126511499)
-        print("😡 \(current.distance(from: radius))")
-        
-        
-        
-        //let converted = locationWithBearing(bearing: Double.pi/2, distanceMeters: 50/2, origin: currentCenterLocation)
-        let converted = currentCenterLocation.shift(byDistance: 25, azimuth: Double.pi/2)
-        let seed2 = MTMapPOIItem()
-        seed2.mapPoint = MTMapPoint(geoCoord: .init(latitude: converted.latitude, longitude: converted.longitude))
-        
-        seed2.markerType = .customImage
-        seed2.customImage = UIImage(named: "seed")!
-        
-        mapView.add(seed2)
+//        let current = CLLocation(latitude: currentCenterLocation.latitude, longitude: currentCenterLocation.longitude)
+//        let radius = CLLocation(latitude: 37.42447813219592, longitude: 126.74316126511499)
+//        print("😡 \(current.distance(from: radius))")
+//
+//
+//
+//        //let converted = locationWithBearing(bearing: Double.pi/2, distanceMeters: 50/2, origin: currentCenterLocation)
+//        let converted = currentCenterLocation.shift(byDistance: 25, azimuth: Double.pi/2)
+//        let seed2 = MTMapPOIItem()
+//        seed2.mapPoint = MTMapPoint(geoCoord: .init(latitude: converted.latitude, longitude: converted.longitude))
+//
+//        seed2.markerType = .customImage
+//        seed2.customImage = UIImage(named: "seed")!
+//
+//        mapView.add(seed2)
     }
     func setupMapCenter() {
         //let centerCoor = MTMapPoint(geoCoord: .init(latitude: currentCenter.latitude, longitude: currentCenter.longitude))
@@ -177,6 +175,10 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     func setupViews() {
         titleTextField.tintColor = .orange
         titleTextField.addLine(position: .bottom, color: .lightGray, width: 0.5)
+        addIconButton.layer.cornerRadius = outsideButton.bounds.height/2
+        outsideButton.layer.cornerRadius = outsideButton.bounds.height/2
+        insideButton.layer.cornerRadius = insideButton.bounds.height/2
+        editButton.layer.cornerRadius = editButton.bounds.height/2
     }
     
     func setupMapView() {
@@ -204,7 +206,12 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Views
     @IBOutlet var mapBackgroundView: UIView!
     var mapView: MTMapView!
+    @IBOutlet var addIconButton: UIButton!
     @IBOutlet var inputTableView: UITableView!
+    @IBOutlet var insideButton: UIButton!
+    @IBOutlet var outsideButton: UIButton!
+    @IBOutlet var editButton: UIButton!
+    
     @IBOutlet var mapOutsideView: UIView!
     @IBOutlet var titleTextField: UITextField!
     let datePicker: UIDatePicker = {

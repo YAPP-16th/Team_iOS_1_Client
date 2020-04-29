@@ -14,7 +14,7 @@ protocol AddViewModelInputs {
 }
 
 protocol AddViewModelOutputs {
-    
+    //var detailItem: DetailItem { get }
 }
 
 protocol AddViewModelType {
@@ -25,11 +25,20 @@ protocol AddViewModelType {
 
 class AddViewModel: CommonViewModel, AddViewModelType, AddViewModelInputs, AddViewModelOutputs {
     
+    // MARK: - Constants
+    
+    
+    // MARK: - Variables
+    
     var inputs: AddViewModelInputs { return self }
     var outputs: AddViewModelOutputs { return self }
     
+    
+    // MARK: - Input
     func close() {
         sceneCoordinator.close(animated: true)
     }
     
+    // MARK: - Output
+    //var detailItem: DetailItem
 }
