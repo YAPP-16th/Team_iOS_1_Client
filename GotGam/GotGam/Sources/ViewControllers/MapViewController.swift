@@ -48,6 +48,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.seedImageView.isHidden = true
         self.quickAddView.addAction = { text in
             let centerPoint = self.mapView.mapCenterPoint
+            self.viewModel.showAddVC()
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
             self.viewModel.seedState.onNext(.none)
@@ -224,9 +225,11 @@ extension MapViewController: MTMapViewDelegate{
         }
     }
     func mapView(_ mapView: MTMapView!, doubleTapOn mapPoint: MTMapPoint!) {
+        
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
         }
+        
     }
   func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
     switch self.state{

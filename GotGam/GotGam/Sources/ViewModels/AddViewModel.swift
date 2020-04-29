@@ -2,7 +2,7 @@
 //  AddViewModel.swift
 //  GotGam
 //
-//  Created by woong on 26/04/2020.
+//  Created by woong on 30/04/2020.
 //  Copyright © 2020 손병근. All rights reserved.
 //
 

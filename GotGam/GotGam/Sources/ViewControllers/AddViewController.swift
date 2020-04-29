@@ -29,8 +29,6 @@ enum InputItem: Int, CaseIterable {
         case .alramMsg: return "알려줄 내용을 적어주세요"
         }
     }
-    
-    
 }
 
 extension Hashable where Self : CaseIterable {
@@ -184,8 +182,8 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     func setupMapView() {
         
         mapView = MTMapView()
-        mapView.translatesAutoresizingMaskIntoConstraints = false
         if let mapView = mapView {
+            mapView.translatesAutoresizingMaskIntoConstraints = false
             mapView.delegate = self
             mapView.baseMapType = .standard
             mapBackgroundView.insertSubview(mapView, at: 0)
@@ -318,14 +316,14 @@ extension CLLocationCoordinate2D {
     }
 }
 
-	@IBAction func onClickAdd(_ sender: Any) {
-		   if let title = txtTitle.text, let tag = txtLocation.text, let memo = txtMemo.text {
-			   let newMemo = Gotgam(context: DBManager.share.context)
-			   newMemo.title = title
-			   //newMemo.date = date
-			   newMemo.tag = tag
-			   newMemo.content = memo
-			   DBManager.share.saveContext()
-			   //print("성공")
-		   }
-	}
+//	@IBAction func onClickAdd(_ sender: Any) {
+//		   if let title = txtTitle.text, let tag = txtLocation.text, let memo = txtMemo.text {
+//			   let newMemo = Gotgam(context: DBManager.share.context)
+//			   newMemo.title = title
+//			   //newMemo.date = date
+//			   newMemo.tag = tag
+//			   newMemo.content = memo
+//			   DBManager.share.saveContext()
+//			   //print("성공")
+//		   }
+//	}

@@ -20,4 +20,10 @@ class MapViewModel: CommonViewModel {
     var tag: [String] = ["맛집", "할일", "데이트할 곳", "일상", "집에서 할 일","학교에서 할 일"]
     
     var seedState = BehaviorSubject<SeedState>(value: .none)
+    
+    func showAddVC() {
+        let addVM = AddViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
+        
+    }
 }

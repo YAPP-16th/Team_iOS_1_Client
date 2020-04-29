@@ -71,6 +71,13 @@ class SceneCoordinator: SceneCoordinatorType {
                 subject.onCompleted()
             }
             currentVC = target.sceneViewController
+            
+        case .fullScreen:
+            target.modalPresentationStyle = .fullScreen
+            currentVC.present(target, animated: animated) {
+                subject.onCompleted()
+            }
+            currentVC = target.sceneViewController
         }
         
         return subject.ignoreElements()
