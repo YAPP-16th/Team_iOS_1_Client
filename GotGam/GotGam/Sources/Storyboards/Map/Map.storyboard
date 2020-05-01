@@ -302,7 +302,7 @@
         <!--Title-->
         <scene sceneID="xwa-ip-OSW">
             <objects>
-                <viewController storyboardIdentifier="AddVC" id="9o4-1I-vlQ" customClass="AddViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddVC" id="9o4-1I-vlQ" customClass="AddPlantViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RV1-gH-Au6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -482,7 +482,6 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="9o4-1I-vlQ" id="eHe-j1-uXx"/>
                                     <outlet property="delegate" destination="9o4-1I-vlQ" id="qSY-mI-x9r"/>
                                 </connections>
                             </tableView>
@@ -519,6 +518,7 @@
                         <outlet property="mapBackgroundView" destination="ONd-Cp-AX0" id="SR6-Sj-Lrx"/>
                         <outlet property="mapOutsideView" destination="MyP-d2-Jg3" id="ObX-mU-z9Z"/>
                         <outlet property="outsideButton" destination="tpG-V1-Ejh" id="X5Q-ba-T1Q"/>
+                        <outlet property="placeLabel" destination="74J-fI-xGP" id="pem-b0-WDf"/>
                         <outlet property="titleTextField" destination="YWo-eb-s3U" id="b3a-Kh-5J2"/>
                     </connections>
                 </viewController>

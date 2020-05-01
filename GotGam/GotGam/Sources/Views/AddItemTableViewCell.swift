@@ -10,8 +10,7 @@ import UIKit
 
 class AddItemTableViewCell: UITableViewCell {
 
-    
-    var item: InputItem? {
+    var item: InputItemType? {
         didSet {
             guard let item = item else { return }
             titleLabel.text = item.title
@@ -21,7 +20,7 @@ class AddItemTableViewCell: UITableViewCell {
         }
     }
     
-    func setup(_ item: InputItem) {
+    func setup(_ item: InputItemType) {
         
         switch item {
         case .tag:

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Got : Equatable{
+struct Got: Equatable {
    
     var title: String
     var insertedDate: Date?

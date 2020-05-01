@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import CoreLocation
 
-enum InputItem: Int, CaseIterable {
-    case tag = 0
-    case endDate
-    case alramMsg
+enum InputItemType: CaseIterable {
+    static var allCases: [InputItemType] {
+        return [.tag(nil), .endDate(nil), .alramMsg(nil) ]
+    }
+    
+    case tag(String?)
+    case endDate(Date?)
+    case alramMsg(String?)
     
     var title: String {
         switch self {
@@ -38,11 +44,11 @@ extension Hashable where Self : CaseIterable {
 }
 
 
-class AddViewController: BaseViewController, ViewModelBindableType {
+class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Properties
     
-    var viewModel: AddViewModel!
+    var viewModel: AddPlantViewModel!
     var currentCenter: MTMapPoint = MTMapPoint(geoCoord: .init(latitude: 37.42462158203125, longitude: 126.74259919223122))
     var currentCenterLocation = CLLocationCoordinate2D(latitude: 37.42462158203125, longitude: 126.74259919223122)
     let locationManager = CLLocationManager()
@@ -138,12 +144,12 @@ class AddViewController: BaseViewController, ViewModelBindableType {
         view.endEditing(true)
     }
     @objc func didTapDatePickerCancel() {
-        guard
-            let index: Int = InputItem.allCases.firstIndex(of: .endDate),
-            let cell = inputTableView.cellForRow(at: .init(row: index, section: 0)) as? AddItemTableViewCell
-            else { return }
-        cell.detailTextField.text = ""
-        view.endEditing(true)
+//        guard
+//            let index: Int = InputItemType.allCases.firstIndex(of: .endDate),
+//            let cell = inputTableView.cellForRow(at: .init(row: index, section: 0)) as? AddItemTableViewCell
+//            else { return }
+//        cell.detailTextField.text = ""
+//        view.endEditing(true)
     }
     
     
@@ -169,6 +175,8 @@ class AddViewController: BaseViewController, ViewModelBindableType {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
     }
+    
+    // MARK: - Initializing
     
     func setupViews() {
         titleTextField.tintColor = .orange
@@ -199,9 +207,98 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
+        viewModel.outputs.initGot?
+            .compactMap { $0.title }
+            .bind(to: titleTextField.rx.text )
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.cellType
+            .bind(to: inputTableView.rx.items(cellIdentifier: "addDetailItemCell", cellType: AddItemTableViewCell.self)) { [unowned self] (row: Int, item: InputItemType, cell: AddItemTableViewCell) in
+                
+                switch item {
+                case .tag(let tag): ""
+                    
+                case .endDate(let date):
+                    if let date = date {
+                        self.datePicker.date = date
+                        cell.detailTextField.text = date.endDate
+                    }
+                    
+                    cell.datePicker = self.datePicker
+                    cell.toolBar = self.toolBar
+                case .alramMsg(let msg): ""
+                    
+                }
+                
+                cell.item = item
+            }
+            .disposed(by: disposeBag)
+        
+        
+//        let item = InputItemType.allCases[indexPath.row]
+//
+//        if item == .endDate {
+//            cell.datePicker = datePicker
+//            cell.toolBar = toolBar
+//        }
+//
+//        cell.item = item
+        
+        //cellType.bind(to: inputTableView.rx.items)
+        
+//        cellType
+//            .bind(to: inputTableView.rx.items(cellIdentifier: "addDetailItemCell", cellType: AddItemTableViewCell.self)) { (row: Int, item: InputItemType, cell: AddItemTableViewCell) in
+//                let indexPath = IndexPath(row: row, section: 0)
+//
+//                switch item {
+//                case .tag:
+//
+//                case .
+//                }
+//            }
+        
+//        viewModel.outputs.initGot?
+//            .compactMap { $0 }
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { [unowned self] (got: Got) in
+//                self.inputTableView.visibleCells.forEach { (cell) in
+//                    guard let itemCell = cell as? AddItemTableViewCell else { return }
+//                    switch itemCell.item {
+//                    case .tag: break
+//                        // set tag
+//                    case .endDate:
+//                        if let date = got.insertedDate {
+//                            itemCell.datePicker?.date = date
+//                        }
+//                    case .alramMsg:
+//                        itemCell.detailTextField.text = got.content
+//                    case .none:
+//                        break
+//                    }
+//                }
+//                
+//            })
+//            .disposed(by: disposeBag)
+//            .bind(to: inputTableView.rx.cell)
+        
+//        cellType
+//            .bind(to: inputTableView.rx.items(cellIdentifier: "addDetailItemCell", cellType: AddItemTableViewCell.self)) { row, item, cell in
+//                let item = InputItem.allCases[row]
+//
+//                if item == .endDate {
+//                    cell.datePicker = self.datePicker
+//                    cell.toolBar = self.toolBar
+//                }
+//
+//                cell.item = item
+//            }
+//            .disposed(by: disposeBag)
+        
     }
     
     // MARK: - Views
+    @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var placeLabel: UILabel!
     @IBOutlet var mapBackgroundView: UIView!
     var mapView: MTMapView!
     @IBOutlet var addIconButton: UIButton!
@@ -211,7 +308,7 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var editButton: UIButton!
     
     @IBOutlet var mapOutsideView: UIView!
-    @IBOutlet var titleTextField: UITextField!
+    
     let datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .dateAndTime
@@ -233,7 +330,7 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     
 }
 
-extension AddViewController: UIAdaptivePresentationControllerDelegate {
+extension AddPlantViewController: UIAdaptivePresentationControllerDelegate {
     // MARK: UIAdaptivePresentationControllerDelegate
     
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
@@ -241,46 +338,21 @@ extension AddViewController: UIAdaptivePresentationControllerDelegate {
     }
 }
 
-extension AddViewController: MTMapViewDelegate {
+extension AddPlantViewController: MTMapViewDelegate {
     //MARK: MTMapViewDelegate
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
         print(mapPoint.mapPointGeo())
     }
 }
 
-extension AddViewController: UITableViewDataSource {
-    // MARK: - UITableView DataSource
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return InputItem.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "addDetailItemCell", for: indexPath) as? AddItemTableViewCell else {return UITableViewCell()}
-        
-        let item = InputItem.allCases[indexPath.row]
-        
-        if item == .endDate {
-            cell.datePicker = datePicker
-            cell.toolBar = toolBar
-        }
-        
-        cell.item = item
-        
-        
-        
-        return cell
-    }
-}
-
-extension AddViewController: UITableViewDelegate {
+extension AddPlantViewController: UITableViewDelegate {
     // MARK: - UITableView Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let cell = tableView.cellForRow(at: indexPath) as? AddItemTableViewCell else { return }
         
-        let item = InputItem.allCases[indexPath.row]
+        let item = InputItemType.allCases[indexPath.row]
         switch item {
         case .tag: ""
             // transition tag set VC

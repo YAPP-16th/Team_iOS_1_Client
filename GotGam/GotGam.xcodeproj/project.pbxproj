@@ -17,6 +17,8 @@
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
 		4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */; };
 		4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */; };
+		4CBD535C245B133B00B235D5 /* AddTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535B245B133B00B235D5 /* AddTagViewController.swift */; };
+		4CBD535E245B134A00B235D5 /* AddTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535D245B134A00B235D5 /* AddTagViewModel.swift */; };
 		4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037D92438C9330093E39D /* ViewModelBindableType.swift */; };
 		4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DC2438CA590093E39D /* GotStorageType.swift */; };
 		4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DE2438CA780093E39D /* GotStorage.swift */; };
@@ -30,7 +32,7 @@
 		4CE037F02438D6990093E39D /* Got.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037EF2438D6990093E39D /* Got.swift */; };
 		4CE3B6F82458709800A53BF8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4CE3B6FA2458744D00A53BF8 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4CE3B6FC2459E28900A53BF8 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FB2459E28900A53BF8 /* AddViewModel.swift */; };
+		4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */; };
 		4CE3B6FE2459E31E00A53BF8 /* AddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FD2459E31E00A53BF8 /* AddItemTableViewCell.swift */; };
 		4CE3B7002459E36000A53BF8 /* UIView+line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FF2459E36000A53BF8 /* UIView+line.swift */; };
 		4CF1D08A243E0EC700B45751 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D089243E0EC700B45751 /* OpenGLES.framework */; };
@@ -81,7 +83,7 @@
 		A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */; };
 		A159DBFA2459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */; };
 		A159DBFB2459C1DD004FCA66 /* Gotgam+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */; };
-		A159DBFD2459C360004FCA66 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBFC2459C360004FCA66 /* AddViewController.swift */; };
+		A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBFC2459C360004FCA66 /* AddPlantViewController.swift */; };
 		A16439712454001100C740F4 /* MapCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164396F2454001100C740F4 /* MapCardCollectionViewCell.swift */; };
 		A16439722454001100C740F4 /* MapTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16439702454001100C740F4 /* MapTagCell.swift */; };
 		A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16439732454002300C740F4 /* MapQuickAddView.xib */; };
@@ -105,9 +107,10 @@
 		4269388824306B68007B60FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
-		4CA155A92455B46B005D2444 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab+ViewController.swift"; sourceTree = "<group>"; };
+		4CBD535B245B133B00B235D5 /* AddTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagViewController.swift; sourceTree = "<group>"; };
+		4CBD535D245B134A00B235D5 /* AddTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagViewModel.swift; sourceTree = "<group>"; };
 		4CE037D92438C9330093E39D /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		4CE037DC2438CA590093E39D /* GotStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorageType.swift; sourceTree = "<group>"; };
 		4CE037DE2438CA780093E39D /* GotStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorage.swift; sourceTree = "<group>"; };
@@ -119,7 +122,7 @@
 		4CE037EA2438CD470093E39D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		4CE037ED2438CD810093E39D /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		4CE037EF2438D6990093E39D /* Got.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Got.swift; sourceTree = "<group>"; };
-		4CE3B6FB2459E28900A53BF8 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
+		4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlantViewModel.swift; sourceTree = "<group>"; };
 		4CE3B6FD2459E31E00A53BF8 /* AddItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemTableViewCell.swift; sourceTree = "<group>"; };
 		4CE3B6FF2459E36000A53BF8 /* UIView+line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+line.swift"; sourceTree = "<group>"; };
 		4CF1D089243E0EC700B45751 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -180,7 +183,7 @@
 		A159DBF62459C1DD004FCA66 /* Gotgam.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gotgam.xcdatamodel; sourceTree = "<group>"; };
 		A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gotgam+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gotgam+CoreDataClass.swift"; sourceTree = "<group>"; };
-		A159DBFC2459C360004FCA66 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		A159DBFC2459C360004FCA66 /* AddPlantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlantViewController.swift; sourceTree = "<group>"; };
 		A164396F2454001100C740F4 /* MapCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		A16439702454001100C740F4 /* MapTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTagCell.swift; sourceTree = "<group>"; };
 		A16439732454002300C740F4 /* MapQuickAddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapQuickAddView.xib; sourceTree = "<group>"; };
@@ -261,13 +264,13 @@
 		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				A159DBFC2459C360004FCA66 /* AddViewController.swift */,
 				4269388324306B66007B60FD /* BaseViewController.swift */,
 				4CE037D92438C9330093E39D /* ViewModelBindableType.swift */,
 				4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */,
 				4CE037EA2438CD470093E39D /* MapViewController.swift */,
 				4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */,
-				4CA155A92455B46B005D2444 /* AddViewController.swift */,
+				A159DBFC2459C360004FCA66 /* AddPlantViewController.swift */,
+				4CBD535B245B133B00B235D5 /* AddTagViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -339,7 +342,8 @@
 				4CF1D0B2244AABC000B45751 /* TabBarViewModel.swift */,
 				4CE037ED2438CD810093E39D /* MapViewModel.swift */,
 				4CF1D0AC24499F4200B45751 /* GotListViewModel.swift */,
-				4CE3B6FB2459E28900A53BF8 /* AddViewModel.swift */,
+				4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */,
+				4CBD535D245B134A00B235D5 /* AddTagViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -668,19 +672,21 @@
 				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
 				A159DBFB2459C1DD004FCA66 /* Gotgam+CoreDataClass.swift in Sources */,
-				4CE3B6FC2459E28900A53BF8 /* AddViewModel.swift in Sources */,
+				4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */,
+				4CBD535C245B133B00B235D5 /* AddTagViewController.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
-				A159DBFD2459C360004FCA66 /* AddViewController.swift in Sources */,
+				A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
 				A159DBFA2459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift in Sources */,
 				4CE3B6FE2459E31E00A53BF8 /* AddItemTableViewCell.swift in Sources */,
 				A157E118245572F4001E310D /* LocationManagerType.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
+				4CBD535E245B134A00B235D5 /* AddTagViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
