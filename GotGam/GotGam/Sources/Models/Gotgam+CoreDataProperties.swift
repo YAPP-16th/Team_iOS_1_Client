@@ -25,5 +25,6 @@ extension Gotgam {
     @NSManaged public var date: Date?
     @NSManaged public var longitude: Double
     @NSManaged public var isDone: Bool
+	@NSManaged public var palce: String?
 
 }
