@@ -29,11 +29,10 @@ class MapCardCollectionViewCell: UICollectionViewCell{
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        self.layer.applySketchShadow(color: .black, alpha: 0.05, x: 0, y: 2, blur: 10, spread: 0)
         self.contentView.layer.cornerRadius = 24
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 3)
-        self.layer.shadowRadius = 24.0
-        self.layer.shadowOpacity = 0.25
+        self.contentView.layer.masksToBounds = true
+        self.contentView.backgroundColor = .white
         
         tagView.layer.cornerRadius = 7
         tagView.layer.masksToBounds = true
