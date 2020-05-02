@@ -98,6 +98,8 @@
 /* Begin PBXFileReference section */
 		12F3319E806996FEAD031C42 /* Pods-GotGam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.debug.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.debug.xcconfig"; sourceTree = "<group>"; };
 		292ED455245D354700E662EF /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		292ED457245D402300E662EF /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		292ED458245D402300E662EF /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -277,6 +279,8 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				292ED457245D402300E662EF /* Tag+CoreDataClass.swift */,
+				292ED458245D402300E662EF /* Tag+CoreDataProperties.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
 				A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */,
 				A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */,

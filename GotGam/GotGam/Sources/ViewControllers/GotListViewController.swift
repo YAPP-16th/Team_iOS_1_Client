@@ -16,7 +16,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     let searchController = UISearchController(searchResultsController: nil)
   
-    var memos = [Gotgam]()
+    var memos = [ManagedGot]()
     
     // MARK: - Views
     @IBOutlet weak var gotListTableView: UITableView!

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Tag{
+struct Tag {
 	var color: String
 	var name: String
 	
