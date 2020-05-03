@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -259,11 +259,20 @@
                                     <constraint firstAttribute="width" constant="35.799999999999997" id="ruh-M6-PMr"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="80c-Q8-Ox9" customClass="MapRestoreView" customModule="GotGam" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="630" width="195" height="48"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="195" id="UNO-d3-1ch"/>
+                                    <constraint firstAttribute="height" constant="48" id="XZ5-d2-ZNy"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="bottom" secondItem="Pep-Z7-O3k" secondAttribute="bottom" id="1Vu-Ty-WRl"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="lLe-wS-YdH" secondAttribute="trailing" constant="16" id="75O-Zl-HRV"/>
+                            <constraint firstItem="80c-Q8-Ox9" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="A72-7D-qCf"/>
                             <constraint firstItem="TiL-oy-OC7" firstAttribute="centerX" secondItem="lcW-sk-zKN" secondAttribute="centerX" id="Ji6-th-xbk"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="lWX-nJ-lVC" secondAttribute="trailing" id="MH8-Uq-Shu"/>
                             <constraint firstItem="BsL-sj-hgP" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="Y6g-h8-NoC"/>
@@ -274,6 +283,7 @@
                             <constraint firstItem="lLe-wS-YdH" firstAttribute="top" secondItem="1Ei-Ux-SvZ" secondAttribute="bottom" constant="10" id="eZZ-2X-fuu"/>
                             <constraint firstItem="lLe-wS-YdH" firstAttribute="bottom" secondItem="lWX-nJ-lVC" secondAttribute="top" constant="-19" id="ex1-SK-KXb"/>
                             <constraint firstItem="n2t-Q7-lmx" firstAttribute="leading" secondItem="OqC-QT-JzJ" secondAttribute="leading" id="g2b-xe-B0I"/>
+                            <constraint firstItem="lWX-nJ-lVC" firstAttribute="top" secondItem="80c-Q8-Ox9" secondAttribute="bottom" constant="14" id="iHP-6p-YhH"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="Pep-Z7-O3k" secondAttribute="trailing" constant="16" id="iLs-9o-785"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="bottom" secondItem="lWX-nJ-lVC" secondAttribute="bottom" id="pdc-Gr-TBI"/>
                             <constraint firstItem="OqC-QT-JzJ" firstAttribute="trailing" secondItem="1Ei-Ux-SvZ" secondAttribute="trailing" constant="16" id="piD-fZ-n67"/>
@@ -443,12 +453,12 @@
                                                     <rect key="frame" x="72" y="0.0" width="301" height="116"/>
                                                     <subviews>
                                                         <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="placeholder" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="452-Pw-TcR">
-                                                            <rect key="frame" x="214.5" y="49.5" width="76.5" height="17"/>
+                                                            <rect key="frame" x="214.5" y="49" width="76.5" height="18.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rGg-Xy-GRw">
-                                                            <rect key="frame" x="191" y="51" width="13.5" height="14"/>
+                                                            <rect key="frame" x="189.5" y="50.5" width="15" height="15"/>
                                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="rGg-Xy-GRw" secondAttribute="height" multiplier="1:1" id="x58-tM-ihz"/>

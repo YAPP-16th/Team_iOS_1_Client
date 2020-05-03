@@ -25,6 +25,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var myLocationButton: UIButton!
     @IBOutlet weak var quickAddView: MapQuickAddView!
     @IBOutlet weak var seedImageView: UIImageView!
+    @IBOutlet weak var restoreView: MapRestoreView!
   
     // MARK: - Constraints
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
