@@ -10,7 +10,8 @@ import Foundation
 import RxSwift
 
 protocol GotListViewModelInputs {
-    
+    // show vc
+	func showVC()
 }
 
 protocol GotListViewModelOutputs {
@@ -24,9 +25,19 @@ protocol GotListViewModelType {
 
 
 class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelInputs, GotListViewModelOutputs {
+
+	
     
     var inputs: GotListViewModelInputs { return self }
     var outputs: GotListViewModelOutputs { return self }
+	
+	// Inputs
+	
+	// show
+	func showVC() {
+		let viewModel = AddViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		sceneCoordinator.transition(to: .add(viewModel), using: .push, animated: true)
+	}
     
     // Outputs
     

@@ -5,7 +5,6 @@
 //  Created by woong on 26/04/2020.
 //  Copyright © 2020 손병근. All rights reserved.
 //
-
 import UIKit
 import CoreLocation
 
@@ -83,7 +82,6 @@ class AddViewController: BaseViewController, ViewModelBindableType {
     
     func locationWithBearing(bearing:Double, distanceMeters:Double, origin:CLLocationCoordinate2D) -> CLLocationCoordinate2D {
         let distRadians = distanceMeters / (6372797.6) // earth radius in meters
-
         let lat1 = origin.latitude * Double.pi / 180
         let lon1 = origin.longitude * Double.pi / 180
 
@@ -306,7 +304,6 @@ extension CLLocationCoordinate2D {
         let bearing = azimuth
         let origin = self
         let distRadians = distanceMeters / (6372797.6) // earth radius in meters
-
         let lat1 = origin.latitude * Double.pi / 180
         let lon1 = origin.longitude * Double.pi / 180
 

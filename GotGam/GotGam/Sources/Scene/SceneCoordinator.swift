@@ -51,6 +51,8 @@ class SceneCoordinator: SceneCoordinatorType {
             subject.onCompleted()
             
         case .push:
+			//변환코드 
+			print(currentVC)
             guard let nav = currentVC.navigationController else {
                 subject.onError(TransitionError.navigationControllerMissing)
                 break

@@ -22,7 +22,11 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var gotListTableView: UITableView!
 
 
-    // MARK: - View Life Cycle
+	
+	@IBAction func moveAddVC(_ sender: UIButton) {
+		viewModel.inputs.showVC()
+	}
+	// MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +74,7 @@ extension GotListViewController: UISearchResultsUpdating {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath)
         let amemos = memos[indexPath.row]
-        cell.textLabel?.text = amemos.title
+        cell.textLabel?.text = amemos.title 
 
         return cell
         
