@@ -36,12 +36,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     var state: MapViewModel.SeedState = .none
     // MARK: - View Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureMapView()
-//        setCircle()
         
         configureCardCollectionView()
         self.quickAddView.isHidden = true
@@ -58,6 +56,35 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        LocationManager.shared.startUpdatingLocation()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+    }
+    
+    @objc func keyboardWillShow(noti: Notification){
+        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.quickAddViewBottomConstraint.constant == 0{
+                self.quickAddViewBottomConstraint.constant = keyboardSize.height - self.view.safeAreaInsets.bottom
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(noti: Notification){
+        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.quickAddViewBottomConstraint.constant != 0 {
+                self.quickAddViewBottomConstraint.constant = 0
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -92,33 +119,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.view.addSubview(mapView)
       self.view.sendSubviewToBack(mapView)
     }
-    func setSomePins(){
-        poiItem1 = MTMapPOIItem()
-        poiItem1.itemName = "City on a Hill"
-        poiItem1.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: 37.541889, longitude: 127.095388))
-        poiItem1.showDisclosureButtonOnCalloutBalloon = true
-        poiItem1.markerType = .redPin
-        poiItem1.showAnimationType = .dropFromHeaven;
-        poiItem1.draggable = true
-        poiItem1.tag = 1;
-
-        mapView.add(poiItem1)
-        mapView.fitArea(toShowMapPoints: [poiItem1.mapPoint!])
-        
-        
-    }
-    
-    func setCircle(point: MTMapPoint){
-        mapView.removeAllCircles()
-        let circle = MTMapCircle()
-        circle.circleCenterPoint = point
-        circle.circleLineColor = .saffron
-      circle.circleLineWidth = 2.0
-        circle.circleFillColor = UIColor.saffron.withAlphaComponent(0.17)
-        circle.tag = 1234
-        circle.circleRadius = 100
-      mapView.addCircle(circle)
-    }
     
     private func configureCardCollectionView(){
         cardCollectionView.collectionViewLayout = centeredCollectionViewFlowLayout
@@ -136,19 +136,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.state = state
             switch state{
             case .none:
-                self.seedButton.backgroundColor = .white
-                self.seedButton.isEnabled = true
-                self.quickAddView.isHidden = true
-                self.seedImageView.isHidden = true
+                self.setNormalStateUI()
             case .seeding:
-                self.seedButton.backgroundColor = .orange
-                self.seedButton.isEnabled = true
-                self.seedImageView.isHidden = false
+                self.setSeedingStateUI()
             case .adding:
-                self.seedButton.isEnabled = false
-                self.quickAddView.isHidden = false
-                self.seedImageView.isHidden = false
-                self.quickAddView.addField.becomeFirstResponder()
+                self.setAddingStateUI()
             }
             }).disposed(by: disposeBag)
         
@@ -171,34 +163,27 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        LocationManager.shared.startUpdatingLocation()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    //MARK: Set UI According to the State
+    func setNormalStateUI(){
+        self.mapView.removeAllCircles()
+        self.seedButton.backgroundColor = .white
+        self.seedButton.isEnabled = true
+        self.quickAddView.isHidden = true
+        self.seedImageView.isHidden = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
+    func setSeedingStateUI(){
+        setCircle(point: mapView.mapCenterPoint)
+        self.seedButton.backgroundColor = .orange
+        self.seedButton.isEnabled = true
+        self.seedImageView.isHidden = false
     }
     
-    @objc func keyboardWillShow(noti: Notification){
-        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.quickAddViewBottomConstraint.constant == 0{
-                self.quickAddViewBottomConstraint.constant = keyboardSize.height - self.view.safeAreaInsets.bottom
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
-    
-    @objc func keyboardWillHide(noti: Notification){
-        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.quickAddViewBottomConstraint.constant != 0 {
-                self.quickAddViewBottomConstraint.constant = 0
-                self.view.layoutIfNeeded()
-            }
-        }
+    func setAddingStateUI(){
+        self.seedButton.isEnabled = false
+        self.quickAddView.isHidden = false
+        self.seedImageView.isHidden = false
+        self.quickAddView.addField.becomeFirstResponder()
     }
     func setMyLocation(){
         LocationManager.shared.requestAuthorization()
@@ -216,6 +201,18 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         }else{
         }
     }
+    
+    func setCircle(point: MTMapPoint){
+        mapView.removeAllCircles()
+        let circle = MTMapCircle()
+        circle.circleCenterPoint = point
+        circle.circleLineColor = .saffron
+      circle.circleLineWidth = 2.0
+        circle.circleFillColor = UIColor.saffron.withAlphaComponent(0.17)
+        circle.tag = 1234
+        circle.circleRadius = 100
+      mapView.addCircle(circle)
+    }
 }
 
 extension MapViewController: MTMapViewDelegate{
@@ -224,31 +221,23 @@ extension MapViewController: MTMapViewDelegate{
             self.quickAddView.addField.resignFirstResponder()
         }
     }
-    func mapView(_ mapView: MTMapView!, doubleTapOn mapPoint: MTMapPoint!) {
-        
-        if self.quickAddView.addField.isFirstResponder{
-            self.quickAddView.addField.resignFirstResponder()
+    func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
+        switch self.state{
+        case .adding, .seeding:
+            setCircle(point: mapCenterPoint)
+        case .none:
+            break
         }
-        
     }
-  func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
-    switch self.state{
-    case .adding, .seeding:
-      setCircle(point: mapCenterPoint)
-      break
-    case .none:
-      break
+    func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
+        switch self.state{
+        case .adding, .seeding:
+            setCircle(point: mapCenterPoint)
+            break
+        case .none:
+            break
+        }
     }
-  }
-  func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
-    switch self.state{
-    case .adding, .seeding:
-      setCircle(point: mapCenterPoint)
-      break
-    case .none:
-      break
-    }
-  }
 }
 
 
@@ -259,13 +248,13 @@ extension MapViewController: UICollectionViewDataSource{
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.tagCollectionView{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MapTagCell", for: indexPath) as! MapTagCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapTagCell.reuseIdenfier, for: indexPath) as! MapTagCell
             let data = viewModel.tag[indexPath.item]
             cell.tagIndicator.backgroundColor = .green
             cell.tagLabel.text = data
             return cell
         }else if collectionView == self.cardCollectionView{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MapCardCollectionViewCell", for: indexPath) as! MapCardCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapCardCollectionViewCell.reuseIdenfier, for: indexPath) as! MapCardCollectionViewCell
             return cell
         }else{
             fatalError()
