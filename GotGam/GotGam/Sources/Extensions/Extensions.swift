@@ -60,3 +60,21 @@ extension CALayer{
     }
   }
 }
+
+protocol ReuseIdentifying{
+  static var reuseIdenfier: String { get }
+}
+
+extension ReuseIdentifying{
+  static var reuseIdenfier: String {
+    return String(describing: Self.self)
+  }
+}
+
+extension UITableViewCell: ReuseIdentifying{
+  
+}
+
+extension UICollectionViewCell: ReuseIdentifying{
+  
+}
