@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxDataSources
 import RxCocoa
 import CoreLocation
 
@@ -55,35 +56,14 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
 
     // MARK: - Methods
     
-    
     func drawCircle(center: MTMapPoint, radius: Float) {
         let circle = MTMapCircle()
         circle.circleCenterPoint = center
         circle.circleLineColor = .orange
         circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
-        //circle.circleFillColor = .clear
         circle.circleRadius = radius
-        
-        mapOutsideView.isHidden = true
-        
-        print(radius, CGFloat(radius))
-        //mapOutsideView.backgroundColor = UIColor.b
-        
-//        let backgroundLayer = CAShapeLayer()
-//        let bgPath = UIBezierPath(rect: <#T##CGRect#>)
-//
-//        let circleLayer = CAShapeLayer()
-//        let circlePath = UIBezierPath(rect: mapOutsideView.bounds)
-//        circlePath.addArc(withCenter: mapOutsideView.center, radius: CGFloat(radius), startAngle: 0, endAngle: CGFloat.pi*2, clockwise: true)
-//        circleLayer.path = circlePath.cgPath
-//
-//        circleLayer.fillColor = UIColor.orange.withAlphaComponent(0.1).cgColor
-//        circleLayer.fillRule = .evenOdd
-//
-//        mapView.layer.addSublayer(circleLayer)
-//        mapView.addCircle(circle)
-        
         mapView.addCircle(circle)
+    
         mapView.fitArea(toShow: circle)
     }
     
@@ -104,25 +84,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         seed.mapPoint = point
         seed.markerType = .customImage
         seed.customImage = UIImage(named: "seed")!
-        
         mapView.add(seed)
-        
-        //latitude: 37.42447813219592, longitude: 126.74313983219017
-//        let current = CLLocation(latitude: currentCenterLocation.latitude, longitude: currentCenterLocation.longitude)
-//        let radius = CLLocation(latitude: 37.42447813219592, longitude: 126.74316126511499)
-//        print("😡 \(current.distance(from: radius))")
-//
-//
-//
-//        //let converted = locationWithBearing(bearing: Double.pi/2, distanceMeters: 50/2, origin: currentCenterLocation)
-//        let converted = currentCenterLocation.shift(byDistance: 25, azimuth: Double.pi/2)
-//        let seed2 = MTMapPOIItem()
-//        seed2.mapPoint = MTMapPoint(geoCoord: .init(latitude: converted.latitude, longitude: converted.longitude))
-//
-//        seed2.markerType = .customImage
-//        seed2.customImage = UIImage(named: "seed")!
-//
-//        mapView.add(seed2)
     }
     func setupMapCenter() {
         //let centerCoor = MTMapPoint(geoCoord: .init(latitude: currentCenter.latitude, longitude: currentCenter.longitude))
@@ -131,12 +93,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBAction func didTapCancelButton(_ sender: UIBarButtonItem) {
         viewModel.inputs.close()
     }
-    @IBAction func didTapInsideRegionButton(_ sender: UIButton) {
-        drawCircle(center: currentCenter, radius: 10)
-    }
-    @IBAction func didTapOutsideRegionButton(_ sender: UIButton) {
-        
-    }
+
     @IBAction func didTapEditMapButton(_ sender: UIButton) {
     }
     
@@ -181,9 +138,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     func setupViews() {
         titleTextField.tintColor = .orange
         titleTextField.addLine(position: .bottom, color: .lightGray, width: 0.5)
-        addIconButton.layer.cornerRadius = outsideButton.bounds.height/2
-        outsideButton.layer.cornerRadius = outsideButton.bounds.height/2
-        insideButton.layer.cornerRadius = insideButton.bounds.height/2
         editButton.layer.cornerRadius = editButton.bounds.height/2
     }
     
@@ -207,92 +161,17 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        viewModel.outputs.initGot?
-            .compactMap { $0.title }
-            .bind(to: titleTextField.rx.text )
-            .disposed(by: disposeBag)
-        
-        viewModel.outputs.cellType
-            .bind(to: inputTableView.rx.items(cellIdentifier: "addDetailItemCell", cellType: AddItemTableViewCell.self)) { [unowned self] (row: Int, item: InputItemType, cell: AddItemTableViewCell) in
-                
-                switch item {
-                case .tag(let tag): ""
-                    
-                case .endDate(let date):
-                    if let date = date {
-                        self.datePicker.date = date
-                        cell.detailTextField.text = date.endDate
-                    }
-                    
-                    cell.datePicker = self.datePicker
-                    cell.toolBar = self.toolBar
-                case .alramMsg(let msg): ""
-                    
-                }
-                
-                cell.item = item
-            }
-            .disposed(by: disposeBag)
-        
-        
-//        let item = InputItemType.allCases[indexPath.row]
-//
-//        if item == .endDate {
-//            cell.datePicker = datePicker
-//            cell.toolBar = toolBar
-//        }
-//
-//        cell.item = item
-        
-        //cellType.bind(to: inputTableView.rx.items)
-        
-//        cellType
-//            .bind(to: inputTableView.rx.items(cellIdentifier: "addDetailItemCell", cellType: AddItemTableViewCell.self)) { (row: Int, item: InputItemType, cell: AddItemTableViewCell) in
-//                let indexPath = IndexPath(row: row, section: 0)
-//
-//                switch item {
-//                case .tag:
-//
-//                case .
-//                }
-//            }
-        
 //        viewModel.outputs.initGot?
-//            .compactMap { $0 }
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { [unowned self] (got: Got) in
-//                self.inputTableView.visibleCells.forEach { (cell) in
-//                    guard let itemCell = cell as? AddItemTableViewCell else { return }
-//                    switch itemCell.item {
-//                    case .tag: break
-//                        // set tag
-//                    case .endDate:
-//                        if let date = got.insertedDate {
-//                            itemCell.datePicker?.date = date
-//                        }
-//                    case .alramMsg:
-//                        itemCell.detailTextField.text = got.content
-//                    case .none:
-//                        break
-//                    }
-//                }
-//                
-//            })
+//            .compactMap { $0.title }
+//            .bind(to: titleTextField.rx.text )
 //            .disposed(by: disposeBag)
-//            .bind(to: inputTableView.rx.cell)
+//
+        let dataSource = AddPlantViewController.dataSource()
         
-//        cellType
-//            .bind(to: inputTableView.rx.items(cellIdentifier: "addDetailItemCell", cellType: AddItemTableViewCell.self)) { row, item, cell in
-//                let item = InputItem.allCases[row]
-//
-//                if item == .endDate {
-//                    cell.datePicker = self.datePicker
-//                    cell.toolBar = self.toolBar
-//                }
-//
-//                cell.item = item
-//            }
-//            .disposed(by: disposeBag)
+        //Observable.just(viewModel.sections)
+        viewModel.sections
+            .bind(to: inputTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
         
     }
     
@@ -303,11 +182,8 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     var mapView: MTMapView!
     @IBOutlet var addIconButton: UIButton!
     @IBOutlet var inputTableView: UITableView!
-    @IBOutlet var insideButton: UIButton!
-    @IBOutlet var outsideButton: UIButton!
     @IBOutlet var editButton: UIButton!
     
-    @IBOutlet var mapOutsideView: UIView!
     
     let datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
@@ -328,6 +204,34 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     }()
     
     
+}
+
+extension AddPlantViewController {
+    static func dataSource() -> RxTableViewSectionedReloadDataSource<InputSectionModel> {
+        return RxTableViewSectionedReloadDataSource<InputSectionModel>(
+            configureCell: { dataSource, table, indexPath, _ in
+                switch dataSource[indexPath] {
+                case let .ToggleableItem(title, enabled):
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "toggleableCell", for: indexPath) as? ToggleableTableViewCell else { return UITableViewCell()}
+                    cell.configure(title: title, enabled: enabled)
+                    return cell
+                case .TagItem(let title, let tag):
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "inputTagCell", for: indexPath) as? InputTagTableViewCell else { return UITableViewCell() }
+                    // TODO: tag 새로만들기
+                    cell.configure(title: title, tag: tag)
+                    return cell
+                case .TextFieldItem(let text, let placeholder, let enabled):
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "textFieldCell", for: indexPath) as? TextFieldTableViewCell else { return UITableViewCell() }
+                    cell.configure(text: text, placeholder: placeholder, enabled: enabled)
+                    return cell
+                }
+            },
+            titleForHeaderInSection: { dataSource, index in
+                let section = dataSource[index]
+                return section.title
+            }
+        )
+    }
 }
 
 extension AddPlantViewController: UIAdaptivePresentationControllerDelegate {
@@ -387,15 +291,3 @@ extension CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: lat2 * 180 / Double.pi, longitude: lon2 * 180 / Double.pi)
     }
 }
-
-//	@IBAction func onClickAdd(_ sender: Any) {
-//		   if let title = txtTitle.text, let tag = txtLocation.text, let memo = txtMemo.text {
-//			   let newMemo = Gotgam(context: DBManager.share.context)
-//			   newMemo.title = title
-//			   //newMemo.date = date
-//			   newMemo.tag = tag
-//			   newMemo.content = memo
-//			   DBManager.share.saveContext()
-//			   //print("성공")
-//		   }
-//	}
