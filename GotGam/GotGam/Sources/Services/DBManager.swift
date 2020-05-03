@@ -43,13 +43,14 @@ class DBManager {
 
 		
 	
-    func fetchGotgam() -> [Gotgam]{
-           var memo = [Gotgam]()
+    func fetchGotgam() -> [Got]{
+           var memo = [Got]()
 
-           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Gotgam.description())
+           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
 
            do{
-               memo = try context.fetch(fetchRequest) as! [Gotgam]
+               let managedGotList = try context.fetch(fetchRequest) as! [ManagedGot]
+            
                print("core data~~~ \(memo)")
            }
            catch{

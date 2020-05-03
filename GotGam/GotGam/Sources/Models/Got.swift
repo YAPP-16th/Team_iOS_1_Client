@@ -7,64 +7,39 @@
 //
 
 import Foundation
-
-struct Got : Equatable{
-   
-    var title: String
-    var insertedDate: Date?
-    var createedDate: Date
+import CoreLocation
+struct Got: Equatable{
+    
     var id: Int64?
-    var content : String?
+    var title: String
+    var createedDate: Date
+    var dueDate: Date
+    var memo : String?
     var tag : String?
-    var latitude: Double?
-    var longitude: Double?
-    var isDone: Bool
-     
+    var location: CLLocationCoordinate2D
+    var isFinished: Bool
+    var address: String?
      
     
-	init(title: String, id: Int64, insertedDate: Date = Date(), content: String, tag: String,
-          latitude: Double, longitude: Double, isDone: Bool){
+    init(title: String, createdDate: Date = Date(), dueDate: Date, memo: String, tag: String,
+         location: CLLocationCoordinate2D){
         self.title = title
-        //수정필요
-        self.insertedDate = insertedDate
-        self.id = id
-      
         self.createedDate = Date()
-        self.content = content
+        self.dueDate = dueDate
+        self.memo = memo
         self.tag = tag
-        self.latitude = latitude
-        self.longitude = longitude
-        self.isDone = false
+        self.location = location
+        self.isFinished = false
     }
-    
-    init(title: String, id: Int64, latitude: Double, longitude: Double, isDone: Bool){
-        self.title = title
-        self.insertedDate = nil
-        self.id = id
-        self.createedDate = Date()
-        self.content = nil
-        self.tag = nil
-        self.latitude = latitude
-        self.longitude = longitude
-        self.isDone = false
-    }
-   
-   init(title: String, id: Int64){
-          self.title = title
-          self.insertedDate = nil
-          self.id = id
-          self.createedDate = Date()
-          self.content = nil
-          self.tag = nil
-          self.latitude = nil
-          self.longitude = nil
-          self.isDone = false
-      }
-    
-    
-    //타이틀만 바꿀 때
-    init(original: Got, updatedTitle: String){
-        self = original
-        self.title = updatedTitle
-    }
+}
+
+func ==(lhs: Got, rhs: Got) -> Bool{
+    return lhs.title == rhs.title
+        && lhs.createedDate == rhs.createedDate
+        && lhs.memo == rhs.memo
+        && lhs.tag == rhs.tag
+        && lhs.location.latitude == rhs.location.latitude
+        && lhs.location.longitude == rhs.location.longitude
+        && lhs.isFinished == rhs.isFinished
+        && lhs.address == rhs.address
 }

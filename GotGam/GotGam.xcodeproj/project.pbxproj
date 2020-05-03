@@ -79,8 +79,6 @@
 		A157E11D2455754A001E310D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157E11C2455754A001E310D /* Extensions.swift */; };
 		A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF32459C1B9004FCA66 /* DBManager.swift */; };
 		A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */; };
-		A159DBFA2459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */; };
-		A159DBFB2459C1DD004FCA66 /* Gotgam+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */; };
 		A159DBFD2459C360004FCA66 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159DBFC2459C360004FCA66 /* AddViewController.swift */; };
 		A16439712454001100C740F4 /* MapCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164396F2454001100C740F4 /* MapCardCollectionViewCell.swift */; };
 		A16439722454001100C740F4 /* MapTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16439702454001100C740F4 /* MapTagCell.swift */; };
@@ -88,6 +86,8 @@
 		A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164397524540A0F00C740F4 /* MapQuickAddView.swift */; };
 		A1905B6E245F2DE300322E43 /* MapRestoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1905B6D245F2DE300322E43 /* MapRestoreView.xib */; };
 		A1905B70245F2EB000322E43 /* MapRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1905B6F245F2EB000322E43 /* MapRestoreView.swift */; };
+		A1905B77245F31CC00322E43 /* ManagedGot+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1905B75245F31CC00322E43 /* ManagedGot+CoreDataClass.swift */; };
+		A1905B78245F31CC00322E43 /* ManagedGot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1905B76245F31CC00322E43 /* ManagedGot+CoreDataProperties.swift */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
 		A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */; };
@@ -180,8 +180,6 @@
 		A157E11C2455754A001E310D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A159DBF32459C1B9004FCA66 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		A159DBF62459C1DD004FCA66 /* Gotgam.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gotgam.xcdatamodel; sourceTree = "<group>"; };
-		A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gotgam+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gotgam+CoreDataClass.swift"; sourceTree = "<group>"; };
 		A159DBFC2459C360004FCA66 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		A164396F2454001100C740F4 /* MapCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		A16439702454001100C740F4 /* MapTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTagCell.swift; sourceTree = "<group>"; };
@@ -189,6 +187,8 @@
 		A164397524540A0F00C740F4 /* MapQuickAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuickAddView.swift; sourceTree = "<group>"; };
 		A1905B6D245F2DE300322E43 /* MapRestoreView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapRestoreView.xib; sourceTree = "<group>"; };
 		A1905B6F245F2EB000322E43 /* MapRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestoreView.swift; sourceTree = "<group>"; };
+		A1905B75245F31CC00322E43 /* ManagedGot+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A1905B76245F31CC00322E43 /* ManagedGot+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
 		A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Bold.ttf"; sourceTree = "<group>"; };
@@ -281,9 +281,9 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A1905B75245F31CC00322E43 /* ManagedGot+CoreDataClass.swift */,
+				A1905B76245F31CC00322E43 /* ManagedGot+CoreDataProperties.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
-				A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */,
-				A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */,
 				4CE037EF2438D6990093E39D /* Got.swift */,
 			);
 			path = Models;
@@ -673,8 +673,8 @@
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+line.swift in Sources */,
 				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
+				A1905B77245F31CC00322E43 /* ManagedGot+CoreDataClass.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
-				A159DBFB2459C1DD004FCA66 /* Gotgam+CoreDataClass.swift in Sources */,
 				4CE3B6FC2459E28900A53BF8 /* AddViewModel.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
@@ -683,8 +683,8 @@
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
 				A1905B70245F2EB000322E43 /* MapRestoreView.swift in Sources */,
 				A159DBFD2459C360004FCA66 /* AddViewController.swift in Sources */,
+				A1905B78245F31CC00322E43 /* ManagedGot+CoreDataProperties.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
-				A159DBFA2459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift in Sources */,
 				4CE3B6FE2459E31E00A53BF8 /* AddItemTableViewCell.swift in Sources */,
 				A157E118245572F4001E310D /* LocationManagerType.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
