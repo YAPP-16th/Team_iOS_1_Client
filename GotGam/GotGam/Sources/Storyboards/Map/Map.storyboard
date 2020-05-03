@@ -433,7 +433,7 @@
                                             <outlet property="titleLabel" destination="7m6-m5-0WZ" id="dbG-Lt-WPc"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="toggleableCell" rowHeight="65" id="uEw-C4-hpA" customClass="ToggleableTableViewCell" customModule="GotGam" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="toggleableCell" rowHeight="65" id="uEw-C4-hpA" customClass="ToggleableTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="89" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uEw-C4-hpA" id="y84-X2-Wfw">
@@ -463,7 +463,7 @@
                                             <outlet property="titleLabel" destination="wOX-4u-Tul" id="H8J-46-r26"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="textFieldCell" rowHeight="65" id="1Bp-ug-j8k" customClass="TextFieldTableViewCell" customModule="GotGam" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="textFieldCell" rowHeight="65" id="1Bp-ug-j8k" customClass="TextFieldTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="154" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Bp-ug-j8k" id="y0y-56-Diy">
@@ -529,7 +529,7 @@
             </objects>
             <point key="canvasLocation" x="2650.7246376811595" y="-883.25892857142856"/>
         </scene>
-        <!--Add Tag View Controller-->
+        <!--태그 설정-->
         <scene sceneID="IMK-wr-d6a">
             <objects>
                 <viewController storyboardIdentifier="AddTag" id="gUV-Fs-8wH" customClass="AddTagViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
@@ -537,14 +537,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vh3-hz-Ksr">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <items>
-                                    <navigationItem title="Title" id="FtX-I8-kWN">
-                                        <barButtonItem key="rightBarButtonItem" title="저장" id="dTW-fg-pSe"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="R2d-sB-kcF">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -562,14 +554,14 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QlS-b0-jAa">
-                                                    <rect key="frame" x="352" y="16.5" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QlS-b0-jAa">
+                                                    <rect key="frame" x="349" y="16.5" width="45" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eXj-Nd-qfz">
-                                                    <rect key="frame" x="321" y="16.5" width="21" height="21"/>
+                                                    <rect key="frame" x="318" y="16.5" width="21" height="21"/>
                                                     <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="eXj-Nd-qfz" secondAttribute="height" multiplier="1:1" id="RcY-Cf-gEm"/>
@@ -587,11 +579,12 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="tagLabel" destination="QlS-b0-jAa" id="eLu-YS-h0G"/>
-                                            <outlet property="tagView" destination="eXj-Nd-qfz" id="QIV-9w-Dye"/>
+                                            <outlet property="tagColorView" destination="eXj-Nd-qfz" id="aDE-6c-zbz"/>
+                                            <outlet property="tagLabel" destination="QlS-b0-jAa" id="pfh-Fi-qUY"/>
+                                            <outlet property="titleLabel" destination="Ucx-AG-A27" id="Bwp-CV-1Xz"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tagCell" rowHeight="71" id="BwV-bx-iIN" customClass="AddTagTableViewCell" customModule="GotGam" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tagListCell" rowHeight="71" id="BwV-bx-iIN" customClass="AddTagListTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="82" width="414" height="71"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BwV-bx-iIN" id="sHR-DF-eYC">
@@ -612,14 +605,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oAA-Xy-mjo">
-                                                    <rect key="frame" x="103" y="25" width="21" height="21"/>
+                                                    <rect key="frame" x="373" y="25" width="21" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="oAA-Xy-mjo" secondAttribute="height" multiplier="1:1" id="chZ-Zx-dos"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="oAA-Xy-mjo" firstAttribute="leading" secondItem="W0K-5k-dj2" secondAttribute="trailing" constant="10" id="HEo-7Y-BSA"/>
                                                 <constraint firstItem="oAA-Xy-mjo" firstAttribute="height" secondItem="W0K-5k-dj2" secondAttribute="height" id="Kjk-DK-g2f"/>
                                                 <constraint firstItem="GPg-X7-qeZ" firstAttribute="centerY" secondItem="sHR-DF-eYC" secondAttribute="centerY" id="Ozc-ni-Voh"/>
                                                 <constraint firstItem="W0K-5k-dj2" firstAttribute="leading" secondItem="GPg-X7-qeZ" secondAttribute="trailing" constant="10" id="Rkc-ex-LDF"/>
@@ -627,6 +619,7 @@
                                                 <constraint firstItem="GPg-X7-qeZ" firstAttribute="leading" secondItem="sHR-DF-eYC" secondAttribute="leadingMargin" id="izj-J6-wuy"/>
                                                 <constraint firstItem="W0K-5k-dj2" firstAttribute="centerY" secondItem="sHR-DF-eYC" secondAttribute="centerY" id="skd-af-dWf"/>
                                                 <constraint firstItem="GPg-X7-qeZ" firstAttribute="height" secondItem="W0K-5k-dj2" secondAttribute="height" id="ypZ-vW-vXc"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="oAA-Xy-mjo" secondAttribute="trailing" id="ztq-M9-GqY"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -657,23 +650,41 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Vh3-hz-Ksr" firstAttribute="leading" secondItem="GFK-5y-E75" secondAttribute="leading" id="2Ca-Gc-bT6"/>
-                            <constraint firstItem="Vh3-hz-Ksr" firstAttribute="top" secondItem="GFK-5y-E75" secondAttribute="top" id="7o3-t7-Trh"/>
-                            <constraint firstItem="Vh3-hz-Ksr" firstAttribute="trailing" secondItem="GFK-5y-E75" secondAttribute="trailing" id="9iN-dn-6Fz"/>
+                            <constraint firstItem="R2d-sB-kcF" firstAttribute="top" secondItem="GFK-5y-E75" secondAttribute="top" id="7tM-ng-9qt"/>
                             <constraint firstItem="GFK-5y-E75" firstAttribute="trailing" secondItem="R2d-sB-kcF" secondAttribute="trailing" id="QeD-qF-jbN"/>
                             <constraint firstItem="R2d-sB-kcF" firstAttribute="leading" secondItem="GFK-5y-E75" secondAttribute="leading" id="e7U-gB-sci"/>
-                            <constraint firstItem="R2d-sB-kcF" firstAttribute="top" secondItem="Vh3-hz-Ksr" secondAttribute="bottom" id="hf5-oL-I4a"/>
                             <constraint firstItem="GFK-5y-E75" firstAttribute="bottom" secondItem="R2d-sB-kcF" secondAttribute="bottom" id="zrw-bB-g0z"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GFK-5y-E75"/>
                     </view>
+                    <navigationItem key="navigationItem" title="태그 설정" id="bbD-Re-Qyj">
+                        <barButtonItem key="rightBarButtonItem" title="저장" id="Hvp-C5-RkH"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tagTableView" destination="R2d-sB-kcF" id="jAs-pl-EXq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SYr-XP-BjH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3366.666666666667" y="-883.25892857142856"/>
+            <point key="canvasLocation" x="3500.0000000000005" y="-883.25892857142856"/>
+        </scene>
+        <!--새 태그 만들기-->
+        <scene sceneID="j58-r3-ONW">
+            <objects>
+                <viewController id="CoK-Az-QqR" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="H8f-Bc-hU7">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="1q8-Cc-56Z"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="새 태그 만들기" id="Cyo-Nu-vp0">
+                        <barButtonItem key="rightBarButtonItem" title="저장" id="BgX-zO-POi"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZYr-v7-fDI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4258" y="-883"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QES-eD-tsS">
@@ -686,12 +697,48 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="9o4-1I-vlQ" kind="relationship" relationship="rootViewController" id="oZM-1a-R88"/>
+                        <segue destination="9o4-1I-vlQ" kind="relationship" relationship="rootViewController" id="awS-8m-xBG"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9i-AW-abp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1924.6376811594205" y="-883.25892857142856"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="FUN-1y-6fQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kCS-dq-ZYC" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uvY-rg-8AN">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="gUV-Fs-8wH" kind="relationship" relationship="rootViewController" id="G8H-OA-u1U"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MW7-h6-qCN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3500" y="-1556"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ByM-xq-ICl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iqf-q2-oFX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZFI-Ly-rnl">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="CoK-Az-QqR" kind="relationship" relationship="rootViewController" id="Fy5-3h-mYa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VJN-aG-jbc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4258" y="-1556"/>
         </scene>
     </scenes>
     <resources>

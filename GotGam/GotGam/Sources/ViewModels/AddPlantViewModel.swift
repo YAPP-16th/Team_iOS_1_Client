@@ -13,7 +13,7 @@ import RxDataSources
 protocol AddPlantViewModelInputs {
     func close()
     // tap tag
-    func pushAddTagVC()
+    func pushAddTagVC(tag: String?)
     // tap save
     // tap image
 }
@@ -44,9 +44,9 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         sceneCoordinator.close(animated: true)
     }
     
-    func pushAddTagVC() {
+    func pushAddTagVC(tag: String? = nil) {
         // TODO: tag 가져오기
-        let addTagViewModel = AddTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: "미지정")
+        let addTagViewModel = AddTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag)
         sceneCoordinator.transition(to: .addTag(addTagViewModel), using: .push, animated: true)
     }
     

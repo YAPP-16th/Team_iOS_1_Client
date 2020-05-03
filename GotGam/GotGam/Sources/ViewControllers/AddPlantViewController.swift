@@ -168,9 +168,23 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
 //
         let dataSource = AddPlantViewController.dataSource()
         
-        //Observable.just(viewModel.sections)
-        viewModel.sections
+        viewModel.outputs.sections
             .bind(to: inputTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        inputTableView.rx.modelSelected(InputItem.self)
+            .compactMap{ $0 }
+            .subscribe(onNext: { [unowned self] item in
+                switch item {
+                case let .TagItem(_, tag):
+                    self.viewModel.inputs.pushAddTagVC(tag: tag)
+                case let .TextFieldItem(text, placeholder, enabled):
+                    ""
+                case let .ToggleableItem(title, enabled):
+                    ""
+                }
+                
+            })
             .disposed(by: disposeBag)
         
     }
@@ -253,20 +267,7 @@ extension AddPlantViewController: UITableViewDelegate {
     // MARK: - UITableView Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard let cell = tableView.cellForRow(at: indexPath) as? AddItemTableViewCell else { return }
-        
-        let item = InputItemType.allCases[indexPath.row]
-        switch item {
-        case .tag: ""
-            // transition tag set VC
-        case .endDate:
-            // show datePicker
-            cell.detailTextField.becomeFirstResponder()
-        case .alramMsg: ""
-            // turn textField
-        
-        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

@@ -19,10 +19,11 @@
 		4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */; };
 		4CBD535C245B133B00B235D5 /* AddTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535B245B133B00B235D5 /* AddTagViewController.swift */; };
 		4CBD535E245B134A00B235D5 /* AddTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535D245B134A00B235D5 /* AddTagViewModel.swift */; };
-		4CBD5362245CEEC100B235D5 /* AddTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5361245CEEC100B235D5 /* AddTagTableViewCell.swift */; };
+		4CBD5362245CEEC100B235D5 /* AddTagListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5361245CEEC100B235D5 /* AddTagListTableViewCell.swift */; };
 		4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5367245E3AC500B235D5 /* ToggleableTableViewCell.swift */; };
 		4CBD536A245E3AF400B235D5 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5369245E3AF400B235D5 /* TextFieldTableViewCell.swift */; };
 		4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD536B245E725400B235D5 /* InputTagTableViewCell.swift */; };
+		4CBD5370245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD536F245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift */; };
 		4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037D92438C9330093E39D /* ViewModelBindableType.swift */; };
 		4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DC2438CA590093E39D /* GotStorageType.swift */; };
 		4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DE2438CA780093E39D /* GotStorage.swift */; };
@@ -37,7 +38,6 @@
 		4CE3B6F82458709800A53BF8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4CE3B6FA2458744D00A53BF8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */; };
-		4CE3B6FE2459E31E00A53BF8 /* AddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FD2459E31E00A53BF8 /* AddItemTableViewCell.swift */; };
 		4CE3B7002459E36000A53BF8 /* UIView+line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FF2459E36000A53BF8 /* UIView+line.swift */; };
 		4CF1D08A243E0EC700B45751 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D089243E0EC700B45751 /* OpenGLES.framework */; };
 		4CF1D08C243E0ECF00B45751 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D08B243E0ECF00B45751 /* SystemConfiguration.framework */; };
@@ -115,10 +115,11 @@
 		4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab+ViewController.swift"; sourceTree = "<group>"; };
 		4CBD535B245B133B00B235D5 /* AddTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagViewController.swift; sourceTree = "<group>"; };
 		4CBD535D245B134A00B235D5 /* AddTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagViewModel.swift; sourceTree = "<group>"; };
-		4CBD5361245CEEC100B235D5 /* AddTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagTableViewCell.swift; sourceTree = "<group>"; };
+		4CBD5361245CEEC100B235D5 /* AddTagListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagListTableViewCell.swift; sourceTree = "<group>"; };
 		4CBD5367245E3AC500B235D5 /* ToggleableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleableTableViewCell.swift; sourceTree = "<group>"; };
 		4CBD5369245E3AF400B235D5 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		4CBD536B245E725400B235D5 /* InputTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTagTableViewCell.swift; sourceTree = "<group>"; };
+		4CBD536F245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelectedTagTableViewCell.swift; sourceTree = "<group>"; };
 		4CE037D92438C9330093E39D /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		4CE037DC2438CA590093E39D /* GotStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorageType.swift; sourceTree = "<group>"; };
 		4CE037DE2438CA780093E39D /* GotStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorage.swift; sourceTree = "<group>"; };
@@ -131,7 +132,6 @@
 		4CE037ED2438CD810093E39D /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		4CE037EF2438D6990093E39D /* Got.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Got.swift; sourceTree = "<group>"; };
 		4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlantViewModel.swift; sourceTree = "<group>"; };
-		4CE3B6FD2459E31E00A53BF8 /* AddItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemTableViewCell.swift; sourceTree = "<group>"; };
 		4CE3B6FF2459E36000A53BF8 /* UIView+line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+line.swift"; sourceTree = "<group>"; };
 		4CF1D089243E0EC700B45751 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		4CF1D08B243E0ECF00B45751 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -269,6 +269,25 @@
 			path = GotGam;
 			sourceTree = "<group>";
 		};
+		4CBD536D245EB97E00B235D5 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				4CBD536B245E725400B235D5 /* InputTagTableViewCell.swift */,
+				4CBD5367245E3AC500B235D5 /* ToggleableTableViewCell.swift */,
+				4CBD5369245E3AF400B235D5 /* TextFieldTableViewCell.swift */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		4CBD536E245EB98C00B235D5 /* AddTag */ = {
+			isa = PBXGroup;
+			children = (
+				4CBD536F245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift */,
+				4CBD5361245CEEC100B235D5 /* AddTagListTableViewCell.swift */,
+			);
+			path = AddTag;
+			sourceTree = "<group>";
+		};
 		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,12 +328,12 @@
 			isa = PBXGroup;
 			children = (
 				A157E119245573BB001E310D /* Extensions */,
-				A164396E2454001100C740F4 /* Views */,
 				4CE037D32438C5640093E39D /* Scene */,
 				4CE037DB2438CA3E0093E39D /* Services */,
 				4CE037CC2438BCB70093E39D /* Models */,
 				4CE037D22438C5550093E39D /* ViewModels */,
 				4CE037CA2438BCAC0093E39D /* ViewControllers */,
+				A164396E2454001100C740F4 /* Views */,
 				4CE037D12438C5340093E39D /* Storyboards */,
 				4269387F24306B66007B60FD /* AppDelegate.swift */,
 			);
@@ -480,11 +499,8 @@
 				A16439702454001100C740F4 /* MapTagCell.swift */,
 				A16439732454002300C740F4 /* MapQuickAddView.xib */,
 				A164397524540A0F00C740F4 /* MapQuickAddView.swift */,
-				4CE3B6FD2459E31E00A53BF8 /* AddItemTableViewCell.swift */,
-				4CBD5361245CEEC100B235D5 /* AddTagTableViewCell.swift */,
-				4CBD5367245E3AC500B235D5 /* ToggleableTableViewCell.swift */,
-				4CBD5369245E3AF400B235D5 /* TextFieldTableViewCell.swift */,
-				4CBD536B245E725400B235D5 /* InputTagTableViewCell.swift */,
+				4CBD536D245EB97E00B235D5 /* Add */,
+				4CBD536E245EB98C00B235D5 /* AddTag */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -679,6 +695,7 @@
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */,
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
+				4CBD5370245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+line.swift in Sources */,
@@ -692,12 +709,11 @@
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
-				4CBD5362245CEEC100B235D5 /* AddTagTableViewCell.swift in Sources */,
+				4CBD5362245CEEC100B235D5 /* AddTagListTableViewCell.swift in Sources */,
 				A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
 				4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */,
 				A159DBFA2459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift in Sources */,
-				4CE3B6FE2459E31E00A53BF8 /* AddItemTableViewCell.swift in Sources */,
 				A157E118245572F4001E310D /* LocationManagerType.swift in Sources */,
 				4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
