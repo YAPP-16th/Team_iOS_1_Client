@@ -31,7 +31,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     // Outputs
     
     var gotList: Observable<[Got]> {
-        return storage.memoList()
+        return storage.fetchGotList()
     }
     
 }
