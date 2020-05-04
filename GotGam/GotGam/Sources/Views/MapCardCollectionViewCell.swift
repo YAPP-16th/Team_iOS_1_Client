@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MapCardCollectionViewCell: UICollectionViewCell{
     @IBOutlet weak var titleLabel: UILabel!
@@ -17,14 +19,30 @@ class MapCardCollectionViewCell: UICollectionViewCell{
     @IBOutlet weak var memoLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
+    let disposeBag = DisposeBag()
+    var isDoneFlag = false{
+        didSet{
+            self.doneButton.backgroundColor = isDoneFlag ? .white : .orange
+        }
+    }
     
     var cancelAction: (() -> Void)? = { }
-    var doneAction: (() -> Void)? = { }
-    @IBAction func cancelButtonTapped(_ sender: UIButton){
-        cancelAction?()
-    }
-    @IBAction func doneButtonTapped(_ sender: UIButton){
-        doneAction?()
+    var doneAction: ((Got) -> Void)? = { _ in }
+    lazy var dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        df.locale = Locale.init(identifier: "Ko_kr")
+        return df
+    }()
+    
+    var got: Got? {
+        didSet{
+            guard let got = got else { return }
+            titleLabel.text = got.title
+            addressLabel.text = got.address
+            dueDateLabel.text = self.dateFormatter.string(from: got.dueDate)
+            self.isDoneFlag = got.isFinished
+        }
     }
     
     override func layoutSubviews() {

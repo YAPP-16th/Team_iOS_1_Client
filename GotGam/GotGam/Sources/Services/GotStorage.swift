@@ -11,9 +11,6 @@ import RxSwift
 import CoreData
 
 class GotStorage: GotStorageType {
-    private var list:[Got] = []
-    
-    private lazy var store = BehaviorSubject<[Got]>(value: list)
     private let context = DBManager.share.context
     
     func fetchGotList() -> Observable<[Got]> {
@@ -30,7 +27,7 @@ class GotStorage: GotStorageType {
     func fetchGot(id: Int64) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
-            fetchRequest.predicate = NSPredicate(format: "id == %d", id)
+            fetchRequest.predicate = NSPredicate(format: "id == %lld", id)
             let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
             if let managedGot = results.first{
                 return .just(managedGot.toGot())
@@ -49,6 +46,7 @@ class GotStorage: GotStorageType {
             let managedGot = NSEntityDescription.insertNewObject(forEntityName: "ManagedGot", into: self.context) as! ManagedGot
             managedGot.fromGot(got: got)
             try self.context.save()
+            
             return .just(got)
         }catch let error{
             return .error(error)
@@ -58,7 +56,7 @@ class GotStorage: GotStorageType {
     func updateGot(gotToUpdate: Got) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
-            fetchRequest.predicate = NSPredicate(format: "id == %d", gotToUpdate.id!)
+            fetchRequest.predicate = NSPredicate(format: "id == %lld", gotToUpdate.id!)
             let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
             if let managedGot = results.first{
                 managedGot.fromGot(got: gotToUpdate)
@@ -80,7 +78,7 @@ class GotStorage: GotStorageType {
     func deleteGot(id: Int64) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
-            fetchRequest.predicate = NSPredicate(format: "id == %d", id)
+            fetchRequest.predicate = NSPredicate(format: "id == %lld", id)
             let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
             if let managedGot = results.first{
                 let got = managedGot.toGot()
@@ -101,7 +99,7 @@ class GotStorage: GotStorageType {
     
     //MARK: - Helper
     func createId(got: inout Got){
-        guard got.id != nil else { return }
+        guard got.id == nil else { return }
         got.id = Int64(arc4random())
     }
 }

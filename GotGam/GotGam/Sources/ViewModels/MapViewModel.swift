@@ -12,11 +12,11 @@ import RxCocoa
 import Action
 
 protocol MapViewModelInputs {
-    
+    func createGot(got: Got)
 }
 
 protocol MapViewModelOutputs {
-    var gotList: Observable<[Got]> { get }
+    var gotList: BehaviorSubject<[Got]> { get }
 }
 
 protocol MapViewModelType {
@@ -28,9 +28,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var input: MapViewModelInputs { return self }
     var output: MapViewModelOutputs { return self }
     
-    var gotList: Observable<[Got]> {
-        return storage.fetchGotList()
-    }
+    var gotList = BehaviorSubject<[Got]>(value: [])
     
     enum SeedState{
         case none
@@ -45,6 +43,41 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     func showAddVC() {
         let addVM = AddViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
+    }
+    
+    func createGot(got: Got){
+        self.storage.createGot(gotToCreate: got).subscribe { event in
+            switch event{
+            case .next:
+                self.storage.fetchGotList().bind(to: self.gotList).disposed(by: self.disposeBag)
+            default:
+                break
+            }
+        }.disposed(by: disposeBag)
+        
+    }
+    
+    func updateGot(got: Got){
+        self.storage.updateGot(gotToUpdate: got).subscribe { event in
+            switch event{
+            case .next:
+                self.storage.fetchGotList().bind(to: self.gotList).disposed(by: self.disposeBag)
+            default:
+                break
+            }
+        }.disposed(by: disposeBag)
+    }
+    
+    func deleteGot(got: Got){
+        self.storage.deleteGot(id: got.id!).subscribe({ event in
+            switch event{
+            case .next:
+                self.storage.fetchGotList().bind(to: self.gotList).disposed(by: self.disposeBag)
+            default:
+                break
+            }
+            }).disposed(by: disposeBag)
+        
     }
     
 }

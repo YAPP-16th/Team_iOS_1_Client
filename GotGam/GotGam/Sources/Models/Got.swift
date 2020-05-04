@@ -22,7 +22,7 @@ struct Got: Equatable{
      
     
     init(title: String, createdDate: Date = Date(), dueDate: Date, memo: String, tag: String,
-         location: CLLocationCoordinate2D){
+         location: CLLocationCoordinate2D, address: String){
         self.title = title
         self.createedDate = Date()
         self.dueDate = dueDate
@@ -30,6 +30,20 @@ struct Got: Equatable{
         self.tag = tag
         self.location = location
         self.isFinished = false
+        self.address = address
+    }
+    
+    init(id: Int64, title: String, createdDate: Date = Date(), dueDate: Date, memo: String, tag: String,
+         location: CLLocationCoordinate2D, address: String){
+        self.id = id
+        self.title = title
+        self.createedDate = Date()
+        self.dueDate = dueDate
+        self.memo = memo
+        self.tag = tag
+        self.location = location
+        self.isFinished = false
+        self.address = address
     }
 }
 

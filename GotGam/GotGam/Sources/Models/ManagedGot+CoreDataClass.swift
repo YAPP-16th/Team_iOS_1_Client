@@ -22,7 +22,7 @@ public class ManagedGot: NSManagedObject {
 //    var isFinished: Bool
 //    var address: String?
     func toGot() -> Got{
-        return Got(title: title!, dueDate: dueDate!, memo: memo!, tag: tag!, location: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+        return Got(id: id, title: title!, dueDate: dueDate!, memo: memo!, tag: tag!, location: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), address: address!)
     }
     
     func fromGot(got: Got){

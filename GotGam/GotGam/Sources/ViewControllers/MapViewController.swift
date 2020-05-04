@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import CenteredCollectionView
-
+import CoreLocation
 class MapViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Properties
@@ -36,6 +36,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     var poiItem1: MTMapPOIItem!
     
     var state: MapViewModel.SeedState = .none
+    
+    var gotList: [Got] = []{
+        didSet{
+            DispatchQueue.main.async {
+                self.cardCollectionView.reloadData()
+            }
+        }
+    }
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,9 +53,12 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         configureCardCollectionView()
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
-        self.quickAddView.addAction = { text in
-            let centerPoint = self.mapView.mapCenterPoint
-            self.viewModel.showAddVC()
+        self.quickAddView.addAction = { [weak self] text in
+            guard let self = self else { return }
+            
+            let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
+            let gotToCreate = Got(title: text!, createdDate: Date(), dueDate: Date.init(timeIntervalSinceNow: 60 * 60 * 24), memo: "", tag: "", location: CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude), address: "서울특별시")
+            self.viewModel.createGot(got: gotToCreate)
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
             self.viewModel.seedState.onNext(.none)
@@ -56,6 +67,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.view.layoutIfNeeded()
         }
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -161,7 +174,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self?.setMyLocation()
             }).disposed(by: disposeBag)
         
-        
+        self.viewModel.gotList.subscribe(onNext: { list in
+            self.gotList = list
+        }).disposed(by: self.disposeBag)
     }
     
     //MARK: Set UI According to the State
@@ -245,7 +260,11 @@ extension MapViewController: MTMapViewDelegate{
 
 extension MapViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.tag.count
+        if collectionView == self.tagCollectionView{
+            return viewModel.tag.count
+        }else {
+            return self.gotList.count
+        }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.tagCollectionView{
@@ -256,6 +275,26 @@ extension MapViewController: UICollectionViewDataSource{
             return cell
         }else if collectionView == self.cardCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapCardCollectionViewCell.reuseIdenfier, for: indexPath) as! MapCardCollectionViewCell
+            let got = self.gotList[indexPath.item]
+            cell.got = got
+            cell.doneAction = { got in
+                self.viewModel.updateGot(got: got)
+            }
+            
+            cell.doneButton.rx.tap
+            .do(onNext: {
+                cell.isDoneFlag = !cell.isDoneFlag
+            })
+            .debounce(.seconds(5), scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                cell.got?.isFinished = cell.isDoneFlag
+                cell.doneAction?(cell.got!)
+
+            }).disposed(by: self.disposeBag)
+            
+            cell.cancelButton.rx.tap.subscribe(onNext: {
+                self.viewModel.deleteGot(got: cell.got!)
+            }).disposed(by: self.disposeBag)
             return cell
         }else{
             fatalError()
