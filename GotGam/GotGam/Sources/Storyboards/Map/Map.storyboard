@@ -116,7 +116,7 @@
                                     <constraint firstAttribute="height" constant="48" id="QuI-wI-J4O"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="icBtnAdd">
+                                <state key="normal" image="icMapBtnAdd">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <state key="selected" title="+">
@@ -126,14 +126,13 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ei-Ux-SvZ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ei-Ux-SvZ">
                                 <rect key="frame" x="350" y="567" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="YVi-Tu-TxS"/>
                                     <constraint firstAttribute="height" constant="48" id="oAq-ba-hTv"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <state key="normal" title="O">
+                                <state key="normal" image="icMapBtnMyLocation">
                                     <color key="titleColor" red="1" green="0.65098039220000004" blue="0.031372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
@@ -171,14 +170,14 @@
                                                         <constraint firstAttribute="width" constant="14" id="PBf-2g-pww"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP5-Rq-eDF">
-                                                    <rect key="frame" x="170" y="17" width="8" height="8"/>
-                                                    <color key="backgroundColor" red="0.99740535019999998" green="0.71073418860000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP5-Rq-eDF">
+                                                    <rect key="frame" x="170" y="9" width="16" height="16"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="8" id="SSL-At-Ct4"/>
-                                                        <constraint firstAttribute="height" constant="8" id="aCI-uB-tUq"/>
+                                                        <constraint firstAttribute="width" constant="16" id="SSL-At-Ct4"/>
+                                                        <constraint firstAttribute="height" constant="16" id="aCI-uB-tUq"/>
                                                     </constraints>
                                                     <color key="tintColor" name="saffron"/>
+                                                    <state key="normal" image="icMapCardBtnCancel"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 강남구 역삼72" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
                                                     <rect key="frame" x="19" y="42" width="124" height="14"/>
@@ -213,7 +212,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="KP5-Rq-eDF" firstAttribute="top" secondItem="nbG-JQ-IuW" secondAttribute="top" constant="17" id="7b5-Jf-07v"/>
+                                                <constraint firstItem="KP5-Rq-eDF" firstAttribute="top" secondItem="nbG-JQ-IuW" secondAttribute="top" constant="9" id="7b5-Jf-07v"/>
                                                 <constraint firstItem="23O-JI-yYF" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="BXt-mc-wdd"/>
                                                 <constraint firstAttribute="trailing" secondItem="wG2-5e-Ypr" secondAttribute="trailing" constant="14" id="EQ6-u3-Eng"/>
                                                 <constraint firstItem="VfK-3O-Idv" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="I2t-nO-xkY"/>
@@ -223,7 +222,7 @@
                                                 <constraint firstItem="SG7-0v-hEX" firstAttribute="top" secondItem="vp2-6v-xZj" secondAttribute="bottom" constant="8" id="ZRN-fV-XAo"/>
                                                 <constraint firstAttribute="bottom" secondItem="wG2-5e-Ypr" secondAttribute="bottom" constant="16" id="ZTs-jr-e8J"/>
                                                 <constraint firstItem="SG7-0v-hEX" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="dtf-0o-c2P"/>
-                                                <constraint firstAttribute="trailing" secondItem="KP5-Rq-eDF" secondAttribute="trailing" constant="17" id="mk7-Iu-ca3"/>
+                                                <constraint firstAttribute="trailing" secondItem="KP5-Rq-eDF" secondAttribute="trailing" constant="9" id="mk7-Iu-ca3"/>
                                                 <constraint firstItem="VfK-3O-Idv" firstAttribute="top" secondItem="23O-JI-yYF" secondAttribute="bottom" constant="4" id="suA-nr-B47"/>
                                                 <constraint firstItem="vp2-6v-xZj" firstAttribute="top" secondItem="nbG-JQ-IuW" secondAttribute="top" constant="15" id="uX8-pb-fx1"/>
                                                 <constraint firstItem="r35-lJ-7h0" firstAttribute="leading" secondItem="vp2-6v-xZj" secondAttribute="trailing" constant="8" id="wV1-g8-8uT"/>
@@ -300,6 +299,7 @@
                         <outlet property="myLocationButton" destination="1Ei-Ux-SvZ" id="CFd-Sw-S28"/>
                         <outlet property="quickAddView" destination="Pep-Z7-O3k" id="pLw-AG-qI2"/>
                         <outlet property="quickAddViewBottomConstraint" destination="1Vu-Ty-WRl" id="YNu-aZ-fm7"/>
+                        <outlet property="restoreView" destination="80c-Q8-Ox9" id="roY-jO-2BZ"/>
                         <outlet property="seedButton" destination="lLe-wS-YdH" id="xnc-Ow-3Gm"/>
                         <outlet property="seedImageView" destination="TiL-oy-OC7" id="5Xi-iA-2ky"/>
                         <outlet property="tagCollectionView" destination="BsL-sj-hgP" id="Rnh-P6-5DU"/>
@@ -557,7 +557,9 @@
     </scenes>
     <resources>
         <image name="gam" width="7" height="8"/>
-        <image name="icBtnAdd" width="6" height="6"/>
+        <image name="icMapBtnAdd" width="18" height="18"/>
+        <image name="icMapBtnMyLocation" width="20.5" height="20.5"/>
+        <image name="icMapCardBtnCancel" width="11" height="11"/>
         <image name="icSeed" width="18" height="24.5"/>
         <namedColor name="brownGrey">
             <color red="0.6589999794960022" green="0.6589999794960022" blue="0.6589999794960022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

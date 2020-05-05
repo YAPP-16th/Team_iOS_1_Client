@@ -40,6 +40,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     var gotList: [Got] = []{
         didSet{
             DispatchQueue.main.async {
+                self.cardCollectionViewHeightConstraint.constant = self.gotList.isEmpty ? 0 : 170
+                self.view.layoutIfNeeded()
                 self.cardCollectionView.reloadData()
             }
         }
@@ -51,8 +53,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         configureMapView()
         
         configureCardCollectionView()
+        
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
+        self.restoreView.isHidden = true
+        
         self.quickAddView.addAction = { [weak self] text in
             guard let self = self else { return }
             
@@ -62,10 +67,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
             self.viewModel.seedState.onNext(.none)
-            self.cardCollectionViewHeightConstraint.constant = 170
             self.cardCollectionView.isHidden = false
             self.view.layoutIfNeeded()
         }
+        self.viewModel.updateList()
     }
     
     
@@ -140,8 +145,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
         centeredCollectionViewFlowLayout.itemSize = CGSize (width: 195, height: 158)
         centeredCollectionViewFlowLayout.minimumLineSpacing = 10
-        self.cardCollectionViewHeightConstraint.constant = 0
-        self.cardCollectionView.isHidden = true
     }
     
     func bindViewModel() {
@@ -159,6 +162,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }).disposed(by: disposeBag)
         
         self.seedButton.rx.tap.subscribe(onNext: { [weak self] in
+            print("버튼 클릭됨")
             guard let self = self else { return }
             switch self.state{
             case .none:
@@ -201,6 +205,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.seedImageView.isHidden = false
         self.quickAddView.addField.becomeFirstResponder()
     }
+    
+    func setRestoreViewUI(){
+        
+    }
+    
     func setMyLocation(){
         LocationManager.shared.requestAuthorization()
         if LocationManager.shared.locationServicesEnabled {
@@ -277,9 +286,6 @@ extension MapViewController: UICollectionViewDataSource{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapCardCollectionViewCell.reuseIdenfier, for: indexPath) as! MapCardCollectionViewCell
             let got = self.gotList[indexPath.item]
             cell.got = got
-            cell.doneAction = { got in
-                self.viewModel.updateGot(got: got)
-            }
             
             cell.doneButton.rx.tap
             .do(onNext: {
@@ -288,13 +294,12 @@ extension MapViewController: UICollectionViewDataSource{
             .debounce(.seconds(5), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
                 cell.got?.isFinished = cell.isDoneFlag
-                cell.doneAction?(cell.got!)
-
-            }).disposed(by: self.disposeBag)
+                self.viewModel.updateGot(got: cell.got!)
+            }).disposed(by: cell.disposeBag)
             
             cell.cancelButton.rx.tap.subscribe(onNext: {
                 self.viewModel.deleteGot(got: cell.got!)
-            }).disposed(by: self.disposeBag)
+            }).disposed(by: cell.disposeBag)
             return cell
         }else{
             fatalError()

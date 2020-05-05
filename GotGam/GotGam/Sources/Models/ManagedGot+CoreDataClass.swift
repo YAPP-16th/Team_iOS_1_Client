@@ -12,17 +12,8 @@ import CoreLocation
 
 @objc(ManagedGot)
 public class ManagedGot: NSManagedObject {
-//    var id: Int64?
-//    var title: String
-//    var createedDate: Date
-//    var dueDate: Date
-//    var memo : String?
-//    var tag : String?
-//    var location: CLLocationCoordinate2D
-//    var isFinished: Bool
-//    var address: String?
     func toGot() -> Got{
-        return Got(id: id, title: title!, dueDate: dueDate!, memo: memo!, tag: tag!, location: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), address: address!)
+        return Got(id: id, title: title!, dueDate: dueDate!, memo: memo!, tag: tag!, location: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), address: address!, isFinished: isFinished)
     }
     
     func fromGot(got: Got){

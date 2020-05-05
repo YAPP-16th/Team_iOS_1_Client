@@ -34,7 +34,7 @@ struct Got: Equatable{
     }
     
     init(id: Int64, title: String, createdDate: Date = Date(), dueDate: Date, memo: String, tag: String,
-         location: CLLocationCoordinate2D, address: String){
+         location: CLLocationCoordinate2D, address: String, isFinished: Bool){
         self.id = id
         self.title = title
         self.createedDate = Date()
@@ -42,7 +42,7 @@ struct Got: Equatable{
         self.memo = memo
         self.tag = tag
         self.location = location
-        self.isFinished = false
+        self.isFinished = isFinished
         self.address = address
     }
 }

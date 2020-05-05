@@ -19,15 +19,13 @@ class MapCardCollectionViewCell: UICollectionViewCell{
     @IBOutlet weak var memoLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var isDoneFlag = false{
         didSet{
             self.doneButton.backgroundColor = isDoneFlag ? .white : .orange
         }
     }
     
-    var cancelAction: (() -> Void)? = { }
-    var doneAction: ((Got) -> Void)? = { _ in }
     lazy var dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -57,5 +55,10 @@ class MapCardCollectionViewCell: UICollectionViewCell{
         
         self.doneButton.layer.cornerRadius = 17
         self.doneButton.layer.masksToBounds = true
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.disposeBag = DisposeBag()
     }
 }

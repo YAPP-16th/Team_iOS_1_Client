@@ -38,7 +38,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     var tag: [String] = ["맛집", "할일", "데이트할 곳", "일상", "집에서 할 일","학교에서 할 일"]
     
-    var seedState = BehaviorSubject<SeedState>(value: .none)
+    var seedState = PublishSubject<SeedState>()
     
     func showAddVC() {
         let addVM = AddViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
@@ -49,9 +49,13 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         self.storage.createGot(gotToCreate: got).subscribe { event in
             switch event{
             case .next:
-                self.storage.fetchGotList().bind(to: self.gotList).disposed(by: self.disposeBag)
-            default:
-                break
+                print("추가 성공")
+            case .error(let error):
+                self.handleError(error: error)
+            case .completed:
+                print("저장 완료 또는 실패")
+                self.updateList()
+                
             }
         }.disposed(by: disposeBag)
         
@@ -61,9 +65,12 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         self.storage.updateGot(gotToUpdate: got).subscribe { event in
             switch event{
             case .next:
-                self.storage.fetchGotList().bind(to: self.gotList).disposed(by: self.disposeBag)
-            default:
-                break
+                print("수정 성공")
+            case .error(let error):
+                self.handleError(error: error)
+            case .completed:
+                print("수정 완료 또는 실패")
+                self.updateList()
             }
         }.disposed(by: disposeBag)
     }
@@ -72,12 +79,42 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         self.storage.deleteGot(id: got.id!).subscribe({ event in
             switch event{
             case .next:
-                self.storage.fetchGotList().bind(to: self.gotList).disposed(by: self.disposeBag)
-            default:
-                break
+                print("제거 성공")
+            case .error(let error):
+                self.handleError(error: error)
+            case .completed:
+                print("제거 완료 또는 실패")
+                self.updateList()
             }
             }).disposed(by: disposeBag)
         
     }
     
+    func handleError(error: Error){
+        if let error = error as? GotStorageError{
+            switch error {
+            case let .createError(err):
+                print(err)
+            case let .fetchError(err):
+                print(err)
+            case let .updateError(err):
+                print(err)
+            case let .deleteError(err):
+                print(err)
+            }
+        }
+    }
+    
+    func updateList(){
+        self.storage.fetchGotList().subscribe { (event) in
+            switch event{
+            case .next(let gotList):
+                self.gotList.onNext(gotList)
+            case .completed:
+                print("조회 성공 또는 실패")
+            case .error(let error):
+                self.handleError(error: error)
+            }
+        }.disposed(by: self.disposeBag)
+    }
 }

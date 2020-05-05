@@ -19,15 +19,18 @@ class GotStorage: GotStorageType {
             let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
             let gotList = results.map { $0.toGot() }
             return .just(gotList)
-        }catch let error{
-            return .error(error)
+        }catch{
+            return .error(GotStorageError.fetchError("GotList 조회 과정에서 문제발생"))
         }
     }
     
     func fetchGot(id: Int64) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
-            fetchRequest.predicate = NSPredicate(format: "id == %lld", id)
+            let p1 =
+                NSPredicate(format: "id == %lld", id)
+            let p2 = NSPredicate(format: "isFinished == NO")
+            fetchRequest.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [p1,p2])
             let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
             if let managedGot = results.first{
                 return .just(managedGot.toGot())
@@ -46,10 +49,9 @@ class GotStorage: GotStorageType {
             let managedGot = NSEntityDescription.insertNewObject(forEntityName: "ManagedGot", into: self.context) as! ManagedGot
             managedGot.fromGot(got: got)
             try self.context.save()
-            
             return .just(got)
         }catch let error{
-            return .error(error)
+            return .error(GotStorageError.createError(error.localizedDescription))
         }
     }
     
@@ -60,10 +62,9 @@ class GotStorage: GotStorageType {
             let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
             if let managedGot = results.first{
                 managedGot.fromGot(got: gotToUpdate)
-                let got = managedGot.toGot()
                 do{
                     try self.context.save()
-                    return .just(got)
+                    return .just(gotToUpdate)
                 }catch let error{
                     return .error(error)
                 }
@@ -87,7 +88,7 @@ class GotStorage: GotStorageType {
                     try self.context.save()
                     return .just(got)
                 }catch{
-                    return .error(error)
+                    return .error(GotStorageError.deleteError("id가 \(id)인 Got을 제거하는데 오류 발생"))
                 }
             }else{
                 return .error(GotStorageError.fetchError("해당 데이터에 대한 Got을 찾을 수 없음"))
