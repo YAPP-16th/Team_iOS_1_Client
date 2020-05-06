@@ -43,6 +43,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.cardCollectionViewHeightConstraint.constant = self.gotList.isEmpty ? 0 : 170
                 self.view.layoutIfNeeded()
                 self.cardCollectionView.reloadData()
+                self.addPin()
             }
         }
     }
@@ -84,7 +85,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(noti: Notification){
@@ -194,7 +196,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     func setSeedingStateUI(){
         setCircle(point: mapView.mapCenterPoint)
-        self.seedButton.backgroundColor = .orange
+        self.seedButton.backgroundColor = .saffron
+        self.seedButton.setImage(UIImage(named: "icMapBtnSeeding"), for: .normal)
         self.seedButton.isEnabled = true
         self.seedImageView.isHidden = false
     }
@@ -203,6 +206,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.seedButton.isEnabled = false
         self.quickAddView.isHidden = false
         self.seedImageView.isHidden = false
+        self.seedButton.backgroundColor = .white
+        self.seedButton.setImage(UIImage(named: "icMapBtnAdd"), for: .normal
+        )
         self.quickAddView.addField.becomeFirstResponder()
     }
     
@@ -210,6 +216,18 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
     }
     
+    func addPin(){
+        mapView.removeAllPOIItems()
+        for got in gotList{
+            let pin = MTMapPOIItem()
+            pin.itemName = got.title
+            pin.markerType = .customImage
+            pin.customImage = UIImage(named: "icPin1")
+            pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.location.latitude, longitude: got.location.longitude))
+            pin.showAnimationType = .springFromGround
+            mapView.addPOIItems([pin])
+        }
+    }
     func setMyLocation(){
         LocationManager.shared.requestAuthorization()
         if LocationManager.shared.locationServicesEnabled {
