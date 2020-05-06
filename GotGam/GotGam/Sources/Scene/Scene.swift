@@ -12,7 +12,7 @@ enum Scene {
     case map(MapViewModel)
     case list(GotListViewModel)
     case add(AddPlantViewModel)
-    case addTag(AddTagViewModel)
+    case setTag(SetTagViewModel)
     case tabBar(TabBarViewModel)
 }
 
@@ -53,8 +53,8 @@ extension Scene {
             addVC.bind(viewModel: viewModel)
             return addNav
             
-        case .addTag(let viewModel):
-            guard var addTagVC = storyboard.instantiateViewController(withIdentifier: "AddTag") as? AddTagViewController else {
+        case .setTag(let viewModel):
+            guard var addTagVC = storyboard.instantiateViewController(withIdentifier: "AddTag") as? SetTagViewController else {
                 fatalError()
             }
             addTagVC.bind(viewModel: viewModel)

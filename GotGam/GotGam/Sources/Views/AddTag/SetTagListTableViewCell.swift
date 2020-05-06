@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class AddTagListTableViewCell: UITableViewCell {
+class SetTagListTableViewCell: UITableViewCell {
 
     var disposeBag = DisposeBag()
 
@@ -17,7 +17,7 @@ class AddTagListTableViewCell: UITableViewCell {
     @IBOutlet var tagLabel: UILabel!
     @IBOutlet var selectImageView: UIImageView!
     
-    func configure(viewModel: AddTagViewModel, tag: String, selected: Bool) {
+    func configure(viewModel: SetTagViewModel, tag: String, selected: Bool) {
         tagLabel.text = tag
         tagView.backgroundColor = tag.hexToColor()
 

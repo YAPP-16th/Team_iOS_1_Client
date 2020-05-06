@@ -66,8 +66,8 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     func pushAddTagVC() {
         // TODO: tag 가져오기
-        let addTagViewModel = AddTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value)
-        sceneCoordinator.transition(to: .addTag(addTagViewModel), using: .push, animated: true)
+        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value)
+        sceneCoordinator.transition(to: .setTag(addTagViewModel), using: .push, animated: true)
     }
     
     func fetchGot(got: Got?) {

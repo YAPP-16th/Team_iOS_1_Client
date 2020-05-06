@@ -16,15 +16,17 @@
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
 		4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF812462BFF700FF17BC /* String+hexToColor.swift */; };
+		4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */; };
+		4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */; };
 		4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */; };
 		4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */; };
-		4CBD535C245B133B00B235D5 /* AddTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535B245B133B00B235D5 /* AddTagViewController.swift */; };
-		4CBD535E245B134A00B235D5 /* AddTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535D245B134A00B235D5 /* AddTagViewModel.swift */; };
-		4CBD5362245CEEC100B235D5 /* AddTagListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5361245CEEC100B235D5 /* AddTagListTableViewCell.swift */; };
+		4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535B245B133B00B235D5 /* SetTagViewController.swift */; };
+		4CBD535E245B134A00B235D5 /* SetTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535D245B134A00B235D5 /* SetTagViewModel.swift */; };
+		4CBD5362245CEEC100B235D5 /* SetTagListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5361245CEEC100B235D5 /* SetTagListTableViewCell.swift */; };
 		4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5367245E3AC500B235D5 /* ToggleableTableViewCell.swift */; };
 		4CBD536A245E3AF400B235D5 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5369245E3AF400B235D5 /* TextFieldTableViewCell.swift */; };
 		4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD536B245E725400B235D5 /* InputTagTableViewCell.swift */; };
-		4CBD5370245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD536F245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift */; };
+		4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD536F245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift */; };
 		4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037D92438C9330093E39D /* ViewModelBindableType.swift */; };
 		4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DC2438CA590093E39D /* GotStorageType.swift */; };
 		4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DE2438CA780093E39D /* GotStorage.swift */; };
@@ -113,15 +115,17 @@
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		4C65BF812462BFF700FF17BC /* String+hexToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+hexToColor.swift"; sourceTree = "<group>"; };
+		4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewModel.swift; sourceTree = "<group>"; };
+		4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewController.swift; sourceTree = "<group>"; };
 		4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab+ViewController.swift"; sourceTree = "<group>"; };
-		4CBD535B245B133B00B235D5 /* AddTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagViewController.swift; sourceTree = "<group>"; };
-		4CBD535D245B134A00B235D5 /* AddTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagViewModel.swift; sourceTree = "<group>"; };
-		4CBD5361245CEEC100B235D5 /* AddTagListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagListTableViewCell.swift; sourceTree = "<group>"; };
+		4CBD535B245B133B00B235D5 /* SetTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTagViewController.swift; sourceTree = "<group>"; };
+		4CBD535D245B134A00B235D5 /* SetTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTagViewModel.swift; sourceTree = "<group>"; };
+		4CBD5361245CEEC100B235D5 /* SetTagListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTagListTableViewCell.swift; sourceTree = "<group>"; };
 		4CBD5367245E3AC500B235D5 /* ToggleableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleableTableViewCell.swift; sourceTree = "<group>"; };
 		4CBD5369245E3AF400B235D5 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		4CBD536B245E725400B235D5 /* InputTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTagTableViewCell.swift; sourceTree = "<group>"; };
-		4CBD536F245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelectedTagTableViewCell.swift; sourceTree = "<group>"; };
+		4CBD536F245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSelectedTagTableViewCell.swift; sourceTree = "<group>"; };
 		4CE037D92438C9330093E39D /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		4CE037DC2438CA590093E39D /* GotStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorageType.swift; sourceTree = "<group>"; };
 		4CE037DE2438CA780093E39D /* GotStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorage.swift; sourceTree = "<group>"; };
@@ -284,8 +288,8 @@
 		4CBD536E245EB98C00B235D5 /* AddTag */ = {
 			isa = PBXGroup;
 			children = (
-				4CBD536F245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift */,
-				4CBD5361245CEEC100B235D5 /* AddTagListTableViewCell.swift */,
+				4CBD536F245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift */,
+				4CBD5361245CEEC100B235D5 /* SetTagListTableViewCell.swift */,
 			);
 			path = AddTag;
 			sourceTree = "<group>";
@@ -299,7 +303,8 @@
 				4CE037EA2438CD470093E39D /* MapViewController.swift */,
 				4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */,
 				A159DBFC2459C360004FCA66 /* AddPlantViewController.swift */,
-				4CBD535B245B133B00B235D5 /* AddTagViewController.swift */,
+				4CBD535B245B133B00B235D5 /* SetTagViewController.swift */,
+				4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -372,7 +377,8 @@
 				4CE037ED2438CD810093E39D /* MapViewModel.swift */,
 				4CF1D0AC24499F4200B45751 /* GotListViewModel.swift */,
 				4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */,
-				4CBD535D245B134A00B235D5 /* AddTagViewModel.swift */,
+				4CBD535D245B134A00B235D5 /* SetTagViewModel.swift */,
+				4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -686,6 +692,7 @@
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
+				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
 				4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */,
 				4CF1D0AB24499F1B00B45751 /* GotListViewController.swift in Sources */,
 				4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */,
@@ -699,7 +706,7 @@
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */,
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
-				4CBD5370245EBAB200B235D5 /* AddSelectedTagTableViewCell.swift in Sources */,
+				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+line.swift in Sources */,
@@ -707,13 +714,14 @@
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
 				A159DBFB2459C1DD004FCA66 /* Gotgam+CoreDataClass.swift in Sources */,
 				4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */,
-				4CBD535C245B133B00B235D5 /* AddTagViewController.swift in Sources */,
+				4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */,
+				4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
-				4CBD5362245CEEC100B235D5 /* AddTagListTableViewCell.swift in Sources */,
+				4CBD5362245CEEC100B235D5 /* SetTagListTableViewCell.swift in Sources */,
 				A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
 				4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */,
@@ -722,7 +730,7 @@
 				4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
-				4CBD535E245B134A00B235D5 /* AddTagViewModel.swift in Sources */,
+				4CBD535E245B134A00B235D5 /* SetTagViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

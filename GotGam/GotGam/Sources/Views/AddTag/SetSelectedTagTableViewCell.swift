@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class AddSelectedTagTableViewCell: UITableViewCell {
+class SetSelectedTagTableViewCell: UITableViewCell {
 
     var disposeBag = DisposeBag()
     
@@ -17,7 +17,7 @@ class AddSelectedTagTableViewCell: UITableViewCell {
     @IBOutlet var tagColorView: UIView!
     @IBOutlet var tagLabel: UILabel!
     
-    func configure(viewModel: AddTagViewModel, title: String, tag: String?) {
+    func configure(viewModel: SetTagViewModel, title: String, tag: String?) {
         titleLabel.text = title
         
         viewModel.selectedTag

@@ -40,7 +40,7 @@ class SceneCoordinator: SceneCoordinatorType {
             target = scene.instantiate(from: "List")
         case .add:
             target = scene.instantiate(from: "Map")
-        case .addTag:
+        case .setTag:
             target = scene.instantiate(from: "Map")
         case .tabBar:
             target = scene.instantiate(from: "Main")
