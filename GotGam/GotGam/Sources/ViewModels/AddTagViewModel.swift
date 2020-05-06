@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import RxDataSources
 
 
@@ -17,12 +18,14 @@ struct Tag {
 }
 
 protocol AddTagViewModelInputs {
-    
+    var selectedTag: BehaviorRelay<String> { get set }
+    var createTag: PublishSubject<Void> { get set }
+    var back: BehaviorSubject<Void> { get set }
+    var save: BehaviorSubject<Void> { get set }
 }
 
 protocol AddTagViewModelOutputs {
     var sections: Observable<[AddTagSectionModel]> { get }
-    var selectedTag: BehaviorSubject<String?> { get }
     
 }
 
@@ -33,32 +36,54 @@ protocol AddTagViewModelType {
 
 class AddTagViewModel: CommonViewModel, AddTagViewModelType, AddTagViewModelInputs, AddTagViewModelOutputs {
     
-    var inputs: AddTagViewModelInputs { return self }
-    var outputs: AddTagViewModelOutputs { return self }
+    // MARK: - Inputs
+    
+    var selectedTag = BehaviorRelay<String>(value: "") // tag
+    var createTag = PublishSubject<Void>()
+    var back = BehaviorSubject<Void>(value: ())
+    var save = BehaviorSubject<Void>(value: ())
     
     // MARK: - Outputs
     
     var sections = Observable<[AddTagSectionModel]>.just([])
-    var selectedTag = BehaviorSubject<String?>(value: nil)
+    
+    // MARK: - Initializing
+    
+    var inputs: AddTagViewModelInputs { return self }
+    var outputs: AddTagViewModelOutputs { return self }
+    
+    // MARK: - Methods
+    
+    func pushCreateVC() {
+        
+        print("crate")
+//        let addTagViewModel = AddTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value)
+//        sceneCoordinator.transition(to: .addTag(addTagViewModel), using: .push, animated: true)
+    }
     
     // MARK: - Initializing
     
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: String?) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
         if let tag = tag {
-            selectedTag.onNext(tag)
+            selectedTag.accept(tag)
         }
-        sections = configureDataSource(selectedTag: tag, tags: ["#FFFFFF", "#ffa608", "6bb4e2"])
+        sections = configureDataSource(tags: ["#FFFFFF", "#ffa608", "#6bb4e2"])
+        
+        createTag.asObserver()
+            .subscribe(onNext: {[unowned self] _ in self.pushCreateVC()})
+            .disposed(by: disposeBag)
+        
     }
     
-    func configureDataSource(selectedTag: String?, tags: [String]) -> Observable<[AddTagSectionModel]> {
-        return Observable.just(
+    func configureDataSource(tags: [String]) -> Observable<[AddTagSectionModel]> {
+        return Observable<[AddTagSectionModel]>.just(
             [
                 .SelectedSection(title: "", items: [
-                    .SelectedTagItem(title: "선택된 태그", tag: selectedTag)
+                    .SelectedTagItem(title: "선택된 태그", tag: selectedTag.value)
                 ]),
                 .ListSection(title: "태그 목록", items: tags.map{
-                    AddTagItem.TagListItem(tag: $0, selected: selectedTag == $0)
+                    AddTagItem.TagListItem(tag: $0, selected: selectedTag.value == $0)
                 }),
                 .NewSection(title: "새 태그 만들기", items: [
                     .CreateTagItem(title: "새로운 태그를 생성합니다")
@@ -68,7 +93,7 @@ class AddTagViewModel: CommonViewModel, AddTagViewModelType, AddTagViewModelInpu
     }
 }
 
-
+// MARK: - for DataSources
 
 enum AddTagSectionModel {
     case SelectedSection(title: String, items: [AddTagItem])

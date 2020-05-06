@@ -7,19 +7,27 @@
 //
 
 import UIKit
+import RxSwift
 
 class AddSelectedTagTableViewCell: UITableViewCell {
 
+    var disposeBag = DisposeBag()
+    
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tagColorView: UIView!
     @IBOutlet var tagLabel: UILabel!
     
-    func configure(title: String, tag: String?) {
+    func configure(viewModel: AddTagViewModel, title: String, tag: String?) {
         titleLabel.text = title
-        if let tag = tag {
-            //tagColorView.backgroundColor = tag.color
-            tagLabel.text = tag
-        }
+        
+        viewModel.selectedTag
+            .bind(to: tagLabel.rx.text)
+            .disposed(by: disposeBag)
+    
+        viewModel.selectedTag
+            .map { $0.hexToColor() }
+            .bind(to: tagColorView.rx.backgroundColor)
+            .disposed(by: disposeBag)
     }
     
     override func awakeFromNib() {

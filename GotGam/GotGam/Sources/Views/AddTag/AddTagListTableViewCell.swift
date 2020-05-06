@@ -7,19 +7,26 @@
 //
 
 import UIKit
+import RxSwift
 
 class AddTagListTableViewCell: UITableViewCell {
 
-    
+    var disposeBag = DisposeBag()
 
     @IBOutlet var tagView: UIView!
     @IBOutlet var tagLabel: UILabel!
     @IBOutlet var selectImageView: UIImageView!
     
-    func configure(tag: String, selected: Bool) {
+    func configure(viewModel: AddTagViewModel, tag: String, selected: Bool) {
         tagLabel.text = tag
-        tagView.backgroundColor = .orange
-        //selectImageView.ishidden = !selected
+        tagView.backgroundColor = tag.hexToColor()
+
+        
+        viewModel.selectedTag
+            .map { !($0 == tag) }
+            .bind(to: selectImageView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
     }
     
     override func awakeFromNib() {
