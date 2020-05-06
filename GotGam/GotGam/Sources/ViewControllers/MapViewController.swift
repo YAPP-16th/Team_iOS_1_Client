@@ -144,7 +144,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     private func configureCardCollectionView(){
         cardCollectionView.collectionViewLayout = centeredCollectionViewFlowLayout
         cardCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-        
+        cardCollectionView.delegate = self
         centeredCollectionViewFlowLayout.itemSize = CGSize (width: 195, height: 158)
         centeredCollectionViewFlowLayout.minimumLineSpacing = 10
     }
@@ -363,5 +363,14 @@ extension MapViewController: UICollectionViewDelegateFlowLayout{
         }else{
             fatalError()
         }
+    }
+}
+
+extension MapViewController: UIScrollViewDelegate{
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let currentIndex = self.centeredCollectionViewFlowLayout.currentCenteredPage else { return }
+        let got = gotList[currentIndex]
+        let geo = MTMapPointGeo(latitude: got.location.latitude, longitude: got.location.longitude)
+        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
     }
 }
