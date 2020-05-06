@@ -13,6 +13,7 @@ enum Scene {
     case list(GotListViewModel)
     case add(AddPlantViewModel)
     case setTag(SetTagViewModel)
+    case createTag(CreateTagViewModel)
     case tabBar(TabBarViewModel)
 }
 
@@ -59,6 +60,13 @@ extension Scene {
             }
             addTagVC.bind(viewModel: viewModel)
             return addTagVC
+            
+        case .createTag(let viewModel):
+            guard var createTagVC = storyboard.instantiateViewController(withIdentifier: "CreateTag") as? CreateTagViewController else {
+                fatalError()
+            }
+            createTagVC.bind(viewModel: viewModel)
+            return createTagVC
             
         case .tabBar(let viewModel):
             guard var tabBar = storyboard.instantiateViewController(withIdentifier: "TabBar") as? TabBarController else {

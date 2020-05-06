@@ -42,6 +42,8 @@ class SceneCoordinator: SceneCoordinatorType {
             target = scene.instantiate(from: "Map")
         case .setTag:
             target = scene.instantiate(from: "Map")
+        case .createTag:
+            target = scene.instantiate(from: "Map")
         case .tabBar:
             target = scene.instantiate(from: "Main")
         }
