@@ -518,10 +518,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addIconButton" destination="8cl-rh-HKX" id="OAx-5w-xPz"/>
+                        <outlet property="cancelButton" destination="Utf-dX-ju4" id="NgA-dZ-FKc"/>
                         <outlet property="editButton" destination="YsO-E7-ZOT" id="IFo-T5-KGp"/>
                         <outlet property="inputTableView" destination="6cX-Sb-v1L" id="uN2-cd-HbU"/>
                         <outlet property="mapBackgroundView" destination="ONd-Cp-AX0" id="SR6-Sj-Lrx"/>
                         <outlet property="placeLabel" destination="74J-fI-xGP" id="pem-b0-WDf"/>
+                        <outlet property="saveButton" destination="hjn-bF-KUB" id="Rk3-oU-SzG"/>
                         <outlet property="titleTextField" destination="YWo-eb-s3U" id="b3a-Kh-5J2"/>
                     </connections>
                 </viewController>

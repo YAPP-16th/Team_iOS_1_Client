@@ -12,39 +12,6 @@ import RxDataSources
 import RxCocoa
 import CoreLocation
 
-enum InputItemType: CaseIterable {
-    static var allCases: [InputItemType] {
-        return [.tag(nil), .endDate(nil), .alramMsg(nil) ]
-    }
-    
-    case tag(String?)
-    case endDate(Date?)
-    case alramMsg(String?)
-    
-    var title: String {
-        switch self {
-        case .tag:     return "태그"
-        case .endDate:  return "마감 일시"
-        case .alramMsg: return "알림 메세지"
-        }
-    }
-    
-    var placeholder: String {
-        switch self {
-        case .tag:     return "미지정"
-        case .endDate:  return "언제까지 가야 할지 알려주세요"
-        case .alramMsg: return "알려줄 내용을 적어주세요"
-        }
-    }
-}
-
-extension Hashable where Self : CaseIterable {
-    var index: Self.AllCases.Index {
-        return type(of: self).allCases.firstIndex(of: self)!
-    }
-}
-
-
 class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Properties
@@ -90,25 +57,9 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         //let centerCoor = MTMapPoint(geoCoord: .init(latitude: currentCenter.latitude, longitude: currentCenter.longitude))
         mapView.setMapCenter(currentCenter, animated: false)
     }
-    @IBAction func didTapCancelButton(_ sender: UIBarButtonItem) {
-        viewModel.inputs.close()
-    }
 
     @IBAction func didTapEditMapButton(_ sender: UIButton) {
     }
-    
-    @objc func didTapDatePickerDone() {
-        view.endEditing(true)
-    }
-    @objc func didTapDatePickerCancel() {
-//        guard
-//            let index: Int = InputItemType.allCases.firstIndex(of: .endDate),
-//            let cell = inputTableView.cellForRow(at: .init(row: index, section: 0)) as? AddItemTableViewCell
-//            else { return }
-//        cell.detailTextField.text = ""
-//        view.endEditing(true)
-    }
-    
     
     // MARK: - View Life Cycle
     
@@ -161,35 +112,47 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-//        viewModel.outputs.initGot?
-//            .compactMap { $0.title }
-//            .bind(to: titleTextField.rx.text )
-//            .disposed(by: disposeBag)
-//
-        let dataSource = AddPlantViewController.dataSource()
+        // Input
         
-        viewModel.outputs.sections
+        cancelButton.rx.tap
+            .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+            .bind(to: viewModel.close)
+            .disposed(by: disposeBag)
+        
+        titleTextField.rx.text.orEmpty
+            .bind(to: viewModel.nameText)
+            .disposed(by: disposeBag)
+        
+        
+        
+        let dataSource = AddPlantViewController.dataSource(viewModel: viewModel)
+
+        viewModel.outputs.sectionsSubject
             .bind(to: inputTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        inputTableView.rx.modelSelected(InputItem.self)
-            .compactMap{ $0 }
-            .subscribe(onNext: { [unowned self] item in
-                switch item {
-                case let .TagItem(_, tag):
-                    self.viewModel.inputs.pushAddTagVC(tag: tag)
-                case let .TextFieldItem(text, placeholder, enabled):
-                    ""
-                case let .ToggleableItem(title, enabled):
-                    ""
-                }
-                
-            })
-            .disposed(by: disposeBag)
+            
+//        inputTableView.rx.modelSelected(InputItem.self)
+//            .compactMap{ $0 }
+//            .subscribe(onNext: { [unowned self] item in
+//                switch item {
+//                case let .TagItem(_, tag):
+//                    self.viewModel.inputs.pushAddTagVC(tag: tag)
+//                case let .TextFieldItem(text, placeholder, enabled, isDate):
+//                    ""
+//                case let .ToggleableItem(title, enabled):
+//                    ""
+//                }
+//
+//            })
+//            .disposed(by: disposeBag)
         
     }
     
     // MARK: - Views
+    
+    @IBOutlet var cancelButton: UIBarButtonItem!
+    @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var placeLabel: UILabel!
     @IBOutlet var mapBackgroundView: UIView!
@@ -197,46 +160,65 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var addIconButton: UIButton!
     @IBOutlet var inputTableView: UITableView!
     @IBOutlet var editButton: UIButton!
-    
-    
-    let datePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .dateAndTime
-        return datePicker
-    }()
-    let toolBar: UIToolbar = {
-        let toolBar = UIToolbar()
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        let cancelButton = UIBarButtonItem(title: "취소", style: .done, target: self, action: #selector(didTapDatePickerCancel))
-        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(didTapDatePickerDone))
-        toolBar.setItems([cancelButton, space, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        toolBar.sizeToFit()
-        return toolBar
-    }()
-    
-    
 }
 
+// MARK: - config Data Sources
 extension AddPlantViewController {
-    static func dataSource() -> RxTableViewSectionedReloadDataSource<InputSectionModel> {
-        return RxTableViewSectionedReloadDataSource<InputSectionModel>(
+    
+    static func dataSource(viewModel: AddPlantViewModel) -> RxTableViewSectionedAnimatedDataSource<InputSectionModel> {
+        //RxTableViewSectionedReloadDataSource
+        return RxTableViewSectionedAnimatedDataSource<InputSectionModel>(
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
                 case let .ToggleableItem(title, enabled):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "toggleableCell", for: indexPath) as? ToggleableTableViewCell else { return UITableViewCell()}
-                    cell.configure(title: title, enabled: enabled)
+                    
+                    cell.configure(viewModel: viewModel, title: title, enabled: enabled)
+                    
+                    if indexPath.section == 1 {
+                        cell.enableSwitch.rx
+                            .isOn.changed
+                            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+                            .bind(to: viewModel.isOnDate)
+                            .disposed(by: cell.disposedBag)
+                    } else if indexPath.section == 2 {
+                        cell.enableSwitch.rx
+                            .isOn.changed
+                            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+                            .bind(to: viewModel.isOnArrive)
+                            .disposed(by: cell.disposedBag)
+                    } else if indexPath.section == 3 {
+                        cell.enableSwitch.rx
+                            .isOn.changed
+                            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+                            .bind(to: viewModel.isOnLeave)
+                            .disposed(by: cell.disposedBag)
+                    }
                     return cell
+                    
                 case .TagItem(let title, let tag):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "inputTagCell", for: indexPath) as? InputTagTableViewCell else { return UITableViewCell() }
                     // TODO: tag 새로만들기
                     cell.configure(title: title, tag: tag)
                     return cell
-                case .TextFieldItem(let text, let placeholder, let enabled):
+                    
+                case .TextFieldItem(let text, let placeholder, let enabled, let isDate):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "textFieldCell", for: indexPath) as? TextFieldTableViewCell else { return UITableViewCell() }
-                    cell.configure(text: text, placeholder: placeholder, enabled: enabled)
+                    cell.configure(viewModel: viewModel, text: text, placeholder: placeholder, enabled: enabled, isDate: isDate)
+                    
+                    if indexPath.section == 1 {
+                        cell.textField.rx.text.orEmpty
+                            .bind(to: viewModel.dateText)
+                            .disposed(by: cell.disposedBag)
+                    } else if indexPath.section == 2 {
+                        cell.textField.rx.text.orEmpty
+                            .bind(to: viewModel.arriveText)
+                            .disposed(by: cell.disposedBag)
+                    } else if indexPath.section == 3 {
+                        cell.textField.rx.text.orEmpty
+                            .bind(to: viewModel.leaveText)
+                            .disposed(by: cell.disposedBag)
+                    }
                     return cell
                 }
             },
@@ -248,13 +230,13 @@ extension AddPlantViewController {
     }
 }
 
-extension AddPlantViewController: UIAdaptivePresentationControllerDelegate {
-    // MARK: UIAdaptivePresentationControllerDelegate
-    
-    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-        self.viewModel.close()
-    }
-}
+//extension AddPlantViewController: UIAdaptivePresentationControllerDelegate {
+//    // MARK: UIAdaptivePresentationControllerDelegate
+//
+//    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+//        self.viewModel.close()
+//    }
+//}
 
 extension AddPlantViewController: MTMapViewDelegate {
     //MARK: MTMapViewDelegate
