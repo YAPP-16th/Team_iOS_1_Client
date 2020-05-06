@@ -123,30 +123,18 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .bind(to: viewModel.nameText)
             .disposed(by: disposeBag)
         
+        inputTableView.rx.itemSelected
+            .filter { $0.section == 0 }
+            .subscribe(onNext: { _ in self.viewModel.tapTag.onNext(()) })
+            .disposed(by: disposeBag)
         
+        
+        // Output
         
         let dataSource = AddPlantViewController.dataSource(viewModel: viewModel)
-
         viewModel.outputs.sectionsSubject
             .bind(to: inputTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
-            
-//        inputTableView.rx.modelSelected(InputItem.self)
-//            .compactMap{ $0 }
-//            .subscribe(onNext: { [unowned self] item in
-//                switch item {
-//                case let .TagItem(_, tag):
-//                    self.viewModel.inputs.pushAddTagVC(tag: tag)
-//                case let .TextFieldItem(text, placeholder, enabled, isDate):
-//                    ""
-//                case let .ToggleableItem(title, enabled):
-//                    ""
-//                }
-//
-//            })
-//            .disposed(by: disposeBag)
-        
     }
     
     // MARK: - Views

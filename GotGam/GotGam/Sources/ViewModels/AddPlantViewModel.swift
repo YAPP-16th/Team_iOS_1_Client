@@ -13,14 +13,7 @@ import RxDataSources
 
 protocol AddPlantViewModelInputs {
     
-    // 취소, 타이틀 입력, 주소..?,
-    // 이미지 선택
-    // 태그 선택
-    // 마감일시, 도착할 때, 떠날 때 toggle
-    // 마감일시, 도착메세지, 떠날 때 메세지
-    
     var nameText: BehaviorRelay<String> { get set }
-    var placeText: BehaviorRelay<String> { get set }
     var dateText: BehaviorRelay<String> { get set }
     var arriveText: BehaviorRelay<String> { get set }
     var leaveText: BehaviorRelay<String> { get set }
@@ -30,21 +23,16 @@ protocol AddPlantViewModelInputs {
     var isOnLeave: BehaviorSubject<Bool> { get set }
     
     var close: BehaviorSubject<Void> { get set }
-    // tap tag
-    func pushAddTagVC(tag: String?)
-
-    // tap save
-    // tap image
+    var tapTag: BehaviorSubject<Void> { get set }
 }
 
 protocol AddPlantViewModelOutputs {
     
     // 테이블 뷰, 지도, 이미지, 이름, 주소 초기값
-    
-    //var detailItem: DetailItem { get }
-    var sections: Observable<[InputSectionModel]> { get }
+
+    var placeText: BehaviorRelay<String> { get set }
+    var tag: BehaviorRelay<String?> { get set }
     var sectionsSubject: BehaviorSubject<[InputSectionModel]> { get }
-    //var cellType: Observable<[InputItemType]> { get }
 }
 
 protocol AddPlantViewModelType {
@@ -54,14 +42,9 @@ protocol AddPlantViewModelType {
 
 class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewModelInputs, AddPlantViewModelOutputs {
     
-    
-    var close = BehaviorSubject<Void>(value: ())
-    
-    
     // MARK: - Input
     
     var nameText = BehaviorRelay<String>(value: "")
-    var placeText = BehaviorRelay<String>(value: "")
     var dateText = BehaviorRelay<String>(value: "")
     var arriveText = BehaviorRelay<String>(value: "")
     var leaveText = BehaviorRelay<String>(value: "")
@@ -70,19 +53,31 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var isOnArrive = BehaviorSubject<Bool>(value: true)
     var isOnLeave = BehaviorSubject<Bool>(value: false)
     
+    var close = BehaviorSubject<Void>(value: ())
+    var tapTag = BehaviorSubject<Void>(value: ())
     
     // MARK: - Output
-       
-    var sections = Observable<[InputSectionModel]>.just([])
+    
+    var placeText = BehaviorRelay<String>(value: "")
+    var tag = BehaviorRelay<String?>(value: nil)
     var sectionsSubject = BehaviorSubject<[InputSectionModel]>(value: [])
 
-    func pushAddTagVC(tag: String? = nil) {
+    // MARK: - Methods
+    
+    func pushAddTagVC() {
         // TODO: tag 가져오기
-        let addTagViewModel = AddTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag)
+        let addTagViewModel = AddTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value)
         sceneCoordinator.transition(to: .addTag(addTagViewModel), using: .push, animated: true)
     }
     
-    
+    func fetchGot(got: Got?) {
+        guard let got = got else { return }
+        
+        nameText.accept(got.title)
+        //placeText.accept(got.place)
+        tag.accept(got.tag)
+        
+    }
    
     
     // MARK: - Initializing
@@ -91,27 +86,31 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, got: Got?) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
-        sections = configureDataSource(got: got)
+        
+        fetchGot(got: got)
         
         let sectionOb = configureDataSource(got: got)
-        
         sectionOb
             .bind(to: sectionsSubject)
             .disposed(by: disposeBag)
-        
-        nameText.accept(got?.title ?? "")
         
         close.asObserver()
             .subscribe(onNext: { _ in
                 sceneCoordinator.close(animated: true)
             })
             .disposed(by: disposeBag)
+        
+        tapTag.asObserver()
+            .subscribe(onNext: { [unowned self] _ in
+                self.pushAddTagVC()
+            })
+            .disposed(by: disposeBag)
     }
     
     func configureDataSource(got: Got?) -> Observable<[InputSectionModel]> {
         return Observable.combineLatest([isOnDate, isOnArrive, isOnLeave])
-                .map ({ (type) -> [InputSectionModel] in
-                    var section: [InputSectionModel] = [.TagSection(section: 0, title: " ", items: [.TagItem(title: "태그", tag: got?.tag)])]
+                .map ({ [unowned self] (type) -> [InputSectionModel] in
+                    var section: [InputSectionModel] = [.TagSection(section: 0, title: " ", items: [.TagItem(title: "태그", tag: self.tag.value)])]
 
                     if type[0] {
                         print("in append: \(self.nameText.value)")
@@ -174,31 +173,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         
     }
     
-//    func configDefault(got: Got?) -> Observable<[InputSectionModel]> {
-//        return Observable.just(
-//            [
-//                .TagSection(title: " ", items: [.TagItem(title: "태그", tag: got?.tag)]),
-//                .ToggleableSection(
-//                    title: " ",
-//                    items: [
-//                        .ToggleableItem(title: "마감일시", enabled: got?.insertedDate != nil),
-//                        .TextFieldItem(text: "", placeholder: "마감 일시를 알려주세요", enabled: false, isDate: true)
-//                    ]),
-//                .ToggleableSection(
-//                    title: " ",
-//                    items: [
-//                        .ToggleableItem(title: "도착할 때 알리기", enabled: got?.insertedDate != nil),
-//                        .TextFieldItem(text: "", placeholder: "도착할 때 알려드릴 메시지를 알려주세요", enabled: false)
-//                    ]),
-//                .ToggleableSection(
-//                    title: " ",
-//                    items: [
-//                        .ToggleableItem(title: "떠날할 때 알리기", enabled: got?.insertedDate != nil),
-//                        .TextFieldItem(text: "", placeholder: "떠날할 때 알려드릴 메시지를 알려주세요", enabled: false)
-//                    ])
-//            ]
-//        )
-//    }
+    
 }
 
 enum InputItem {
