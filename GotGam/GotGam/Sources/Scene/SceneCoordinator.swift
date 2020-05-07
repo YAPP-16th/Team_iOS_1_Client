@@ -15,12 +15,35 @@ extension UIViewController {
     }
 }
 
-class SceneCoordinator: SceneCoordinatorType {
+class SceneCoordinator: NSObject, SceneCoordinatorType {
+    
+    static func actualViewController(for viewController: UIViewController) -> UIViewController {
+        var controller = viewController
+        if let tabBarController = controller as? UITabBarController {
+            guard let selectedViewController = tabBarController.selectedViewController else {
+                return tabBarController
+            }
+            controller = selectedViewController
+            
+            return actualViewController(for: controller)
+        }
+
+        if let navigationController = viewController as? UINavigationController {
+            controller = navigationController.viewControllers.first!
+            
+            return actualViewController(for: controller)
+        }
+        return controller
+    }
     
     var disposeBag = DisposeBag()
     
     var window: UIWindow
-    var currentVC: UIViewController
+    var currentVC: UIViewController {
+        didSet {
+            currentVC.tabBarController?.delegate = self
+        }
+    }
     
     required init(window: UIWindow) {
         self.window = window
@@ -125,4 +148,10 @@ class SceneCoordinator: SceneCoordinatorType {
         return Completable.empty()
     }
     
+}
+
+extension SceneCoordinator: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        currentVC = SceneCoordinator.actualViewController(for: viewController)
+    }
 }
