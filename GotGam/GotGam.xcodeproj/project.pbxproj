@@ -18,6 +18,8 @@
 		4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF812462BFF700FF17BC /* String+hexToColor.swift */; };
 		4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */; };
 		4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */; };
+		4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */; };
+		4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */; };
 		4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */; };
 		4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */; };
 		4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535B245B133B00B235D5 /* SetTagViewController.swift */; };
@@ -117,6 +119,8 @@
 		4C65BF812462BFF700FF17BC /* String+hexToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+hexToColor.swift"; sourceTree = "<group>"; };
 		4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewModel.swift; sourceTree = "<group>"; };
 		4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewController.swift; sourceTree = "<group>"; };
+		4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGridTableViewCell.swift; sourceTree = "<group>"; };
 		4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab+ViewController.swift"; sourceTree = "<group>"; };
 		4CBD535B245B133B00B235D5 /* SetTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTagViewController.swift; sourceTree = "<group>"; };
@@ -275,6 +279,15 @@
 			path = GotGam;
 			sourceTree = "<group>";
 		};
+		4C65BFA724630EDE00FF17BC /* CreateTag */ = {
+			isa = PBXGroup;
+			children = (
+				4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */,
+				4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */,
+			);
+			path = CreateTag;
+			sourceTree = "<group>";
+		};
 		4CBD536D245EB97E00B235D5 /* Add */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,13 +298,13 @@
 			path = Add;
 			sourceTree = "<group>";
 		};
-		4CBD536E245EB98C00B235D5 /* AddTag */ = {
+		4CBD536E245EB98C00B235D5 /* SetTag */ = {
 			isa = PBXGroup;
 			children = (
 				4CBD536F245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift */,
 				4CBD5361245CEEC100B235D5 /* SetTagListTableViewCell.swift */,
 			);
-			path = AddTag;
+			path = SetTag;
 			sourceTree = "<group>";
 		};
 		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
@@ -509,7 +522,8 @@
 				A16439732454002300C740F4 /* MapQuickAddView.xib */,
 				A164397524540A0F00C740F4 /* MapQuickAddView.swift */,
 				4CBD536D245EB97E00B235D5 /* Add */,
-				4CBD536E245EB98C00B235D5 /* AddTag */,
+				4CBD536E245EB98C00B235D5 /* SetTag */,
+				4C65BFA724630EDE00FF17BC /* CreateTag */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -717,10 +731,12 @@
 				4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */,
 				4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
+				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
+				4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */,
 				4CBD5362245CEEC100B235D5 /* SetTagListTableViewCell.swift in Sources */,
 				A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,

@@ -31,6 +31,7 @@ class SetTagListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        tagView.layer.cornerRadius = tagView.bounds.height/2
     }
 }
