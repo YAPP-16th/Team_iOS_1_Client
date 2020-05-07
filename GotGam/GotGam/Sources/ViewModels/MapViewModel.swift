@@ -22,7 +22,7 @@ class MapViewModel: CommonViewModel {
     var seedState = BehaviorSubject<SeedState>(value: .none)
     
     func showAddVC() {
-        let got = Got(title: "멍게비빔밥", id: 1, content: "test", tag: "#123121", latitude: 0, longitude: 0, isDone: false)
+        let got = Got(title: "멍게비빔밥", id: 1, content: "test", tag: "#123121", latitude: 0, longitude: 0, isDone: false, place: "맛집")
         let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
         

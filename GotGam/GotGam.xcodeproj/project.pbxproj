@@ -113,6 +113,8 @@
 		295C03C02464646300789967 /* SearchBar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchBar.storyboard; sourceTree = "<group>"; };
 		295C03C22464652700789967 /* SearchBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewController.swift; sourceTree = "<group>"; };
 		295C03C42464655100789967 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
+		295C03C72464845600789967 /* ManagedTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedTag+CoreDataProperties.swift"; path = "/Users/kimbomin/Downloads/2020-1/YAPP/kraken/Team_iOS_1_Client/GotGam/GotGam/Sources/Models/ManagedTag+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		295C03C82464845600789967 /* ManagedTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedTag+CoreDataClass.swift"; path = "/Users/kimbomin/Downloads/2020-1/YAPP/kraken/Team_iOS_1_Client/GotGam/GotGam/Sources/Models/ManagedTag+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -340,6 +342,8 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				295C03C82464845600789967 /* ManagedTag+CoreDataClass.swift */,
+				295C03C72464845600789967 /* ManagedTag+CoreDataProperties.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
 				A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */,
 				A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */,

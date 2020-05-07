@@ -15,7 +15,7 @@ class DBManager {
     
     lazy var persistentContainer: NSPersistentContainer = {
            
-           let container = NSPersistentContainer(name: "Gotgam")
+           let container = NSPersistentContainer(name: "ManagedGot")
            container.loadPersistentStores(completionHandler: { (storeDescription, error) in
                if let error = error as NSError? {
                    
@@ -43,13 +43,13 @@ class DBManager {
 
 		
 	
-    func fetchGotgam() -> [Gotgam]{
-           var memo = [Gotgam]()
+    func fetchGotgam() -> [ManagedGot]{
+           var memo = [ManagedGot]()
 
-           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Gotgam.description())
+           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: ManagedGot.description())
 
            do{
-               memo = try context.fetch(fetchRequest) as! [Gotgam]
+               memo = try context.fetch(fetchRequest) as! [ManagedGot]
                print("core data~~~ \(memo)")
            }
            catch{

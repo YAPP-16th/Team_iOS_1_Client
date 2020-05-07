@@ -19,22 +19,23 @@ struct Got: Equatable {
     var latitude: Double?
     var longitude: Double?
     var isDone: Bool
+	var place: String?
      
      
     
 	init(title: String, id: Int64, insertedDate: Date = Date(), content: String, tag: String,
-          latitude: Double, longitude: Double, isDone: Bool){
+		 latitude: Double, longitude: Double, isDone: Bool, place: String){
         self.title = title
         //수정필요
         self.insertedDate = insertedDate
         self.id = id
-      
         self.createedDate = Date()
         self.content = content
         self.tag = tag
         self.latitude = latitude
         self.longitude = longitude
         self.isDone = false
+		self.place = place
     }
     
     init(title: String, id: Int64, latitude: Double, longitude: Double, isDone: Bool){

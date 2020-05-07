@@ -20,7 +20,7 @@ class GotStorage: GotStorageType {
         
         @discardableResult
 		func createMemo(title: String, id: Int64, insertedDate: Date, content: String, tag: String,
-	latitude: Double, longitude: Double, isDone: Bool) -> Observable<Got> {
+						latitude: Double, longitude: Double, isDone: Bool, place: String) -> Observable<Got> {
             let memo = Got(title: title, id: id)
             list.append(memo)
             
