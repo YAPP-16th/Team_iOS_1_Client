@@ -17,24 +17,24 @@ struct Tag {
     var color: String // hex. ex) "#FFFFFF"
 }
 
-protocol AddTagViewModelInputs {
+protocol SetTagViewModelInputs {
     var selectedTag: BehaviorRelay<String> { get set }
     var createTag: PublishSubject<Void> { get set }
     var back: BehaviorSubject<Void> { get set }
     var save: BehaviorSubject<Void> { get set }
 }
 
-protocol AddTagViewModelOutputs {
+protocol SetTagViewModelOutputs {
     var sections: Observable<[AddTagSectionModel]> { get }
     
 }
 
-protocol AddTagViewModelType {
-    var inputs: AddTagViewModelInputs { get }
-    var outputs: AddTagViewModelOutputs { get }
+protocol SetTagViewModelType {
+    var inputs: SetTagViewModelInputs { get }
+    var outputs: SetTagViewModelOutputs { get }
 }
 
-class AddTagViewModel: CommonViewModel, AddTagViewModelType, AddTagViewModelInputs, AddTagViewModelOutputs {
+class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInputs, SetTagViewModelOutputs {
     
     // MARK: - Inputs
     
@@ -49,16 +49,15 @@ class AddTagViewModel: CommonViewModel, AddTagViewModelType, AddTagViewModelInpu
     
     // MARK: - Initializing
     
-    var inputs: AddTagViewModelInputs { return self }
-    var outputs: AddTagViewModelOutputs { return self }
+    var inputs: SetTagViewModelInputs { return self }
+    var outputs: SetTagViewModelOutputs { return self }
     
     // MARK: - Methods
     
     func pushCreateVC() {
-        
-        print("crate")
-//        let addTagViewModel = AddTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value)
-//        sceneCoordinator.transition(to: .addTag(addTagViewModel), using: .push, animated: true)
+
+        let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
     }
     
     // MARK: - Initializing

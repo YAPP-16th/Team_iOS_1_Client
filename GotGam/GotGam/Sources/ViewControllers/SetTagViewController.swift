@@ -11,9 +11,9 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class AddTagViewController: BaseViewController, ViewModelBindableType {
+class SetTagViewController: BaseViewController, ViewModelBindableType {
     
-    var viewModel: AddTagViewModel!
+    var viewModel: SetTagViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ class AddTagViewController: BaseViewController, ViewModelBindableType {
         
         // Outputs
         
-        let dataSource = AddTagViewController.dataSource(viewModel: viewModel)
+        let dataSource = SetTagViewController.dataSource(viewModel: viewModel)
         viewModel.outputs.sections
             .bind(to: tagTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -57,17 +57,17 @@ class AddTagViewController: BaseViewController, ViewModelBindableType {
     
 }
 
-extension AddTagViewController {
-    static func dataSource(viewModel: AddTagViewModel) -> RxTableViewSectionedReloadDataSource<AddTagSectionModel> {
+extension SetTagViewController {
+    static func dataSource(viewModel: SetTagViewModel) -> RxTableViewSectionedReloadDataSource<AddTagSectionModel> {
         return RxTableViewSectionedReloadDataSource<AddTagSectionModel>(
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
                 case let .SelectedTagItem(title, tag):
-                    guard let cell = table.dequeueReusableCell(withIdentifier: "selectedTagCell", for: indexPath) as? AddSelectedTagTableViewCell else { return UITableViewCell()}
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "selectedTagCell", for: indexPath) as? SetSelectedTagTableViewCell else { return UITableViewCell()}
                     cell.configure(viewModel: viewModel, title: title, tag: tag)
                     return cell
                 case let .TagListItem(tag, selectedTag):
-                    guard let cell = table.dequeueReusableCell(withIdentifier: "tagListCell", for: indexPath) as? AddTagListTableViewCell else { return UITableViewCell()}
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "tagListCell", for: indexPath) as? SetTagListTableViewCell else { return UITableViewCell()}
                     cell.configure(viewModel: viewModel,tag: tag, selected: selectedTag)
                     return cell
                 case .CreateTagItem(let title):
@@ -84,8 +84,14 @@ extension AddTagViewController {
     }
 }
 
-extension AddTagViewController: UITableViewDelegate {
+extension SetTagViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
     }
 }
