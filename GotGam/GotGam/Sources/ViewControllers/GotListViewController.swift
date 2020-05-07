@@ -14,7 +14,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     var viewModel: GotListViewModel!
     
-    let searchController = UISearchController(searchResultsController: nil)
+//    let searchController = UISearchController(searchResultsController: nil)
   
     var memos = [ManagedGot]()
     
@@ -30,7 +30,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSearchController()
+//        configureSearchController()
     }
 	
 	override func viewDidLayoutSubviews() {
@@ -52,11 +52,11 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Initializing
     
-    func configureSearchController() {
-        
-        searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
-    }
+//    func configureSearchController() {
+//
+//        searchController.searchResultsUpdater = self
+//        navigationItem.searchController = searchController
+//    }
     
     func bindViewModel() {
         
