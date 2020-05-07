@@ -16,17 +16,16 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     let searchController = UISearchController(searchResultsController: nil)
   
-    var memos = [ManagedGot]()
+    var memos = [Gotgam]()
     
     // MARK: - Views
     @IBOutlet weak var gotListTableView: UITableView!
 
-
-	
-	@IBAction func moveAddVC(_ sender: UIButton) {
+	@IBAction func moveAddVC(_ sender: Any) {
 		viewModel.inputs.showVC()
 	}
-	// MARK: - View Life Cycle
+	
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +73,7 @@ extension GotListViewController: UISearchResultsUpdating {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath)
         let amemos = memos[indexPath.row]
-        cell.textLabel?.text = amemos.title 
+        cell.textLabel?.text = amemos.title
 
         return cell
         

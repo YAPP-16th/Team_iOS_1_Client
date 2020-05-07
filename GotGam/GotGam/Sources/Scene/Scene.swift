@@ -66,7 +66,6 @@ extension Scene {
             tabBar.bind(viewModel: viewModel)
             
             return tabBar
-    
         }
     }
 }

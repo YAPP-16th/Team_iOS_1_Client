@@ -9,9 +9,9 @@
 import Foundation
 import RxSwift
 
+
 protocol GotListViewModelInputs {
-    // show vc
-	func showVC()
+    func showVC()
 }
 
 protocol GotListViewModelOutputs {
@@ -25,22 +25,17 @@ protocol GotListViewModelType {
 
 
 class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelInputs, GotListViewModelOutputs {
-
-	
     
     var inputs: GotListViewModelInputs { return self }
     var outputs: GotListViewModelOutputs { return self }
 	
-	// Inputs
-	
-	// show
 	func showVC() {
-		let viewModel = AddViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-		sceneCoordinator.transition(to: .add(viewModel), using: .push, animated: true)
+		let got = Got(title: "멍게비빔밥", id: 1, content: "test", tag: "#123121", latitude: 0, longitude: 0, isDone: false)
+        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
+        sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
 	}
-    
-    // Outputs
-    
+	
+	// Outputs
     var gotList: Observable<[Got]> {
         return storage.memoList()
     }
