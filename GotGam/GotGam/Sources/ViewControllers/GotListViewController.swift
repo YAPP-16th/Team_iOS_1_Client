@@ -22,12 +22,28 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var gotListTableView: UITableView!
 
 
-    // MARK: - View Life Cycle
+	@IBOutlet var ListAddButton: UIButton!
+	@IBAction func moveAddVC(_ sender: Any) {
+		viewModel.inputs.showVC()
+	}
+	// MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSearchController()
     }
+	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		
+		self.ListAddButton.layer.shadowColor = UIColor.black.cgColor
+        self.ListAddButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.ListAddButton.layer.shadowRadius = 5.0
+        self.ListAddButton.layer.shadowOpacity = 0.3
+        self.ListAddButton.layer.cornerRadius = 4.0
+        self.ListAddButton.layer.masksToBounds = false
+		self.ListAddButton.layer.cornerRadius = self.ListAddButton.frame.height / 2
+	}
   
     override func viewWillAppear(_ animated: Bool) {
         memos = DBManager.share.fetchGotgam()

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2273802A6EF7CEC60DFA2E9F /* Pods_GotGam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */; };
+		295C03C12464646300789967 /* SearchBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295C03C02464646300789967 /* SearchBar.storyboard */; };
+		295C03C32464652700789967 /* SearchBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C22464652700789967 /* SearchBarViewController.swift */; };
+		295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C42464655100789967 /* SearchBarViewModel.swift */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -107,6 +110,9 @@
 
 /* Begin PBXFileReference section */
 		12F3319E806996FEAD031C42 /* Pods-GotGam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.debug.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.debug.xcconfig"; sourceTree = "<group>"; };
+		295C03C02464646300789967 /* SearchBar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchBar.storyboard; sourceTree = "<group>"; };
+		295C03C22464652700789967 /* SearchBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewController.swift; sourceTree = "<group>"; };
+		295C03C42464655100789967 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,6 +241,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		295C03BF2464643B00789967 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				295C03C02464646300789967 /* SearchBar.storyboard */,
+			);
+			path = SearchBar;
+			sourceTree = "<group>";
+		};
 		425836B52442FE5300EC9C76 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,13 +324,14 @@
 		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				295C03C22464652700789967 /* SearchBarViewController.swift */,
 				4269388324306B66007B60FD /* BaseViewController.swift */,
 				4CE037D92438C9330093E39D /* ViewModelBindableType.swift */,
 				4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */,
-				4CE037EA2438CD470093E39D /* MapViewController.swift */,
 				4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */,
 				A159DBFC2459C360004FCA66 /* AddPlantViewController.swift */,
 				4CBD535B245B133B00B235D5 /* SetTagViewController.swift */,
+				4CE037EA2438CD470093E39D /* MapViewController.swift */,
 				4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */,
 			);
 			path = ViewControllers;
@@ -373,6 +388,7 @@
 		4CE037D12438C5340093E39D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				295C03BF2464643B00789967 /* SearchBar */,
 				4CF1D0A624499E5000B45751 /* List */,
 				425836B82442FEBA00EC9C76 /* Setting */,
 				425836B52442FE5300EC9C76 /* Map */,
@@ -385,6 +401,7 @@
 		4CE037D22438C5550093E39D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				295C03C42464655100789967 /* SearchBarViewModel.swift */,
 				4CE037E22438CAF20093E39D /* CommonViewModel.swift */,
 				4CF1D0B2244AABC000B45751 /* TabBarViewModel.swift */,
 				4CE037ED2438CD810093E39D /* MapViewModel.swift */,
@@ -638,6 +655,7 @@
 				A157E10A24555A90001E310D /* map_pinup_custom.png in Resources */,
 				A157E10624555A90001E310D /* map_present_tracking.png in Resources */,
 				A157E10724555A90001E310D /* map_pin_red.png in Resources */,
+				295C03C12464646300789967 /* SearchBar.storyboard in Resources */,
 				A157E11324555A90001E310D /* map_pin_shadow.png in Resources */,
 				4CF1D0A924499ED200B45751 /* List.storyboard in Resources */,
 				A157E10924555A90001E310D /* point_sprite.png in Resources */,
@@ -701,6 +719,7 @@
 			files = (
 				4CE3B6F82458709800A53BF8 /* (null) in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
+				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
 				A157E11D2455754A001E310D /* Extensions.swift in Sources */,
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
@@ -720,6 +739,7 @@
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */,
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
+				295C03C32464652700789967 /* SearchBarViewController.swift in Sources */,
 				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
