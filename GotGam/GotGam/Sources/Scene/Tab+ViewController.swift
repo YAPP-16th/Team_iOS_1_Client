@@ -29,6 +29,16 @@ extension Tab {
             }
             listVC.bind(viewModel: viewModel)
             return listNav
+        case .alarm(let viewModel):
+            let storyboard = UIStoryboard(name: "Alarm", bundle: nil)
+            guard let alarmNav = storyboard.instantiateViewController(withIdentifier: "AlarmNav") as? UINavigationController else {
+                fatalError()
+            }
+            guard var alarmVC = alarmNav.viewControllers.first as? AlarmViewController else {
+                fatalError()
+            }
+            alarmVC.bind(viewModel: viewModel)
+            return alarmNav
         case .setting(let viewModel):
             let storyboard = UIStoryboard(name: "Setting", bundle: nil)
             guard let settingNav = storyboard.instantiateViewController(withIdentifier: "SettingNav") as? UINavigationController else {

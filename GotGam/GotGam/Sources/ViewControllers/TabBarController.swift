@@ -18,8 +18,12 @@ class TabBarController: UITabBarController, ViewModelBindableType {
         
         tabBar.tintColor = .orange
         if let items = tabBar.items {
-            items[2].image = UIImage(named: "tab_setting")?.withRenderingMode(.alwaysOriginal)
-            items[2].selectedImage = UIImage(named: "tab_setting_active")?.withRenderingMode(.alwaysOriginal)
+            
+            items[2].image = UIImage(named: "tab_alarm")?.withRenderingMode(.alwaysOriginal)
+            items[2].selectedImage = UIImage(named: "tab_alarm_active")?.withRenderingMode(.alwaysOriginal)
+            
+            items[3].image = UIImage(named: "tab_setting")?.withRenderingMode(.alwaysOriginal)
+            items[3].selectedImage = UIImage(named: "tab_setting_active")?.withRenderingMode(.alwaysOriginal)
         }
     }
     
