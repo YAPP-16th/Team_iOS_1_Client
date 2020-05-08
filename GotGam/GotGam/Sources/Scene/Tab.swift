@@ -13,4 +13,5 @@ enum Tab {
 
     case map(viewModel: MapViewModel)
     case list(viewModel: GotListViewModel)
+    case setting(viewModel: SettingViewModel)
 }

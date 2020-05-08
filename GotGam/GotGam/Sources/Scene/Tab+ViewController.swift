@@ -19,7 +19,6 @@ extension Tab {
             }
             mapVC.bind(viewModel: viewModel)
             return mapVC
-            
         case .list(let viewModel):
             let storyboard = UIStoryboard(name: "List", bundle: nil)
             guard let listNav = storyboard.instantiateViewController(withIdentifier: "GotListNav") as? UINavigationController else {
@@ -30,6 +29,17 @@ extension Tab {
             }
             listVC.bind(viewModel: viewModel)
             return listNav
+        case .setting(let viewModel):
+            let storyboard = UIStoryboard(name: "Setting", bundle: nil)
+            guard let settingNav = storyboard.instantiateViewController(withIdentifier: "SettingNav") as? UINavigationController else {
+                fatalError()
+            }
+            guard var settingVC = settingNav.viewControllers.first as? SettingViewController else {
+                fatalError()
+            }
+            settingVC.bind(viewModel: viewModel)
+            return settingNav
+            
         }
     }
 }
