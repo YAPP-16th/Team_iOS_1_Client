@@ -67,12 +67,3 @@ class TextFieldTableViewCell: UITableViewCell {
         return toolBar
     }()
 }
-
-extension Date {
-    var endTime: String {
-        let df = DateFormatter()
-        df.locale = .init(identifier: "ko-KR")
-        df.dateFormat = "yyyy.MM.dd.E"
-        return df.string(from: self)
-    }
-}
