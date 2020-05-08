@@ -139,11 +139,13 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
         
         let mapViewModel = MapViewModel(sceneCoordinator: self, storage: gotService)
         let gotListViewModel = GotListViewModel(sceneCoordinator: self, storage: gotService)
+        let settingViewModel = SettingViewModel(sceneCoordinator: self, storage: gotService)
         
         let mapTab = Tab.map(viewModel: mapViewModel)
         let listTab = Tab.list(viewModel: gotListViewModel)
+        let settingTab = Tab.setting(viewModel: settingViewModel)
         
-        Tab.tabs.append(contentsOf: [mapTab, listTab])
+        Tab.tabs.append(contentsOf: [mapTab, listTab, settingTab])
         
         return Completable.empty()
     }
