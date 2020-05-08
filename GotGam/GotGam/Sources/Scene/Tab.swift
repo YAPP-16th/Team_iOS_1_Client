@@ -13,5 +13,6 @@ enum Tab {
 
     case map(viewModel: MapViewModel)
     case list(viewModel: GotListViewModel)
+    case alarm(viewModel: AlarmViewModel)
     case setting(viewModel: SettingViewModel)
 }
