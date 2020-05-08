@@ -30,7 +30,15 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
     
-    
+	@IBAction func moveSearch(_ sender: Any) {
+		let bundle = Bundle.main
+		let sb = UIStoryboard(name: "SearchBar", bundle: bundle)
+		guard let hvc = sb.instantiateInitialViewController() else { return }
+		
+		hvc.modalPresentationStyle = .fullScreen
+		self.present(hvc, animated: false)
+	}
+	
     var centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
     var poiItem1: MTMapPOIItem!
     

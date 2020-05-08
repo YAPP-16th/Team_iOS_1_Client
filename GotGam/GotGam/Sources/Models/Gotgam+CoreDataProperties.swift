@@ -11,10 +11,10 @@ import Foundation
 import CoreData
 
 
-extension Gotgam {
+extension ManagedGot {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Gotgam> {
-        return NSFetchRequest<Gotgam>(entityName: "Gotgam")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ManagedGot> {
+        return NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
     }
 
     @NSManaged public var title: String?
@@ -25,5 +25,6 @@ extension Gotgam {
     @NSManaged public var date: Date?
     @NSManaged public var longitude: Double
     @NSManaged public var isDone: Bool
+	@NSManaged public var place: String?
 
 }

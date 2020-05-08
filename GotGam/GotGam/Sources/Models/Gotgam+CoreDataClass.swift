@@ -11,6 +11,6 @@ import Foundation
 import CoreData
 
 @objc(Gotgam)
-public class Gotgam: NSManagedObject {
+public class ManagedGot: NSManagedObject {
 
 }
