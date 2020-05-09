@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Moy-tB-Efn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Moy-tB-Efn">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -30,18 +30,92 @@
                                 <rect key="frame" x="0.0" y="206" width="414" height="607"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="gotListCell" id="KUX-Jp-djr">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="gotListCell" rowHeight="99" id="KUX-Jp-djr">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KUX-Jp-djr" id="VOa-t0-WDD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F0R-8G-D0j">
+                                                    <rect key="frame" x="27" y="30.5" width="35" height="38.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="34.899999999999999" id="3cB-hI-w55"/>
+                                                        <constraint firstAttribute="height" constant="38.5" id="RuP-qb-8Pd"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nOb-JD-eAS" userLabel="check Box">
+                                                    <rect key="frame" x="77" y="21" width="16" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="7m8-18-DYS"/>
+                                                        <constraint firstAttribute="height" constant="16" id="eLc-i6-jWG"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAN-wm-Cwu" userLabel="Label_title">
+                                                    <rect key="frame" x="103" y="0.0" width="43.5" height="57"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="fqV-eG-Tle"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vod-ah-3V7">
+                                                    <rect key="frame" x="150.5" y="22" width="14" height="14"/>
+                                                    <color key="backgroundColor" name="softBlue"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="14" id="ftD-ug-S0w"/>
+                                                        <constraint firstAttribute="width" constant="14" id="fwQ-4m-k0b"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYD-za-xb6" userLabel="Label_date">
+                                                    <rect key="frame" x="77" y="67" width="71" height="12"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="12" id="R9j-gE-Gbf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8c-6g-u7g" userLabel="Label_memo">
+                                                    <rect key="frame" x="218" y="67" width="31" height="12"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="12" id="TLg-FC-fhP"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYs-h7-l10" userLabel="Label_location">
+                                                    <rect key="frame" x="77" y="45" width="31" height="12"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="12" id="UcM-hT-eDo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="F0R-8G-D0j" firstAttribute="centerY" secondItem="VOa-t0-WDD" secondAttribute="centerY" id="8mY-WR-K9w"/>
+                                                <constraint firstItem="nOb-JD-eAS" firstAttribute="top" secondItem="VOa-t0-WDD" secondAttribute="top" constant="21" id="FGD-GC-8a0"/>
+                                                <constraint firstItem="IYD-za-xb6" firstAttribute="top" secondItem="jYs-h7-l10" secondAttribute="bottom" constant="10" id="Owu-YI-S8d"/>
+                                                <constraint firstItem="Vod-ah-3V7" firstAttribute="leading" secondItem="ZAN-wm-Cwu" secondAttribute="trailing" constant="8" id="Oxy-v6-6vG"/>
+                                                <constraint firstItem="nOb-JD-eAS" firstAttribute="leading" secondItem="F0R-8G-D0j" secondAttribute="trailing" constant="15.199999999999999" id="PzV-gA-4Cg"/>
+                                                <constraint firstItem="jYs-h7-l10" firstAttribute="leading" secondItem="F0R-8G-D0j" secondAttribute="trailing" constant="15.199999999999999" id="RPF-ov-nLx"/>
+                                                <constraint firstItem="q8c-6g-u7g" firstAttribute="leading" secondItem="IYD-za-xb6" secondAttribute="trailing" constant="5" id="Zj1-k3-pbr"/>
+                                                <constraint firstItem="jYs-h7-l10" firstAttribute="top" secondItem="ZAN-wm-Cwu" secondAttribute="bottom" constant="8" id="eTi-4H-qdK"/>
+                                                <constraint firstItem="ZAN-wm-Cwu" firstAttribute="leading" secondItem="nOb-JD-eAS" secondAttribute="trailing" constant="10" id="mzX-ot-TOk"/>
+                                                <constraint firstItem="ZAN-wm-Cwu" firstAttribute="top" secondItem="VOa-t0-WDD" secondAttribute="top" constant="21" id="ok2-fp-2st"/>
+                                                <constraint firstItem="F0R-8G-D0j" firstAttribute="leading" secondItem="VOa-t0-WDD" secondAttribute="leading" constant="26.899999999999999" id="uBP-kz-4nn"/>
+                                                <constraint firstItem="ZAN-wm-Cwu" firstAttribute="centerY" secondItem="VOa-t0-WDD" secondAttribute="centerY" id="zAx-aZ-8eZ"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFf-aF-5eY">
-                                <rect key="frame" x="356" y="746" width="48" height="48"/>
+                                <rect key="frame" x="356" y="697" width="48" height="48"/>
                                 <color key="backgroundColor" name="white"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="CEe-Bv-L7N"/>
@@ -159,14 +233,15 @@
             </objects>
             <point key="canvasLocation" x="926.08695652173924" y="17.410714285714285"/>
         </scene>
-        <!--List-->
+        <!--Navigation Controller-->
         <scene sceneID="s95-Xm-Hnu">
             <objects>
                 <navigationController storyboardIdentifier="GotListNav" automaticallyAdjustsScrollViewInsets="NO" id="Moy-tB-Efn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="List" id="rCL-sY-IjC"/>
+                    <tabBarItem key="tabBarItem" title="" id="dFE-uv-Gdg"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="3t0-a7-JGk">
-                        <rect key="frame" x="0.0" y="44" width="414" height="104.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="103.5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -187,6 +262,9 @@
         </namedColor>
         <namedColor name="saffron">
             <color red="1" green="0.65100002288818359" blue="0.030999999493360519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="softBlue">
+            <color red="0.41999998688697815" green="0.70599997043609619" blue="0.88599997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
