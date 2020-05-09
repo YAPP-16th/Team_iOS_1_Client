@@ -4,21 +4,174 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Spoqa Han Sans Bold.ttf">
+            <string>SpoqaHanSans-Bold</string>
+        </array>
+        <array key="Spoqa Han Sans Regular.ttf">
+            <string>SpoqaHanSans-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
-        <!--설정-->
+        <!--Setting View Controller-->
         <scene sceneID="DxS-Pf-cS5">
             <objects>
                 <viewController id="upZ-UE-W9t" customClass="SettingViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3mp-pc-Qdz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="설정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7MI-E3-hqP">
+                                <rect key="frame" x="16" y="101.5" width="44.5" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="9FA-v9-Q41"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="24"/>
+                                <color key="textColor" name="black"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D0H-h0-rKX" userLabel="로그인View">
+                                <rect key="frame" x="0.0" y="145.5" width="414" height="154"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icsettingLogin" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Vh-wmv">
+                                        <rect key="frame" x="16" y="27" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="JuJ-nl-aKE"/>
+                                            <constraint firstAttribute="width" constant="60" id="yS5-UD-96T"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인이 필요합니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7I-08-5TT">
+                                        <rect key="frame" x="101" y="39" width="136.5" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="HEz-iF-2Gd"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
+                                        <color key="textColor" name="black"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="CgE-Vh-wmv" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="top" constant="27" id="3Ol-wY-c30"/>
+                                    <constraint firstAttribute="height" constant="154" id="4y3-2g-DBM"/>
+                                    <constraint firstItem="b7I-08-5TT" firstAttribute="leading" secondItem="CgE-Vh-wmv" secondAttribute="trailing" constant="25" id="7Lb-oB-JsS"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="ZK6-5l-jwc"/>
+                                    <constraint firstItem="CgE-Vh-wmv" firstAttribute="leading" secondItem="D0H-h0-rKX" secondAttribute="leading" constant="16" id="mzp-6a-e8n"/>
+                                    <constraint firstItem="b7I-08-5TT" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="top" constant="39" id="qd3-gx-GfX"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-9K-bK3">
+                                <rect key="frame" x="0.0" y="303" width="414" height="510"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="773-iS-eeF">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="773-iS-eeF" id="5nn-fJ-A1g">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="푸시 알람 설정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhj-gV-Vbn">
+                                                    <rect key="frame" x="16" y="14.5" width="95.5" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="hmL-97-OM0"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
+                                                    <color key="textColor" name="black"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeU-uL-Mbl">
+                                                    <rect key="frame" x="387" y="14" width="11" height="22"/>
+                                                    <state key="normal" image="icSettingNextBtn"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Uhj-gV-Vbn" firstAttribute="leading" secondItem="5nn-fJ-A1g" secondAttribute="leading" constant="16" id="75S-7c-Joz"/>
+                                                <constraint firstItem="CeU-uL-Mbl" firstAttribute="top" secondItem="5nn-fJ-A1g" secondAttribute="top" constant="14" id="94b-LQ-PEW"/>
+                                                <constraint firstItem="Uhj-gV-Vbn" firstAttribute="top" secondItem="5nn-fJ-A1g" secondAttribute="top" constant="14.6" id="Hye-d4-zoT"/>
+                                                <constraint firstAttribute="trailing" secondItem="CeU-uL-Mbl" secondAttribute="trailing" constant="16" id="U6g-6j-oND"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="dXX-0Z-Lvz">
+                                        <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dXX-0Z-Lvz" id="WlT-1h-HWy">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="자주 가는 장소 설정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cpo-Dk-OM5">
+                                                    <rect key="frame" x="16" y="14.5" width="129" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="XFk-Kq-Ilx"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
+                                                    <color key="textColor" name="black"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJR-MZ-SXc">
+                                                    <rect key="frame" x="387" y="14" width="11" height="22"/>
+                                                    <state key="normal" image="icSettingNextBtn"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Cpo-Dk-OM5" firstAttribute="leading" secondItem="WlT-1h-HWy" secondAttribute="leading" constant="16" id="6gf-SM-rQa"/>
+                                                <constraint firstItem="RJR-MZ-SXc" firstAttribute="top" secondItem="WlT-1h-HWy" secondAttribute="top" constant="14" id="Liv-Zp-1sx"/>
+                                                <constraint firstAttribute="trailing" secondItem="RJR-MZ-SXc" secondAttribute="trailing" constant="16" id="RVh-Qg-Us3"/>
+                                                <constraint firstItem="Cpo-Dk-OM5" firstAttribute="top" secondItem="WlT-1h-HWy" secondAttribute="top" constant="14.6" id="gsR-eK-bpW"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="8xL-Ax-b3P">
+                                        <rect key="frame" x="0.0" y="116" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8xL-Ax-b3P" id="rRs-iw-wr2">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관 및 정책" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUJ-wG-CmM">
+                                                    <rect key="frame" x="16" y="14.5" width="81" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="YMn-6e-GVc"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
+                                                    <color key="textColor" name="black"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BR9-aQ-2ed">
+                                                    <rect key="frame" x="387" y="14" width="11" height="22"/>
+                                                    <state key="normal" image="icSettingNextBtn"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="BR9-aQ-2ed" secondAttribute="trailing" constant="16" id="1WA-5o-AIM"/>
+                                                <constraint firstItem="BR9-aQ-2ed" firstAttribute="top" secondItem="rRs-iw-wr2" secondAttribute="top" constant="14" id="BoV-E3-gHM"/>
+                                                <constraint firstItem="mUJ-wG-CmM" firstAttribute="leading" secondItem="rRs-iw-wr2" secondAttribute="leading" constant="16" id="mia-f2-DEA"/>
+                                                <constraint firstItem="mUJ-wG-CmM" firstAttribute="top" secondItem="rRs-iw-wr2" secondAttribute="top" constant="14.6" id="t0C-Gi-8JP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="D0H-h0-rKX" firstAttribute="trailing" secondItem="xTR-w3-ghi" secondAttribute="trailing" id="9y1-gk-HHx"/>
+                            <constraint firstItem="D0H-h0-rKX" firstAttribute="top" secondItem="7MI-E3-hqP" secondAttribute="bottom" constant="20" id="H4R-Ys-wU1"/>
+                            <constraint firstItem="7MI-E3-hqP" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" constant="16" id="TLZ-oQ-KJZ"/>
+                            <constraint firstItem="3cg-9K-bK3" firstAttribute="trailing" secondItem="xTR-w3-ghi" secondAttribute="trailing" id="gjx-Kc-fYp"/>
+                            <constraint firstItem="3cg-9K-bK3" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" id="u4N-dG-RXC"/>
+                            <constraint firstItem="3cg-9K-bK3" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="bottom" constant="44" id="vhr-Eg-AVk"/>
+                            <constraint firstItem="7MI-E3-hqP" firstAttribute="top" secondItem="xTR-w3-ghi" secondAttribute="top" constant="13.6" id="wcm-Yg-ibW"/>
+                            <constraint firstItem="D0H-h0-rKX" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" id="xPr-dJ-0kA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="xTR-w3-ghi"/>
                     </view>
-                    <navigationItem key="navigationItem" title="설정" id="267-ij-Rdf"/>
+                    <navigationItem key="navigationItem" id="267-ij-Rdf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPe-5h-Bom" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -46,4 +199,11 @@
             <point key="canvasLocation" x="137.68115942028987" y="109.82142857142857"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icSettingNextBtn" width="11" height="16"/>
+        <image name="icsettingLogin" width="60" height="60"/>
+        <namedColor name="black">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>
