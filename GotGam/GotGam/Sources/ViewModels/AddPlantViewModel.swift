@@ -22,8 +22,8 @@ protocol AddPlantViewModelInputs {
     var isOnArrive: BehaviorSubject<Bool> { get set }
     var isOnLeave: BehaviorSubject<Bool> { get set }
     
-    var close: BehaviorSubject<Void> { get set }
-    var tapTag: BehaviorSubject<Void> { get set }
+    var close: PublishSubject<Void> { get set }
+    var tapTag: PublishSubject<Void> { get set }
 }
 
 protocol AddPlantViewModelOutputs {
@@ -53,8 +53,8 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var isOnArrive = BehaviorSubject<Bool>(value: true)
     var isOnLeave = BehaviorSubject<Bool>(value: false)
     
-    var close = BehaviorSubject<Void>(value: ())
-    var tapTag = BehaviorSubject<Void>(value: ())
+    var close = PublishSubject<Void>()
+    var tapTag = PublishSubject<Void>()
     
     // MARK: - Output
     
