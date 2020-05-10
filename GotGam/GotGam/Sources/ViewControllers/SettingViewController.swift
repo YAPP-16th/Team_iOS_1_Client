@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SettingViewController: BaseViewController, ViewModelBindableType {
     
@@ -18,6 +20,7 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
+		
     }
     
     func bindViewModel() {

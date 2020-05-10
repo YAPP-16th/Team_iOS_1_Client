@@ -26,7 +26,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="설정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7MI-E3-hqP">
-                                <rect key="frame" x="16" y="101.5" width="44.5" height="24"/>
+                                <rect key="frame" x="16" y="101.5" width="42" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="9FA-v9-Q41"/>
                                 </constraints>
@@ -45,7 +45,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인이 필요합니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7I-08-5TT">
-                                        <rect key="frame" x="101" y="39" width="136.5" height="16"/>
+                                        <rect key="frame" x="101" y="39" width="129.5" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="HEz-iF-2Gd"/>
                                         </constraints>
@@ -76,7 +76,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="푸시 알림 설정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhj-gV-Vbn">
-                                                    <rect key="frame" x="16" y="14.5" width="95.5" height="16"/>
+                                                    <rect key="frame" x="16" y="14.5" width="92" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="hmL-97-OM0"/>
                                                     </constraints>
@@ -85,7 +85,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeU-uL-Mbl">
-                                                    <rect key="frame" x="387" y="14" width="11" height="22"/>
+                                                    <rect key="frame" x="376" y="14" width="22" height="32"/>
                                                     <state key="normal" image="icSettingNextBtn"/>
                                                     <connections>
                                                         <segue destination="aQc-3t-fnZ" kind="show" id="qwt-gX-DV6"/>
@@ -108,7 +108,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="자주 가는 장소 설정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cpo-Dk-OM5">
-                                                    <rect key="frame" x="16" y="14.5" width="129" height="16"/>
+                                                    <rect key="frame" x="16" y="14.5" width="124.5" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="XFk-Kq-Ilx"/>
                                                     </constraints>
@@ -117,7 +117,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJR-MZ-SXc">
-                                                    <rect key="frame" x="387" y="14" width="11" height="22"/>
+                                                    <rect key="frame" x="376" y="14" width="22" height="32"/>
                                                     <state key="normal" image="icSettingNextBtn"/>
                                                     <connections>
                                                         <segue destination="F2f-XU-2I7" kind="show" id="w5V-hD-bDb"/>
@@ -140,7 +140,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관 및 정책" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUJ-wG-CmM">
-                                                    <rect key="frame" x="16" y="14.5" width="81" height="16"/>
+                                                    <rect key="frame" x="16" y="14.5" width="78.5" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="YMn-6e-GVc"/>
                                                     </constraints>
@@ -149,7 +149,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BR9-aQ-2ed">
-                                                    <rect key="frame" x="387" y="14" width="11" height="22"/>
+                                                    <rect key="frame" x="376" y="14" width="22" height="32"/>
                                                     <state key="normal" image="icSettingNextBtn"/>
                                                     <connections>
                                                         <segue destination="Ul7-xe-xtI" kind="show" id="tb4-Kt-dj7"/>
