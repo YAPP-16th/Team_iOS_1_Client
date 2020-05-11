@@ -165,21 +165,24 @@ extension AddPlantViewController {
                     cell.configure(viewModel: viewModel, title: title, enabled: enabled)
                     
                     if indexPath.section == 1 {
-                        cell.enableSwitch.setOn(viewModel.inputs.isOnDate.value, animated: false)
+                        viewModel.inputs.isOnDate.bind(to: cell.enableSwitch.rx.isOn)
+                            .disposed(by: cell.disposedBag)
                         cell.enableSwitch.rx
                             .isOn.changed
                             .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
                             .bind(to: viewModel.isOnDate)
                             .disposed(by: cell.disposedBag)
                     } else if indexPath.section == 2 {
-                        cell.enableSwitch.setOn(viewModel.inputs.isOnArrive.value, animated: false)
+                        viewModel.inputs.isOnDate.bind(to: cell.enableSwitch.rx.isOn)
+                        .disposed(by: cell.disposedBag)
                         cell.enableSwitch.rx
                             .isOn.changed
                             .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
                             .bind(to: viewModel.isOnArrive)
                             .disposed(by: cell.disposedBag)
                     } else if indexPath.section == 3 {
-                        cell.enableSwitch.setOn(viewModel.inputs.isOnLeave.value, animated: false)
+                        viewModel.inputs.isOnDate.bind(to: cell.enableSwitch.rx.isOn)
+                        .disposed(by: cell.disposedBag)
                         cell.enableSwitch.rx
                             .isOn.changed
                             .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
