@@ -20,12 +20,13 @@ struct Tag {
 protocol SetTagViewModelInputs {
     var selectedTag: BehaviorRelay<String> { get set }
     var createTag: PublishSubject<Void> { get set }
+    func removeItem(indexPath: IndexPath)
     var back: BehaviorSubject<Void> { get set }
     var save: BehaviorSubject<Void> { get set }
 }
 
 protocol SetTagViewModelOutputs {
-    var sections: Observable<[AddTagSectionModel]> { get }
+    var sections: BehaviorRelay<[AddTagSectionModel]> { get }
     
 }
 
@@ -36,16 +37,27 @@ protocol SetTagViewModelType {
 
 class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInputs, SetTagViewModelOutputs {
     
+    
+    
     // MARK: - Inputs
     
     var selectedTag = BehaviorRelay<String>(value: "") // tag
     var createTag = PublishSubject<Void>()
+    
+    func removeItem(indexPath: IndexPath) {
+        var updateSections = sections.value
+        var items = updateSections[indexPath.section].items
+        items.remove(at: indexPath.row)
+        updateSections[indexPath.section] = AddTagSectionModel(original: updateSections[indexPath.section], items: items)
+        sections.accept(updateSections)
+    }
+    
     var back = BehaviorSubject<Void>(value: ())
     var save = BehaviorSubject<Void>(value: ())
     
     // MARK: - Outputs
     
-    var sections = Observable<[AddTagSectionModel]>.just([])
+    var sections = BehaviorRelay<[AddTagSectionModel]>(value: [])
     
     // MARK: - Initializing
     
@@ -67,7 +79,8 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
         if let tag = tag {
             selectedTag.accept(tag)
         }
-        sections = configureDataSource(tags: ["#FFFFFF", "#ffa608", "#6bb4e2"])
+        //sections = configureDataSource(tags: ["#FFFFFF", "#ffa608", "#6bb4e2"])
+        sections.accept(configureDataSource(tags: ["#FFFFFF", "#ffa608", "#6bb4e2"]))
         
         createTag.asObserver()
             .subscribe(onNext: {[unowned self] _ in self.pushCreateVC()})
@@ -75,9 +88,8 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
         
     }
     
-    func configureDataSource(tags: [String]) -> Observable<[AddTagSectionModel]> {
-        return Observable<[AddTagSectionModel]>.just(
-            [
+    func configureDataSource(tags: [String]) -> [AddTagSectionModel] {
+        return [
                 .SelectedSection(title: "", items: [
                     .SelectedTagItem(title: "선택된 태그", tag: selectedTag.value)
                 ]),
@@ -88,17 +100,10 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
                     .CreateTagItem(title: "새로운 태그를 생성합니다")
                 ])
             ]
-        )
     }
 }
 
 // MARK: - for DataSources
-
-enum AddTagSectionModel {
-    case SelectedSection(title: String, items: [AddTagItem])
-    case ListSection(title: String, items: [AddTagItem])
-    case NewSection(title: String, items: [AddTagItem])
-}
 
 enum AddTagItem {
     case SelectedTagItem(title: String, tag: String?)
@@ -106,9 +111,39 @@ enum AddTagItem {
     case CreateTagItem(title: String)
 }
 
+extension AddTagItem: IdentifiableType, Equatable {
+    typealias Identity = String
+    var identity: Identity {
+        switch self {
+        case let .SelectedTagItem(title, _): return title
+        case let .TagListItem(tag, _): return tag
+        case let .CreateTagItem(title): return title
+        }
+    }
+    
+    static func == (lhs: AddTagItem, rhs: AddTagItem) -> Bool {
+        return lhs.identity == rhs.identity
+    }
+}
 
-extension AddTagSectionModel: SectionModelType {
+enum AddTagSectionModel {
+    case SelectedSection(title: String, items: [AddTagItem])
+    case ListSection(title: String, items: [AddTagItem])
+    case NewSection(title: String, items: [AddTagItem])
+}
+
+extension AddTagSectionModel: AnimatableSectionModelType {
+    
+    typealias Identity = String
     typealias Item = AddTagItem
+    
+    var identity: String {
+        switch self {
+        case let .SelectedSection(title, _): return title
+        case let .ListSection(title, _): return title
+        case let .NewSection(title, _): return title
+        }
+    }
     
     var items: [AddTagItem] {
         switch self {
