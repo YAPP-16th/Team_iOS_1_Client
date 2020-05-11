@@ -20,12 +20,6 @@ class ToggleableTableViewCell: UITableViewCell {
     func configure(viewModel vm: AddPlantViewModel, title: String, enabled: Bool) {
         viewModel = vm
         titleLabel.text = title
-        
-        guard let viewModel = viewModel else { return }
-        print(enableSwitch.tag)
-        if enableSwitch.tag == 1 {
-            enableSwitch.rx.isOn.bind(to: viewModel.isOnDate).disposed(by: disposedBag)
-        }
     }
     
     override func awakeFromNib() {

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import RxDataSources
 
 enum TagColor: CaseIterable {
@@ -62,7 +63,9 @@ enum TagColor: CaseIterable {
 }
 
 protocol CreateTagViewModelInputs {
-    var newTag: PublishSubject<String> { get set }
+    var save: PublishSubject<Void> { get set }
+    var newTag: BehaviorRelay<String?> { get set }
+    var tagName: BehaviorRelay<String> { get set }
 }
 
 protocol CreateTagViewModelOutputs {
@@ -79,22 +82,42 @@ protocol CreateTagViewModelType {
 class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagViewModelInputs, CreateTagViewModelOutputs {
     
     
-    // Inputs
+    // MARK: - Inputs
     
-    var newTag = PublishSubject<String>()
+    var save = PublishSubject<Void>()
+    var newTag = BehaviorRelay<String?>(value: nil)
+    var tagName = BehaviorRelay<String>(value: "")
     
-    // Outputs
+    // MARK: - Outputs
     
     var sections = Observable<[CreateTagSectionModel]>.just([])
     var tagColors = Observable<[TagColor]>.just(TagColor.allCases)
     
+    // MARK: - Methods
+    
+    func createTag() {
+        print(tagName.value)
+    }
+    
+    // MARK: - Initializing
+    
     var inputs: CreateTagViewModelInputs { return self }
     var outputs: CreateTagViewModelOutputs { return self }
     
-    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: String? = nil) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
         
+        newTag.accept(tag)
+        if let tag = tag {
+            tagName.accept(tag)
+        }
         sections = configureDataSource()
+        
+        save.asObserver()
+            .subscribe(onNext: { [unowned self] _ in
+                self.createTag()
+            })
+            .disposed(by: disposeBag)
     }
     
     func configureDataSource() -> Observable<[CreateTagSectionModel]> {

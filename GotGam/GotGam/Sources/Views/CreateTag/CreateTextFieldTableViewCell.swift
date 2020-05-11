@@ -12,6 +12,7 @@ import RxCocoa
 
 class CreateTextFieldTableViewCell: UITableViewCell {
     
+    var disposeBag = DisposeBag()
     var viewModel: CreateTagViewModel! {
         didSet {
             configure()
@@ -19,7 +20,10 @@ class CreateTextFieldTableViewCell: UITableViewCell {
     }
     
     func configure() {
-        
+        nameTextField.text = viewModel.inputs.tagName.value
+        nameTextField.rx.text.orEmpty
+            .bind(to: viewModel.inputs.tagName)
+            .disposed(by: disposeBag)
     }
 
     override func awakeFromNib() {

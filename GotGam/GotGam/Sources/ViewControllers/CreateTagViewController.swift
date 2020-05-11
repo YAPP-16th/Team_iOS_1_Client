@@ -28,17 +28,23 @@ class CreateTagViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.sections
             .bind(to: createTagTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.save)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Views
     
     @IBOutlet var createTagTableView: UITableView!
+    @IBOutlet var saveButton: UIBarButtonItem!
 }
 
 extension CreateTagViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = .groupTableViewBackground
+        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = tableView.backgroundColor
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

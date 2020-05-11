@@ -33,7 +33,7 @@ class CreateGridTableViewCell: UITableViewCell {
         colorCollectionView.rx.modelSelected(TagColor.self)
             //.map {}  MARK: TODO: 중복체크
             .subscribe(onNext: { [unowned self] (tagColor) in
-                self.viewModel.inputs.newTag.onNext(tagColor.hex)
+                self.viewModel.inputs.newTag.accept(tagColor.hex)
             })
             .disposed(by: disposeBag)
     }

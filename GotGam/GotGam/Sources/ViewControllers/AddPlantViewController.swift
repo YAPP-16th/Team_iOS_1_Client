@@ -119,6 +119,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .bind(to: viewModel.close)
             .disposed(by: disposeBag)
         
+        titleTextField.text = viewModel.inputs.nameText.value
         titleTextField.rx.text.orEmpty
             .bind(to: viewModel.nameText)
             .disposed(by: disposeBag)
@@ -164,18 +165,21 @@ extension AddPlantViewController {
                     cell.configure(viewModel: viewModel, title: title, enabled: enabled)
                     
                     if indexPath.section == 1 {
+                        cell.enableSwitch.setOn(viewModel.inputs.isOnDate.value, animated: false)
                         cell.enableSwitch.rx
                             .isOn.changed
                             .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
                             .bind(to: viewModel.isOnDate)
                             .disposed(by: cell.disposedBag)
                     } else if indexPath.section == 2 {
+                        cell.enableSwitch.setOn(viewModel.inputs.isOnArrive.value, animated: false)
                         cell.enableSwitch.rx
                             .isOn.changed
                             .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
                             .bind(to: viewModel.isOnArrive)
                             .disposed(by: cell.disposedBag)
                     } else if indexPath.section == 3 {
+                        cell.enableSwitch.setOn(viewModel.inputs.isOnLeave.value, animated: false)
                         cell.enableSwitch.rx
                             .isOn.changed
                             .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
@@ -238,6 +242,23 @@ extension AddPlantViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = tableView.backgroundColor
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == tableView.numberOfSections-1 {
+            return 44
+        }
+        return 0
     }
 }
 

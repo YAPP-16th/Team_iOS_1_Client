@@ -23,7 +23,8 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        tagTableView.rx.setDelegate(self).disposed(by: disposeBag)
+        tagTableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
         
         // Inputs
         
@@ -44,6 +45,12 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
+        tagTableView.rx.itemDeleted
+            .subscribe (onNext: { [unowned self] indexPath in
+                self.viewModel.inputs.removeItem(indexPath: indexPath)
+            })
+            .disposed(by: disposeBag)
+        
         // Outputs
         
         let dataSource = SetTagViewController.dataSource(viewModel: viewModel)
@@ -58,8 +65,13 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
 }
 
 extension SetTagViewController {
-    static func dataSource(viewModel: SetTagViewModel) -> RxTableViewSectionedReloadDataSource<AddTagSectionModel> {
-        return RxTableViewSectionedReloadDataSource<AddTagSectionModel>(
+    static func dataSource(viewModel: SetTagViewModel) -> RxTableViewSectionedAnimatedDataSource<AddTagSectionModel> {
+        return RxTableViewSectionedAnimatedDataSource<AddTagSectionModel>(
+            animationConfiguration: AnimationConfiguration(
+                insertAnimation: .top,
+                reloadAnimation: .fade,
+                deleteAnimation: .left),
+
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
                 case let .SelectedTagItem(title, tag):
@@ -79,6 +91,14 @@ extension SetTagViewController {
             titleForHeaderInSection: { dataSource, index in
                 let section = dataSource[index]
                 return section.title
+            },
+            canEditRowAtIndexPath: { dataSource, index in
+                let section = dataSource[index]
+                switch section {
+                case .TagListItem(_, _):
+                    return true
+                default: return false
+                }
             }
         )
     }
@@ -93,5 +113,19 @@ extension SetTagViewController: UITableViewDelegate {
         let view = UIView()
         view.backgroundColor = .clear
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteButton = UITableViewRowAction(style: .default, title: "삭제") { (action, indexPath) in
+            self.tagTableView.dataSource?.tableView?(self.tagTableView, commit: .delete, forRowAt: indexPath)
+            return
+        }
+
+        let editButton = UITableViewRowAction(style: .normal, title: "수정") { (action, indexPath) in
+            // here is yours custom action
+            self.viewModel.inputs.updateItem(indexPath: indexPath)
+            return
+        }
+        return [deleteButton, editButton]
     }
 }
