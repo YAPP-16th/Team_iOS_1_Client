@@ -44,7 +44,7 @@ class CreateTagViewController: BaseViewController, ViewModelBindableType {
 extension CreateTagViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = .groupTableViewBackground
+        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = tableView.backgroundColor
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

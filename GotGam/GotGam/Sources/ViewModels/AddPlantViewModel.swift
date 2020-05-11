@@ -18,9 +18,9 @@ protocol AddPlantViewModelInputs {
     var arriveText: BehaviorRelay<String> { get set }
     var leaveText: BehaviorRelay<String> { get set }
     
-    var isOnDate: BehaviorSubject<Bool> { get set }
-    var isOnArrive: BehaviorSubject<Bool> { get set }
-    var isOnLeave: BehaviorSubject<Bool> { get set }
+    var isOnDate: BehaviorRelay<Bool> { get set }
+    var isOnArrive: BehaviorRelay<Bool> { get set }
+    var isOnLeave: BehaviorRelay<Bool> { get set }
     
     var close: PublishSubject<Void> { get set }
     var tapTag: PublishSubject<Void> { get set }
@@ -32,7 +32,7 @@ protocol AddPlantViewModelOutputs {
 
     var placeText: BehaviorRelay<String> { get set }
     var tag: BehaviorRelay<String?> { get set }
-    var sectionsSubject: BehaviorSubject<[InputSectionModel]> { get }
+    var sectionsSubject: BehaviorRelay<[InputSectionModel]> { get }
 }
 
 protocol AddPlantViewModelType {
@@ -49,9 +49,9 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var arriveText = BehaviorRelay<String>(value: "")
     var leaveText = BehaviorRelay<String>(value: "")
     
-    var isOnDate = BehaviorSubject<Bool>(value: true)
-    var isOnArrive = BehaviorSubject<Bool>(value: true)
-    var isOnLeave = BehaviorSubject<Bool>(value: false)
+    var isOnDate = BehaviorRelay<Bool>(value: false)
+    var isOnArrive = BehaviorRelay<Bool>(value: true)
+    var isOnLeave = BehaviorRelay<Bool>(value: false)
     
     var close = PublishSubject<Void>()
     var tapTag = PublishSubject<Void>()
@@ -60,23 +60,60 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     var placeText = BehaviorRelay<String>(value: "")
     var tag = BehaviorRelay<String?>(value: nil)
-    var sectionsSubject = BehaviorSubject<[InputSectionModel]>(value: [])
+    var sectionsSubject = BehaviorRelay<[InputSectionModel]>(value: [])
 
     // MARK: - Methods
     
-    func pushAddTagVC() {
+    private func pushAddTagVC() {
         // TODO: tag 가져오기
         let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value)
         sceneCoordinator.transition(to: .setTag(addTagViewModel), using: .push, animated: true)
     }
     
-    func fetchGot(got: Got?) {
+    private func fetchGot(got: Got?) {
         guard let got = got else { return }
         
         nameText.accept(got.title)
         //placeText.accept(got.place)
         tag.accept(got.tag)
+    }
+    
+    private func removeItem(section: InputItemType) {
+        var sections = sectionsSubject.value
+        guard sections.count > section.rawValue else { return }
+        var items = sections[section.rawValue].items
         
+        switch section {
+        case .tag: return
+        default:
+            if items.count >= 2 {
+                items.removeLast()
+            }
+        }
+        
+        sections[section.rawValue] = InputSectionModel(original: sections[section.rawValue], items: items)
+        sectionsSubject.accept(sections)
+    }
+    
+    private func insertItem(section: InputItemType) {
+        var sections = sectionsSubject.value
+        guard sections.count > section.rawValue else { return }
+        var items = sections[section.rawValue].items
+        
+        var item: InputItem = .TextFieldItem(text: "", placeholder: "", enabled: false, isDate: false)
+        
+        switch section {
+        case .tag: return
+        case .date:
+            item = InputItem.TextFieldItem(text: dateText.value, placeholder: section.placeholder, enabled: false, isDate: true)
+        case .arrive:
+            item = InputItem.TextFieldItem(text: arriveText.value, placeholder: section.placeholder, enabled: false, isDate: false)
+        case .leave:
+            item = InputItem.TextFieldItem(text: leaveText.value, placeholder: section.placeholder, enabled: false, isDate: false)
+        }
+        items.append(item)
+        sections[section.rawValue] = InputSectionModel(original: sections[section.rawValue], items: items)
+        sectionsSubject.accept(sections)
     }
    
     
@@ -88,12 +125,11 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
         
         fetchGot(got: got)
-        
-        let sectionOb = configureDataSource(got: got)
-        sectionOb
-            .bind(to: sectionsSubject)
-            .disposed(by: disposeBag)
-        
+        sectionsSubject.accept(configureDataSource(got: got))
+        configureBind(sceneCoordinator: sceneCoordinator)
+    }
+    
+    func configureBind(sceneCoordinator: SceneCoordinatorType) {
         close.asObserver()
             .subscribe(onNext: { _ in
                 sceneCoordinator.close(animated: true)
@@ -105,75 +141,74 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 self.pushAddTagVC()
             })
             .disposed(by: disposeBag)
-    }
-    
-    func configureDataSource(got: Got?) -> Observable<[InputSectionModel]> {
-        return Observable.combineLatest([isOnDate, isOnArrive, isOnLeave])
-                .map ({ [unowned self] (type) -> [InputSectionModel] in
-                    var section: [InputSectionModel] = [.TagSection(section: 0, title: " ", items: [.TagItem(title: "태그", tag: self.tag.value)])]
-
-                    if type[0] {
-                        print("in append: \(self.nameText.value)")
-                        section.append(
-                            .ToggleableSection(
-                                section: section.count,
-                                title: " ",
-                                items: [
-                                    .ToggleableItem(title: "마감일시", enabled: got?.insertedDate != nil),
-                                    .TextFieldItem(text: self.dateText.value, placeholder: "마감 일시를 알려주세요", enabled: false, isDate: true)
-                                    ]))
-                    } else {
-                        section.append(
-                            .ToggleableSection(
-                                section: section.count,
-                                title: " ",
-                                items: [.ToggleableItem(title: "마감일시", enabled: got?.insertedDate != nil)]))
-                    }
-
-                    if type[1] {
-                        section.append(
-                            .ToggleableSection(
-                                section: section.count,
-                                title: " ",
-                                items: [
-                                    .ToggleableItem(title: "도착할 때 알리기", enabled: got?.insertedDate != nil),
-                                    .TextFieldItem(text: self.arriveText.value, placeholder: "도착할 때 알려드릴 메시지를 알려주세요", enabled: false)
-                                ])
-                        )
-                    } else {
-                        section.append(
-                            .ToggleableSection(
-                                section: section.count,
-                                title: " ",
-                                items: [.ToggleableItem(title: "도착할 때 알리기", enabled: got?.insertedDate != nil)
-                            ])
-                        )
-                    }
-
-                    if type[2] {
-                        section.append(
-                            .ToggleableSection(
-                                section: section.count,
-                                title: " ",
-                                items: [
-                                    .ToggleableItem(title: "떠날할 때 알리기", enabled: got?.insertedDate != nil),
-                                    .TextFieldItem(text: self.leaveText.value, placeholder: "떠날할 때 알려드릴 메시지를 알려주세요", enabled: false)
-                                ])
-                        )
-                    } else {
-                        section.append(
-                            .ToggleableSection(
-                                section: section.count,
-                                title: " ",
-                                items: [.ToggleableItem(title: "떠날할 때 알리기", enabled: got?.insertedDate != nil),])
-                        )
-                    }
-                    return section
-                })
         
+        isOnDate
+            .subscribe(onNext: { [unowned self] b in
+                b ? self.insertItem(section: .date) : self.removeItem(section: .date)
+            })
+            .disposed(by: disposeBag)
+        
+        isOnArrive
+            .subscribe(onNext: { [unowned self] b in
+                b ? self.insertItem(section: .arrive) : self.removeItem(section: .arrive)
+            })
+            .disposed(by: disposeBag)
+        
+        isOnLeave
+            .subscribe(onNext: { [unowned self] b in
+                b ? self.insertItem(section: .leave) : self.removeItem(section: .leave)
+            })
+            .disposed(by: disposeBag)
     }
     
+    func configureDataSource(got: Got?) -> [InputSectionModel] {
+        return [
+            .TagSection(section: InputItemType.tag.rawValue, title: " ", items: [.TagItem(title: InputItemType.tag.title, tag: self.tag.value)]),
+            .ToggleableSection(
+                section: InputItemType.date.rawValue,
+                title: " ",
+                items: [
+                    .ToggleableItem(title: InputItemType.date.title, enabled: got?.insertedDate != nil)
+                ]),
+            .ToggleableSection(
+                section: InputItemType.arrive.rawValue,
+                title: " ",
+                items: [
+                    .ToggleableItem(title: InputItemType.arrive.title, enabled: got?.insertedDate != nil)
+                ]),
+            .ToggleableSection(
+                section: InputItemType.leave.rawValue,
+                title: " ",
+                items: [
+                    .ToggleableItem(title: InputItemType.leave.title, enabled: got?.insertedDate != nil)
+                ])
+        ]
+    }
+}
+
+enum InputItemType: Int {
+    case tag = 0
+    case date
+    case arrive
+    case leave
     
+    var title: String {
+        switch self {
+        case .tag:      return "태그"
+        case .date:     return "마감일시"
+        case .arrive:   return "도착할 때 알리기"
+        case .leave:    return "떠날 때 알리기"
+        }
+    }
+    
+    var placeholder: String {
+        switch self {
+        case .date:     return "마감 일시를 알려주세요"
+        case .arrive:   return "도착할 때 알려드릴 메시지를 알려주세요"
+        case .leave:    return "떠날할 때 알려드릴 메시지를 알려주세요"
+        default:        return ""
+        }
+    }
 }
 
 enum InputItem {
@@ -203,16 +238,16 @@ enum InputSectionModel {
 }
 
 extension InputSectionModel: AnimatableSectionModelType {
+    
+    typealias Identity = Int
+    typealias Item = InputItem
+    
     var identity: Int {
         switch self {
         case let .TagSection(section, _, _): return section
         case let .ToggleableSection(section, _, _): return section
         }
     }
-    
-    typealias Identity = Int
-    
-    typealias Item = InputItem
     
     var items: [InputItem] {
         switch self {
@@ -238,59 +273,10 @@ extension InputSectionModel: AnimatableSectionModelType {
 extension InputSectionModel {
     var title: String {
         switch self {
-        case .TagSection(_, title: let title, items: _):
+        case let .TagSection(_, title, _):
             return title
-        case .ToggleableSection(_, title: let title, items: _):
+        case let .ToggleableSection(_, title, _):
             return title
         }
     }
 }
-
-
-//enum InputSectionModel {
-//    case TagSection(title: String, items: [InputItem])
-//    case ToggleableSection(title: String, items: [InputItem])
-//}
-//
-//enum InputItem {
-//    typealias Identity = String
-//
-//    case TagItem(title: String, tag: String?) // String -> Tag
-//    case ToggleableItem(title: String, enabled: Bool)
-//    case TextFieldItem(text: String, placeholder: String, enabled: Bool, isDate: Bool = false)
-//}
-//
-////AnimatableSectionModel
-//extension InputSectionModel: SectionModel<String, InputItem> {
-//    typealias Item = InputItem
-//
-//    var items: [InputItem] {
-//        switch self {
-//        case .TagSection(title: _, items: let items):
-//            return items.map { $0 }
-//        case .ToggleableSection(title: _, items: let items):
-//            return items.map { $0 }
-//        }
-//    }
-//
-//    init(original: InputSectionModel, items: [Item]) {
-//        switch original {
-//        case let .TagSection(title: title, items: _):
-//            self = .TagSection(title: title, items: items)
-//        case let .ToggleableSection(title: title, items: _):
-//            self = .ToggleableSection(title: title, items: items)
-//        }
-//    }
-//}
-//
-//
-//extension InputSectionModel {
-//    var title: String {
-//        switch self {
-//        case .TagSection(title: let title, items: _):
-//            return title
-//        case .ToggleableSection(title: let title, items: _):
-//            return title
-//        }
-//    }
-//}
