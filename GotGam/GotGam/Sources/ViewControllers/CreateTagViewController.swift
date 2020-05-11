@@ -28,11 +28,17 @@ class CreateTagViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.sections
             .bind(to: createTagTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.save)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Views
     
     @IBOutlet var createTagTableView: UITableView!
+    @IBOutlet var saveButton: UIBarButtonItem!
 }
 
 extension CreateTagViewController: UITableViewDelegate {

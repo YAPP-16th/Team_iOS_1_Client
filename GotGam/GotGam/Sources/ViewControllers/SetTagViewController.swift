@@ -123,7 +123,7 @@ extension SetTagViewController: UITableViewDelegate {
 
         let editButton = UITableViewRowAction(style: .normal, title: "수정") { (action, indexPath) in
             // here is yours custom action
-            //self.tagTableView.dataSource?.tableView?(self.tagTableView, commit: .none, forRowAt: indexPath)
+            self.viewModel.inputs.updateItem(indexPath: indexPath)
             return
         }
         return [deleteButton, editButton]

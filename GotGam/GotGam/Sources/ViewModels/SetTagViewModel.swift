@@ -18,11 +18,12 @@ struct Tag {
 }
 
 protocol SetTagViewModelInputs {
+    var back: PublishSubject<Void> { get set }
+    var save: PublishSubject<Void> { get set }
     var selectedTag: BehaviorRelay<String> { get set }
     var createTag: PublishSubject<Void> { get set }
     func removeItem(indexPath: IndexPath)
-    var back: BehaviorSubject<Void> { get set }
-    var save: BehaviorSubject<Void> { get set }
+    func updateItem(indexPath: IndexPath)
 }
 
 protocol SetTagViewModelOutputs {
@@ -41,6 +42,8 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     
     // MARK: - Inputs
     
+    var back = PublishSubject<Void>()
+    var save = PublishSubject<Void>()
     var selectedTag = BehaviorRelay<String>(value: "") // tag
     var createTag = PublishSubject<Void>()
     
@@ -52,8 +55,16 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
         sections.accept(updateSections)
     }
     
-    var back = BehaviorSubject<Void>(value: ())
-    var save = BehaviorSubject<Void>(value: ())
+    func updateItem(indexPath: IndexPath) {
+        let item = sections.value[indexPath.section].items[indexPath.row]
+        
+        if case let .TagListItem(tag, selected) = item {
+            let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag)
+            sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
+        }
+    }
+    
+    
     
     // MARK: - Outputs
     
