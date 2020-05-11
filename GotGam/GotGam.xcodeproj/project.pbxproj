@@ -975,7 +975,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios1.GotGam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)$(PROJECT_DIR)/GotGam/Supporting Files/Bridging_Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1002,7 +1002,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios1.GotGam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)$(PROJECT_DIR)/GotGam/Supporting Files/Bridging_Header.h";
 				SWIFT_VERSION = 5.0;
