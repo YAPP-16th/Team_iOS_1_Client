@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Test</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Test</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>사용자가 앱을 사용하는 동안 사용자의 위치에 접근하려고합니다.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -28,6 +22,19 @@
 	<string>aaf4214901d356b5251370e59145d2f3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Test</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Test</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>사용자가 앱을 사용하는 동안 사용자의 위치에 접근하려고합니다.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Spoqa Han Sans Bold.ttf</string>
+		<string>Spoqa Han Sans Light.ttf</string>
+		<string>Spoqa Han Sans Regular.ttf</string>
+		<string>Spoqa Han Sans Thin.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
@@ -50,13 +57,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Spoqa Han Sans Bold.ttf</string>
-		<string>Spoqa Han Sans Light.ttf</string>
-		<string>Spoqa Han Sans Regular.ttf</string>
-		<string>Spoqa Han Sans Thin.ttf</string>
 	</array>
 </dict>
 </plist>
