@@ -11,57 +11,96 @@ import RxSwift
 import CoreData
 
 class GotStorage: GotStorageType {
-    private var list = [
-      Got(title:"1번", id: 1, latitude: 100.0 , longitude: 100.0 , isDone: false)
-        ]
-        
-        private lazy var store = BehaviorSubject<[Got]>(value: list)
-       
-        
-        @discardableResult
-		func createMemo(title: String, id: Int64, insertedDate: Date, content: String, tag: String,
-						latitude: Double, longitude: Double, isDone: Bool, place: String) -> Observable<Got> {
-            let memo = Got(title: title, id: id)
-            list.append(memo)
-            
-            store.onNext(list)
-			DBManager.share.saveContext()
-            
-            return Observable.just(memo)
-        }
-        
-        @discardableResult
-        func memoList() -> Observable<[Got]> {
-            return store
-        }
-        
-        
-        @discardableResult
-		func update(title: Got, updatedtitle: String, id: Int64) -> Observable<Got> {
-         let updated = Got(original: title, updatedTitle: updatedtitle)
-            
-            
-            if let index = list.firstIndex(where: { $0 == title}) {
-                list.remove(at: index)
-                list.insert(updated, at: index)
-            }
-            
-            
-            store.onNext(list)
-            
-            
-            return Observable.just(updated)
-        }
-        
-        
-        @discardableResult
-        func delete(title: Got) -> Observable<Got> {
-            if let index = list.firstIndex(where: { $0 == title}) {
-                list.remove(at: index)
-            }
+    private let context = DBManager.share.context
     
-            store.onNext(list)
-    
-            return Observable.just(title)
+    func fetchGotList() -> Observable<[Got]> {
+        do{
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
+            let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
+            let gotList = results.map { $0.toGot() }
+            return .just(gotList)
+        }catch{
+            return .error(GotStorageError.fetchError("GotList 조회 과정에서 문제발생"))
         }
+    }
+    
+    func fetchGot(id: Int64) -> Observable<Got> {
+        do{
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
+            let p1 =
+                NSPredicate(format: "id == %lld", id)
+            let p2 = NSPredicate(format: "isFinished == NO")
+            fetchRequest.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [p1,p2])
+            let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
+            if let managedGot = results.first{
+                return .just(managedGot.toGot())
+            }else{
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Got을 찾을 수 없음"))
+            }
+        }catch let error{
+            return .error(GotStorageError.fetchError((error.localizedDescription)))
+        }
+    }
+    
+    func createGot(gotToCreate: Got) -> Observable<Got>{
+        do{
+            var got = gotToCreate
+            self.createId(got: &got)
+            let managedGot = NSEntityDescription.insertNewObject(forEntityName: "ManagedGot", into: self.context) as! ManagedGot
+            managedGot.fromGot(got: got)
+            try self.context.save()
+            return .just(got)
+        }catch let error{
+            return .error(GotStorageError.createError(error.localizedDescription))
+        }
+    }
+    
+    func updateGot(gotToUpdate: Got) -> Observable<Got> {
+        do{
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
+            fetchRequest.predicate = NSPredicate(format: "id == %lld", gotToUpdate.id!)
+            let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
+            if let managedGot = results.first{
+                managedGot.fromGot(got: gotToUpdate)
+                do{
+                    try self.context.save()
+                    return .just(gotToUpdate)
+                }catch let error{
+                    return .error(error)
+                }
+            }else{
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Got을 찾을 수 없음"))
+            }
+        }catch let error{
+            return .error(GotStorageError.updateError(error.localizedDescription))
+        }
+    }
+    
+    func deleteGot(id: Int64) -> Observable<Got> {
+        do{
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
+            fetchRequest.predicate = NSPredicate(format: "id == %lld", id)
+            let results = try self.context.fetch(fetchRequest) as! [ManagedGot]
+            if let managedGot = results.first{
+                let got = managedGot.toGot()
+                self.context.delete(managedGot)
+                do{
+                    try self.context.save()
+                    return .just(got)
+                }catch{
+                    return .error(GotStorageError.deleteError("id가 \(id)인 Got을 제거하는데 오류 발생"))
+                }
+            }else{
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Got을 찾을 수 없음"))
+            }
+        }catch let error{
+            return .error(GotStorageError.deleteError(error.localizedDescription))
+        }
+    }
+    
+    //MARK: - Helper
+    func createId(got: inout Got){
+        guard got.id == nil else { return }
+        got.id = Int64(arc4random())
+    }
 }

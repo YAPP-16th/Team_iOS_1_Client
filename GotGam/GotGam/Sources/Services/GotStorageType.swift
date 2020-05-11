@@ -9,19 +9,28 @@
 import Foundation
 import RxSwift
 
+enum GotStorageError: Error{
+    case fetchError(String)
+    case createError(String)
+    case updateError(String)
+    case deleteError(String)
+}
+
 protocol GotStorageType {
-   
-      @discardableResult
-	func createMemo(title: String, id: Int64, insertedDate: Date, content: String, tag: String,
-					latitude: Double, longitude: Double, isDone: Bool, place: String) -> Observable<Got>
-      
-      @discardableResult
-      func memoList() -> Observable<[Got]>
-      
-      @discardableResult
-	func update(title: Got, updatedtitle: String, id:Int64) -> Observable<Got>
-      
-      @discardableResult
-      func delete(title: Got) -> Observable<Got>
+    
+    @discardableResult
+    func createGot(gotToCreate: Got) -> Observable<Got>
+    
+    @discardableResult
+    func fetchGotList() -> Observable<[Got]>
+    
+    @discardableResult
+    func fetchGot(id: Int64) -> Observable<Got>
+    
+    @discardableResult
+    func updateGot(gotToUpdate: Got) -> Observable<Got>
+    
+    @discardableResult
+    func deleteGot(id: Int64) -> Observable<Got>
     
 }
