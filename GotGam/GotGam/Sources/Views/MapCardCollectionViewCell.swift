@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MapCardCollectionViewCell: UICollectionViewCell{
     @IBOutlet weak var titleLabel: UILabel!
@@ -17,28 +19,46 @@ class MapCardCollectionViewCell: UICollectionViewCell{
     @IBOutlet weak var memoLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
-    
-    var cancelAction: (() -> Void)? = { }
-    var doneAction: (() -> Void)? = { }
-    @IBAction func cancelButtonTapped(_ sender: UIButton){
-        cancelAction?()
+    var disposeBag = DisposeBag()
+    var isDoneFlag = false{
+        didSet{
+            self.doneButton.backgroundColor = isDoneFlag ? .white : .orange
+        }
     }
-    @IBAction func doneButtonTapped(_ sender: UIButton){
-        doneAction?()
+    
+    lazy var dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        df.locale = Locale.init(identifier: "Ko_kr")
+        return df
+    }()
+    
+    var got: Got? {
+        didSet{
+            guard let got = got else { return }
+            titleLabel.text = got.title
+            addressLabel.text = got.place
+            dueDateLabel.text = self.dateFormatter.string(from: got.insertedDate ?? Date())
+            self.isDoneFlag = got.isDone
+        }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        self.layer.applySketchShadow(color: .black, alpha: 0.05, x: 0, y: 2, blur: 10, spread: 0)
         self.contentView.layer.cornerRadius = 24
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 3)
-        self.layer.shadowRadius = 24.0
-        self.layer.shadowOpacity = 0.25
+        self.contentView.layer.masksToBounds = true
+        self.contentView.backgroundColor = .white
         
         tagView.layer.cornerRadius = 7
         tagView.layer.masksToBounds = true
         
         self.doneButton.layer.cornerRadius = 17
         self.doneButton.layer.masksToBounds = true
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.disposeBag = DisposeBag()
     }
 }

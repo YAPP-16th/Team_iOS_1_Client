@@ -1,8 +1,9 @@
 //
 //  ManagedTag+CoreDataClass.swift
-//  
+//  GotGam
 //
-//  Created by 김삼복 on 08/05/2020.
+//  Created by 손병근 on 2020/05/12.
+//  Copyright © 2020 손병근. All rights reserved.
 //
 //
 
@@ -11,5 +12,13 @@ import CoreData
 
 @objc(ManagedTag)
 public class ManagedTag: NSManagedObject {
-
+    func toTag() -> Tag{
+        .init(id: id, name: name!, color: color!)
+    }
+    
+    func fromTag(tag: Tag){
+        self.id = tag.id!
+        self.name = tag.name
+        self.color = tag.color
+    }
 }

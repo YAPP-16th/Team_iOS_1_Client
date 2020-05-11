@@ -16,8 +16,8 @@ class TabBarController: UITabBarController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBar.tintColor = .orange
-        if let items = tabBar.items {
+        tabBar.tintColor = .saffron
+      if let items = tabBar.items, items.count == 4 {
 			items[0].image = UIImage(named: "tab_map")?.withRenderingMode(.alwaysOriginal)
             items[0].selectedImage = UIImage(named: "tab_map_active")?.withRenderingMode(.alwaysOriginal)
 			

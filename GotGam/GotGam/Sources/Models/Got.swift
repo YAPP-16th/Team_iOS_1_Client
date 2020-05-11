@@ -10,62 +10,45 @@ import Foundation
 
 struct Got: Equatable {
    
-    var title: String
-    var insertedDate: Date?
-    var createedDate: Date
     var id: Int64?
+    var tag : Tag?
+    var title: String?
     var content : String?
-    var tag : String?
     var latitude: Double?
     var longitude: Double?
     var isDone: Bool
 	var place: String?
+    var insertedDate: Date?
      
-     
-    
-	init(title: String, id: Int64, insertedDate: Date = Date(), content: String, tag: String,
-		 latitude: Double, longitude: Double, isDone: Bool, place: String){
-        self.title = title
-        //수정필요
-        self.insertedDate = insertedDate
+    init(id: Int64?, tag: Tag?, title: String?, content: String?, latitude: Double, longitude: Double?, isDone: Bool, place: String?, insertedDate: Date?){
         self.id = id
-        self.createedDate = Date()
-        self.content = content
         self.tag = tag
+        self.title = title ?? ""
+        self.content = content
         self.latitude = latitude
         self.longitude = longitude
-        self.isDone = false
-		self.place = place
+        self.isDone = isDone
+        self.place = place
+        self.insertedDate = insertedDate
     }
     
-    init(title: String, id: Int64, latitude: Double, longitude: Double, isDone: Bool){
-        self.title = title
-        self.insertedDate = nil
-        self.id = id
-        self.createedDate = Date()
-        self.content = nil
-        self.tag = nil
-        self.latitude = latitude
-        self.longitude = longitude
-        self.isDone = false
-    }
-   
-   init(title: String, id: Int64){
-          self.title = title
-          self.insertedDate = nil
-          self.id = id
-          self.createedDate = Date()
-          self.content = nil
-          self.tag = nil
-          self.latitude = nil
-          self.longitude = nil
-          self.isDone = false
-      }
-    
+	
     
     //타이틀만 바꿀 때
     init(original: Got, updatedTitle: String){
         self = original
         self.title = updatedTitle
     }
+}
+
+func ==(lhs: Got, rhs: Got) -> Bool{
+    return lhs.id == rhs.id
+        && lhs.tag == rhs.tag
+        && lhs.title == rhs.title
+        && lhs.content == rhs.content
+        && lhs.latitude == rhs.latitude
+        && lhs.longitude == rhs.longitude
+        && lhs.isDone == rhs.isDone
+        && lhs.place == rhs.place
+        && lhs.insertedDate == rhs.insertedDate
 }
