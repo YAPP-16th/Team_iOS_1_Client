@@ -1,8 +1,9 @@
 //
 //  ManagedGot+CoreDataProperties.swift
-//  
+//  GotGam
 //
-//  Created by 손병근 on 2020/05/04.
+//  Created by 손병근 on 2020/05/12.
+//  Copyright © 2020 손병근. All rights reserved.
 //
 //
 
@@ -16,15 +17,14 @@ extension ManagedGot {
         return NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
     }
 
-    @NSManaged public var memo: String?
-    @NSManaged public var createdDate: Date?
+    @NSManaged public var content: String?
     @NSManaged public var id: Int64
-    @NSManaged public var dueDate: Date?
-    @NSManaged public var isFinished: Bool
+    @NSManaged public var insertedDate: Date?
+    @NSManaged public var isDone: Bool
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
-    @NSManaged public var tag: String?
+    @NSManaged public var place: String?
     @NSManaged public var title: String?
-    @NSManaged public var address: String?
+    @NSManaged public var tag: ManagedTag?
 
 }

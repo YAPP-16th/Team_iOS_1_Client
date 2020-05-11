@@ -1,31 +1,40 @@
 //
 //  ManagedGot+CoreDataClass.swift
-//  
+//  GotGam
 //
-//  Created by 손병근 on 2020/05/04.
+//  Created by 손병근 on 2020/05/12.
+//  Copyright © 2020 손병근. All rights reserved.
 //
 //
 
 import Foundation
 import CoreData
-import CoreLocation
 
 @objc(ManagedGot)
 public class ManagedGot: NSManagedObject {
     func toGot() -> Got{
-        return Got(id: id, title: title!, dueDate: dueDate!, memo: memo!, tag: tag!, location: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), address: address!, isFinished: isFinished)
+        Got.init(
+            id: id,
+            tag: tag?.toTag(),
+            title: title!,
+            content: content,
+            latitude: latitude,
+            longitude: longitude,
+            isDone: isDone,
+            place: place,
+            insertedDate: insertedDate
+        )
     }
     
     func fromGot(got: Got){
         self.id = got.id!
+        self.tag?.fromTag(tag: got.tag!)
         self.title = got.title
-        self.createdDate = got.createedDate
-        self.dueDate = got.dueDate
-        self.memo = got.memo
-        self.tag = got.tag
-        self.latitude = got.location.latitude
-        self.longitude = got.location.longitude
-        self.isFinished = got.isFinished
-        self.address = got.address
+        self.content = got.content
+        self.latitude = got.latitude!
+        self.longitude = got.longitude!
+        self.isDone = got.isDone
+        self.place = got.place
+        self.insertedDate = got.insertedDate
     }
 }

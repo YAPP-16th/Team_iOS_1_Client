@@ -37,9 +37,9 @@ class MapCardCollectionViewCell: UICollectionViewCell{
         didSet{
             guard let got = got else { return }
             titleLabel.text = got.title
-            addressLabel.text = got.address
-            dueDateLabel.text = self.dateFormatter.string(from: got.dueDate)
-            self.isDoneFlag = got.isFinished
+            addressLabel.text = got.place
+            dueDateLabel.text = self.dateFormatter.string(from: got.insertedDate ?? Date())
+            self.isDoneFlag = got.isDone
         }
     }
     

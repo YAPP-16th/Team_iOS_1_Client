@@ -71,8 +71,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             guard let self = self else { return }
             
             let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-            let gotToCreate = Got(title: text!, createdDate: Date(), dueDate: Date.init(timeIntervalSinceNow: 60 * 60 * 24), memo: "", tag: "", location: CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude), address: "서울특별시")
-            self.viewModel.createGot(got: gotToCreate)
+            let got = Got(id: Int64(arc4random()), tag: .init(id: Int64(arc4random()), name: "tag1", color: "#123123"), title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, isDone: false, place: "맛집", insertedDate: Date())
+            self.viewModel.createGot(got: got)
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
             self.viewModel.seedState.onNext(.none)
@@ -231,7 +231,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             pin.itemName = got.title
             pin.markerType = .customImage
             pin.customImage = UIImage(named: "icPin1")
-            pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.location.latitude, longitude: got.location.longitude))
+            pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.latitude!, longitude: got.longitude!))
             pin.showAnimationType = .springFromGround
             mapView.addPOIItems([pin])
         }
@@ -319,7 +319,7 @@ extension MapViewController: UICollectionViewDataSource{
             })
             .debounce(.seconds(5), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-                cell.got?.isFinished = cell.isDoneFlag
+                cell.got?.isDone = cell.isDoneFlag
                 self.viewModel.updateGot(got: cell.got!)
             }).disposed(by: cell.disposeBag)
             
@@ -378,7 +378,7 @@ extension MapViewController: UIScrollViewDelegate{
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let currentIndex = self.centeredCollectionViewFlowLayout.currentCenteredPage else { return }
         let got = gotList[currentIndex]
-        let geo = MTMapPointGeo(latitude: got.location.latitude, longitude: got.location.longitude)
+        let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
         self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
     }
 }

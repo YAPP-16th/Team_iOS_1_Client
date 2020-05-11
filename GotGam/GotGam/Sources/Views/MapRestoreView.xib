@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Spoqa Han Sans Bold.ttf">
+            <string>SpoqaHanSans-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapRestoreView" customModule="GotGam" customModuleProvider="target">
+            <connections>
+                <outlet property="restoreButton" destination="OWm-LE-hGN" id="G0A-NO-mUL"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="0Fb-YI-ihV">
+            <rect key="frame" x="0.0" y="0.0" width="195" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="보관함에서 되돌리기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZO-i6-VfS">
+                    <rect key="frame" x="15" y="16" width="113" height="16.5"/>
+                    <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWm-LE-hGN">
+                    <rect key="frame" x="147" y="0.0" width="48" height="48"/>
+                    <color key="backgroundColor" name="white"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="8PP-xK-0yo"/>
+                        <constraint firstAttribute="width" constant="48" id="uKc-TH-G0E"/>
+                    </constraints>
+                    <state key="normal" title="버튼">
+                        <color key="titleColor" red="0.99740535019999998" green="0.71073418860000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="OWm-LE-hGN" firstAttribute="top" secondItem="0Fb-YI-ihV" secondAttribute="top" id="1Ja-Xe-Cfa"/>
+                <constraint firstAttribute="trailing" secondItem="OWm-LE-hGN" secondAttribute="trailing" id="m1R-Y2-QNo"/>
+                <constraint firstItem="IZO-i6-VfS" firstAttribute="leading" secondItem="0Fb-YI-ihV" secondAttribute="leading" constant="15" id="oIL-rS-AJE"/>
+                <constraint firstItem="IZO-i6-VfS" firstAttribute="centerY" secondItem="0Fb-YI-ihV" secondAttribute="centerY" id="pvA-N9-VW9"/>
+                <constraint firstItem="ycs-H8-PwG" firstAttribute="bottom" secondItem="OWm-LE-hGN" secondAttribute="bottom" id="sI5-XH-89l"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="ycs-H8-PwG"/>
+            <point key="canvasLocation" x="139" y="137"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

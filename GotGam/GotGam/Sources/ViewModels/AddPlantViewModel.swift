@@ -73,9 +73,9 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     func fetchGot(got: Got?) {
         guard let got = got else { return }
         
-        nameText.accept(got.title)
+//        nameText.accept(got.title)
         //placeText.accept(got.place)
-        tag.accept(got.tag)
+//        tag.accept(got.tag)
         
     }
    
