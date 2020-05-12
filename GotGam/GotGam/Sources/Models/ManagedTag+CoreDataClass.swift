@@ -13,11 +13,10 @@ import CoreData
 @objc(ManagedTag)
 public class ManagedTag: NSManagedObject {
     func toTag() -> Tag{
-        .init(id: id, name: name!, color: color!)
+        .init(name: name!, color: color!)
     }
     
     func fromTag(tag: Tag){
-        self.id = tag.id!
         self.name = tag.name
         self.color = tag.color
     }

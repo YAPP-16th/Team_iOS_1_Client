@@ -8,17 +8,16 @@
 
 import UIKit
 
-struct MapTagViewModel{
-    var id: Int
-    var tagColor: UIColor
-    var tagTitle: String
-}
-
 class MapTagCell: UICollectionViewCell{
     @IBOutlet weak var tagIndicator: UIView!
     @IBOutlet weak var tagLabel: UILabel!
     
-    
+    var mapTag: Tag!{
+        didSet{
+            self.tagIndicator.backgroundColor = TagColor.init(rawValue: mapTag.color)?.color
+            tagLabel.text = mapTag.name
+        }
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()

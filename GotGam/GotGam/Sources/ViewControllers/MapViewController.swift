@@ -55,6 +55,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
         }
     }
+    
+    var tagList: [Tag] = []{
+        didSet{
+            DispatchQueue.main.async {
+                self.tagCollectionView.reloadData()
+            }
+        }
+    }
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +79,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             guard let self = self else { return }
             
             let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-            let got = Got(id: Int64(arc4random()), tag: .init(id: Int64(arc4random()), name: "tag1", color: "#123123"), title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, isDone: false, place: "맛집", insertedDate: Date())
+            let got = Got(id: Int64(arc4random()), tag: .init(name: "tag1", color: "#123123"), title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, isDone: false, place: "맛집", insertedDate: Date())
             self.viewModel.createGot(got: got)
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
@@ -79,7 +87,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.cardCollectionView.isHidden = false
             self.view.layoutIfNeeded()
         }
-        self.viewModel.updateList()
+        self.viewModel.updateTagList()
+        self.viewModel.updateGotList()
     }
     
     
@@ -191,6 +200,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.viewModel.gotList.subscribe(onNext: { list in
             self.gotList = list
         }).disposed(by: self.disposeBag)
+        
+        self.viewModel.tagList.subscribe(onNext: { list in
+            self.tagList = list
+        }).disposed(by: self.disposeBag)
     }
     
     //MARK: Set UI According to the State
@@ -296,7 +309,7 @@ extension MapViewController: MTMapViewDelegate{
 extension MapViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.tagCollectionView{
-            return viewModel.tag.count
+            return self.tagList.count
         }else {
             return self.gotList.count
         }
@@ -304,9 +317,8 @@ extension MapViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.tagCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapTagCell.reuseIdenfier, for: indexPath) as! MapTagCell
-            let data = viewModel.tag[indexPath.item]
-            cell.tagIndicator.backgroundColor = .green
-            cell.tagLabel.text = data
+            let tag = self.tagList[indexPath.item]
+            cell.mapTag = tag
             return cell
         }else if collectionView == self.cardCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapCardCollectionViewCell.reuseIdenfier, for: indexPath) as! MapCardCollectionViewCell

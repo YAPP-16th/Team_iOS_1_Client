@@ -13,11 +13,10 @@
     </entity>
     <entity name="ManagedTag" representedClassName="ManagedTag" syncable="YES">
         <attribute name="color" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="ManagedGot" positionX="-54" positionY="90" width="128" height="178"/>
-        <element name="ManagedTag" positionX="-63" positionY="54" width="128" height="88"/>
+        <element name="ManagedTag" positionX="-63" positionY="54" width="128" height="73"/>
     </elements>
 </model>

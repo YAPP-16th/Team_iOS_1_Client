@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-enum TagColor: CaseIterable {
+enum TagColor: String, CaseIterable {
     case veryLightPink
     case softBlue
     case heather

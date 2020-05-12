@@ -74,6 +74,8 @@
 		A125E7A42469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E7A02469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift */; };
 		A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E7A52469B2D1007767D7 /* MapRestoreView.swift */; };
 		A125E7A82469B300007767D7 /* MapRestoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A125E7A72469B300007767D7 /* MapRestoreView.xib */; };
+		A127E65D246AB2DB005137D3 /* TagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127E65C246AB2DB005137D3 /* TagStorage.swift */; };
+		A127E65F246AB2EE005137D3 /* TagStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127E65E246AB2EE005137D3 /* TagStorageType.swift */; };
 		A157E0F924555A90001E310D /* map_pinup_custom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A157E0D424555A90001E310D /* map_pinup_custom@3x.png */; };
 		A157E0FA24555A90001E310D /* map_pin_custom.png in Resources */ = {isa = PBXBuildFile; fileRef = A157E0D524555A90001E310D /* map_pin_custom.png */; };
 		A157E0FB24555A90001E310D /* shadow_balloon.png in Resources */ = {isa = PBXBuildFile; fileRef = A157E0D624555A90001E310D /* shadow_balloon.png */; };
@@ -192,6 +194,8 @@
 		A125E7A02469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A125E7A52469B2D1007767D7 /* MapRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestoreView.swift; sourceTree = "<group>"; };
 		A125E7A72469B300007767D7 /* MapRestoreView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapRestoreView.xib; sourceTree = "<group>"; };
+		A127E65C246AB2DB005137D3 /* TagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStorage.swift; sourceTree = "<group>"; };
+		A127E65E246AB2EE005137D3 /* TagStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStorageType.swift; sourceTree = "<group>"; };
 		A157E0D424555A90001E310D /* map_pinup_custom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pinup_custom@3x.png"; sourceTree = "<group>"; };
 		A157E0D524555A90001E310D /* map_pin_custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_custom.png; sourceTree = "<group>"; };
 		A157E0D624555A90001E310D /* shadow_balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow_balloon.png; sourceTree = "<group>"; };
@@ -478,6 +482,8 @@
 				4CE037DE2438CA780093E39D /* GotStorage.swift */,
 				A157E115245572F4001E310D /* LocationManager.swift */,
 				A157E116245572F4001E310D /* LocationManagerType.swift */,
+				A127E65C246AB2DB005137D3 /* TagStorage.swift */,
+				A127E65E246AB2EE005137D3 /* TagStorageType.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -798,6 +804,7 @@
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				295C03C32464652700789967 /* SearchBarViewController.swift in Sources */,
 				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
+				A127E65D246AB2DB005137D3 /* TagStorage.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
@@ -809,6 +816,7 @@
 				A125E79424695B80007767D7 /* LoginViewController.swift in Sources */,
 				4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */,
 				4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */,
+				A127E65F246AB2EE005137D3 /* TagStorageType.swift in Sources */,
 				4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,

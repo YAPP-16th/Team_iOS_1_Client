@@ -29,7 +29,9 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var output: MapViewModelOutputs { return self }
     
     var gotList = BehaviorSubject<[Got]>(value: [])
+    var tagList = BehaviorSubject<[Tag]>(value: [])
     
+    let tagStorage: TagStorageType
     enum SeedState{
         case none
         case seeding
@@ -40,26 +42,32 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     var seedState = PublishSubject<SeedState>()
     
+    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        self.tagStorage = TagStorage()
+        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+    }
+    
     func showAddVC() {
-        let got = Got(id: Int64(arc4random()), tag: .init(id: Int64(arc4random()), name: "tag1", color: "#123123"), title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, isDone: false, place: "맛집", insertedDate: Date())
+        let got = Got(id: Int64(arc4random()), tag: .init(name: "tag1", color: "#123123"), title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, isDone: false, place: "맛집", insertedDate: Date())
         let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     
     func createGot(got: Got){
-        self.storage.createGot(gotToCreate: got).subscribe { event in
-            switch event{
-            case .next:
-                print("추가 성공")
-            case .error(let error):
-                self.handleError(error: error)
-            case .completed:
-                print("저장 완료 또는 실패")
-                self.updateList()
-                
-            }
-        }.disposed(by: disposeBag)
-        
+        let tagList = try! self.tagList.value()
+        if !tagList.contains(got.tag!){
+            tagStorage.createTag(tagToCreate: got.tag!).bind { (tag) in
+                self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+                    self.updateGotList()
+                    self.updateTagList()
+                }).disposed(by: self.disposeBag)
+            }.disposed(by: self.disposeBag)
+        }else{
+            self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+                self.updateGotList()
+                self.updateTagList()
+            }).disposed(by: self.disposeBag)
+        }
     }
     
     func updateGot(got: Got){
@@ -71,7 +79,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
                 self.handleError(error: error)
             case .completed:
                 print("수정 완료 또는 실패")
-                self.updateList()
+                self.updateGotList()
             }
         }.disposed(by: disposeBag)
     }
@@ -85,7 +93,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
                 self.handleError(error: error)
             case .completed:
                 print("제거 완료 또는 실패")
-                self.updateList()
+                self.updateGotList()
             }
             }).disposed(by: disposeBag)
         
@@ -103,14 +111,38 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             case let .deleteError(err):
                 print(err)
             }
+        }else if let error = error as? TagStorageError{
+            switch error {
+            case let .createError(err):
+                print(err)
+            case let .fetchError(err):
+                print(err)
+            case let .updateError(err):
+                print(err)
+            case let .deleteError(err):
+                print(err)
+            }
         }
     }
     
-    func updateList(){
+    func updateGotList(){
         self.storage.fetchGotList().subscribe { (event) in
             switch event{
             case .next(let gotList):
                 self.gotList.onNext(gotList)
+            case .completed:
+                print("조회 성공 또는 실패")
+            case .error(let error):
+                self.handleError(error: error)
+            }
+        }.disposed(by: self.disposeBag)
+    }
+    
+    func updateTagList(){
+        self.tagStorage.fetchTagList().subscribe { event in
+            switch event{
+            case .next(let tagList):
+                self.tagList.onNext(tagList)
             case .completed:
                 print("조회 성공 또는 실패")
             case .error(let error):

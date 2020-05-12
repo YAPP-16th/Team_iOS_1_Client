@@ -13,12 +13,10 @@ import RxDataSources
 
 
 struct Tag: Equatable {
-    var id: Int64?
     var name: String
     var color: String // hex. ex) "#FFFFFF"
     
-    init(id: Int64?, name: String, color: String){
-        self.id = id
+    init(name: String, color: String){
         self.name = name
         self.color = color
     }
