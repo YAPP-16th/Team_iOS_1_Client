@@ -7,13 +7,20 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SettingViewController: BaseViewController, ViewModelBindableType {
     
     var viewModel: SettingViewModel!
 
-    override func viewDidLoad() {
+	
+	@IBOutlet var SettingTableView: UITableView!
+	
+	
+	override func viewDidLoad() {
         super.viewDidLoad()
+		
     }
     
     func bindViewModel() {

@@ -19,10 +19,16 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     var memos = [Got]()
     
     // MARK: - Views
-    @IBOutlet weak var gotListTableView: UITableView!
 
+	@IBOutlet weak var gotListTableView: UITableView!
+	
+	@IBOutlet var ListAddButton: UIButton!
+	
+	@IBAction func moveAddVC(_ sender: Any) {
+		viewModel.inputs.showVC()
 
-    // MARK: - View Life Cycle
+	}
+	// MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +50,12 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        viewModel.outputs.gotList
-                  .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { index, got, cell in
-                      print(got.title)
-                cell.textLabel?.text = got.title
-            }
-            .disposed(by: disposeBag)
+//        viewModel.outputs.gotList
+//                  .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { index, got, cell in
+//                      print(got.title)
+//                cell.textLabel?.text = got.title
+//            }
+//            .disposed(by: disposeBag)
       
           
       }
