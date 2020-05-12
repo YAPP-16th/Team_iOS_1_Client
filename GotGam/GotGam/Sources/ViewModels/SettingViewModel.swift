@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import RxSwift
 
 
 protocol SettingViewModelInputs {
-    
+    func showDetailVC()
 }
 
 protocol SettingViewModelOutputs {
-    
+	var citiesOb: Observable<[String]> { get }
 }
 
 protocol SettingViewModelType {
@@ -24,10 +25,19 @@ protocol SettingViewModelType {
 
 
 class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelInputs, SettingViewModelOutputs {
-    
+	
+	func showDetailVC() {
+		let movesettingalarmVM = SettingAlarmViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .settingAlarm(movesettingalarmVM), using: .push, animated: true)
+	}
+	
+	var citiesOb = Observable<[String]>.just(["푸시 알람 설정", "자주 가는 장소 설정", "약관 및 정책"])
+	
     var inputs: SettingViewModelInputs { return self }
     var outputs: SettingViewModelOutputs { return self }
     
 
+	
+	
     
 }

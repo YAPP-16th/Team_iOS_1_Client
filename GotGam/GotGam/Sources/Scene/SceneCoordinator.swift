@@ -69,6 +69,8 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             target = scene.instantiate(from: "Map")
         case .tabBar:
             target = scene.instantiate(from: "Main")
+		case .settingAlarm:
+			target = scene.instantiate(from: "Setting")
         }
         
         switch style {
