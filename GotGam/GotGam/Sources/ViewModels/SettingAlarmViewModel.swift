@@ -11,7 +11,7 @@ import RxSwift
 
 
 protocol SettingAlarmViewModelInputs {
-    
+	var isOnAlarm: BehaviorSubject<Bool> { get set }
 }
 
 protocol SettingAlarmViewModelOutputs {
@@ -25,6 +25,9 @@ protocol SettingAlarmViewModelType {
 
 
 class SettingAlarmViewModel: CommonViewModel, SettingAlarmViewModelType, SettingAlarmViewModelInputs, SettingAlarmViewModelOutputs {
+	
+	var isOnAlarm = BehaviorSubject<Bool>(value: true)
+	
 	
     var inputs: SettingAlarmViewModelInputs { return self }
     var outputs: SettingAlarmViewModelOutputs { return self }

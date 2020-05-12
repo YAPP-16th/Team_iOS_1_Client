@@ -30,19 +30,24 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 		settingTableView.rx.setDelegate(self)
 			.disposed(by: disposeBag)
 		
-		print(viewModel.outputs.citiesOb)
-		viewModel.outputs.citiesOb
+		
+		viewModel.outputs.settingMenu
 			.bind(to: settingTableView.rx.items(cellIdentifier: "settingCell")) {
 				(index: Int, element: String, cell: UITableViewCell) in
 				
 				cell.textLabel?.text = element
+				
 				
 		}.disposed(by: disposeBag)
 			
 		settingTableView.rx.itemSelected
 			.subscribe(onNext: { [weak self] (indexPath) in
 				if indexPath.row == 0 {
-					self?.viewModel.inputs.showDetailVC()
+					self?.viewModel.inputs.showAlarmDetailVC()
+				} else if indexPath.row == 1 {
+					print("2")
+				} else if indexPath.row == 2 {
+					print("3")
 				}
 			})
 			.disposed(by: disposeBag)

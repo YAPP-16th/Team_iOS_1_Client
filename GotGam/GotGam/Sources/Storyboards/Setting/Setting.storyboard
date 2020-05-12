@@ -9,15 +9,12 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Spoqa Han Sans Bold.ttf">
-            <string>SpoqaHanSans-Bold</string>
-        </array>
         <array key="Spoqa Han Sans Regular.ttf">
             <string>SpoqaHanSans-Regular</string>
         </array>
     </customFonts>
     <scenes>
-        <!--Setting View Controller-->
+        <!--설정-->
         <scene sceneID="DxS-Pf-cS5">
             <objects>
                 <viewController id="upZ-UE-W9t" customClass="SettingViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
@@ -25,17 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="설정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7MI-E3-hqP">
-                                <rect key="frame" x="16" y="101.5" width="42" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="9FA-v9-Q41"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="24"/>
-                                <color key="textColor" name="black"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D0H-h0-rKX" userLabel="로그인View">
-                                <rect key="frame" x="0.0" y="145.5" width="414" height="130"/>
+                                <rect key="frame" x="0.0" y="147.5" width="414" height="130"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icsettingLogin" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Vh-wmv">
                                         <rect key="frame" x="16" y="27" width="60" height="60"/>
@@ -59,13 +47,12 @@
                                     <constraint firstItem="CgE-Vh-wmv" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="top" constant="27" id="3Ol-wY-c30"/>
                                     <constraint firstAttribute="height" constant="130" id="4y3-2g-DBM"/>
                                     <constraint firstItem="b7I-08-5TT" firstAttribute="leading" secondItem="CgE-Vh-wmv" secondAttribute="trailing" constant="25" id="7Lb-oB-JsS"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="ZK6-5l-jwc"/>
                                     <constraint firstItem="CgE-Vh-wmv" firstAttribute="leading" secondItem="D0H-h0-rKX" secondAttribute="leading" constant="16" id="mzp-6a-e8n"/>
                                     <constraint firstItem="b7I-08-5TT" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="top" constant="39" id="qd3-gx-GfX"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-9K-bK3">
-                                <rect key="frame" x="0.0" y="275.5" width="414" height="537.5"/>
+                                <rect key="frame" x="0.0" y="277.5" width="414" height="535.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="settingCell" rowHeight="44" id="773-iS-eeF">
@@ -81,19 +68,17 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="D0H-h0-rKX" firstAttribute="trailing" secondItem="xTR-w3-ghi" secondAttribute="trailing" id="9y1-gk-HHx"/>
-                            <constraint firstItem="D0H-h0-rKX" firstAttribute="top" secondItem="7MI-E3-hqP" secondAttribute="bottom" constant="20" id="H4R-Ys-wU1"/>
-                            <constraint firstItem="7MI-E3-hqP" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" constant="16" id="TLZ-oQ-KJZ"/>
-                            <constraint firstItem="3cg-9K-bK3" firstAttribute="trailing" secondItem="xTR-w3-ghi" secondAttribute="trailing" id="gjx-Kc-fYp"/>
-                            <constraint firstItem="3cg-9K-bK3" firstAttribute="bottom" secondItem="xTR-w3-ghi" secondAttribute="bottom" id="sFV-7g-eXV"/>
-                            <constraint firstItem="3cg-9K-bK3" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" id="u4N-dG-RXC"/>
-                            <constraint firstItem="3cg-9K-bK3" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="bottom" id="vhr-Eg-AVk"/>
-                            <constraint firstItem="7MI-E3-hqP" firstAttribute="top" secondItem="xTR-w3-ghi" secondAttribute="top" constant="13.6" id="wcm-Yg-ibW"/>
-                            <constraint firstItem="D0H-h0-rKX" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" id="xPr-dJ-0kA"/>
+                            <constraint firstItem="3cg-9K-bK3" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="bottom" id="C87-Ld-FER"/>
+                            <constraint firstItem="D0H-h0-rKX" firstAttribute="trailing" secondItem="xTR-w3-ghi" secondAttribute="trailing" id="IJt-ot-jzP"/>
+                            <constraint firstItem="D0H-h0-rKX" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" id="kaX-N1-A8C"/>
+                            <constraint firstItem="3cg-9K-bK3" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" id="nkA-oQ-FNI"/>
+                            <constraint firstItem="3cg-9K-bK3" firstAttribute="trailing" secondItem="xTR-w3-ghi" secondAttribute="trailing" id="uoS-ll-xqH"/>
+                            <constraint firstItem="D0H-h0-rKX" firstAttribute="top" secondItem="xTR-w3-ghi" secondAttribute="top" id="wys-r5-OOd"/>
+                            <constraint firstItem="3cg-9K-bK3" firstAttribute="bottom" secondItem="xTR-w3-ghi" secondAttribute="bottom" id="yud-0V-o6t"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xTR-w3-ghi"/>
                     </view>
-                    <navigationItem key="navigationItem" id="267-ij-Rdf"/>
+                    <navigationItem key="navigationItem" title="설정" id="267-ij-Rdf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="SettingTableView" destination="3cg-9K-bK3" id="hBc-R2-F2n"/>
@@ -147,7 +132,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="t8h-Ff-b00">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingToggleCell" id="t8h-Ff-b00">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t8h-Ff-b00" id="Ofm-MO-0DJ">
@@ -197,8 +182,8 @@
                     <tabBarItem key="tabBarItem" title="" id="5CN-Md-hPi"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YDp-ya-fgi">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="YDp-ya-fgi">
+                        <rect key="frame" x="0.0" y="44" width="414" height="103.5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

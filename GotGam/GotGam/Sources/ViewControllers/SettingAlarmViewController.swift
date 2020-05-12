@@ -17,13 +17,27 @@ class SettingAlarmViewController: BaseViewController, ViewModelBindableType {
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
-		
-		
+		navigationItem.largeTitleDisplayMode = .never
 	}
 	
 	func bindViewModel() {
 		
 		
+	}
+	
+	func settingToggle() {
+//		guard let cell = table.dequeueReusableCell(withIdentifier: "settingToggleCell", for: indexPath) as? ToggleableTableViewCell else { return UITableViewCell()
+//
+//		cell.configure(viewModel: viewModel, title: title, enabled: enabled)
+//
+//		if indexPath.section == 1 {
+//			cell.enableSwitch.rx
+//				.isOn.changed
+//				.debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+//				.bind(to: viewModel.isOnDate)
+//				.disposed(by: cell.disposedBag)
+//	}
+		print("settingToggle")
 	}
 }
 

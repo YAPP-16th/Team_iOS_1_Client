@@ -12,6 +12,8 @@ import RxSwift
 class ToggleableTableViewCell: UITableViewCell {
 
     var viewModel: AddPlantViewModel?
+	var viewModelSetting: SettingAlarmViewModel?
+	
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var enableSwitch: UISwitch!
     
@@ -25,6 +27,17 @@ class ToggleableTableViewCell: UITableViewCell {
         print(enableSwitch.tag)
         if enableSwitch.tag == 1 {
             enableSwitch.rx.isOn.bind(to: viewModel.isOnDate).disposed(by: disposedBag)
+        }
+    }
+	
+	func configureSetting(viewModelSetting vm: SettingAlarmViewModel, title: String, enabled: Bool) {
+        viewModelSetting = vm
+        titleLabel.text = title
+        
+        guard let viewModel = viewModelSetting else { return }
+        print(enableSwitch.tag)
+        if enableSwitch.tag == 1 {
+            enableSwitch.rx.isOn.bind(to: viewModel.isOnAlarm).disposed(by: disposedBag)
         }
     }
     
