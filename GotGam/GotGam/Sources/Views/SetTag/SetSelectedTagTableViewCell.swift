@@ -21,10 +21,12 @@ class SetSelectedTagTableViewCell: UITableViewCell {
         titleLabel.text = title
         
         viewModel.selectedTag
+            //.compactMap { $0?.name }
             .bind(to: tagLabel.rx.text)
             .disposed(by: disposeBag)
     
         viewModel.selectedTag
+            //.compactMap { $0?.color }
             .map { $0.hexToColor() }
             .bind(to: tagColorView.rx.backgroundColor)
             .disposed(by: disposeBag)
