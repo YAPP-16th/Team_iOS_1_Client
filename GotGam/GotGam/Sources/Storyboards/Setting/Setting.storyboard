@@ -64,8 +64,8 @@
                                     <constraint firstItem="b7I-08-5TT" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="top" constant="39" id="qd3-gx-GfX"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-9K-bK3">
-                                <rect key="frame" x="0.0" y="303" width="414" height="510"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-9K-bK3">
+                                <rect key="frame" x="0.0" y="343.5" width="414" height="469.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="773-iS-eeF">
@@ -173,6 +173,7 @@
                             <constraint firstItem="D0H-h0-rKX" firstAttribute="top" secondItem="7MI-E3-hqP" secondAttribute="bottom" constant="20" id="H4R-Ys-wU1"/>
                             <constraint firstItem="7MI-E3-hqP" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" constant="16" id="TLZ-oQ-KJZ"/>
                             <constraint firstItem="3cg-9K-bK3" firstAttribute="trailing" secondItem="xTR-w3-ghi" secondAttribute="trailing" id="gjx-Kc-fYp"/>
+                            <constraint firstItem="3cg-9K-bK3" firstAttribute="bottom" secondItem="xTR-w3-ghi" secondAttribute="bottom" id="sFV-7g-eXV"/>
                             <constraint firstItem="3cg-9K-bK3" firstAttribute="leading" secondItem="xTR-w3-ghi" secondAttribute="leading" id="u4N-dG-RXC"/>
                             <constraint firstItem="3cg-9K-bK3" firstAttribute="top" secondItem="D0H-h0-rKX" secondAttribute="bottom" constant="44" id="vhr-Eg-AVk"/>
                             <constraint firstItem="7MI-E3-hqP" firstAttribute="top" secondItem="xTR-w3-ghi" secondAttribute="top" constant="13.6" id="wcm-Yg-ibW"/>
@@ -230,15 +231,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="adF-hF-7gj">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="adF-hF-7gj">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="t8h-Ff-b00">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t8h-Ff-b00" id="Ofm-MO-0DJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dS-YA-Vvy">
@@ -266,6 +267,7 @@
                         <constraints>
                             <constraint firstItem="adF-hF-7gj" firstAttribute="top" secondItem="GuS-pG-xne" secondAttribute="top" id="DSu-md-dQG"/>
                             <constraint firstItem="adF-hF-7gj" firstAttribute="leading" secondItem="GuS-pG-xne" secondAttribute="leading" id="HA4-si-L6Z"/>
+                            <constraint firstItem="adF-hF-7gj" firstAttribute="bottom" secondItem="GuS-pG-xne" secondAttribute="bottom" id="coO-bs-h0s"/>
                             <constraint firstItem="GuS-pG-xne" firstAttribute="trailing" secondItem="adF-hF-7gj" secondAttribute="trailing" id="oKb-dV-gD9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GuS-pG-xne"/>
