@@ -24,6 +24,17 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func fetchTagList() -> Observable<[Tag]> {
+        do{
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedTag")
+            let results = try self.context.fetch(fetchRequest) as! [ManagedTag]
+            let tagList = results.map { $0.toTag() }
+            return .just(tagList)
+        }catch{
+            return .error(GotStorageError.fetchError("TagList 조회 과정에서 문제발생"))
+        }
+    }
+    
     func fetchGot(id: Int64) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")

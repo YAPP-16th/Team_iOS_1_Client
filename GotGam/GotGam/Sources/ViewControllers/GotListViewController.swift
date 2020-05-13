@@ -12,18 +12,14 @@ import RxCocoa
 
 class GotListViewController: BaseViewController, ViewModelBindableType {
     
+    // MARK: - Properties
+    
     var viewModel: GotListViewModel!
-    
     let searchController = UISearchController(searchResultsController: nil)
-  
-    var memos = [Got]()
-    
-    // MARK: - Views
 
-	@IBOutlet weak var gotListTableView: UITableView!
-	
-	@IBOutlet var ListAddButton: UIButton!
-	
+    // MARK: - Methods
+    
+	@IBOutlet var listAddButton: UIButton!
 	@IBAction func moveAddVC(_ sender: Any) {
 		viewModel.inputs.showVC()
 
@@ -32,53 +28,99 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSearchController()
+        //configureSearchController()
+        listAddButton.layer.cornerRadius = listAddButton.bounds.height/2
+        listAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
     }
   
     override func viewWillAppear(_ animated: Bool) {
-        memos = DBManager.share.fetchGotgam()
-        gotListTableView.reloadData()
+        //memos = DBManager.share.fetchGotgam()
+        //gotListTableView.reloadData()
+        
     }
     
     // MARK: - Initializing
     
-    func configureSearchController() {
-        
-        searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
-    }
+//    func configureSearchController() {
+//        searchController.searchResultsUpdater = self
+//        navigationItem.searchController = searchController
+//    }
     
     func bindViewModel() {
         
-//        viewModel.outputs.gotList
-//                  .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: UITableViewCell.self)) { index, got, cell in
-//                      print(got.title)
-//                cell.textLabel?.text = got.title
-//            }
-//            .disposed(by: disposeBag)
-      
-          
-      }
+        gotListTableView.rx.setDelegate(self).disposed(by: disposeBag)
+        tagCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
+    
+        viewModel.outputs.gotList
+            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: GotListTableViewCell.self)) { (index, got, cell) in
+                cell.configure(got)
+            }
+            .disposed(by: disposeBag)
 
+        viewModel.outputs.tagList
+            .bind(to: tagCollectionView.rx.items(cellIdentifier: "tagListCell", cellType: TagListCollectionViewCell.self)) { (index, tag, cell) in
+                cell.configure(tag)
+                cell.layer.cornerRadius = cell.bounds.height/2
+                cell.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 3), opacity: 0.2)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    
+    // MARK: - Views
+
+    @IBOutlet weak var gotListTableView: UITableView!
+    @IBOutlet var tagCollectionView: UICollectionView!
 }
-    
 
-
-extension GotListViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        // filter
+extension GotListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return memos.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath)
-        let amemos = memos[indexPath.row]
-        cell.textLabel?.text = amemos.title
+}
 
-        return cell
+extension GotListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension GotListViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        let title = viewModel.outputs.tagList.value[indexPath.item].name
+        let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 30), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
+        
+        // 8 + 태그뷰 + 8 + 글자 +
+        let width: CGFloat = 8 + 15 + 8 + rect.width + 8
+        // cell height - inset(10)
+        let height: CGFloat = 30
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 5, left: 16, bottom: -5, right: 0)
     }
 }
+    
+
+
+//extension GotListViewController: UISearchResultsUpdating {
+//    func updateSearchResults(for searchController: UISearchController) {
+//        // filter
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return memos.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath)
+//        let amemos = memos[indexPath.row]
+//        cell.textLabel?.text = amemos.title
+//
+//        return cell
+//
+//    }
+//}

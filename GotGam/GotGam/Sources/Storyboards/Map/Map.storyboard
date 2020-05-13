@@ -330,7 +330,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gam" translatesAutoresizingMaskIntoConstraints="NO" id="25x-KR-Vbp">
-                                                <rect key="frame" x="46.5" y="46" width="7" height="8"/>
+                                                <rect key="frame" x="17.5" y="16" width="65" height="68.5"/>
                                             </imageView>
                                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-rh-HKX">
                                                 <rect key="frame" x="25" y="25" width="50" height="50"/>
@@ -863,7 +863,7 @@
     </scenes>
     <resources>
         <image name="check" width="20" height="20"/>
-        <image name="gam" width="7" height="8"/>
+        <image name="gam" width="65" height="68.5"/>
         <image name="icListAddBtn" width="18" height="18"/>
         <image name="icSeed" width="18" height="24.5"/>
         <namedColor name="brownGrey">

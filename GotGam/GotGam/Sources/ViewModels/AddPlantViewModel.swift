@@ -148,13 +148,13 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 b ? self.insertItem(section: .date) : self.removeItem(section: .date)
             })
             .disposed(by: disposeBag)
-        
+
         isOnArrive
             .subscribe(onNext: { [unowned self] b in
                 b ? self.insertItem(section: .arrive) : self.removeItem(section: .arrive)
             })
             .disposed(by: disposeBag)
-        
+
         isOnLeave
             .subscribe(onNext: { [unowned self] b in
                 b ? self.insertItem(section: .leave) : self.removeItem(section: .leave)
@@ -170,6 +170,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 title: " ",
                 items: [
                     .ToggleableItem(title: InputItemType.date.title, enabled: got?.insertedDate != nil)
+                    //.TextFieldItem(text: dateText.value, placeholder: InputItemType.date.placeholder, enabled: false, isDate: true)
                 ]),
             .ToggleableSection(
                 section: InputItemType.arrive.rawValue,

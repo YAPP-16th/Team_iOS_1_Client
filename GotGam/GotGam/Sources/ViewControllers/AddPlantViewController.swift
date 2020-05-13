@@ -168,21 +168,21 @@ extension AddPlantViewController {
                         cell.enableSwitch.setOn(viewModel.inputs.isOnDate.value, animated: false)
                         cell.enableSwitch.rx
                             .isOn.changed
-                            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+                            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
                             .bind(to: viewModel.isOnDate)
                             .disposed(by: cell.disposedBag)
                     } else if indexPath.section == 2 {
                         cell.enableSwitch.setOn(viewModel.inputs.isOnArrive.value, animated: false)
                         cell.enableSwitch.rx
                             .isOn.changed
-                            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+                            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
                             .bind(to: viewModel.isOnArrive)
                             .disposed(by: cell.disposedBag)
                     } else if indexPath.section == 3 {
                         cell.enableSwitch.setOn(viewModel.inputs.isOnLeave.value, animated: false)
                         cell.enableSwitch.rx
                             .isOn.changed
-                            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+                            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
                             .bind(to: viewModel.isOnLeave)
                             .disposed(by: cell.disposedBag)
                     }

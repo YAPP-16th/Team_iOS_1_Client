@@ -25,6 +25,9 @@ protocol GotStorageType {
     func fetchGotList() -> Observable<[Got]>
     
     @discardableResult
+    func fetchTagList() -> Observable<[Tag]>
+
+    @discardableResult
     func fetchGot(id: Int64) -> Observable<Got>
     
     @discardableResult

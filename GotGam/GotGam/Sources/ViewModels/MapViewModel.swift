@@ -41,7 +41,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var seedState = PublishSubject<SeedState>()
     
     func showAddVC() {
-        let got = Got(id: Int64(arc4random()), tag: .init(id: Int64(arc4random()), name: "tag1", color: "#123123"), title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, isDone: false, place: "맛집", insertedDate: Date())
+        let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, isDone: false, place: "맛집", insertedDate: Date())
         let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
