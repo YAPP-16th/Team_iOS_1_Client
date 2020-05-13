@@ -17,8 +17,7 @@ extension ManagedTag {
         return NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
     }
 
-    @NSManaged public var color: String?
-    @NSManaged public var id: Int64
+    @NSManaged public var hex: String
     @NSManaged public var name: String?
 
 }
