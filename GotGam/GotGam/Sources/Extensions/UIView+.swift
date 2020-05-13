@@ -33,4 +33,12 @@ extension UIView {
             break
         }
     }
+    
+    func shadow(radius: CGFloat, color: UIColor, offset: CGSize, opacity: Float) {
+        self.layer.masksToBounds = false
+        self.layer.shadowRadius = radius
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowOffset = offset
+        self.layer.shadowOpacity = opacity
+    }
 }

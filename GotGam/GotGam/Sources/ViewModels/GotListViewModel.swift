@@ -8,13 +8,15 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 protocol GotListViewModelInputs {
 	func showVC()
 }
 
 protocol GotListViewModelOutputs {
-    var gotList: Observable<[Got]> { get }
+    var gotList: BehaviorSubject<[Got]> { get }
+    var tagList: BehaviorRelay<[Tag]> { get }
 }
 
 protocol GotListViewModelType {
@@ -25,19 +27,49 @@ protocol GotListViewModelType {
 
 class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelInputs, GotListViewModelOutputs {
     
+    
+    // Inputs
+    
+    // Outputs
+    
+    var gotList = BehaviorSubject<[Got]>(value: [])
+    var tagList = BehaviorRelay<[Tag]>(value: [])
+    
+//    var gotList: Observable<[Got]> {
+//        return storage.fetchGotList()
+//    }
+    
+    
+    
     var inputs: GotListViewModelInputs { return self }
     var outputs: GotListViewModelOutputs { return self }
     
 	func showVC() {
-    let got = Got(id: Int64(arc4random()), tag: .init(id: Int64(arc4random()), name: "tag1", color: "#123123"), title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, isDone: false, place: "맛집", insertedDate: Date())
-        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
-        sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
+        let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, isDone: false, place: "맛집", insertedDate: Date())
+            let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
+            sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
 	}
-	
-    // Outputs
     
-    var gotList: Observable<[Got]> {
-        return storage.fetchGotList()
+    
+    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+        
+        storage.fetchGotList()
+            .subscribe(onNext: { list in
+                print(list)
+                self.gotList.onNext(list)
+            })
+            .disposed(by: disposeBag)
+        
+        // MARK: tag 더미데이터 수정
+        let tags: [Tag] = [.init(name: "맛집", hex: TagColor.saffron.hex), .init(name: "할일", hex: TagColor.hospitalGreen.hex), Tag(name: "데이트할 곳", hex: TagColor.greenishBrown.hex)]
+        tagList.accept(tags)
+        
+//        storage.fetchTagList()
+//            .subscribe(onNext: { tag in
+//                self.tagList.onNext(tag)
+//            })
+//            .disposed(by: disposeBag)
+        
     }
-    
 }

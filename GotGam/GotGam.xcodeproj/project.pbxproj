@@ -26,6 +26,9 @@
 		4C5F0F6624654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F6524654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift */; };
 		4C5F0F682465503200C7A6E9 /* AlarmLeaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F672465503200C7A6E9 /* AlarmLeaveTableViewCell.swift */; };
 		4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F692465540700C7A6E9 /* Date+String.swift */; };
+		4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CEF246AB62A00B25B86 /* Tag.swift */; };
+		4C620CF7246ACDBE00B25B86 /* GotListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */; };
+		4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */; };
 		4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF812462BFF700FF17BC /* String+hexToColor.swift */; };
 		4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */; };
 		4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */; };
@@ -54,7 +57,7 @@
 		4CE3B6F82458709800A53BF8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4CE3B6FA2458744D00A53BF8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */; };
-		4CE3B7002459E36000A53BF8 /* UIView+line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FF2459E36000A53BF8 /* UIView+line.swift */; };
+		4CE3B7002459E36000A53BF8 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3B6FF2459E36000A53BF8 /* UIView+.swift */; };
 		4CF1D08A243E0EC700B45751 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D089243E0EC700B45751 /* OpenGLES.framework */; };
 		4CF1D08C243E0ECF00B45751 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D08B243E0ECF00B45751 /* SystemConfiguration.framework */; };
 		4CF1D08E243E0ED600B45751 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF1D08D243E0ED600B45751 /* CoreLocation.framework */; };
@@ -143,6 +146,9 @@
 		4C5F0F6524654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmArriveTableViewCell.swift; sourceTree = "<group>"; };
 		4C5F0F672465503200C7A6E9 /* AlarmLeaveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmLeaveTableViewCell.swift; sourceTree = "<group>"; };
 		4C5F0F692465540700C7A6E9 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
+		4C620CEF246AB62A00B25B86 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotListTableViewCell.swift; sourceTree = "<group>"; };
+		4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C65BF812462BFF700FF17BC /* String+hexToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+hexToColor.swift"; sourceTree = "<group>"; };
 		4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewModel.swift; sourceTree = "<group>"; };
 		4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewController.swift; sourceTree = "<group>"; };
@@ -169,7 +175,7 @@
 		4CE037ED2438CD810093E39D /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		4CE037EF2438D6990093E39D /* Got.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Got.swift; sourceTree = "<group>"; };
 		4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlantViewModel.swift; sourceTree = "<group>"; };
-		4CE3B6FF2459E36000A53BF8 /* UIView+line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+line.swift"; sourceTree = "<group>"; };
+		4CE3B6FF2459E36000A53BF8 /* UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		4CF1D089243E0EC700B45751 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		4CF1D08B243E0ECF00B45751 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CF1D08D243E0ED600B45751 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -379,12 +385,13 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4C620CEF246AB62A00B25B86 /* Tag.swift */,
 				A125E79D2469AFC3007767D7 /* ManagedTag+CoreDataClass.swift */,
 				A125E79E2469AFC3007767D7 /* ManagedTag+CoreDataProperties.swift */,
+				4CE037EF2438D6990093E39D /* Got.swift */,
 				A125E79F2469AFC3007767D7 /* ManagedGot+CoreDataClass.swift */,
 				A125E7A02469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
-				4CE037EF2438D6990093E39D /* Got.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -569,7 +576,7 @@
 			children = (
 				A157E11A24557410001E310D /* GGUserDefault.swift */,
 				A157E11C2455754A001E310D /* Extensions.swift */,
-				4CE3B6FF2459E36000A53BF8 /* UIView+line.swift */,
+				4CE3B6FF2459E36000A53BF8 /* UIView+.swift */,
 				4C65BF812462BFF700FF17BC /* String+hexToColor.swift */,
 				4C5F0F692465540700C7A6E9 /* Date+String.swift */,
 			);
@@ -583,6 +590,8 @@
 				A16439702454001100C740F4 /* MapTagCell.swift */,
 				A16439732454002300C740F4 /* MapQuickAddView.xib */,
 				A164397524540A0F00C740F4 /* MapQuickAddView.swift */,
+				4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */,
+				4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */,
 				4CBD536D245EB97E00B235D5 /* Add */,
 				4CBD536E245EB98C00B235D5 /* SetTag */,
 				4C65BFA724630EDE00FF17BC /* CreateTag */,
@@ -792,6 +801,8 @@
 				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
 				4CE3B6FA2458744D00A53BF8 /* (null) in Sources */,
 				4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */,
+				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,
+				4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */,
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */,
@@ -801,7 +812,7 @@
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
-				4CE3B7002459E36000A53BF8 /* UIView+line.swift in Sources */,
+				4CE3B7002459E36000A53BF8 /* UIView+.swift in Sources */,
 				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
 				4C5F0F682465503200C7A6E9 /* AlarmLeaveTableViewCell.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
@@ -825,6 +836,7 @@
 				4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */,
 				4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */,
 				A157E118245572F4001E310D /* LocationManagerType.swift in Sources */,
+				4C620CF7246ACDBE00B25B86 /* GotListTableViewCell.swift in Sources */,
 				4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
