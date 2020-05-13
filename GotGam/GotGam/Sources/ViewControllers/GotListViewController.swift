@@ -19,7 +19,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
 
     // MARK: - Methods
     
-	@IBOutlet var ListAddButton: UIButton!
+	@IBOutlet var listAddButton: UIButton!
 	@IBAction func moveAddVC(_ sender: Any) {
 		viewModel.inputs.showVC()
 
@@ -29,11 +29,14 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         //configureSearchController()
+        listAddButton.layer.cornerRadius = listAddButton.bounds.height/2
+        listAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
     }
   
     override func viewWillAppear(_ animated: Bool) {
         //memos = DBManager.share.fetchGotgam()
-        gotListTableView.reloadData()
+        //gotListTableView.reloadData()
+        
     }
     
     // MARK: - Initializing
@@ -45,8 +48,8 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        tagCollectionView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+        gotListTableView.rx.setDelegate(self).disposed(by: disposeBag)
+        tagCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
     
         viewModel.outputs.gotList
             .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: GotListTableViewCell.self)) { (index, got, cell) in
@@ -70,6 +73,18 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var tagCollectionView: UICollectionView!
 }
 
+extension GotListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+}
+
+extension GotListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
 extension GotListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -87,8 +102,6 @@ extension GotListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 5, left: 16, bottom: -5, right: 0)
     }
-    
-    
 }
     
 

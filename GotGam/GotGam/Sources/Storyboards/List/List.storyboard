@@ -267,8 +267,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="DRj-yK-8GH"/>
                     <connections>
-                        <outlet property="ListAddButton" destination="MqI-NW-AlK" id="WbB-ri-5nr"/>
                         <outlet property="gotListTableView" destination="04h-mj-DYN" id="giJ-Ba-IYt"/>
+                        <outlet property="listAddButton" destination="MqI-NW-AlK" id="WbB-ri-5nr"/>
                         <outlet property="tagCollectionView" destination="A6V-se-hdF" id="Va9-8R-cu9"/>
                     </connections>
                 </viewController>
