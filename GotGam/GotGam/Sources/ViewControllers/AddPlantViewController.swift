@@ -13,7 +13,7 @@ import RxCocoa
 import CoreLocation
 
 class AddPlantViewController: BaseViewController, ViewModelBindableType {
-    
+
     // MARK: - Properties
     
     var viewModel: AddPlantViewModel!
@@ -57,8 +57,21 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         //let centerCoor = MTMapPoint(geoCoord: .init(latitude: currentCenter.latitude, longitude: currentCenter.longitude))
         mapView.setMapCenter(currentCenter, animated: false)
     }
+    
+    func showAlert(_ label: UILabel, message msg: String) {
+        
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.duration = 1
+        animation.fromValue = 1
+        animation.toValue = 0
+        animation.isRemovedOnCompletion = true
+
+        label.text = msg
+        label.layer.add(animation, forKey: "opacity")
+    }
 
     @IBAction func didTapEditMapButton(_ sender: UIButton) {
+    
     }
     
     // MARK: - View Life Cycle
@@ -74,9 +87,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         drawSeed(point: currentCenter)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -89,7 +106,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     func setupViews() {
         titleTextField.tintColor = .orange
         titleTextField.addLine(position: .bottom, color: .lightGray, width: 0.5)
+        
         editButton.layer.cornerRadius = editButton.bounds.height/2
+        
+        alertDefaultLabel.layer.cornerRadius = 6
+        alertDefaultLabel.alpha = 0
+        
+        alertErrorLabel.layer.cornerRadius = 6
     }
     
     func setupMapView() {
@@ -129,6 +152,28 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .subscribe(onNext: { _ in self.viewModel.tapTag.onNext(()) })
             .disposed(by: disposeBag)
         
+        Observable.combineLatest(viewModel.inputs.isOnArrive, viewModel.inputs.isOnLeave)
+            .subscribe(onNext: { [unowned self] arrive, leave in
+                
+                if !arrive, !leave {
+                    self.alertErrorLabel.isHidden = false
+                    return
+                } else {
+                    self.alertErrorLabel.isHidden = true
+                }
+                
+                var msg = ""
+                if arrive, leave {
+                    msg = "도착할 때와 떠날 때 알려줍니다"
+                } else if arrive {
+                    msg = "도착할 때만 알려줍니다"
+                } else if leave {
+                    msg = "떠날 때만 알려줍니다"
+                }
+                
+                self.showAlert(self.alertDefaultLabel, message: msg)
+            })
+            .disposed(by: disposeBag)
         
         // Output
         
@@ -145,6 +190,8 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var placeLabel: UILabel!
     @IBOutlet var mapBackgroundView: UIView!
+    @IBOutlet var alertDefaultLabel: PaddingLabel!
+    @IBOutlet var alertErrorLabel: PaddingLabel!
     var mapView: MTMapView!
     @IBOutlet var addIconButton: UIButton!
     @IBOutlet var inputTableView: UITableView!
@@ -249,15 +296,15 @@ extension AddPlantViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
+//        let view = UIView()
+//        view.backgroundColor = .clear
+        return nil
     }
-    
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == tableView.numberOfSections-1 {
-            return 44
-        }
+//        if section == tableView.numberOfSections-1 {
+//            return 44
+//        }
         return 0
     }
 }

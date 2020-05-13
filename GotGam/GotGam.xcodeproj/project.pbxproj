@@ -29,6 +29,7 @@
 		4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CEF246AB62A00B25B86 /* Tag.swift */; };
 		4C620CF7246ACDBE00B25B86 /* GotListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */; };
 		4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */; };
+		4C620D12246C370300B25B86 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620D11246C370300B25B86 /* PaddingLabel.swift */; };
 		4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF812462BFF700FF17BC /* String+hexToColor.swift */; };
 		4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */; };
 		4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */; };
@@ -149,6 +150,7 @@
 		4C620CEF246AB62A00B25B86 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotListTableViewCell.swift; sourceTree = "<group>"; };
 		4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListCollectionViewCell.swift; sourceTree = "<group>"; };
+		4C620D11246C370300B25B86 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		4C65BF812462BFF700FF17BC /* String+hexToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+hexToColor.swift"; sourceTree = "<group>"; };
 		4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewModel.swift; sourceTree = "<group>"; };
 		4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewController.swift; sourceTree = "<group>"; };
@@ -599,6 +601,7 @@
 				4C5F0F672465503200C7A6E9 /* AlarmLeaveTableViewCell.swift */,
 				A125E7A52469B2D1007767D7 /* MapRestoreView.swift */,
 				A125E7A72469B300007767D7 /* MapRestoreView.xib */,
+				4C620D11246C370300B25B86 /* PaddingLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -813,6 +816,7 @@
 				A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+.swift in Sources */,
+				4C620D12246C370300B25B86 /* PaddingLabel.swift in Sources */,
 				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
 				4C5F0F682465503200C7A6E9 /* AlarmLeaveTableViewCell.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
