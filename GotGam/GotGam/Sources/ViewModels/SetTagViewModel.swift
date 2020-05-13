@@ -11,19 +11,6 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-
-struct Tag: Equatable {
-    var id: Int64?
-    var name: String
-    var color: String // hex. ex) "#FFFFFF"
-    
-    init(id: Int64?, name: String, color: String){
-        self.id = id
-        self.name = name
-        self.color = color
-    }
-}
-
 protocol SetTagViewModelInputs {
     var back: PublishSubject<Void> { get set }
     var save: PublishSubject<Void> { get set }
