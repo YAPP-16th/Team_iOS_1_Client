@@ -48,11 +48,11 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         tagCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     
-//        viewModel.outputs.gotList
-//            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: GotListTableViewCell.self)) { (index, got, cell) in
-//                cell.configure(got)
-//            }
-//            .disposed(by: disposeBag)
+        viewModel.outputs.gotList
+            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: GotListTableViewCell.self)) { (index, got, cell) in
+                cell.configure(got)
+            }
+            .disposed(by: disposeBag)
 
         viewModel.outputs.tagList
             .bind(to: tagCollectionView.rx.items(cellIdentifier: "tagListCell", cellType: TagListCollectionViewCell.self)) { (index, tag, cell) in

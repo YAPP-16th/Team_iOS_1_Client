@@ -56,7 +56,6 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
         
         storage.fetchGotList()
             .subscribe(onNext: { list in
-                print(list)
                 self.gotList.onNext(list)
             })
             .disposed(by: disposeBag)

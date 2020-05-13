@@ -13,7 +13,6 @@ class GotListTableViewCell: UITableViewCell {
     
     
     func configure(_ got: Got) {
-        print(got)
 //        titleLabel.text = got.title
 //        tagView.backgroundColor = got.tag?.color.hexToColor()
 //        placeLabel.text = got.place

@@ -17,7 +17,6 @@ class TagListCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         tagView.layer.cornerRadius = tagView.bounds.height/2
     }
     
