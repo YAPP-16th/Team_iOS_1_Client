@@ -50,7 +50,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             DispatchQueue.main.async {
                 self.cardCollectionViewHeightConstraint.constant = self.gotList.isEmpty ? 0 : 170
                 self.view.layoutIfNeeded()
-                self.cardCollectionView.reloadData()
+//                self.cardCollectionView.reloadData()
                 self.addPin()
             }
         }
@@ -59,7 +59,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     var tagList: [Tag] = []{
         didSet{
             DispatchQueue.main.async {
-                self.tagCollectionView.reloadData()
+//                self.tagCollectionView.reloadData()
             }
         }
     }
@@ -178,7 +178,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     private func configureCardCollectionView(){
         cardCollectionView.collectionViewLayout = centeredCollectionViewFlowLayout
         cardCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-        cardCollectionView.delegate = self
         centeredCollectionViewFlowLayout.itemSize = CGSize (width: 195, height: 158)
         centeredCollectionViewFlowLayout.minimumLineSpacing = 10
     }
@@ -214,12 +213,40 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self?.setMyLocation()
             }).disposed(by: disposeBag)
         
-        self.viewModel.gotList.subscribe(onNext: { list in
-            self.gotList = list
+        self.tagCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
+        self.cardCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
+        
+        self.viewModel.gotList.bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { (index, got, cell) in
+            cell.got = got
+            
+            cell.doneButton.rx.tap
+            .do(onNext: {
+                cell.isDoneFlag = !cell.isDoneFlag
+                cell.got?.isDone = cell.isDoneFlag
+                self.currentDoneGot = cell.isDoneFlag ? got : nil
+            })
+            .debounce(.seconds(5), scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                guard let currentGot = self.currentDoneGot else { return }
+                self.viewModel.updateGot(got: currentGot)
+            }).disposed(by: cell.disposeBag)
+            
+            cell.cancelButton.rx.tap.subscribe(onNext: {
+                self.viewModel.deleteGot(got: cell.got!)
+            }).disposed(by: cell.disposeBag)
+        }.disposed(by: self.disposeBag)
+        
+        self.viewModel.output.tagList.bind(to: tagCollectionView.rx.items(cellIdentifier: MapTagCell.reuseIdenfier, cellType: MapTagCell.self)) { (index, tag, cell) in
+            cell.tagIndicator.backgroundColor = tag.hex.hexToColor()
+            cell.tagLabel.text = tag.name
+        }.disposed(by: self.disposeBag)
+        
+        self.viewModel.output.tagList.subscribe(onNext: { list in
+            self.tagList = list
         }).disposed(by: self.disposeBag)
         
-        self.viewModel.tagList.subscribe(onNext: { list in
-            self.tagList = list
+        self.viewModel.output.gotList.subscribe(onNext: { list in
+            self.gotList = list
         }).disposed(by: self.disposeBag)
     }
     
@@ -317,51 +344,6 @@ extension MapViewController: MTMapViewDelegate{
             break
         case .none:
             break
-        }
-    }
-}
-
-
-
-extension MapViewController: UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.tagCollectionView{
-            return self.tagList.count
-        }else {
-            return self.gotList.count
-        }
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.tagCollectionView{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapTagCell.reuseIdenfier, for: indexPath) as! MapTagCell
-            let data = self.tagList[indexPath.item]
-            
-            cell.tagIndicator.backgroundColor = TagColor.allCases.filter { $0.hex == data.hex }.first?.color
-            cell.tagLabel.text = data.name
-            return cell
-        }else if collectionView == self.cardCollectionView{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapCardCollectionViewCell.reuseIdenfier, for: indexPath) as! MapCardCollectionViewCell
-            let got = self.gotList[indexPath.item]
-            cell.got = got
-            
-            cell.doneButton.rx.tap
-            .do(onNext: {
-                cell.isDoneFlag = !cell.isDoneFlag
-                cell.got?.isDone = cell.isDoneFlag
-                self.currentDoneGot = cell.isDoneFlag ? got : nil
-            })
-            .debounce(.seconds(5), scheduler: MainScheduler.instance)
-            .subscribe(onNext: {
-                guard let currentGot = self.currentDoneGot else { return }
-                self.viewModel.updateGot(got: currentGot)
-            }).disposed(by: cell.disposeBag)
-            
-            cell.cancelButton.rx.tap.subscribe(onNext: {
-                self.viewModel.deleteGot(got: cell.got!)
-            }).disposed(by: cell.disposeBag)
-            return cell
-        }else{
-            fatalError()
         }
     }
 }
