@@ -20,7 +20,6 @@ class MapCardCollectionViewCell: UICollectionViewCell{
     @IBOutlet weak var doneButton: UIButton!
     
     var disposeBag = DisposeBag()
-    var isDoneFlag = false
     
     lazy var dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -35,11 +34,7 @@ class MapCardCollectionViewCell: UICollectionViewCell{
             titleLabel.text = got.title
             addressLabel.text = got.place
             dueDateLabel.text = self.dateFormatter.string(from: got.insertedDate ?? Date())
-            if let hex = got.tag?.first?.hex{
-                tagView.backgroundColor = TagColor.allCases.filter { $0.hex == hex }.first?.color
-            }
-            
-            self.isDoneFlag = got.isDone
+            tagView.backgroundColor = got.tag?.first?.hex.hexToColor()
         }
     }
     

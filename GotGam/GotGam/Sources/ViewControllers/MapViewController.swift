@@ -50,16 +50,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             DispatchQueue.main.async {
                 self.cardCollectionViewHeightConstraint.constant = self.gotList.isEmpty ? 0 : 170
                 self.view.layoutIfNeeded()
-//                self.cardCollectionView.reloadData()
                 self.addPin()
-            }
-        }
-    }
-    
-    var tagList: [Tag] = []{
-        didSet{
-            DispatchQueue.main.async {
-//                self.tagCollectionView.reloadData()
             }
         }
     }
@@ -220,15 +211,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             cell.got = got
             
             cell.doneButton.rx.tap
-            .do(onNext: {
-                cell.isDoneFlag = !cell.isDoneFlag
-                cell.got?.isDone = cell.isDoneFlag
-                self.currentDoneGot = cell.isDoneFlag ? got : nil
-            })
-            .debounce(.seconds(5), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-                guard let currentGot = self.currentDoneGot else { return }
-                self.viewModel.updateGot(got: currentGot)
+                guard var got = cell.got else { return }
+                got.isDone = true
+                self.viewModel.updateGot(got: got)
             }).disposed(by: cell.disposeBag)
             
             cell.cancelButton.rx.tap.subscribe(onNext: {
@@ -241,13 +227,12 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             cell.tagLabel.text = tag.name
         }.disposed(by: self.disposeBag)
         
-        self.viewModel.output.tagList.subscribe(onNext: { list in
-            self.tagList = list
-        }).disposed(by: self.disposeBag)
         
         self.viewModel.output.gotList.subscribe(onNext: { list in
             self.gotList = list
         }).disposed(by: self.disposeBag)
+        
+        
     }
     
     //MARK: Set UI According to the State
@@ -301,7 +286,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             case .denied:
               print("거부됨")
             case .notDetermined, .restricted:
-                print("성정으로 이동시키기")
+                print("설정으로 이동시키기")
             case .authorizedWhenInUse, .authorizedAlways:
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: LocationManager.shared.currentLocation!.latitude, longitude: LocationManager.shared.currentLocation!.longitude)), animated: true)
             }
@@ -348,14 +333,11 @@ extension MapViewController: MTMapViewDelegate{
     }
 }
 
-extension MapViewController: UICollectionViewDelegate{
-
-}
-
 extension MapViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == self.tagCollectionView{
-            let title = self.tagList[indexPath.item].name
+            guard let tagList = try? self.viewModel.output.tagList.value(), !tagList.isEmpty else { return .zero }
+            let title = tagList[indexPath.item].name
             let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 32), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
             let width = 9 + 14 + 8 + rect.width + 16
             return CGSize(width: width, height: 32)
@@ -377,6 +359,7 @@ extension MapViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if collectionView == self.tagCollectionView{
             return UIEdgeInsets(top: 11, left: 16, bottom: 10, right: 48)
@@ -391,6 +374,7 @@ extension MapViewController: UICollectionViewDelegateFlowLayout{
 extension MapViewController: UIScrollViewDelegate{
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let currentIndex = self.centeredCollectionViewFlowLayout.currentCenteredPage else { return }
+        guard let gotList = try? self.viewModel.output.gotList.value() else { return }
         let got = gotList[currentIndex]
         let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
         self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
