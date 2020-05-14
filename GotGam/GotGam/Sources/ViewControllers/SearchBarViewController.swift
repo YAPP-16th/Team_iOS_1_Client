@@ -25,6 +25,5 @@ class SearchBarViewController: UIViewController, ViewModelBindableType {
 	func bindViewModel() {
 		
 		
-		
 	}
 }
