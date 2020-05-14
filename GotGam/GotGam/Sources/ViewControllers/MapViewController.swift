@@ -55,22 +55,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         }
     }
     
-    var currentDoneGot: Got? {
-        didSet{
-            if self.currentDoneGot != nil{
-                self.restoreView.isHidden = false
-                self.restoreView.restoreAction = {
-                    self.restoreView.isHidden = true
-                    self.currentDoneGot = nil
-                }
-            }else{
-                self.restoreView.isHidden = true
-                self.restoreView.restoreAction = { }
-            }
-            
-            
-        }
-    }
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +71,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             guard let self = self else { return }
             
             let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-            let got = Got(id: Int64(arc4random()), tag: [.init(name: "태그3", hex: TagColor.coolBlue.hex)], title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, isDone: false, place: "맛집", insertedDate: Date())
+            let got = Got(id: Int64(arc4random()), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)], title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, isDone: false, place: "화장실", insertedDate: Date())
             self.viewModel.createGot(got: got)
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
@@ -95,8 +79,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.cardCollectionView.isHidden = false
             self.view.layoutIfNeeded()
         }
-        self.viewModel.updateList()
-        self.viewModel.updateTagList()
     }
     
     
@@ -106,6 +88,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         LocationManager.shared.startUpdatingLocation()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        self.viewModel.updateList()
+        self.viewModel.updateTagList()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

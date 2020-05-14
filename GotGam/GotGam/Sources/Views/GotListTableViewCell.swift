@@ -13,9 +13,9 @@ class GotListTableViewCell: UITableViewCell {
     
     
     func configure(_ got: Got) {
-//        titleLabel.text = got.title
-//        tagView.backgroundColor = got.tag?.color.hexToColor()
-//        placeLabel.text = got.place
+        titleLabel.text = got.title
+        tagView.backgroundColor = got.tag?.first?.hex.hexToColor()
+        placeLabel.text = got.place
         dateLabel.text = got.insertedDate?.endTime
         //finishButton
     }

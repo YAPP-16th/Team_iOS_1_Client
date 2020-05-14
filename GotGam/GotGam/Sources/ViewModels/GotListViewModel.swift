@@ -61,8 +61,10 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
             .disposed(by: disposeBag)
         
         // MARK: tag 더미데이터 수정
-        let tags: [Tag] = [.init(name: "맛집", hex: TagColor.saffron.hex), .init(name: "할일", hex: TagColor.hospitalGreen.hex), Tag(name: "데이트할 곳", hex: TagColor.greenishBrown.hex)]
-        tagList.accept(tags)
+        storage.fetchTagList()
+            .subscribe(onNext: { list in
+                self.tagList.accept(list)
+            }).disposed(by: disposeBag)
         
 //        storage.fetchTagList()
 //            .subscribe(onNext: { tag in
