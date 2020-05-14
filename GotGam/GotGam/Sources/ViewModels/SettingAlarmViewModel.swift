@@ -15,7 +15,7 @@ protocol SettingAlarmViewModelInputs {
 }
 
 protocol SettingAlarmViewModelOutputs {
-	
+	var settingAlarmMenu: Observable<[String]> { get }
 }
 
 protocol SettingAlarmViewModelType {
@@ -28,6 +28,7 @@ class SettingAlarmViewModel: CommonViewModel, SettingAlarmViewModelType, Setting
 	
 	var isOnAlarm = BehaviorSubject<Bool>(value: true)
 	
+	var settingAlarmMenu = Observable<[String]>.just(["알림 허용", "이벤트 및 마케팅 정보 수신 동의"])
 	
     var inputs: SettingAlarmViewModelInputs { return self }
     var outputs: SettingAlarmViewModelOutputs { return self }

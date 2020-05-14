@@ -14,6 +14,7 @@ class SettingAlarmViewController: BaseViewController, ViewModelBindableType {
 	
     var viewModel: SettingAlarmViewModel!
 	
+	@IBOutlet var settingAlarmTableView: UITableView!
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +23,22 @@ class SettingAlarmViewController: BaseViewController, ViewModelBindableType {
 	
 	func bindViewModel() {
 		
+		settingAlarmTableView.rx.setDelegate(self)
+			.disposed(by: disposeBag)
+		
+		
+		viewModel.outputs.settingAlarmMenu
+			.bind(to: settingAlarmTableView.rx.items(cellIdentifier: "settingToggleCell")) {
+				(index: Int, element: String, cell: UITableViewCell) in
+				
+				cell.textLabel?.text = element
+				
+				
+		}.disposed(by: disposeBag)
 		
 	}
 	
-	func settingToggle() {
+//	func settingToggle() {
 //		guard let cell = table.dequeueReusableCell(withIdentifier: "settingToggleCell", for: indexPath) as? ToggleableTableViewCell else { return UITableViewCell()
 //
 //		cell.configure(viewModel: viewModel, title: title, enabled: enabled)
@@ -37,11 +50,15 @@ class SettingAlarmViewController: BaseViewController, ViewModelBindableType {
 //				.bind(to: viewModel.isOnDate)
 //				.disposed(by: cell.disposedBag)
 //	}
-		print("settingToggle")
-	}
+//		print("settingToggle")
+//	}
 }
 
 extension SettingAlarmViewController: UITableViewDelegate {
 	
-	
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
 }
