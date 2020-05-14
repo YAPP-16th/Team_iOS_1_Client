@@ -265,13 +265,28 @@
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYk-0N-bqg" customClass="MapRestoreView" customModule="GotGam" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="630" width="195" height="48"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GKi-uU-MMK">
+                                        <rect key="frame" x="147" y="0.0" width="48" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="48" id="NgT-Ad-Mwy"/>
+                                        </constraints>
+                                        <state key="normal" image="icMapRestore"/>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
+                                    <constraint firstItem="GKi-uU-MMK" firstAttribute="top" secondItem="hYk-0N-bqg" secondAttribute="top" id="5C7-rV-OoF"/>
                                     <constraint firstAttribute="height" constant="48" id="CLC-W0-HeW"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Q1X-09-sgj"/>
+                                    <constraint firstAttribute="bottom" secondItem="GKi-uU-MMK" secondAttribute="bottom" id="SKc-8d-q4y"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="195" id="lNw-Cq-LMs"/>
+                                    <constraint firstAttribute="trailing" secondItem="GKi-uU-MMK" secondAttribute="trailing" id="mvz-Vw-Il5"/>
                                     <constraint firstAttribute="width" constant="195" id="tcr-WC-HV6"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="restoreButton" destination="GKi-uU-MMK" id="lwc-Vd-iqf"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -887,6 +902,7 @@
         <image name="check" width="20" height="20"/>
         <image name="gam" width="65" height="68.5"/>
         <image name="icListAddBtn" width="18" height="18"/>
+        <image name="icMapRestore" width="18" height="22.5"/>
         <image name="icSeed" width="18" height="24.5"/>
         <namedColor name="brownGrey">
             <color red="0.6589999794960022" green="0.6589999794960022" blue="0.6589999794960022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

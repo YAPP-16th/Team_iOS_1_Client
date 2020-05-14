@@ -16,6 +16,7 @@ class GotStorage: GotStorageType {
     func fetchGotList() -> Observable<[Got]> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
+            fetchRequest.predicate = NSPredicate(format: "isDone == %@", NSNumber(booleanLiteral: false))
             let results = try self.context.fetch(fetchRequest)
             let gotList = results.map { $0.toGot() }
             return .just(gotList)

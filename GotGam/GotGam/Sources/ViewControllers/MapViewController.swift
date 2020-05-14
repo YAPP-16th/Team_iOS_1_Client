@@ -63,6 +63,23 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
         }
     }
+    
+    var currentDoneGot: Got? {
+        didSet{
+            if self.currentDoneGot != nil{
+                self.restoreView.isHidden = false
+                self.restoreView.restoreAction = {
+                    self.restoreView.isHidden = true
+                    self.currentDoneGot = nil
+                }
+            }else{
+                self.restoreView.isHidden = true
+                self.restoreView.restoreAction = { }
+            }
+            
+            
+        }
+    }
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -330,11 +347,13 @@ extension MapViewController: UICollectionViewDataSource{
             cell.doneButton.rx.tap
             .do(onNext: {
                 cell.isDoneFlag = !cell.isDoneFlag
+                cell.got?.isDone = cell.isDoneFlag
+                self.currentDoneGot = cell.isDoneFlag ? got : nil
             })
             .debounce(.seconds(5), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-                cell.got?.isDone = cell.isDoneFlag
-                self.viewModel.updateGot(got: cell.got!)
+                guard let currentGot = self.currentDoneGot else { return }
+                self.viewModel.updateGot(got: currentGot)
             }).disposed(by: cell.disposeBag)
             
             cell.cancelButton.rx.tap.subscribe(onNext: {
@@ -353,7 +372,6 @@ extension MapViewController: UICollectionViewDelegate{
 
 extension MapViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        9 + 14 + 글자 + 16
         if collectionView == self.tagCollectionView{
             let title = self.tagList[indexPath.item].name
             let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 32), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
