@@ -17,6 +17,7 @@ protocol MapViewModelInputs {
 
 protocol MapViewModelOutputs {
     var gotList: BehaviorSubject<[Got]> { get }
+    var tagList: BehaviorSubject<[Tag]> { get }
 }
 
 protocol MapViewModelType {
@@ -29,6 +30,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var output: MapViewModelOutputs { return self }
     
     var gotList = BehaviorSubject<[Got]>(value: [])
+    var tagList = BehaviorSubject<[Tag]>(value: [])
     
     enum SeedState{
         case none
@@ -36,7 +38,6 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         case adding
     }
     
-    var tag: [String] = ["맛집", "할일", "데이트할 곳", "일상", "집에서 할 일","학교에서 할 일"]
     
     var seedState = PublishSubject<SeedState>()
     
@@ -56,7 +57,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             case .completed:
                 print("저장 완료 또는 실패")
                 self.updateList()
-                
+                self.updateTagList()
             }
         }.disposed(by: disposeBag)
         
@@ -72,6 +73,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             case .completed:
                 print("수정 완료 또는 실패")
                 self.updateList()
+                self.updateTagList()
             }
         }.disposed(by: disposeBag)
     }
@@ -86,9 +88,9 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             case .completed:
                 print("제거 완료 또는 실패")
                 self.updateList()
+                self.updateTagList()
             }
             }).disposed(by: disposeBag)
-        
     }
     
     func handleError(error: Error){
@@ -116,6 +118,12 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             case .error(let error):
                 self.handleError(error: error)
             }
+        }.disposed(by: self.disposeBag)
+    }
+    
+    func updateTagList(){
+        self.storage.fetchTagList().bind { (tagList) in
+            self.tagList.onNext(tagList)
         }.disposed(by: self.disposeBag)
     }
 }

@@ -28,7 +28,13 @@ class GotStorage: GotStorageType {
         do{
             let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
             let results = try self.context.fetch(fetchRequest)
-            let tagList = results.map { $0.toTag() }
+            var tagList = [Tag]()
+            for managedTag in results{
+                let tag = managedTag.toTag()
+                if !tagList.contains(tag){
+                    tagList.append(tag)
+                }
+            }
             return .just(tagList)
         }catch{
             return .error(GotStorageError.fetchError("TagList 조회 과정에서 문제발생"))

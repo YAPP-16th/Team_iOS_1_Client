@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -174,14 +174,15 @@
                                                         <constraint firstAttribute="width" constant="14" id="PBf-2g-pww"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP5-Rq-eDF">
-                                                    <rect key="frame" x="170" y="17" width="8" height="8"/>
-                                                    <color key="backgroundColor" red="0.99740535019999998" green="0.71073418860000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP5-Rq-eDF">
+                                                    <rect key="frame" x="162" y="17" width="16" height="16"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="8" id="SSL-At-Ct4"/>
-                                                        <constraint firstAttribute="height" constant="8" id="aCI-uB-tUq"/>
+                                                        <constraint firstAttribute="width" constant="16" id="SSL-At-Ct4"/>
+                                                        <constraint firstAttribute="height" constant="16" id="aCI-uB-tUq"/>
                                                     </constraints>
                                                     <color key="tintColor" name="saffron"/>
+                                                    <state key="normal" image="candCancel"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 강남구 역삼72" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
                                                     <rect key="frame" x="19" y="42" width="124" height="14"/>
@@ -190,13 +191,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감 일시 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23O-JI-yYF">
-                                                    <rect key="frame" x="19" y="72" width="79.5" height="14"/>
+                                                    <rect key="frame" x="19" y="69" width="79.5" height="14"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메모 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VfK-3O-Idv">
-                                                    <rect key="frame" x="19" y="90" width="55.5" height="14"/>
+                                                    <rect key="frame" x="19" y="87" width="55.5" height="14"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
@@ -221,7 +222,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="wG2-5e-Ypr" secondAttribute="trailing" constant="14" id="EQ6-u3-Eng"/>
                                                 <constraint firstItem="VfK-3O-Idv" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="I2t-nO-xkY"/>
                                                 <constraint firstItem="vp2-6v-xZj" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="KPc-RC-O5E"/>
-                                                <constraint firstItem="23O-JI-yYF" firstAttribute="top" secondItem="SG7-0v-hEX" secondAttribute="bottom" constant="16" id="PYi-3a-hkT"/>
+                                                <constraint firstItem="23O-JI-yYF" firstAttribute="top" secondItem="SG7-0v-hEX" secondAttribute="bottom" constant="13" id="PYi-3a-hkT"/>
                                                 <constraint firstItem="r35-lJ-7h0" firstAttribute="centerY" secondItem="vp2-6v-xZj" secondAttribute="centerY" id="XoL-GX-aei"/>
                                                 <constraint firstItem="SG7-0v-hEX" firstAttribute="top" secondItem="vp2-6v-xZj" secondAttribute="bottom" constant="8" id="ZRN-fV-XAo"/>
                                                 <constraint firstAttribute="bottom" secondItem="wG2-5e-Ypr" secondAttribute="bottom" constant="16" id="ZTs-jr-e8J"/>
@@ -330,7 +331,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gam" translatesAutoresizingMaskIntoConstraints="NO" id="25x-KR-Vbp">
-                                                <rect key="frame" x="-15" y="-18.5" width="130" height="137"/>
+                                                <rect key="frame" x="17.5" y="16" width="65" height="68.5"/>
                                             </imageView>
                                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-rh-HKX">
                                                 <rect key="frame" x="25" y="25" width="50" height="50"/>
@@ -505,7 +506,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="메세지를 알려주세요" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PDx-3A-Mfw">
-                                                    <rect key="frame" x="20" y="24" width="374" height="17"/>
+                                                    <rect key="frame" x="20" y="23.5" width="374" height="18.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -882,6 +883,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="candCancel" width="11" height="11"/>
         <image name="check" width="20" height="20"/>
         <image name="gam" width="65" height="68.5"/>
         <image name="icListAddBtn" width="18" height="18"/>
@@ -893,7 +895,7 @@
             <color red="0.3919999897480011" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="orangeyRed">
-            <color red="0.99904340505599976" green="0.23302030563354492" blue="0.231609046459198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.99900001287460327" green="0.23299999535083771" blue="0.23199999332427979" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="saffron">
             <color red="1" green="0.65100002288818359" blue="0.030999999493360519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

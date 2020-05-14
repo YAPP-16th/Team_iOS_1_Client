@@ -55,6 +55,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
         }
     }
+    
+    var tagList: [Tag] = []{
+        didSet{
+            DispatchQueue.main.async {
+                self.tagCollectionView.reloadData()
+            }
+        }
+    }
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +79,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             guard let self = self else { return }
             
             let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-          
+            let got = Got(id: Int64(arc4random()), tag: [.init(name: "태그3", hex: TagColor.coolBlue.hex)], title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, isDone: false, place: "맛집", insertedDate: Date())
+            self.viewModel.createGot(got: got)
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
             self.viewModel.seedState.onNext(.none)
@@ -79,6 +88,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.view.layoutIfNeeded()
         }
         self.viewModel.updateList()
+        self.viewModel.updateTagList()
     }
     
     
@@ -190,6 +200,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.viewModel.gotList.subscribe(onNext: { list in
             self.gotList = list
         }).disposed(by: self.disposeBag)
+        
+        self.viewModel.tagList.subscribe(onNext: { list in
+            self.tagList = list
+        }).disposed(by: self.disposeBag)
     }
     
     //MARK: Set UI According to the State
@@ -295,7 +309,7 @@ extension MapViewController: MTMapViewDelegate{
 extension MapViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.tagCollectionView{
-            return viewModel.tag.count
+            return self.tagList.count
         }else {
             return self.gotList.count
         }
@@ -303,9 +317,10 @@ extension MapViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.tagCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapTagCell.reuseIdenfier, for: indexPath) as! MapTagCell
-            let data = viewModel.tag[indexPath.item]
-            cell.tagIndicator.backgroundColor = .green
-            cell.tagLabel.text = data
+            let data = self.tagList[indexPath.item]
+            
+            cell.tagIndicator.backgroundColor = TagColor.allCases.filter { $0.hex == data.hex }.first?.color
+            cell.tagLabel.text = data.name
             return cell
         }else if collectionView == self.cardCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapCardCollectionViewCell.reuseIdenfier, for: indexPath) as! MapCardCollectionViewCell
@@ -340,7 +355,7 @@ extension MapViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        9 + 14 + 글자 + 16
         if collectionView == self.tagCollectionView{
-            let title = viewModel.tag[indexPath.item]
+            let title = self.tagList[indexPath.item].name
             let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 32), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
             let width = 9 + 14 + 8 + rect.width + 16
             return CGSize(width: width, height: 32)
