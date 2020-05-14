@@ -11,14 +11,10 @@ import RxSwift
 
 
 protocol SearchBarViewModelInputs {
-//	var inputText: BehaviorSubject<String> { get set }
+	
 }
 
 protocol SearchBarViewModelOutputs {
-//	var placeText: BehaviorSubject<String> { get }
-//    var tag: BehaviorSubject<String?> { get }
-//    var keyword: BehaviorSubject<String> { get }
-//	var history: BehaviorSubject<String> { get }
 	
 }
 
@@ -28,18 +24,7 @@ protocol SearchBarViewModelType {
 }
 
 class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarViewModelOutputs, SearchBarViewModelType {
-	//input
-//	var inputText: BehaviorSubject<String>
-	
-	//output
-//	var placeText: BehaviorSubject<String>
-//	var tag: BehaviorSubject<String?>
-//	var keyword: BehaviorSubject<String>
-//	var history: BehaviorSubject<String>
-	
 	
 	var inputs: SearchBarViewModelInputs { return self }
     var outputs: SearchBarViewModelOutputs { return self }
-	
-	
 }

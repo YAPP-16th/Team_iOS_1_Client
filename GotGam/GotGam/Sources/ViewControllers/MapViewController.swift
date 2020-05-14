@@ -25,29 +25,18 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var myLocationButton: UIButton!
     @IBOutlet weak var quickAddView: MapQuickAddView!
     @IBOutlet weak var seedImageView: UIImageView!
-<<<<<<< Updated upstream
-=======
-    @IBOutlet weak var restoreView: MapRestoreView!
-	@IBOutlet weak var searchField: UITextField!
->>>>>>> Stashed changes
   
     // MARK: - Constraints
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
     
 	@IBAction func moveSearch(_ sender: Any) {
-		let sb = UIStoryboard(name: "SearchBar", bundle: nil)
+		let bundle = Bundle.main
+		let sb = UIStoryboard(name: "SearchBar", bundle: bundle)
 		guard let hvc = sb.instantiateInitialViewController() else { return }
 		
 		hvc.modalPresentationStyle = .fullScreen
-		
-		DispatchQueue.main.async {
-			if self.searchField.isFirstResponder{
-				self.searchField.resignFirstResponder()
-			}
-			self.tabBarController?.present(hvc, animated: false, completion: nil)
-		}
-		
+		self.present(hvc, animated: false)
 	}
 	
     var centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
