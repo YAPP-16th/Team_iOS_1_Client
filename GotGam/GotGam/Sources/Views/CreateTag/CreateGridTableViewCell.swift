@@ -33,7 +33,7 @@ class CreateGridTableViewCell: UITableViewCell {
         colorCollectionView.rx.modelSelected(TagColor.self)
             //.map {}  MARK: TODO: 중복체크
             .subscribe(onNext: { [unowned self] (tagColor) in
-                self.viewModel.inputs.newTag.accept(tagColor.hex)
+                self.viewModel.inputs.newTagHex.accept(tagColor.hex)
             })
             .disposed(by: disposeBag)
     }
@@ -75,8 +75,8 @@ class TagColorCollectionViewCell: UICollectionViewCell {
         self.tagColor = tagColor
         backgroundColor = tagColor.color
         
-        viewModel.newTag
-            .map { !($0 == tagColor.hex) } // MARK: TODO: string -> color로 바꾸가
+        viewModel.newTagHex
+            .map { !($0 == tagColor.hex) }
             .bind(to: checkImageView.rx.isHidden)
             .disposed(by: disposeBag)
     }

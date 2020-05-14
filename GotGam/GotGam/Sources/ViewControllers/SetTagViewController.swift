@@ -31,7 +31,7 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
         
         tagTableView.rx.modelSelected(AddTagSectionModel.Item.self)
             .subscribe(onNext: { item in
-                if case let .TagListItem(tag, selected) = item {
+                if case let .TagListItem(tag) = item {
                     self.viewModel.selectedTag.accept(tag)
                 }
             })
@@ -74,13 +74,13 @@ extension SetTagViewController {
 
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
-                case let .SelectedTagItem(title, tag):
+                case let .SelectedTagItem(title):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "selectedTagCell", for: indexPath) as? SetSelectedTagTableViewCell else { return UITableViewCell()}
-                    cell.configure(viewModel: viewModel, title: title, tag: tag)
+                    cell.configure(viewModel: viewModel, title: title)
                     return cell
-                case let .TagListItem(tag, selectedTag):
+                case let .TagListItem(tag):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "tagListCell", for: indexPath) as? SetTagListTableViewCell else { return UITableViewCell()}
-                    cell.configure(viewModel: viewModel,tag: tag, selected: selectedTag)
+                    cell.configure(viewModel: viewModel,tag: tag)
                     return cell
                 case .CreateTagItem(let title):
                     let cell = table.dequeueReusableCell(withIdentifier: "newTagCell", for: indexPath)
@@ -95,7 +95,7 @@ extension SetTagViewController {
             canEditRowAtIndexPath: { dataSource, index in
                 let section = dataSource[index]
                 switch section {
-                case .TagListItem(_, _):
+                case .TagListItem(_):
                     return true
                 default: return false
                 }

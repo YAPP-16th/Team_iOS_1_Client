@@ -64,7 +64,7 @@ enum TagColor: CaseIterable {
 
 protocol CreateTagViewModelInputs {
     var save: PublishSubject<Void> { get set }
-    var newTag: BehaviorRelay<String?> { get set }
+    var newTagHex: BehaviorRelay<String?> { get set }
     var tagName: BehaviorRelay<String> { get set }
 }
 
@@ -85,7 +85,7 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     // MARK: - Inputs
     
     var save = PublishSubject<Void>()
-    var newTag = BehaviorRelay<String?>(value: nil)
+    var newTagHex = BehaviorRelay<String?>(value: nil)
     var tagName = BehaviorRelay<String>(value: "")
     
     // MARK: - Outputs
@@ -104,12 +104,12 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     var inputs: CreateTagViewModelInputs { return self }
     var outputs: CreateTagViewModelOutputs { return self }
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: String? = nil) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: Tag? = nil) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
         
-        newTag.accept(tag)
+        newTagHex.accept(tag?.hex)
         if let tag = tag {
-            tagName.accept(tag)
+            tagName.accept(tag.name)
         }
         sections = configureDataSource()
         

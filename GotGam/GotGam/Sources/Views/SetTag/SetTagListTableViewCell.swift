@@ -17,9 +17,9 @@ class SetTagListTableViewCell: UITableViewCell {
     @IBOutlet var tagLabel: UILabel!
     @IBOutlet var selectImageView: UIImageView!
     
-    func configure(viewModel: SetTagViewModel, tag: String, selected: Bool) {
-        tagLabel.text = tag
-        tagView.backgroundColor = tag.hexToColor()
+    func configure(viewModel: SetTagViewModel, tag: Tag) {
+        tagLabel.text = tag.name
+        tagView.backgroundColor = tag.hex.hexToColor()
 
         
         viewModel.selectedTag

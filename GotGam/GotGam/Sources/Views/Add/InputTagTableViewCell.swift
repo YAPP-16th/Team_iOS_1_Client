@@ -7,20 +7,26 @@
 //
 
 import UIKit
+import RxSwift
 
 class InputTagTableViewCell: UITableViewCell {
+    
+    var viewModel: AddPlantViewModel!
+    var disposeBag = DisposeBag()
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tagColorView: UIView!
     @IBOutlet var tagLabel: UILabel!
     
     
-    func configure(title: String, tag: String?) {
+    func configure(viewModel: AddPlantViewModel, title: String) {
         titleLabel.text = title
-        if let tag = tag {
-            tagLabel.text = tag
-            // tagColorView.backgroundColor = tag.color
-        }
+        self.viewModel = viewModel
+        
+        viewModel.tag
+            .compactMap{ $0?.hex.hexToColor() }
+            .bind(to: tagColorView.rx.backgroundColor)
+            .disposed(by: disposeBag)
     }
     
     override func awakeFromNib() {
