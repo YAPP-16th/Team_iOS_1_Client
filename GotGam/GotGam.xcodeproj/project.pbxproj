@@ -8,8 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2273802A6EF7CEC60DFA2E9F /* Pods_GotGam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */; };
+<<<<<<< Updated upstream
 		292EA38F246AB8370090AAEF /* SettingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EA38E246AB8370090AAEF /* SettingAlarmViewModel.swift */; };
 		292EA391246ABA380090AAEF /* SettingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EA390246ABA380090AAEF /* SettingAlarmViewController.swift */; };
+=======
+		292EA393246AD2F60090AAEF /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EA392246AD2F60090AAEF /* APIManager.swift */; };
+		292EA396246ADBBE0090AAEF /* KakaoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EA395246ADBBE0090AAEF /* KakaoResponse.swift */; };
+>>>>>>> Stashed changes
 		295C03C12464646300789967 /* SearchBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295C03C02464646300789967 /* SearchBar.storyboard */; };
 		295C03C32464652700789967 /* SearchBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C22464652700789967 /* SearchBarViewController.swift */; };
 		295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C42464655100789967 /* SearchBarViewModel.swift */; };
@@ -120,8 +125,13 @@
 
 /* Begin PBXFileReference section */
 		12F3319E806996FEAD031C42 /* Pods-GotGam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.debug.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.debug.xcconfig"; sourceTree = "<group>"; };
+<<<<<<< Updated upstream
 		292EA38E246AB8370090AAEF /* SettingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewModel.swift; sourceTree = "<group>"; };
 		292EA390246ABA380090AAEF /* SettingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewController.swift; sourceTree = "<group>"; };
+=======
+		292EA392246AD2F60090AAEF /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		292EA395246ADBBE0090AAEF /* KakaoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoResponse.swift; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		295C03C02464646300789967 /* SearchBar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchBar.storyboard; sourceTree = "<group>"; };
 		295C03C22464652700789967 /* SearchBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewController.swift; sourceTree = "<group>"; };
 		295C03C42464655100789967 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
@@ -379,6 +389,7 @@
 				A159DBF82459C1DD004FCA66 /* Gotgam+CoreDataClass.swift */,
 				A159DBF72459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift */,
 				4CE037EF2438D6990093E39D /* Got.swift */,
+				292EA395246ADBBE0090AAEF /* KakaoResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -473,6 +484,7 @@
 				4CE037DE2438CA780093E39D /* GotStorage.swift */,
 				A157E115245572F4001E310D /* LocationManager.swift */,
 				A157E116245572F4001E310D /* LocationManagerType.swift */,
+				292EA392246AD2F60090AAEF /* APIManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -812,12 +824,17 @@
 				A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
 				4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */,
+<<<<<<< Updated upstream
 				A159DBFA2459C1DD004FCA66 /* Gotgam+CoreDataProperties.swift in Sources */,
+=======
+				292EA396246ADBBE0090AAEF /* KakaoResponse.swift in Sources */,
+>>>>>>> Stashed changes
 				4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */,
 				A157E118245572F4001E310D /* LocationManagerType.swift in Sources */,
 				4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
+				292EA393246AD2F60090AAEF /* APIManager.swift in Sources */,
 				4CBD535E245B134A00B235D5 /* SetTagViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
