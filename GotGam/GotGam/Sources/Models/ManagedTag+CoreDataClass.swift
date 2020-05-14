@@ -16,7 +16,7 @@ public class ManagedTag: NSManagedObject {
         .init(name: name!, hex: hex)
     }
     
-    func fromTag(tag: Tag){
+    func from(_ tag: Tag){
         self.name = tag.name
         self.hex = tag.hex
     }

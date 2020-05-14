@@ -88,9 +88,8 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
         
         
         storage.fetchTagList()
-            .map { $0.isEmpty ? [Tag(name: "미지정", hex: "#cecece")] : $0 }
-            .subscribe(onNext: { [unowned self] tagList in
-                self.sections.accept(self.configureDataSource(tags: tagList))
+            .map { [Tag(name: "미지정", hex: "#cecece")] + $0 }
+            .subscribe(onNext: { [unowned self] tagList in self.sections.accept(self.configureDataSource(tags: tagList))
             })
             .disposed(by: disposeBag)
         

@@ -28,7 +28,7 @@ public class ManagedGot: NSManagedObject {
     
     func fromGot(got: Got){
         self.id = got.id!
-        self.tag?.fromTag(tag: got.tag!)
+        self.tag?.from(got.tag!)
         self.title = got.title
         self.content = got.content
         self.latitude = got.latitude!

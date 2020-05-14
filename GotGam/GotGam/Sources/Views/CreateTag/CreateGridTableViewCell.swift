@@ -76,9 +76,21 @@ class TagColorCollectionViewCell: UICollectionViewCell {
         backgroundColor = tagColor.color
         
         viewModel.newTagHex
-            .map { !($0 == tagColor.hex) }
-            .bind(to: checkImageView.rx.isHidden)
+            .map { $0 == tagColor.hex }
+            .subscribe(onNext: { [unowned self] isPick in
+                if isPick {
+                    self.layer.shadowOpacity = 0.3
+                } else {
+                    self.layer.shadowOpacity = 0
+                }
+            })
             .disposed(by: disposeBag)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.shadow(radius: 10, color: .black, offset: .zero, opacity: 0)
     }
 }
 

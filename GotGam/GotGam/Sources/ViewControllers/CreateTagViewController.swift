@@ -25,6 +25,7 @@ class CreateTagViewController: BaseViewController, ViewModelBindableType {
         createTagTableView.rx.setDelegate(self).disposed(by: disposeBag)
         
         let dataSource = CreateTagViewController.dataSource(viewModel: viewModel)
+        
         viewModel.outputs.sections
             .bind(to: createTagTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -59,7 +60,7 @@ extension CreateTagViewController {
         return RxTableViewSectionedReloadDataSource<CreateTagSectionModel>(
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
-                case let .TextFieldItem(text, placeholder):
+                case .TextFieldItem:
                     guard let cell = table.dequeueReusableCell(withIdentifier: "createNameCell", for: indexPath) as? CreateTextFieldTableViewCell else { return UITableViewCell()}
                     cell.viewModel = viewModel
                     return cell

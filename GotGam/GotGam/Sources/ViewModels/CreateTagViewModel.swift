@@ -96,7 +96,11 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     // MARK: - Methods
     
     func createTag() {
-        print(tagName.value)
+        guard let hex = newTagHex.value else { return }
+        let newTag = Tag(name: tagName.value, hex: hex)
+        
+//        storage.create(tag: newTag)
+        print("create tag: \(newTag)")
     }
     
     // MARK: - Initializing
@@ -108,6 +112,7 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
         
         newTagHex.accept(tag?.hex)
+        
         if let tag = tag {
             tagName.accept(tag.name)
         }
@@ -122,7 +127,7 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     
     func configureDataSource() -> Observable<[CreateTagSectionModel]> {
         return Observable<[CreateTagSectionModel]>.just([
-            .NameSection(title: "태그 이름", items: [.TextFieldItem(text: "", placeholder: "태그 이름을 적어주세요")]),
+            .NameSection(title: "태그 이름", items: [.TextFieldItem]),
             .ColorSection(title: "태그 색상", items: [.GridItem])
         ])
     }
@@ -136,7 +141,7 @@ enum CreateTagSectionModel {
 }
 
 enum CreateTagItem {
-    case TextFieldItem(text: String, placeholder: String)
+    case TextFieldItem
     case GridItem
 }
 
