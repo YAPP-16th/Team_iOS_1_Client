@@ -11,7 +11,7 @@ import Foundation
 struct Got: Equatable {
    
     var id: Int64?
-    var tag : Tag?
+    var tag : [Tag]?
     var title: String?
     var content : String?
     var latitude: Double?
@@ -20,7 +20,7 @@ struct Got: Equatable {
 	var place: String?
     var insertedDate: Date?
      
-    init(id: Int64?, tag: Tag?, title: String?, content: String?, latitude: Double, longitude: Double?, isDone: Bool, place: String?, insertedDate: Date?){
+    init(id: Int64?, tag: [Tag]?, title: String?, content: String?, latitude: Double, longitude: Double?, isDone: Bool, place: String?, insertedDate: Date?){
         self.id = id
         self.tag = tag
         self.title = title ?? ""

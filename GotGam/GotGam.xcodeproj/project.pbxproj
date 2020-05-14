@@ -72,12 +72,12 @@
 		4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0AE244AA41D00B45751 /* Tab.swift */; };
 		4CF1D0B3244AABC000B45751 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0B2244AABC000B45751 /* TabBarViewModel.swift */; };
 		A125E79424695B80007767D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E79324695B80007767D7 /* LoginViewController.swift */; };
-		A125E7A12469AFC3007767D7 /* ManagedTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E79D2469AFC3007767D7 /* ManagedTag+CoreDataClass.swift */; };
-		A125E7A22469AFC3007767D7 /* ManagedTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E79E2469AFC3007767D7 /* ManagedTag+CoreDataProperties.swift */; };
-		A125E7A32469AFC3007767D7 /* ManagedGot+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E79F2469AFC3007767D7 /* ManagedGot+CoreDataClass.swift */; };
-		A125E7A42469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E7A02469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift */; };
 		A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E7A52469B2D1007767D7 /* MapRestoreView.swift */; };
 		A125E7A82469B300007767D7 /* MapRestoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A125E7A72469B300007767D7 /* MapRestoreView.xib */; };
+		A127E714246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127E710246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift */; };
+		A127E715246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127E711246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift */; };
+		A127E716246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127E712246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift */; };
+		A127E717246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A127E713246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift */; };
 		A157E0F924555A90001E310D /* map_pinup_custom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A157E0D424555A90001E310D /* map_pinup_custom@3x.png */; };
 		A157E0FA24555A90001E310D /* map_pin_custom.png in Resources */ = {isa = PBXBuildFile; fileRef = A157E0D524555A90001E310D /* map_pin_custom.png */; };
 		A157E0FB24555A90001E310D /* shadow_balloon.png in Resources */ = {isa = PBXBuildFile; fileRef = A157E0D624555A90001E310D /* shadow_balloon.png */; };
@@ -194,12 +194,12 @@
 		62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GotGam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A125E79224695AF8007767D7 /* GotGam.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GotGam.entitlements; sourceTree = "<group>"; };
 		A125E79324695B80007767D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		A125E79D2469AFC3007767D7 /* ManagedTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedTag+CoreDataClass.swift"; sourceTree = "<group>"; };
-		A125E79E2469AFC3007767D7 /* ManagedTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		A125E79F2469AFC3007767D7 /* ManagedGot+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataClass.swift"; sourceTree = "<group>"; };
-		A125E7A02469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A125E7A52469B2D1007767D7 /* MapRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestoreView.swift; sourceTree = "<group>"; };
 		A125E7A72469B300007767D7 /* MapRestoreView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapRestoreView.xib; sourceTree = "<group>"; };
+		A127E710246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A127E711246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A127E712246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedTag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A127E713246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedTag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A157E0D424555A90001E310D /* map_pinup_custom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pinup_custom@3x.png"; sourceTree = "<group>"; };
 		A157E0D524555A90001E310D /* map_pin_custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_custom.png; sourceTree = "<group>"; };
 		A157E0D624555A90001E310D /* shadow_balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow_balloon.png; sourceTree = "<group>"; };
@@ -387,12 +387,12 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A127E710246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift */,
+				A127E711246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift */,
+				A127E712246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift */,
+				A127E713246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift */,
 				4C620CEF246AB62A00B25B86 /* Tag.swift */,
-				A125E79D2469AFC3007767D7 /* ManagedTag+CoreDataClass.swift */,
-				A125E79E2469AFC3007767D7 /* ManagedTag+CoreDataProperties.swift */,
 				4CE037EF2438D6990093E39D /* Got.swift */,
-				A125E79F2469AFC3007767D7 /* ManagedGot+CoreDataClass.swift */,
-				A125E7A02469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
 			);
 			path = Models;
@@ -780,10 +780,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A127E717246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift in Sources */,
 				4CE3B6F82458709800A53BF8 /* (null) in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
-				A125E7A32469AFC3007767D7 /* ManagedGot+CoreDataClass.swift in Sources */,
 				4C5F0F6624654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift in Sources */,
 				A157E11D2455754A001E310D /* Extensions.swift in Sources */,
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
@@ -792,9 +792,6 @@
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
 				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
 				4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */,
-				A125E7A42469AFC3007767D7 /* ManagedGot+CoreDataProperties.swift in Sources */,
-				A125E7A12469AFC3007767D7 /* ManagedTag+CoreDataClass.swift in Sources */,
-				A125E7A22469AFC3007767D7 /* ManagedTag+CoreDataProperties.swift in Sources */,
 				4CF1D0AB24499F1B00B45751 /* GotListViewController.swift in Sources */,
 				4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */,
 				4CBD536A245E3AF400B235D5 /* TextFieldTableViewCell.swift in Sources */,
@@ -812,6 +809,7 @@
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				295C03C32464652700789967 /* SearchBarViewController.swift in Sources */,
 				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
+				A127E714246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
@@ -821,10 +819,12 @@
 				4C5F0F682465503200C7A6E9 /* AlarmLeaveTableViewCell.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
 				4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */,
+				A127E716246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift in Sources */,
 				A125E79424695B80007767D7 /* LoginViewController.swift in Sources */,
 				4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */,
 				4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */,
 				4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */,
+				A127E715246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
