@@ -45,9 +45,9 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 				if indexPath.row == 0 {
 					self?.viewModel.inputs.showAlarmDetailVC()
 				} else if indexPath.row == 1 {
-					print("2")
+					self?.viewModel.inputs.showPlaceDetailVC()
 				} else if indexPath.row == 2 {
-					print("3")
+					self?.viewModel.inputs.showOtherDetailVC()
 				}
 			})
 			.disposed(by: disposeBag)

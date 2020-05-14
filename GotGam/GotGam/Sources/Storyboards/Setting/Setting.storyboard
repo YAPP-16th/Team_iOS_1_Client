@@ -33,7 +33,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인이 필요합니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7I-08-5TT">
-                                        <rect key="frame" x="101" y="39" width="136.5" height="16"/>
+                                        <rect key="frame" x="101" y="39" width="129.5" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="HEz-iF-2Gd"/>
                                         </constraints>
@@ -91,34 +91,84 @@
         <!--자주 가는 장소-->
         <scene sceneID="JNp-hz-uMv">
             <objects>
-                <viewController id="F2f-XU-2I7" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settingPlace" id="F2f-XU-2I7" customClass="SettingPlaceViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rhs-7z-p4j">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PjP-dV-etj">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingPlaceCell" id="dii-qJ-wuk">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dii-qJ-wuk" id="dKy-JN-hY9">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="PjP-dV-etj" firstAttribute="top" secondItem="jsB-3k-uWR" secondAttribute="top" id="US0-Ex-edR"/>
+                            <constraint firstItem="PjP-dV-etj" firstAttribute="leading" secondItem="jsB-3k-uWR" secondAttribute="leading" id="edE-AA-65F"/>
+                            <constraint firstItem="jsB-3k-uWR" firstAttribute="trailing" secondItem="PjP-dV-etj" secondAttribute="trailing" id="et6-np-tnz"/>
+                            <constraint firstItem="jsB-3k-uWR" firstAttribute="bottom" secondItem="PjP-dV-etj" secondAttribute="bottom" id="v0T-6s-fHe"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="jsB-3k-uWR"/>
                     </view>
                     <navigationItem key="navigationItem" title="자주 가는 장소" id="9O8-z3-0yy"/>
+                    <connections>
+                        <outlet property="settingPlaceTableView" destination="PjP-dV-etj" id="Wpt-A1-rcl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rAj-Qh-WLh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="819"/>
+            <point key="canvasLocation" x="2713" y="110"/>
         </scene>
         <!--약관 및 정책-->
         <scene sceneID="jS8-6i-N9E">
             <objects>
-                <viewController id="Ul7-xe-xtI" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settingOther" id="Ul7-xe-xtI" customClass="SettingOtherViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZtQ-7y-irT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hcA-jz-iyu">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="settingOtherCell" id="TtL-dG-Eub">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TtL-dG-Eub" id="jm5-uk-gDH">
+                                            <rect key="frame" x="0.0" y="0.0" width="382.5" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="0i0-p6-0bl" firstAttribute="trailing" secondItem="hcA-jz-iyu" secondAttribute="trailing" id="cIv-NU-PrU"/>
+                            <constraint firstItem="hcA-jz-iyu" firstAttribute="top" secondItem="0i0-p6-0bl" secondAttribute="top" id="dPb-Zh-5mY"/>
+                            <constraint firstItem="hcA-jz-iyu" firstAttribute="leading" secondItem="0i0-p6-0bl" secondAttribute="leading" id="eN5-gT-jHG"/>
+                            <constraint firstItem="0i0-p6-0bl" firstAttribute="bottom" secondItem="hcA-jz-iyu" secondAttribute="bottom" id="igx-S9-BZG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="0i0-p6-0bl"/>
                     </view>
                     <navigationItem key="navigationItem" title="약관 및 정책" id="JcM-Uy-GTO"/>
+                    <connections>
+                        <outlet property="settingOtherTableView" destination="hcA-jz-iyu" id="svU-Cl-Ci8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yIY-iG-4vQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1938" y="819"/>
+            <point key="canvasLocation" x="3519" y="110"/>
         </scene>
         <!--푸시 알림 설정-->
         <scene sceneID="IJz-r6-J4O">
@@ -215,6 +265,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qF4-Lw-FUe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1896" y="-593"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="kDz-sB-P3A">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TzY-QL-b8C" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Et-IZ-6xm">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="F2f-XU-2I7" kind="relationship" relationship="rootViewController" id="T1c-pK-Ne8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fnl-Va-cJp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2712" y="-593"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="67X-8F-gzt">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EFF-TT-Gee" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ckh-WT-cjn">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Ul7-xe-xtI" kind="relationship" relationship="rootViewController" id="DMo-4c-CTX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ApU-KS-ZIg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3519" y="-593"/>
         </scene>
     </scenes>
     <resources>

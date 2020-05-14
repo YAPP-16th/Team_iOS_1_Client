@@ -13,6 +13,10 @@
 		295C03C12464646300789967 /* SearchBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295C03C02464646300789967 /* SearchBar.storyboard */; };
 		295C03C32464652700789967 /* SearchBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C22464652700789967 /* SearchBarViewController.swift */; };
 		295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C42464655100789967 /* SearchBarViewModel.swift */; };
+		297277FB246D591A00B75AC7 /* SettingOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297277FA246D591A00B75AC7 /* SettingOtherViewController.swift */; };
+		297277FD246D594900B75AC7 /* SettingOtherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297277FC246D594900B75AC7 /* SettingOtherViewModel.swift */; };
+		297277FF246D5DFF00B75AC7 /* SettingPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297277FE246D5DFF00B75AC7 /* SettingPlaceViewController.swift */; };
+		29727801246D5E1500B75AC7 /* SettingPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727800246D5E1500B75AC7 /* SettingPlaceViewModel.swift */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -127,6 +131,10 @@
 		295C03C42464655100789967 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
 		295C03C72464845600789967 /* ManagedTag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedTag+CoreDataProperties.swift"; path = "/Users/kimbomin/Downloads/2020-1/YAPP/kraken/Team_iOS_1_Client/GotGam/GotGam/Sources/Models/ManagedTag+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		295C03C82464845600789967 /* ManagedTag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedTag+CoreDataClass.swift"; path = "/Users/kimbomin/Downloads/2020-1/YAPP/kraken/Team_iOS_1_Client/GotGam/GotGam/Sources/Models/ManagedTag+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		297277FA246D591A00B75AC7 /* SettingOtherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherViewController.swift; sourceTree = "<group>"; };
+		297277FC246D594900B75AC7 /* SettingOtherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherViewModel.swift; sourceTree = "<group>"; };
+		297277FE246D5DFF00B75AC7 /* SettingPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPlaceViewController.swift; sourceTree = "<group>"; };
+		29727800246D5E1500B75AC7 /* SettingPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPlaceViewModel.swift; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -366,6 +374,8 @@
 				4C5F0F60246538B700C7A6E9 /* AlarmViewController.swift */,
 				4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */,
 				292EA390246ABA380090AAEF /* SettingAlarmViewController.swift */,
+				297277FA246D591A00B75AC7 /* SettingOtherViewController.swift */,
+				297277FE246D5DFF00B75AC7 /* SettingPlaceViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -448,6 +458,8 @@
 				4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */,
 				4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */,
 				292EA38E246AB8370090AAEF /* SettingAlarmViewModel.swift */,
+				297277FC246D594900B75AC7 /* SettingOtherViewModel.swift */,
+				29727800246D5E1500B75AC7 /* SettingPlaceViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -768,6 +780,7 @@
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
+				297277FF246D5DFF00B75AC7 /* SettingPlaceViewController.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
 				292EA38F246AB8370090AAEF /* SettingAlarmViewModel.swift in Sources */,
 				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
@@ -779,6 +792,7 @@
 				4CF1D0B3244AABC000B45751 /* TabBarViewModel.swift in Sources */,
 				4CF1D0AD24499F4200B45751 /* GotListViewModel.swift in Sources */,
 				A16439712454001100C740F4 /* MapCardCollectionViewCell.swift in Sources */,
+				29727801246D5E1500B75AC7 /* SettingPlaceViewModel.swift in Sources */,
 				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
 				4CE3B6FA2458744D00A53BF8 /* (null) in Sources */,
 				4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */,
@@ -788,6 +802,7 @@
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				295C03C32464652700789967 /* SearchBarViewController.swift in Sources */,
 				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
+				297277FD246D594900B75AC7 /* SettingOtherViewModel.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+line.swift in Sources */,
@@ -800,6 +815,7 @@
 				4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */,
 				4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
+				297277FB246D591A00B75AC7 /* SettingOtherViewController.swift in Sources */,
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
