@@ -14,11 +14,27 @@ import RxDataSources
 class CreateTagViewController: BaseViewController, ViewModelBindableType {
     
     var viewModel: CreateTagViewModel!
+    
+    // MARK: Methods
+    
+    func showAlert() {
+        let anim = CABasicAnimation(keyPath: "opacity")
+        anim.duration = 2
+        anim.fromValue = 1
+        anim.toValue = 0
+        anim.isRemovedOnCompletion = true
+        
+        alertLabel.layer.add(anim, forKey: "alert")
+    }
+    
+    // MARK: - Initializing
 
     override func viewDidLoad() {
         super.viewDidLoad()
         createTagTableView.rowHeight = UITableView.automaticDimension
         createTagTableView.estimatedRowHeight = 600
+        alertLabel.layer.cornerRadius = 6
+        alertLabel.alpha = 0
     }
     
     func bindViewModel() {
@@ -28,6 +44,10 @@ class CreateTagViewController: BaseViewController, ViewModelBindableType {
         
         viewModel.outputs.sections
             .bind(to: createTagTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.duplicateOb
+            .subscribe(onNext: { [weak self] _ in self?.showAlert() })
             .disposed(by: disposeBag)
         
         saveButton.rx.tap
@@ -40,6 +60,7 @@ class CreateTagViewController: BaseViewController, ViewModelBindableType {
     
     @IBOutlet var createTagTableView: UITableView!
     @IBOutlet var saveButton: UIBarButtonItem!
+    @IBOutlet var alertLabel: PaddingLabel!
 }
 
 extension CreateTagViewController: UITableViewDelegate {

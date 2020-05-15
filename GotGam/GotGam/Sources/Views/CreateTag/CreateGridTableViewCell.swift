@@ -24,17 +24,14 @@ class CreateGridTableViewCell: UITableViewCell {
         
         viewModel.outputs.tagColors
             .bind(to: colorCollectionView.rx.items(cellIdentifier: "tagColorCell", cellType: TagColorCollectionViewCell.self)) { indexPath, tagColor, cell in
-                
                 cell.configure(viewModel: self.viewModel, tagColor: tagColor)
                 cell.layer.cornerRadius = cell.bounds.height/2
-        }
-        .disposed(by: disposeBag)
-        
+            }
+            .disposed(by: disposeBag)
+            
         colorCollectionView.rx.modelSelected(TagColor.self)
-            //.map {}  MARK: TODO: 중복체크
-            .subscribe(onNext: { [unowned self] (tagColor) in
-                self.viewModel.inputs.newTagHex.accept(tagColor.hex)
-            })
+            .map { $0.hex }
+            .bind(to: viewModel.inputs.tagSelected)
             .disposed(by: disposeBag)
     }
 
@@ -62,6 +59,8 @@ extension CreateGridTableViewCell: UICollectionViewDelegateFlowLayout {
     
 }
 
+// MARK: - TagColor Cell
+
 class TagColorCollectionViewCell: UICollectionViewCell {
     
     var tagColor: TagColor!
@@ -74,6 +73,7 @@ class TagColorCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         self.tagColor = tagColor
         backgroundColor = tagColor.color
+        
         
         viewModel.newTagHex
             .map { $0 == tagColor.hex }
@@ -89,7 +89,6 @@ class TagColorCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.shadow(radius: 10, color: .black, offset: .zero, opacity: 0)
     }
 }

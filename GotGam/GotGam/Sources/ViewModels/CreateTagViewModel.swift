@@ -64,13 +64,15 @@ enum TagColor: CaseIterable {
 
 protocol CreateTagViewModelInputs {
     var save: PublishSubject<Void> { get set }
-    var newTagHex: BehaviorRelay<String?> { get set }
+    var tagSelected: PublishSubject<String> { get set }
     var tagName: BehaviorRelay<String> { get set }
 }
 
 protocol CreateTagViewModelOutputs {
     var sections: Observable<[CreateTagSectionModel]> { get }
     var tagColors: Observable<[TagColor]> { get }
+    var newTagHex: BehaviorRelay<String?> { get }
+    var duplicateOb: PublishSubject<Void> { get }
 }
 
 protocol CreateTagViewModelType {
@@ -85,12 +87,14 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     // MARK: - Inputs
     
     var save = PublishSubject<Void>()
-    var newTagHex = BehaviorRelay<String?>(value: nil)
+    var tagSelected = PublishSubject<String>()
     var tagName = BehaviorRelay<String>(value: "")
     
     // MARK: - Outputs
     
     var sections = Observable<[CreateTagSectionModel]>.just([])
+    var newTagHex = BehaviorRelay<String?>(value: nil)
+    var duplicateOb = PublishSubject<Void>()
     var tagColors = Observable<[TagColor]>.just(TagColor.allCases)
     
     // MARK: - Methods
@@ -116,7 +120,20 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
         if let tag = tag {
             tagName.accept(tag.name)
         }
+        
         sections = configureDataSource()
+        
+        Observable
+            .combineLatest(tagSelected, storage.fetchTagList())
+            .subscribe(onNext: { [unowned self] selectedTag, tagList in
+                if tagList.contains(where: {$0.hex != selectedTag}) {
+                    self.newTagHex.accept(selectedTag)
+                } else {
+                    self.duplicateOb.onNext(())
+                }
+            })
+            .disposed(by: disposeBag)
+        
         
         save.asObserver()
             .subscribe(onNext: { [unowned self] _ in

@@ -161,13 +161,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="케이블사기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vp2-6v-xZj">
-                                                    <rect key="frame" x="19" y="15" width="69.5" height="19"/>
+                                                    <rect key="frame" x="19" y="15" width="74" height="24"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r35-lJ-7h0">
-                                                    <rect key="frame" x="96.5" y="17.5" width="14" height="14"/>
+                                                    <rect key="frame" x="101" y="20" width="14" height="14"/>
                                                     <color key="backgroundColor" name="veryLightPink"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="9aD-OO-hkS"/>
@@ -184,19 +184,19 @@
                                                     <color key="tintColor" name="saffron"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 강남구 역삼72" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
-                                                    <rect key="frame" x="19" y="42" width="124" height="14"/>
+                                                    <rect key="frame" x="19" y="47" width="130.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감 일시 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23O-JI-yYF">
-                                                    <rect key="frame" x="19" y="72" width="79.5" height="14"/>
+                                                    <rect key="frame" x="19" y="81" width="83" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메모 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VfK-3O-Idv">
-                                                    <rect key="frame" x="19" y="90" width="55.5" height="14"/>
+                                                    <rect key="frame" x="19" y="103" width="58" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
@@ -330,7 +330,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gam" translatesAutoresizingMaskIntoConstraints="NO" id="25x-KR-Vbp">
-                                                <rect key="frame" x="-15" y="-18.5" width="130" height="137"/>
+                                                <rect key="frame" x="17.5" y="16" width="65" height="68.5"/>
                                             </imageView>
                                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-rh-HKX">
                                                 <rect key="frame" x="25" y="25" width="50" height="50"/>
@@ -638,13 +638,13 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0K-5k-dj2">
-                                                    <rect key="frame" x="44" y="15.5" width="42" height="40"/>
+                                                    <rect key="frame" x="44" y="25.5" width="42" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="oAA-Xy-mjo">
-                                                    <rect key="frame" x="354" y="15.5" width="40" height="40"/>
+                                                    <rect key="frame" x="374" y="25.5" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="oAA-Xy-mjo" secondAttribute="height" multiplier="1:1" id="chZ-Zx-dos"/>
                                                     </constraints>
@@ -768,24 +768,8 @@
                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="NFw-X4-Rt9">
                                                                 <rect key="frame" x="0.0" y="0.0" width="68" height="68"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
-                                                                <subviews>
-                                                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="bc3-PQ-58j">
-                                                                        <rect key="frame" x="19" y="19" width="30" height="30"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" secondItem="bc3-PQ-58j" secondAttribute="height" multiplier="1:1" id="JD2-0V-1V9"/>
-                                                                            <constraint firstAttribute="height" constant="30" id="bKH-0C-XsR"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="bc3-PQ-58j" firstAttribute="centerY" secondItem="NFw-X4-Rt9" secondAttribute="centerY" id="9mF-jK-ce2"/>
-                                                                    <constraint firstItem="bc3-PQ-58j" firstAttribute="centerX" secondItem="NFw-X4-Rt9" secondAttribute="centerX" id="phW-Ro-lgE"/>
-                                                                </constraints>
                                                             </collectionViewCellContentView>
                                                             <size key="customSize" width="68" height="68"/>
-                                                            <connections>
-                                                                <outlet property="checkImageView" destination="bc3-PQ-58j" id="yIH-BT-bKL"/>
-                                                            </connections>
                                                         </collectionViewCell>
                                                     </cells>
                                                 </collectionView>
@@ -803,12 +787,21 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이미 사용된 색상입니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1xR-6u-9U2" customClass="PaddingLabel" customModule="GotGam" customModuleProvider="target">
+                                <rect key="frame" x="152" y="388" width="110" height="14.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Svy-nw-J6b" firstAttribute="top" secondItem="1q8-Cc-56Z" secondAttribute="top" id="0Rc-bR-dWA"/>
                             <constraint firstItem="1q8-Cc-56Z" firstAttribute="bottom" secondItem="Svy-nw-J6b" secondAttribute="bottom" id="3Xc-Kc-c2Y"/>
                             <constraint firstItem="1q8-Cc-56Z" firstAttribute="trailing" secondItem="Svy-nw-J6b" secondAttribute="trailing" id="SFo-zM-r7a"/>
+                            <constraint firstItem="1xR-6u-9U2" firstAttribute="centerX" secondItem="H8f-Bc-hU7" secondAttribute="centerX" id="qEA-iQ-nRs"/>
+                            <constraint firstItem="1xR-6u-9U2" firstAttribute="top" secondItem="1q8-Cc-56Z" secondAttribute="top" constant="300" id="thu-QU-boX"/>
                             <constraint firstItem="Svy-nw-J6b" firstAttribute="leading" secondItem="1q8-Cc-56Z" secondAttribute="leading" id="zex-zh-vVq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1q8-Cc-56Z"/>
@@ -817,6 +810,7 @@
                         <barButtonItem key="rightBarButtonItem" title="저장" id="BgX-zO-POi"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="alertLabel" destination="1xR-6u-9U2" id="hvo-ao-sFM"/>
                         <outlet property="createTagTableView" destination="Svy-nw-J6b" id="dXq-r7-nhV"/>
                         <outlet property="saveButton" destination="BgX-zO-POi" id="qy1-zs-Hfl"/>
                     </connections>
