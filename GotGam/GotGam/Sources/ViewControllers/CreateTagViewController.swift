@@ -54,6 +54,16 @@ class CreateTagViewController: BaseViewController, ViewModelBindableType {
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: viewModel.inputs.save)
             .disposed(by: disposeBag)
+        
+        Observable.combineLatest(viewModel.inputs.tagName, viewModel.outputs.newTagHex)
+            .subscribe(onNext: {[weak self] name, color in
+                if name.isEmpty || color == nil {
+                    self?.saveButton.isEnabled = false
+                } else {
+                    self?.saveButton.isEnabled = true
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Views
