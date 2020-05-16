@@ -16,6 +16,7 @@ protocol MapViewModelInputs {
     func createGot(got: Got)
     func showAddVC()
     func updateGot(got: Got)
+    func setGotDone(got: inout Got)
     func deleteGot(got: Got)
     func updateList()
     func updateTagList()
@@ -25,6 +26,8 @@ protocol MapViewModelInputs {
 protocol MapViewModelOutputs {
     var gotList: BehaviorSubject<[Got]> { get }
     var tagList: BehaviorSubject<[Tag]> { get }
+    
+    var doneAction: PublishSubject<Got> { get }
 }
 
 protocol MapViewModelType {
@@ -33,6 +36,7 @@ protocol MapViewModelType {
 }
 
 class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapViewModelOutputs {
+    
     //MARK: - Model Input
     var input: MapViewModelInputs { return self }
     
@@ -41,12 +45,14 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var output: MapViewModelOutputs { return self }
     var gotList = BehaviorSubject<[Got]>(value: [])
     var tagList = BehaviorSubject<[Tag]>(value: [])
+    var doneAction = PublishSubject<Got>()
     
     enum SeedState{
         case none
         case seeding
         case adding
     }
+    
     
     var seedState = PublishSubject<SeedState>()
     
@@ -71,7 +77,13 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             self.updateList()
             self.updateTagList()
         }).disposed(by: self.disposeBag)
-        
+    }
+    
+    func setGotDone(got: inout Got){
+        got.isDone = true
+        self.storage.updateGot(gotToUpdate: got).bind{ got in
+            self.doneAction.onNext(got)
+        }.disposed(by: self.disposeBag)
     }
     
     func updateGot(got: Got){
@@ -79,7 +91,6 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             self.updateList()
             self.updateTagList()
         }.disposed(by: self.disposeBag)
-        
     }
     
     func deleteGot(got: Got){

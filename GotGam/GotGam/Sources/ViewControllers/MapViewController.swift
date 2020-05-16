@@ -172,8 +172,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             cell.doneButton.rx.tap
             .subscribe(onNext: {
                 guard var got = cell.got else { return }
-                got.isDone = true
-                self.viewModel.updateGot(got: got)
+                self.viewModel.setGotDone(got: &got)
             }).disposed(by: cell.disposeBag)
             
             cell.cancelButton.rx.tap.subscribe(onNext: {
@@ -199,6 +198,20 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             
             self.viewModel.input.quickAdd(text: text ?? "", location: location)
         }
+        
+        self.viewModel.output.doneAction.bind { got in
+            self.viewModel.input.updateList()
+            self.restoreView.isHidden = false
+            self.restoreView.restoreAction = {
+                self.restoreView.isHidden = true
+                var tmpGot = got
+                tmpGot.isDone = false
+                self.viewModel.input.updateGot(got: tmpGot)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.restoreView.isHidden = true
+            }
+        }.disposed(by: self.disposeBag)
     }
     
     //MARK: Set UI According to the State
