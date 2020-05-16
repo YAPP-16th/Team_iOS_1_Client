@@ -103,8 +103,9 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
         guard let hex = newTagHex.value else { return }
         let newTag = Tag(name: tagName.value, hex: hex)
         
-//        storage.create(tag: newTag)
+        storage.create(tag: newTag)
         print("create tag: \(newTag)")
+        sceneCoordinator.pop(animated: true)
     }
     
     // MARK: - Initializing
@@ -126,10 +127,11 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
         Observable
             .combineLatest(tagSelected, storage.fetchTagList())
             .subscribe(onNext: { [unowned self] selectedTag, tagList in
-                if tagList.contains(where: {$0.hex != selectedTag}) {
-                    self.newTagHex.accept(selectedTag)
-                } else {
+                let duplicated = tagList.map{$0.hex}.contains(selectedTag)
+                if duplicated {
                     self.duplicateOb.onNext(())
+                } else {
+                    self.newTagHex.accept(selectedTag)
                 }
             })
             .disposed(by: disposeBag)

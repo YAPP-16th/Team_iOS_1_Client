@@ -16,6 +16,7 @@ protocol SetTagViewModelInputs {
     var save: PublishSubject<Void> { get set }
     var selectedTag: BehaviorRelay<Tag> { get set }
     var createTag: PublishSubject<Void> { get set }
+    func fetcTagList()
     func removeItem(indexPath: IndexPath)
     func updateItem(indexPath: IndexPath)
 }
@@ -58,38 +59,49 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
         }
     }
     
+    func fetcTagList() {
+        
+        storage.fetchTagList()
+            .subscribe(onNext: { [weak self] in self?.tagList.onNext($0) })
+            .disposed(by: disposeBag)
+        
+    }
+    
     
     
     // MARK: - Outputs
     
     var sections = BehaviorRelay<[AddTagSectionModel]>(value: [])
     
-    // MARK: - Initializing
-    
-    var inputs: SetTagViewModelInputs { return self }
-    var outputs: SetTagViewModelOutputs { return self }
     
     // MARK: - Methods
     
     func pushCreateVC() {
-
         let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
     }
     
     // MARK: - Initializing
     
+    //private var tagList = PublishSubject<[Tag]>()
+    private var tagList = PublishSubject<[Tag]>()
+    
+    var inputs: SetTagViewModelInputs { return self }
+    var outputs: SetTagViewModelOutputs { return self }
+    
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: Tag?) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+        
         if let tag = tag {
             selectedTag.accept(tag)
         }
+        
         //sections = configureDataSource(tags: ["#FFFFFF", "#ffa608", "#6bb4e2"])
         
-        
-        storage.fetchTagList()
+        tagList
             .map { [Tag(name: "미지정", hex: "#cecece")] + $0 }
-            .subscribe(onNext: { [unowned self] tagList in self.sections.accept(self.configureDataSource(tags: tagList))
+            .subscribe(onNext: { [unowned self] tagList in
+                self.sections.accept(self.configureDataSource(tags: tagList))
             })
             .disposed(by: disposeBag)
         
