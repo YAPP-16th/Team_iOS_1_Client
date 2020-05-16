@@ -8,19 +8,39 @@
 
 import UIKit
 import AuthenticationServices
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController{
   
+  lazy var facebookLoginButton: FacebookButton = {
+    let b = FacebookButton()
+    b.translatesAutoresizingMaskIntoConstraints = false
+    return b
+  }()
+  
+  lazy var kakaoLoginButton: UIButton = {
+    let b = UIButton(type: .system)
+    b.setImage(UIImage(named: "btnKakaoLogin")?.withRenderingMode(.alwaysOriginal), for: .normal)
+    b.translatesAutoresizingMaskIntoConstraints = false
+    b.imageView?.contentMode = .scaleAspectFit
+    return b
+  }()ImageView(image: UIImage(named: "btnKakaoLogin"))
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
+    prepareFacebookLoginButton()
+    prepareKakaoLoginButton()
     if #available(iOS 13.0, *) {
       prepareSignInApple()
     }
-    
-    
-    
+
+    if let token = AccessToken.current, !token.isExpired { // User is logged in, do work such as go to next view controller.
+      print(token)
+    }
+
+    // Swift // // Extend the code sample from 6a. Add Facebook Login to Your Code // Add to your viewDidLoad method:
+
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -35,6 +55,34 @@ class LoginViewController: UIViewController{
       NotificationCenter.default.removeObserver(self, name: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil)
     }
   }
+  
+  private func prepareKakaoLoginButton(){
+    self.view.addSubview(kakaoLoginButton)
+    NSLayoutConstraint.activate([
+      kakaoLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+      kakaoLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+      kakaoLoginButton.bottomAnchor.constraint(equalTo: self.facebookLoginButton.topAnchor, constant: -8),
+      kakaoLoginButton.heightAnchor.constraint(equalToConstant: 45)
+    ])
+  }
+  
+  private func prepareFacebookLoginButton(){
+    self.view.addSubview(facebookLoginButton)
+    
+    for ic in facebookLoginButton.constraints{
+      if ic.constant == 28{
+        ic.isActive = false
+        break
+      }
+    }
+    NSLayoutConstraint.activate([
+      facebookLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+      facebookLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+      facebookLoginButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
+      facebookLoginButton.heightAnchor.constraint(equalToConstant: 45)
+    ])
+    facebookLoginButton.permissions = ["public_profile", "email"]
+  }
   @available(iOS 13.0, *)
   private func prepareSignInApple(){
     let siwaButton = ASAuthorizationAppleIDButton()
@@ -43,8 +91,8 @@ class LoginViewController: UIViewController{
     NSLayoutConstraint.activate([
       siwaButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
       siwaButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-      siwaButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
-      siwaButton.heightAnchor.constraint(equalToConstant: 50)
+      siwaButton.bottomAnchor.constraint(equalTo: self.kakaoLoginButton.topAnchor, constant: -8),
+      siwaButton.heightAnchor.constraint(equalToConstant: 45)
     ])
     
     siwaButton.addTarget(self, action: #selector(appleSignInTapped), for: .touchUpInside)
@@ -137,4 +185,40 @@ extension LoginViewController: ASAuthorizationControllerDelegate{
       UserDefaults.standard.set(userID, forDefines: .userID)
     }
   }
+}
+class FacebookButton: FBLoginButton {
+
+    override func updateConstraints() {
+        // deactivate height constraints added by the facebook sdk (we'll force our own instrinsic height)
+        for contraint in constraints {
+            if contraint.firstAttribute == .height, contraint.constant < 45 {
+                // deactivate this constraint
+                contraint.isActive = false
+            }
+        }
+        super.updateConstraints()
+    }
+
+    override var intrinsicContentSize: CGSize {
+      return CGSize(width: UIView.noIntrinsicMetric, height: 45)
+    }
+
+    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
+        let logoSize: CGFloat = 24.0
+        let centerY = contentRect.midY
+        let y: CGFloat = centerY - (logoSize / 2.0)
+        return CGRect(x: y, y: y, width: logoSize, height: logoSize)
+    }
+
+    override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
+        if isHidden || bounds.isEmpty {
+            return .zero
+        }
+
+        let imageRect = self.imageRect(forContentRect: contentRect)
+        let titleX = imageRect.maxX
+        let titleRect = CGRect(x: titleX, y: 0, width: contentRect.width - titleX - titleX, height: contentRect.height)
+        return titleRect
+    }
+
 }
