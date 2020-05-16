@@ -50,6 +50,8 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
         self.currentVC = window.rootViewController!
     }
     
+    // MARK: - Methods
+    
     @discardableResult
     func transition(to scene: Scene, using style: Transition, animated: Bool) -> Completable {
         
@@ -131,6 +133,24 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             subject.onError(TransitionError.unknown)
         }
 
+        return subject.ignoreElements()
+    }
+    
+    @discardableResult
+    func pop(animated: Bool) -> Completable {
+        let subject = PublishSubject<Void>()
+        
+        if let nav = currentVC.navigationController {
+            guard nav.popViewController(animated: animated) != nil else {
+                subject.onError(TransitionError.cannotPop)
+                return subject.ignoreElements()
+            }
+
+            currentVC = nav.viewControllers.last!
+            print(currentVC)
+            subject.onCompleted()
+        }
+        
         return subject.ignoreElements()
     }
     

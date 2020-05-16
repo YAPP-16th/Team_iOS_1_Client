@@ -18,5 +18,8 @@ protocol SceneCoordinatorType {
     func close(animated: Bool) -> Completable
     
     @discardableResult
+    func pop(animated: Bool) -> Completable
+    
+    @discardableResult
     func createTabBar(gotService: GotStorageType) -> Completable
 }
