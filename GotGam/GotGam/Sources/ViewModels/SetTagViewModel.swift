@@ -32,9 +32,7 @@ protocol SetTagViewModelType {
 }
 
 class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInputs, SetTagViewModelOutputs {
-    
-    
-    
+
     // MARK: - Inputs
     
     var back = PublishSubject<Void>()
@@ -60,11 +58,9 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     }
     
     func fetcTagList() {
-        
         storage.fetchTagList()
             .subscribe(onNext: { [weak self] in self?.tagList.onNext($0) })
             .disposed(by: disposeBag)
-        
     }
     
     
@@ -81,6 +77,10 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
         sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
     }
     
+    func pop() {
+        sceneCoordinator.pop(animated: true)
+    }
+    
     // MARK: - Initializing
     
     //private var tagList = PublishSubject<[Tag]>()
@@ -89,14 +89,8 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     var inputs: SetTagViewModelInputs { return self }
     var outputs: SetTagViewModelOutputs { return self }
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: Tag?) {
+    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
-        
-        if let tag = tag {
-            selectedTag.accept(tag)
-        }
-        
-        //sections = configureDataSource(tags: ["#FFFFFF", "#ffa608", "#6bb4e2"])
         
         tagList
             .map { [Tag(name: "미지정", hex: "#cecece")] + $0 }
@@ -106,7 +100,13 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
             .disposed(by: disposeBag)
         
         createTag.asObserver()
-            .subscribe(onNext: {[unowned self] _ in self.pushCreateVC()})
+            .subscribe(onNext: {[weak self] _ in self?.pushCreateVC()})
+            .disposed(by: disposeBag)
+        
+        save
+            .subscribe(onNext: {
+                [weak self] _ in self?.pop()
+            })
             .disposed(by: disposeBag)
         
     }

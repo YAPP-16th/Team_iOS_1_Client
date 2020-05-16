@@ -638,13 +638,13 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0K-5k-dj2">
-                                                    <rect key="frame" x="44" y="25.5" width="42" height="20"/>
+                                                    <rect key="frame" x="44" y="15.5" width="42" height="40"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="oAA-Xy-mjo">
-                                                    <rect key="frame" x="374" y="25.5" width="20" height="20"/>
+                                                    <rect key="frame" x="354" y="15.5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="oAA-Xy-mjo" secondAttribute="height" multiplier="1:1" id="chZ-Zx-dos"/>
                                                     </constraints>
@@ -699,6 +699,7 @@
                         <barButtonItem key="rightBarButtonItem" title="저장" id="Hvp-C5-RkH"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="saveButton" destination="Hvp-C5-RkH" id="JQF-Au-fgQ"/>
                         <outlet property="tagTableView" destination="R2d-sB-kcF" id="jAs-pl-EXq"/>
                     </connections>
                 </viewController>

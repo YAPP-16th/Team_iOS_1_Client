@@ -34,6 +34,11 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
         
         // Inputs
         
+        saveButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.save)
+            .disposed(by: disposeBag)
+        
         
         tagTableView.rx.modelSelected(AddTagSectionModel.Item.self)
             .subscribe(onNext: { item in
@@ -67,6 +72,7 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
     }
     
     @IBOutlet var tagTableView: UITableView!
+    @IBOutlet var saveButton: UIBarButtonItem!
     
 }
 

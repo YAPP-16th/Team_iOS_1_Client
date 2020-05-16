@@ -19,5 +19,4 @@ extension ManagedTag {
 
     @NSManaged public var hex: String
     @NSManaged public var name: String?
-
 }

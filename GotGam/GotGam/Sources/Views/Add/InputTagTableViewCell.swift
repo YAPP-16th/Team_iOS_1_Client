@@ -27,6 +27,11 @@ class InputTagTableViewCell: UITableViewCell {
             .compactMap{ $0?.hex.hexToColor() }
             .bind(to: tagColorView.rx.backgroundColor)
             .disposed(by: disposeBag)
+        
+        viewModel.tag
+            .compactMap { $0?.name }
+            .bind(to: tagLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
     override func awakeFromNib() {

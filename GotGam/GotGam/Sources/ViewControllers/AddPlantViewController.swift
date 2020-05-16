@@ -89,7 +89,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        print(viewModel)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

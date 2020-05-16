@@ -66,7 +66,18 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     private func pushAddTagVC() {
         // TODO: tag 가져오기
-        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value ?? nil)
+        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        
+        if let tag = tag.value {
+            addTagViewModel.selectedTag.accept(tag)
+        }
+        
+        addTagViewModel.save
+            .subscribe(onNext: { [weak self] _ in
+                self?.tag.accept(addTagViewModel.selectedTag.value)
+            })
+            .disposed(by: disposeBag)
+        
         sceneCoordinator.transition(to: .setTag(addTagViewModel), using: .push, animated: true)
     }
     
@@ -74,9 +85,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         guard let got = got else { return }
         
         nameText.accept(got.title ?? "")
-        //placeText.accept(got.place)
-        //tag.accept(got.tag)
-        //tag.accept("#123123")
     }
     
     private func removeItem(section: InputItemType) {
