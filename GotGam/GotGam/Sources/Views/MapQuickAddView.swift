@@ -22,6 +22,9 @@ class MapQuickAddView: UIView{
     var addAction: ((String?) -> Void)? = { _ in }
     
     @IBAction func quickAddAction(){
+        if addField.isFirstResponder{
+            addField.resignFirstResponder()
+        }
         addAction?(self.addField.text)
         addField.text = ""
     }

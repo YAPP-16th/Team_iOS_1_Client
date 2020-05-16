@@ -49,7 +49,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         didSet{
             DispatchQueue.main.async {
                 self.cardCollectionViewHeightConstraint.constant = self.gotList.isEmpty ? 0 : 170
-                self.view.layoutIfNeeded()
                 self.addPin()
             }
         }
@@ -66,19 +65,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
         self.restoreView.isHidden = true
-        
-        self.quickAddView.addAction = { [weak self] text in
-            guard let self = self else { return }
-            
-            let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-            let got = Got(id: Int64(arc4random()), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)], title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, isDone: false, place: "화장실", insertedDate: Date())
-            self.viewModel.createGot(got: got)
-            //ToDo: - deliver centerPoint To moedl to create new task
-            self.quickAddView.addField.resignFirstResponder()
-            self.viewModel.seedState.onNext(.none)
-            self.cardCollectionView.isHidden = false
-            self.view.layoutIfNeeded()
-        }
     }
     
     
@@ -118,22 +104,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        self.seedButton.layer.shadowColor = UIColor.black.cgColor
-        self.seedButton.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.seedButton.layer.shadowRadius = 5.0
-        self.seedButton.layer.shadowOpacity = 0.3
-        self.seedButton.layer.cornerRadius = 4.0
-        self.seedButton.layer.masksToBounds = false
-        
+        self.seedButton.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
         self.seedButton.layer.cornerRadius = self.seedButton.frame.height / 2
         
-        self.myLocationButton.layer.shadowColor = UIColor.black.cgColor
-        self.myLocationButton.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.myLocationButton.layer.shadowRadius = 5.0
-        self.myLocationButton.layer.shadowOpacity = 0.3
-        self.myLocationButton.layer.cornerRadius = 4.0
-        self.myLocationButton.layer.masksToBounds = false
+        self.myLocationButton.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
         
         self.myLocationButton.layer.cornerRadius = self.seedButton.frame.height / 2
         self.myLocationButton.backgroundColor = .white
@@ -192,7 +166,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.tagCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
         self.cardCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
         
-        self.viewModel.gotList.bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { (index, got, cell) in
+        self.viewModel.output.gotList.bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { (index, got, cell) in
             cell.got = got
             
             cell.doneButton.rx.tap
@@ -217,7 +191,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.gotList = list
         }).disposed(by: self.disposeBag)
         
-        
+        self.quickAddView.addAction = { [weak self] text in
+            guard let self = self else { return }
+            
+            let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
+            let location = CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude)
+            
+            self.viewModel.input.quickAdd(text: text ?? "", location: location)
+        }
     }
     
     //MARK: Set UI According to the State
