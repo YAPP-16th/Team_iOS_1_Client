@@ -22,6 +22,9 @@ protocol GotStorageType {
     func createGot(gotToCreate: Got) -> Observable<Got>
     
     @discardableResult
+    func create(tag: Tag) -> Observable<Tag>
+    
+    @discardableResult
     func fetchGotList() -> Observable<[Got]>
     
     @discardableResult

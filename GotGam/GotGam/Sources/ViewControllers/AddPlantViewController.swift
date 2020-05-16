@@ -61,7 +61,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     func showAlert(_ label: UILabel, message msg: String) {
         
         let animation = CABasicAnimation(keyPath: "opacity")
-        animation.duration = 1
+        animation.duration = 2.5
         animation.fromValue = 1
         animation.toValue = 0
         animation.isRemovedOnCompletion = true
@@ -89,7 +89,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        print(viewModel)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -206,10 +206,10 @@ extension AddPlantViewController {
         return RxTableViewSectionedAnimatedDataSource<InputSectionModel>(
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
-                case let .ToggleableItem(title, enabled):
+                case let .ToggleableItem(title):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "toggleableCell", for: indexPath) as? ToggleableTableViewCell else { return UITableViewCell()}
                     
-                    cell.configure(viewModel: viewModel, title: title, enabled: enabled)
+                    cell.configure(viewModel: viewModel, title: title)
                     
                     if indexPath.section == 1 {
                         cell.enableSwitch.setOn(viewModel.inputs.isOnDate.value, animated: false)
@@ -235,10 +235,9 @@ extension AddPlantViewController {
                     }
                     return cell
                     
-                case .TagItem(let title, let tag):
+                case .TagItem(let title):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "inputTagCell", for: indexPath) as? InputTagTableViewCell else { return UITableViewCell() }
-                    // TODO: tag 새로만들기
-                    cell.configure(title: title, tag: tag)
+                    cell.configure(viewModel: viewModel, title: title)
                     return cell
                     
                 case .TextFieldItem(let text, let placeholder, let enabled, let isDate):

@@ -64,13 +64,15 @@ enum TagColor: String, CaseIterable {
 
 protocol CreateTagViewModelInputs {
     var save: PublishSubject<Void> { get set }
-    var newTag: BehaviorRelay<String?> { get set }
+    var tagSelected: PublishSubject<String> { get set }
     var tagName: BehaviorRelay<String> { get set }
 }
 
 protocol CreateTagViewModelOutputs {
     var sections: Observable<[CreateTagSectionModel]> { get }
     var tagColors: Observable<[TagColor]> { get }
+    var newTagHex: BehaviorRelay<String?> { get }
+    var duplicateOb: PublishSubject<Void> { get }
 }
 
 protocol CreateTagViewModelType {
@@ -85,18 +87,25 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     // MARK: - Inputs
     
     var save = PublishSubject<Void>()
-    var newTag = BehaviorRelay<String?>(value: nil)
+    var tagSelected = PublishSubject<String>()
     var tagName = BehaviorRelay<String>(value: "")
     
     // MARK: - Outputs
     
     var sections = Observable<[CreateTagSectionModel]>.just([])
+    var newTagHex = BehaviorRelay<String?>(value: nil)
+    var duplicateOb = PublishSubject<Void>()
     var tagColors = Observable<[TagColor]>.just(TagColor.allCases)
     
     // MARK: - Methods
     
     func createTag() {
-        print(tagName.value)
+        guard let hex = newTagHex.value else { return }
+        let newTag = Tag(name: tagName.value, hex: hex)
+        
+        storage.create(tag: newTag)
+        print("create tag: \(newTag)")
+        sceneCoordinator.pop(animated: true)
     }
     
     // MARK: - Initializing
@@ -104,14 +113,29 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     var inputs: CreateTagViewModelInputs { return self }
     var outputs: CreateTagViewModelOutputs { return self }
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: String? = nil) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: Tag? = nil) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
         
-        newTag.accept(tag)
+        newTagHex.accept(tag?.hex)
+        
         if let tag = tag {
-            tagName.accept(tag)
+            tagName.accept(tag.name)
         }
+        
         sections = configureDataSource()
+        
+        Observable
+            .combineLatest(tagSelected, storage.fetchTagList())
+            .subscribe(onNext: { [unowned self] selectedTag, tagList in
+                let duplicated = tagList.map{$0.hex}.contains(selectedTag)
+                if duplicated {
+                    self.duplicateOb.onNext(())
+                } else {
+                    self.newTagHex.accept(selectedTag)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         
         save.asObserver()
             .subscribe(onNext: { [unowned self] _ in
@@ -122,7 +146,7 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     
     func configureDataSource() -> Observable<[CreateTagSectionModel]> {
         return Observable<[CreateTagSectionModel]>.just([
-            .NameSection(title: "태그 이름", items: [.TextFieldItem(text: "", placeholder: "태그 이름을 적어주세요")]),
+            .NameSection(title: "태그 이름", items: [.TextFieldItem]),
             .ColorSection(title: "태그 색상", items: [.GridItem])
         ])
     }
@@ -136,7 +160,7 @@ enum CreateTagSectionModel {
 }
 
 enum CreateTagItem {
-    case TextFieldItem(text: String, placeholder: String)
+    case TextFieldItem
     case GridItem
 }
 

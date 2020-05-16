@@ -31,7 +31,7 @@ protocol AddPlantViewModelOutputs {
     // 테이블 뷰, 지도, 이미지, 이름, 주소 초기값
 
     var placeText: BehaviorRelay<String> { get set }
-    var tag: BehaviorRelay<String?> { get set }
+    var tag: BehaviorRelay<Tag?> { get set }
     var sectionsSubject: BehaviorRelay<[InputSectionModel]> { get }
 }
 
@@ -59,14 +59,25 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     // MARK: - Output
     
     var placeText = BehaviorRelay<String>(value: "")
-    var tag = BehaviorRelay<String?>(value: nil)
+    var tag = BehaviorRelay<Tag?>(value: nil)
     var sectionsSubject = BehaviorRelay<[InputSectionModel]>(value: [])
 
     // MARK: - Methods
     
     private func pushAddTagVC() {
         // TODO: tag 가져오기
-        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value ?? nil)
+        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        
+        if let tag = tag.value {
+            addTagViewModel.selectedTag.accept(tag)
+        }
+        
+        addTagViewModel.save
+            .subscribe(onNext: { [weak self] _ in
+                self?.tag.accept(addTagViewModel.selectedTag.value)
+            })
+            .disposed(by: disposeBag)
+        
         sceneCoordinator.transition(to: .setTag(addTagViewModel), using: .push, animated: true)
     }
     
@@ -74,9 +85,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         guard let got = got else { return }
         
         nameText.accept(got.title ?? "")
-        //placeText.accept(got.place)
-        //tag.accept(got.tag)
-        tag.accept("#123123")
     }
     
     private func removeItem(section: InputItemType) {
@@ -164,25 +172,25 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     func configureDataSource(got: Got?) -> [InputSectionModel] {
         return [
-            .TagSection(section: InputItemType.tag.rawValue, title: " ", items: [.TagItem(title: InputItemType.tag.title, tag: self.tag.value)]),
+            .TagSection(section: InputItemType.tag.rawValue, title: " ", items: [.TagItem(title: InputItemType.tag.title)]),
             .ToggleableSection(
                 section: InputItemType.date.rawValue,
                 title: " ",
                 items: [
-                    .ToggleableItem(title: InputItemType.date.title, enabled: got?.insertedDate != nil)
+                    .ToggleableItem(title: InputItemType.date.title)
                     //.TextFieldItem(text: dateText.value, placeholder: InputItemType.date.placeholder, enabled: false, isDate: true)
                 ]),
             .ToggleableSection(
                 section: InputItemType.arrive.rawValue,
                 title: " ",
                 items: [
-                    .ToggleableItem(title: InputItemType.arrive.title, enabled: got?.insertedDate != nil)
+                    .ToggleableItem(title: InputItemType.arrive.title)
                 ]),
             .ToggleableSection(
                 section: InputItemType.leave.rawValue,
                 title: " ",
                 items: [
-                    .ToggleableItem(title: InputItemType.leave.title, enabled: got?.insertedDate != nil)
+                    .ToggleableItem(title: InputItemType.leave.title)
                 ])
         ]
     }
@@ -214,8 +222,8 @@ enum InputItemType: Int {
 }
 
 enum InputItem {
-    case TagItem(title: String, tag: String?) // String -> Tag
-    case ToggleableItem(title: String, enabled: Bool)
+    case TagItem(title: String)
+    case ToggleableItem(title: String)
     case TextFieldItem(text: String, placeholder: String, enabled: Bool, isDate: Bool = false)
 }
 
@@ -223,8 +231,8 @@ extension InputItem: IdentifiableType, Equatable {
     typealias Identity = String
     var identity: Identity {
         switch self {
-        case let .TagItem(title, _): return title
-        case let .ToggleableItem(title, _): return title
+        case let .TagItem(title): return title
+        case let .ToggleableItem(title): return title
         case let .TextFieldItem(_, placeholder, _, _): return placeholder
         }
     }

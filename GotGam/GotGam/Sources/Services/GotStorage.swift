@@ -73,6 +73,17 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func create(tag: Tag) -> Observable<Tag>{
+        do {
+            let managedTag = NSEntityDescription.insertNewObject(forEntityName: "ManagedTag", into: self.context) as! ManagedTag
+            managedTag.from(tag)
+            try self.context.save()
+            return .just(tag)
+        } catch let error{
+            return .error(GotStorageError.createError(error.localizedDescription))
+        }
+    }
+    
     func updateGot(gotToUpdate: Got) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
