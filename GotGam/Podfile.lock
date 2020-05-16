@@ -20,9 +20,9 @@ DEPENDENCIES:
   - Action
   - Alamofire
   - CenteredCollectionView
-  - RxCocoa
+  - RxCocoa (~> 5)
   - RxDataSources
-  - RxSwift
+  - RxSwift (~> 5)
 
 SPEC REPOS:
   trunk:
@@ -45,6 +45,6 @@ SPEC CHECKSUMS:
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
 
-PODFILE CHECKSUM: f0096ff7389af2f7b29ffc2b9bb0eb0e1f089efd
+PODFILE CHECKSUM: 846c82719358a2d19dc73af2c8d6860d6a2a3e12
 
 COCOAPODS: 1.9.1

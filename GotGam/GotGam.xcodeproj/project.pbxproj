@@ -132,7 +132,7 @@
 		295C03C42464655100789967 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
-		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4269387C24306B66007B60FD /* 곳감.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "곳감.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4269387F24306B66007B60FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4269388324306B66007B60FD /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		4269388624306B66007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 		4269387D24306B66007B60FD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4269387C24306B66007B60FD /* GotGam.app */,
+				4269387C24306B66007B60FD /* 곳감.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -645,7 +645,7 @@
 			);
 			name = GotGam;
 			productName = GotGam;
-			productReference = 4269387C24306B66007B60FD /* GotGam.app */;
+			productReference = 4269387C24306B66007B60FD /* 곳감.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -992,6 +992,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 97C96KP84G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1003,8 +1004,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios1.GotGam;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
+				PRODUCT_NAME = "곳감";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)$(PROJECT_DIR)/GotGam/Supporting Files/Bridging_Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1019,6 +1020,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 97C96KP84G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1030,8 +1032,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios1.GotGam;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
+				PRODUCT_NAME = "곳감";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)$(PROJECT_DIR)/GotGam/Supporting Files/Bridging_Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
