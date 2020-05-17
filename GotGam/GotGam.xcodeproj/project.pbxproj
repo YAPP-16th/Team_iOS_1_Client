@@ -117,6 +117,7 @@
 		A16439722454001100C740F4 /* MapTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16439702454001100C740F4 /* MapTagCell.swift */; };
 		A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16439732454002300C740F4 /* MapQuickAddView.xib */; };
 		A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164397524540A0F00C740F4 /* MapQuickAddView.swift */; };
+		A1A5DE042471132C00AFA9D5 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
 		A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */; };
@@ -247,6 +248,7 @@
 		A16439702454001100C740F4 /* MapTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTagCell.swift; sourceTree = "<group>"; };
 		A16439732454002300C740F4 /* MapQuickAddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapQuickAddView.xib; sourceTree = "<group>"; };
 		A164397524540A0F00C740F4 /* MapQuickAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuickAddView.swift; sourceTree = "<group>"; };
+		A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
 		A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Bold.ttf"; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				2273802A6EF7CEC60DFA2E9F /* Pods_GotGam.framework in Frameworks */,
 				4CF1D094243E0EFC00B45751 /* libxml2.tbd in Frameworks */,
 				4CF1D08C243E0ECF00B45751 /* SystemConfiguration.framework in Frameworks */,
+				A1A5DE042471132C00AFA9D5 /* KakaoOpenSDK.framework in Frameworks */,
 				A157E11424555A90001E310D /* DaumMap.framework in Frameworks */,
 				4CF1D08A243E0EC700B45751 /* OpenGLES.framework in Frameworks */,
 			);
@@ -428,6 +431,7 @@
 		4CE037CF2438BDDE0093E39D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */,
 				A157E0D224555A90001E310D /* DaumMap.embeddedframework */,
 				4269388D24306B68007B60FD /* Info.plist */,
 				4CF1D097243E0F7200B45751 /* Bridging_Header.h */,
@@ -998,11 +1002,63 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files/DaumMap.embeddedframework",
+					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 				);
 				INFOPLIST_FILE = "GotGam/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"c++\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Action\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CenteredCollectionView\"",
+					"-framework",
+					"\"Differentiator\"",
+					"-framework",
+					"\"FBSDKCoreKit\"",
+					"-framework",
+					"\"FBSDKLoginKit\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"RxCocoa\"",
+					"-framework",
+					"\"RxDataSources\"",
+					"-framework",
+					"\"RxRelay\"",
+					"-framework",
+					"\"RxSwift\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accelerate\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
 				PRODUCT_NAME = GotGam;
@@ -1026,11 +1082,63 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files/DaumMap.embeddedframework",
+					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 				);
 				INFOPLIST_FILE = "GotGam/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"c++\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Action\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CenteredCollectionView\"",
+					"-framework",
+					"\"Differentiator\"",
+					"-framework",
+					"\"FBSDKCoreKit\"",
+					"-framework",
+					"\"FBSDKLoginKit\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"RxCocoa\"",
+					"-framework",
+					"\"RxDataSources\"",
+					"-framework",
+					"\"RxRelay\"",
+					"-framework",
+					"\"RxSwift\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accelerate\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
 				PRODUCT_NAME = GotGam;
