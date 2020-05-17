@@ -60,7 +60,7 @@ extension SearchBarViewController: UITableViewDataSource{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let place = placeList[indexPath.row]
 		
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+		let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
 		cell.textLabel?.text = place.addressName
 		return cell
 	}

@@ -28,7 +28,7 @@ class APIManager {
 			
 			if let data = response.data{
 				let jsonDecoder = JSONDecoder()
-				let result = try! jsonDecoder.decode(KakaoResponse.self, from: data)
+				let result = try? jsonDecoder.decode(KakaoResponse.self, from: data)
 				completion(result.documents)
 			} else {
 				completion([])
