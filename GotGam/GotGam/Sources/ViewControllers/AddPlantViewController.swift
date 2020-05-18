@@ -50,9 +50,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         let seed = MTMapPOIItem()
         seed.mapPoint = point
         seed.markerType = .customImage
-        seed.customImage = UIImage(named: "seed")!
+        seed.customImage = UIImage(named: "icSeed")!
         mapView.add(seed)
     }
+    
     func setupMapCenter() {
         //let centerCoor = MTMapPoint(geoCoord: .init(latitude: currentCenter.latitude, longitude: currentCenter.longitude))
         mapView.setMapCenter(currentCenter, animated: false)
@@ -82,9 +83,9 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         //navigationController?.presentationController?.delegate = self
         setupViews()
         setupMapView()
-        setupMapCenter()
-        drawCircle(center: currentCenter, radius: 50)
-        drawSeed(point: currentCenter)
+        //setupMapCenter()
+        //drawCircle(center: currentCenter, radius: 50)
+        //drawSeed(point: currentCenter)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,7 +118,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         placeTextView.centerVertically()
         
         
-        editButton.layer.cornerRadius = editButton.bounds.height/2
+        //editButton.layer.cornerRadius = editButton.bounds.height/2
         
         alertDefaultLabel.layer.cornerRadius = 6
         alertDefaultLabel.alpha = 0
@@ -132,6 +133,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             mapView.translatesAutoresizingMaskIntoConstraints = false
             mapView.delegate = self
             mapView.baseMapType = .standard
+            mapView.isHidden = true
             mapBackgroundView.insertSubview(mapView, at: 0)
             
             NSLayoutConstraint.activate([
@@ -147,9 +149,14 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         
         // Input
         
+//        saveButton.rx.tap
+//            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+//            .bind(to: viewModel.inputs.save)
+//            .disposed(by: disposeBag)
+        
         cancelButton.rx.tap
             .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.close)
+            .bind(to: viewModel.inputs.close)
             .disposed(by: disposeBag)
         
         titleTextView.rx.text.orEmpty
@@ -193,10 +200,30 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .bind(to: inputTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        //viewModel.outputs.currentGot.value
-            //.compactMap {  }
+        viewModel.outputs.currentGot
+            .compactMap { $0?.title }
+            .bind(to: titleTextView.rx.text)
+            .disposed(by: disposeBag)
         
-//        titleTextField.text = viewModel.inputs.nameText.value
+        viewModel.outputs.currentGot
+            .compactMap { $0?.place }
+            .subscribe(onNext: { [weak self] place in
+                self?.placeTextView.text = place
+                self?.placeTextView.textColor = .black
+                self?.placeTextView.isEditable = false
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.currentGot
+            .compactMap { $0 }
+            .subscribe(onNext: { [weak self] got in
+                guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
+                self?.drawSeed(point: point)
+                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
+            })
+            .disposed(by: disposeBag)
+        
+        
 //        placeLabel.text = viewModel.outputs.currentGot.value?.place
         
     }
@@ -319,15 +346,10 @@ extension AddPlantViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = .clear
         return nil
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        if section == tableView.numberOfSections-1 {
-//            return 44
-//        }
         return 0
     }
 }
@@ -337,9 +359,15 @@ extension AddPlantViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         
-        DispatchQueue.main.async {
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        if textView == titleTextView {
+            DispatchQueue.main.async {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+        } else if textView == placeTextView {
+            // TODO: 플레이스를 클릭하면 지도 설정으로 이동
         }
+        
+        
     }
     
     
