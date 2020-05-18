@@ -27,9 +27,16 @@ class APIManager {
         AF.request(urlString, method: .get, parameters: parameters, encoder: URLEncodedFormParameterEncoder.default, headers: headers, interceptor: nil).responseJSON { (response) in
 			
 			if let data = response.data{
-				let jsonDecoder = JSONDecoder()
-				let result = try? jsonDecoder.decode(KakaoResponse.self, from: data)
-				completion(result.documents)
+				do{
+					let jsonDecoder = JSONDecoder()
+					let result = try jsonDecoder.decode(KakaoResponse.self, from: data)
+					completion(result.documents)
+				}catch let error {
+					print(error.localizedDescription)
+				}
+				
+				//수정
+				
 			} else {
 				completion([])
 			}

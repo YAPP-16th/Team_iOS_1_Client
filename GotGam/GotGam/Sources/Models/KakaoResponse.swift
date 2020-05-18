@@ -13,12 +13,13 @@ struct KakaoResponse:Codable {
 }
 
 struct Place: Codable {
-	let addressName: String
+	let addressName, placeName: String
 	let roadAddressName, x, y: String
 	
 	enum CodingKeys:String, CodingKey {
 		case addressName = "address_name"
 		case roadAddressName = "road_address_name"
+		case placeName = "place_name"
         case x, y
 	}
 }
