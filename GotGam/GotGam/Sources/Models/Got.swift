@@ -16,17 +16,19 @@ struct Got: Equatable {
     var content : String?
     var latitude: Double?
     var longitude: Double?
+    var radius: Double?
     var isDone: Bool
 	var place: String?
     var insertedDate: Date?
      
-    init(id: Int64?, tag: [Tag]?, title: String?, content: String?, latitude: Double, longitude: Double?, isDone: Bool, place: String?, insertedDate: Date?){
+    init(id: Int64?, tag: [Tag]?, title: String?, content: String?, latitude: Double, longitude: Double?, radius: Double?, isDone: Bool, place: String?, insertedDate: Date?){
         self.id = id
         self.tag = tag
         self.title = title ?? ""
         self.content = content
         self.latitude = latitude
         self.longitude = longitude
+        self.radius = radius
         self.isDone = isDone
         self.place = place
         self.insertedDate = insertedDate

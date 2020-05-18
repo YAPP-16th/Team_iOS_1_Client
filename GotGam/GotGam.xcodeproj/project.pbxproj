@@ -18,6 +18,7 @@
 		4269388724306B66007B60FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388524306B66007B60FD /* Main.storyboard */; };
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
+		4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */; };
 		4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */; };
 		4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */; };
 		4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */; };
@@ -132,13 +133,14 @@
 		295C03C42464655100789967 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
-		4269387C24306B66007B60FD /* 곳감.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "곳감.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4269387F24306B66007B60FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4269388324306B66007B60FD /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		4269388624306B66007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4269388824306B68007B60FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+centerVertically.swift"; sourceTree = "<group>"; };
 		4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
@@ -313,7 +315,7 @@
 		4269387D24306B66007B60FD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4269387C24306B66007B60FD /* 곳감.app */,
+				4269387C24306B66007B60FD /* GotGam.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -323,8 +325,8 @@
 			children = (
 				A125E79224695AF8007767D7 /* GotGam.entitlements */,
 				4CE037CD2438BDD10093E39D /* Resources */,
-				4CE037CE2438BDD80093E39D /* Sources */,
 				4CE037CF2438BDDE0093E39D /* Supporting Files */,
+				4CE037CE2438BDD80093E39D /* Sources */,
 			);
 			path = GotGam;
 			sourceTree = "<group>";
@@ -581,6 +583,7 @@
 				4CE3B6FF2459E36000A53BF8 /* UIView+.swift */,
 				4C65BF812462BFF700FF17BC /* String+hexToColor.swift */,
 				4C5F0F692465540700C7A6E9 /* Date+String.swift */,
+				4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -645,7 +648,7 @@
 			);
 			name = GotGam;
 			productName = GotGam;
-			productReference = 4269387C24306B66007B60FD /* 곳감.app */;
+			productReference = 4269387C24306B66007B60FD /* GotGam.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -827,6 +830,7 @@
 				A127E715246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
+				4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
@@ -993,7 +997,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 97C96KP84G;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
@@ -1005,7 +1009,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
-				PRODUCT_NAME = "곳감";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)$(PROJECT_DIR)/GotGam/Supporting Files/Bridging_Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1021,7 +1025,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 97C96KP84G;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
@@ -1033,7 +1037,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
-				PRODUCT_NAME = "곳감";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)$(PROJECT_DIR)/GotGam/Supporting Files/Bridging_Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

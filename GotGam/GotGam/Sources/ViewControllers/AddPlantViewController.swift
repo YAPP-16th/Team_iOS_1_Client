@@ -50,9 +50,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         let seed = MTMapPOIItem()
         seed.mapPoint = point
         seed.markerType = .customImage
-        seed.customImage = UIImage(named: "seed")!
+        seed.customImage = UIImage(named: "icSeed")!
         mapView.add(seed)
     }
+    
     func setupMapCenter() {
         //let centerCoor = MTMapPoint(geoCoord: .init(latitude: currentCenter.latitude, longitude: currentCenter.longitude))
         mapView.setMapCenter(currentCenter, animated: false)
@@ -82,14 +83,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         //navigationController?.presentationController?.delegate = self
         setupViews()
         setupMapView()
-        setupMapCenter()
-        drawCircle(center: currentCenter, radius: 50)
-        drawSeed(point: currentCenter)
+        //setupMapCenter()
+        //drawCircle(center: currentCenter, radius: 50)
+        //drawSeed(point: currentCenter)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(viewModel)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,10 +104,21 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Initializing
     
     func setupViews() {
-        titleTextField.tintColor = .orange
-        titleTextField.addLine(position: .bottom, color: .lightGray, width: 0.5)
         
-        editButton.layer.cornerRadius = editButton.bounds.height/2
+        titleTextView.delegate = self
+        placeTextView.delegate = self
+        
+        titleTextView.tintColor = .orange
+        titleTextView.textColor = .veryLightPink
+        placeTextView.tintColor = .orange
+        placeTextView.textColor = .veryLightPink
+        titleTextView.addBottomBorderWithColor(color: .lightGray, width: 0.5)
+        
+        titleTextView.centerVertically()
+        placeTextView.centerVertically()
+        
+        
+        //editButton.layer.cornerRadius = editButton.bounds.height/2
         
         alertDefaultLabel.layer.cornerRadius = 6
         alertDefaultLabel.alpha = 0
@@ -122,6 +133,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             mapView.translatesAutoresizingMaskIntoConstraints = false
             mapView.delegate = self
             mapView.baseMapType = .standard
+            mapView.isHidden = true
             mapBackgroundView.insertSubview(mapView, at: 0)
             
             NSLayoutConstraint.activate([
@@ -137,13 +149,17 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         
         // Input
         
+//        saveButton.rx.tap
+//            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+//            .bind(to: viewModel.inputs.save)
+//            .disposed(by: disposeBag)
+        
         cancelButton.rx.tap
             .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.close)
+            .bind(to: viewModel.inputs.close)
             .disposed(by: disposeBag)
         
-        titleTextField.text = viewModel.inputs.nameText.value
-        titleTextField.rx.text.orEmpty
+        titleTextView.rx.text.orEmpty
             .bind(to: viewModel.nameText)
             .disposed(by: disposeBag)
         
@@ -157,9 +173,11 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 
                 if !arrive, !leave {
                     self.alertErrorLabel.isHidden = false
+                    self.saveButton.isEnabled = false
                     return
                 } else {
                     self.alertErrorLabel.isHidden = true
+                    self.saveButton.isEnabled = true
                 }
                 
                 var msg = ""
@@ -181,14 +199,43 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.sectionsSubject
             .bind(to: inputTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.currentGot
+            .compactMap { $0?.title }
+            .bind(to: titleTextView.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.currentGot
+            .compactMap { $0?.place }
+            .subscribe(onNext: { [weak self] place in
+                self?.placeTextView.text = place
+                self?.placeTextView.textColor = .black
+                self?.placeTextView.isEditable = false
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.currentGot
+            .compactMap { $0 }
+            .subscribe(onNext: { [weak self] got in
+                guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
+                self?.drawSeed(point: point)
+                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
+            })
+            .disposed(by: disposeBag)
+        
+        
+//        placeLabel.text = viewModel.outputs.currentGot.value?.place
+        
     }
     
     // MARK: - Views
     
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var saveButton: UIBarButtonItem!
-    @IBOutlet var titleTextField: UITextField!
-    @IBOutlet var placeLabel: UILabel!
+    
+    @IBOutlet var titleTextView: UITextView!
+    @IBOutlet var placeTextView: UITextView!
+    
     @IBOutlet var mapBackgroundView: UIView!
     @IBOutlet var alertDefaultLabel: PaddingLabel!
     @IBOutlet var alertErrorLabel: PaddingLabel!
@@ -276,15 +323,19 @@ extension AddPlantViewController {
 //    }
 //}
 
+//MARK: - MTMapViewDelegate
+
 extension AddPlantViewController: MTMapViewDelegate {
-    //MARK: MTMapViewDelegate
+    
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
         print(mapPoint.mapPointGeo())
     }
 }
 
+// MARK: - UITableView Delegate
+
 extension AddPlantViewController: UITableViewDelegate {
-    // MARK: - UITableView Delegate
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -295,16 +346,72 @@ extension AddPlantViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = .clear
         return nil
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        if section == tableView.numberOfSections-1 {
-//            return 44
-//        }
         return 0
+    }
+}
+
+// MARK: - TextView Delegate
+extension AddPlantViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        if textView == titleTextView {
+            DispatchQueue.main.async {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+        } else if textView == placeTextView {
+            // TODO: 플레이스를 클릭하면 지도 설정으로 이동
+        }
+        
+        
+    }
+    
+    
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+
+        // Combine the textView text and the replacement text to
+        // create the updated text string
+        let currentText:String = textView.text
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+
+        // If updated text view will be empty, add the placeholder
+        // and set the cursor to the beginning of the text view
+        if updatedText.isEmpty {
+
+            if textView == titleTextView {
+                textView.text = "제목을 입력해주세요"
+            } else if textView == placeTextView {
+                textView.text = "장소를 입력해주세요"
+            }
+            textView.textColor = UIColor.veryLightPink
+
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        }
+
+        // Else if the text view's placeholder is showing and the
+        // length of the replacement string is greater than 0, set
+        // the text color to black then set its text to the
+        // replacement string
+         else if textView.textColor == UIColor.veryLightPink && !text.isEmpty {
+            textView.textColor = UIColor.black
+            textView.text = text
+        }
+
+        // For every other case, the text should change with the usual
+        // behavior...
+        else {
+            return true
+        }
+
+        textView.centerVertically()
+        // ...otherwise return false since the updates have already
+        // been made
+        return false
     }
 }
 

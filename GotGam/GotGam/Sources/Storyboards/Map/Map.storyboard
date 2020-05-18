@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KGN-0W-myJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -157,13 +157,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="케이블사기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vp2-6v-xZj">
-                                                    <rect key="frame" x="19" y="15" width="69.5" height="19"/>
+                                                    <rect key="frame" x="19" y="15" width="74" height="24"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r35-lJ-7h0">
-                                                    <rect key="frame" x="96.5" y="17.5" width="14" height="14"/>
+                                                    <rect key="frame" x="101" y="20" width="14" height="14"/>
                                                     <color key="backgroundColor" name="veryLightPink"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="9aD-OO-hkS"/>
@@ -181,19 +181,19 @@
                                                     <state key="normal" image="candCancel"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 강남구 역삼72" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
-                                                    <rect key="frame" x="19" y="42" width="124" height="14"/>
+                                                    <rect key="frame" x="19" y="47" width="130.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감 일시 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23O-JI-yYF">
-                                                    <rect key="frame" x="19" y="69" width="79.5" height="14"/>
+                                                    <rect key="frame" x="19" y="78" width="83" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메모 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VfK-3O-Idv">
-                                                    <rect key="frame" x="19" y="87" width="55.5" height="14"/>
+                                                    <rect key="frame" x="19" y="100" width="58" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
@@ -259,7 +259,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYk-0N-bqg" customClass="MapRestoreView" customModule="GotGam" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="630" width="195" height="48"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GKi-uU-MMK">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GKi-uU-MMK">
                                         <rect key="frame" x="147" y="0.0" width="48" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="NgT-Ad-Mwy"/>
@@ -339,7 +339,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gam" translatesAutoresizingMaskIntoConstraints="NO" id="25x-KR-Vbp">
-                                                <rect key="frame" x="17.5" y="16" width="65" height="68.5"/>
+                                                <rect key="frame" x="-15" y="-18.5" width="130" height="137"/>
                                             </imageView>
                                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-rh-HKX">
                                                 <rect key="frame" x="25" y="25" width="50" height="50"/>
@@ -365,17 +365,20 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="5lv-AR-bWD">
                                         <rect key="frame" x="105" y="0.0" width="309" height="100"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YWo-eb-s3U">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="제목을 입력해주세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="suR-zG-cLz">
                                                 <rect key="frame" x="0.0" y="0.0" width="309" height="50"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="textColor" name="veryLightPink"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울 강남구 테헤란로 103 명선상가빌딩 서울 강남구 테헤란로 103 명선상가빌딩서울" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74J-fI-xGP">
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="장소를 입력해주세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tIh-9N-K2z">
                                                 <rect key="frame" x="0.0" y="50" width="309" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="textColor" name="veryLightPink"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -394,13 +397,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ONd-Cp-AX0">
                                 <rect key="frame" x="0.0" y="188" width="414" height="269"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsO-E7-ZOT">
-                                        <rect key="frame" x="354" y="209" width="50" height="50"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsO-E7-ZOT">
+                                        <rect key="frame" x="334" y="189" width="80" height="80"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="7Bj-iP-Gkf"/>
-                                            <constraint firstAttribute="height" constant="50" id="tQd-22-zoC"/>
+                                            <constraint firstAttribute="width" constant="80" id="7Bj-iP-Gkf"/>
+                                            <constraint firstAttribute="height" constant="80" id="tQd-22-zoC"/>
                                         </constraints>
+                                        <state key="normal" backgroundImage="edit_pencel"/>
                                         <connections>
                                             <action selector="didTapEditMapButton:" destination="9o4-1I-vlQ" eventType="touchUpInside" id="wso-r0-7a5"/>
                                         </connections>
@@ -423,9 +426,9 @@
                                 <constraints>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="53n-Ju-icp"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="NwI-WF-PxO"/>
-                                    <constraint firstAttribute="trailing" secondItem="YsO-E7-ZOT" secondAttribute="trailing" constant="10" id="VXU-Yk-Bgx"/>
+                                    <constraint firstAttribute="trailing" secondItem="YsO-E7-ZOT" secondAttribute="trailing" id="VXU-Yk-Bgx"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="gJA-ET-guz"/>
-                                    <constraint firstAttribute="bottom" secondItem="YsO-E7-ZOT" secondAttribute="bottom" constant="10" id="hat-Mj-7jc"/>
+                                    <constraint firstAttribute="bottom" secondItem="YsO-E7-ZOT" secondAttribute="bottom" id="hat-Mj-7jc"/>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="lJW-fJ-C3o"/>
                                 </constraints>
                             </view>
@@ -514,7 +517,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="메세지를 알려주세요" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PDx-3A-Mfw">
-                                                    <rect key="frame" x="20" y="23.5" width="374" height="18.5"/>
+                                                    <rect key="frame" x="20" y="24" width="374" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -552,11 +555,7 @@
                         <viewLayoutGuide key="safeArea" id="FBO-QS-FrG"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="YmK-s7-WN8">
-                        <barButtonItem key="leftBarButtonItem" title="취소" id="Utf-dX-ju4">
-                            <connections>
-                                <action selector="didTapCancelButton:" destination="9o4-1I-vlQ" id="6Dp-YS-0YY"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="취소" id="Utf-dX-ju4"/>
                         <barButtonItem key="rightBarButtonItem" title="저장" id="hjn-bF-KUB"/>
                     </navigationItem>
                     <connections>
@@ -567,9 +566,9 @@
                         <outlet property="editButton" destination="YsO-E7-ZOT" id="IFo-T5-KGp"/>
                         <outlet property="inputTableView" destination="6cX-Sb-v1L" id="uN2-cd-HbU"/>
                         <outlet property="mapBackgroundView" destination="ONd-Cp-AX0" id="SR6-Sj-Lrx"/>
-                        <outlet property="placeLabel" destination="74J-fI-xGP" id="pem-b0-WDf"/>
+                        <outlet property="placeTextView" destination="tIh-9N-K2z" id="g95-ZN-Pdt"/>
                         <outlet property="saveButton" destination="hjn-bF-KUB" id="Rk3-oU-SzG"/>
-                        <outlet property="titleTextField" destination="YWo-eb-s3U" id="b3a-Kh-5J2"/>
+                        <outlet property="titleTextView" destination="suR-zG-cLz" id="sl6-Ey-aFn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="41C-cp-0Sd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -887,6 +886,7 @@
     <resources>
         <image name="candCancel" width="11" height="11"/>
         <image name="check" width="20" height="20"/>
+        <image name="edit_pencel" width="70" height="70"/>
         <image name="gam" width="65" height="68.5"/>
         <image name="icListAddBtn" width="18" height="18"/>
         <image name="icMapRestore" width="18" height="22.5"/>

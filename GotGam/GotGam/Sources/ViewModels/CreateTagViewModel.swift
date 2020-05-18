@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 
 enum TagColor: String, CaseIterable {
-    case veryLightPink
+    case orangeRed
     case softBlue
     case heather
     case saffron
@@ -28,7 +28,7 @@ enum TagColor: String, CaseIterable {
     
     var hex: String {
         switch self {
-        case .veryLightPink:    return "#cecece"
+        case .orangeRed:    return "#ff3b3b"
         case .softBlue:        return "#6bb4e2"
         case .heather:         return "#b579ba"
         case .saffron:         return "#ffa608"
@@ -45,7 +45,7 @@ enum TagColor: String, CaseIterable {
     
     var color: UIColor {
         switch self {
-        case .veryLightPink,
+        case .orangeRed,
              .softBlue,
              .heather,
              .saffron,
@@ -84,6 +84,10 @@ protocol CreateTagViewModelType {
 class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagViewModelInputs, CreateTagViewModelOutputs {
     
     
+    // MARK: - Private Properties
+    
+    var editableTag = BehaviorRelay<Tag?>(value: nil)
+    
     // MARK: - Inputs
     
     var save = PublishSubject<Void>()
@@ -103,8 +107,12 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
         guard let hex = newTagHex.value else { return }
         let newTag = Tag(name: tagName.value, hex: hex)
         
-        storage.create(tag: newTag)
-        print("create tag: \(newTag)")
+        if let tag = editableTag.value {
+            storage.update(tag: tag, to: newTag)
+        } else {
+            storage.create(tag: newTag)
+        }
+        
         sceneCoordinator.pop(animated: true)
     }
     
@@ -116,11 +124,18 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: Tag? = nil) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
         
-        newTagHex.accept(tag?.hex)
         
-        if let tag = tag {
-            tagName.accept(tag.name)
-        }
+        editableTag.accept(tag)
+        
+        editableTag
+            .compactMap { $0?.hex }
+            .bind(to: newTagHex)
+            .disposed(by: disposeBag)
+        
+        editableTag
+            .compactMap { $0?.name }
+            .bind(to: tagName)
+            .disposed(by: disposeBag)
         
         sections = configureDataSource()
         

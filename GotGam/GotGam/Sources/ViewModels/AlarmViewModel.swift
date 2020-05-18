@@ -38,7 +38,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     var inputs: AlarmViewModelInputs { return self }
     var outputs: AlarmViewModelOutputs { return self }
     
-    let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게", content: "test", latitude: .zero, longitude: .zero, isDone: false, place: "맛집", insertedDate: Date())
+    let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
     
     override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)

@@ -28,6 +28,7 @@ public class ManagedGot: NSManagedObject {
           content: content,
           latitude: latitude,
           longitude: longitude,
+          radius: radius,
           isDone: isDone,
           place: place,
           insertedDate: insertedDate
@@ -49,6 +50,7 @@ public class ManagedGot: NSManagedObject {
       self.content = got.content
       self.latitude = got.latitude!
       self.longitude = got.longitude!
+      self.radius = got.radius!
       self.isDone = got.isDone
       self.place = got.place
       self.insertedDate = got.insertedDate

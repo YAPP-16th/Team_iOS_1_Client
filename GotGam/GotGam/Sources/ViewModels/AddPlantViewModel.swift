@@ -22,6 +22,7 @@ protocol AddPlantViewModelInputs {
     var isOnArrive: BehaviorRelay<Bool> { get set }
     var isOnLeave: BehaviorRelay<Bool> { get set }
     
+    var save: PublishSubject<Void> { get set }
     var close: PublishSubject<Void> { get set }
     var tapTag: PublishSubject<Void> { get set }
 }
@@ -30,8 +31,9 @@ protocol AddPlantViewModelOutputs {
     
     // 테이블 뷰, 지도, 이미지, 이름, 주소 초기값
 
-    var placeText: BehaviorRelay<String> { get set }
-    var tag: BehaviorRelay<Tag?> { get set }
+    var currentGot: BehaviorSubject<Got?> { get }
+    var placeText: BehaviorRelay<String> { get }
+    var tag: BehaviorRelay<Tag?> { get }
     var sectionsSubject: BehaviorRelay<[InputSectionModel]> { get }
 }
 
@@ -53,11 +55,13 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var isOnArrive = BehaviorRelay<Bool>(value: true)
     var isOnLeave = BehaviorRelay<Bool>(value: false)
     
+    var save = PublishSubject<Void>()
     var close = PublishSubject<Void>()
     var tapTag = PublishSubject<Void>()
     
     // MARK: - Output
     
+    var currentGot = BehaviorSubject<Got?>(value: nil)
     var placeText = BehaviorRelay<String>(value: "")
     var tag = BehaviorRelay<Tag?>(value: nil)
     var sectionsSubject = BehaviorRelay<[InputSectionModel]>(value: [])
@@ -65,7 +69,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     // MARK: - Methods
     
     private func pushAddTagVC() {
-        // TODO: tag 가져오기
         let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         
         if let tag = tag.value {
@@ -79,12 +82,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             .disposed(by: disposeBag)
         
         sceneCoordinator.transition(to: .setTag(addTagViewModel), using: .push, animated: true)
-    }
-    
-    private func fetchGot(got: Got?) {
-        guard let got = got else { return }
-        
-        nameText.accept(got.title ?? "")
     }
     
     private func removeItem(section: InputItemType) {
@@ -127,25 +124,35 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
    
     
     // MARK: - Initializing
+    
     var inputs: AddPlantViewModelInputs { return self }
     var outputs: AddPlantViewModelOutputs { return self }
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, got: Got?) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, got: Got? = nil) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+        
         
         fetchGot(got: got)
         sectionsSubject.accept(configureDataSource(got: got))
         configureBind(sceneCoordinator: sceneCoordinator)
     }
     
-    func configureBind(sceneCoordinator: SceneCoordinatorType) {
-        close.asObserver()
+    private func fetchGot(got: Got?) {
+        guard let got = got else { return }
+        
+        currentGot.onNext(got)
+        nameText.accept(got.title ?? "")
+        placeText.accept(got.place ?? "")
+    }
+    
+    private func configureBind(sceneCoordinator: SceneCoordinatorType) {
+        close
             .subscribe(onNext: { _ in
                 sceneCoordinator.close(animated: true)
             })
             .disposed(by: disposeBag)
         
-        tapTag.asObserver()
+        tapTag
             .subscribe(onNext: { [unowned self] _ in
                 self.pushAddTagVC()
             })
@@ -153,24 +160,27 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         
         isOnDate
             .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .date) : self.removeItem(section: .date)
+                b ? self.insertItem(section: .date)
+                  : self.removeItem(section: .date)
             })
             .disposed(by: disposeBag)
 
         isOnArrive
             .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .arrive) : self.removeItem(section: .arrive)
+                b ? self.insertItem(section: .arrive)
+                  : self.removeItem(section: .arrive)
             })
             .disposed(by: disposeBag)
 
         isOnLeave
             .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .leave) : self.removeItem(section: .leave)
+                b ? self.insertItem(section: .leave)
+                  : self.removeItem(section: .leave)
             })
             .disposed(by: disposeBag)
     }
     
-    func configureDataSource(got: Got?) -> [InputSectionModel] {
+    private func configureDataSource(got: Got?) -> [InputSectionModel] {
         return [
             .TagSection(section: InputItemType.tag.rawValue, title: " ", items: [.TagItem(title: InputItemType.tag.title)]),
             .ToggleableSection(
