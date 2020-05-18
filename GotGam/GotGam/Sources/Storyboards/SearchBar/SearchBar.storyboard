@@ -21,7 +21,7 @@
         <!--Search Bar View Controller-->
         <scene sceneID="RRE-Dg-eDQ">
             <objects>
-                <viewController id="bUb-3f-gKL" customClass="SearchBarViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bUb-3f-gKL" customClass="SearchBarViewController" customModule="곳감" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lMg-IM-X2J">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -116,7 +116,7 @@
                                 <rect key="frame" x="0.0" y="186" width="414" height="627"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="48" id="Vv1-EG-AZu">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="historyCell" rowHeight="48" id="Vv1-EG-AZu" customClass="SearchHistoryCell" customModule="곳감" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vv1-EG-AZu" id="ADY-eO-CyJ">
@@ -144,8 +144,11 @@
                                                 <constraint firstItem="wau-2U-wnp" firstAttribute="leading" secondItem="ADY-eO-CyJ" secondAttribute="leading" constant="16" id="aYj-Un-pw0"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="historyLabel" destination="IJt-3h-OG1" id="fcO-cy-9vo"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="U7X-iA-wT5">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="100" id="U7X-iA-wT5" customClass="SearchKakaoCell" customModule="곳감" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="76" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="U7X-iA-wT5" id="V8F-Y2-UaF">
@@ -181,8 +184,16 @@
                                                 <constraint firstItem="IKA-hT-hjW" firstAttribute="leading" secondItem="V8F-Y2-UaF" secondAttribute="leading" constant="16" id="w3U-fw-IUD"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="kewordLabel" destination="p6k-fG-CqM" id="gGT-qy-QLr"/>
+                                            <outlet property="resultLabel" destination="tka-Xt-cFW" id="qyv-T1-P7y"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="bUb-3f-gKL" id="Hi0-oR-oLD"/>
+                                    <outlet property="delegate" destination="bUb-3f-gKL" id="aCB-ea-SaK"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -203,6 +214,7 @@
                     <navigationItem key="navigationItem" id="15t-Sf-72a"/>
                     <connections>
                         <outlet property="SearchBar" destination="bzl-vb-jrP" id="4ct-wD-uEG"/>
+                        <outlet property="tableView" destination="fwh-vr-5lM" id="b68-Sh-Rrr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMn-N7-thm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
