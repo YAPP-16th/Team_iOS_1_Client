@@ -23,6 +23,7 @@ extension ManagedGot {
     @NSManaged public var isDone: Bool
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
+    @NSManaged public var radius: Double
     @NSManaged public var place: String?
     @NSManaged public var title: String?
     @NSManaged public var tag: NSSet?

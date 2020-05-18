@@ -71,7 +71,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             guard let self = self else { return }
             
             let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-            let got = Got(id: Int64(arc4random()), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)], title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, isDone: false, place: "화장실", insertedDate: Date())
+            let got = Got(id: Int64(arc4random()), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)], title: text, content: "test", latitude: centerPoint.latitude, longitude: centerPoint.longitude, radius: .zero, isDone: false, place: "화장실", insertedDate: Date())
             self.viewModel.createGot(got: got)
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
