@@ -192,6 +192,33 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func deleteTag(hex: String) -> Observable<Tag> {
+        do{
+            let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            fetchRequest.predicate = NSPredicate(format: "hex == %@", hex)
+            let results = try self.context.fetch(fetchRequest)
+            if let managedTag = results.first{
+                let tag = managedTag.toTag()
+                self.context.delete(managedTag)
+                
+                do{
+                    try self.context.save()
+                    return .just(tag)
+                }catch{
+                    return .error(GotStorageError.deleteError("hex가 \(hex)인 Tag를 제거하는데 오류 발생"))
+                }
+            }else{
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Tag를 찾을 수 없음"))
+            }
+        }catch let error{
+            return .error(GotStorageError.deleteError(error.localizedDescription))
+        }
+    }
+    
+    func deleteTag(tag: Tag) -> Observable<Tag> {
+        deleteTag(hex: tag.hex)
+    }
+    
     //MARK: - Helper
     func createId(got: inout Got){
         guard got.id == nil else { return }

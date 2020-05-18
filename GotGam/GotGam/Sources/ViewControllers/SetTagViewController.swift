@@ -56,10 +56,14 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
-        tagTableView.rx.itemDeleted
-            .subscribe (onNext: { [unowned self] indexPath in
-                self.viewModel.inputs.removeItem(indexPath: indexPath)
-            })
+        Observable.zip(tagTableView.rx.itemDeleted, tagTableView.rx.modelDeleted(AddTagItem.self))
+            .bind { [unowned self] indexPath, tagItem in
+                
+                if case let .TagListItem(tag) = tagItem {
+                    self.viewModel.inputs.removeTag(indexPath: indexPath, tag: tag)
+                }
+                
+            }
             .disposed(by: disposeBag)
         
         // Outputs
@@ -135,7 +139,7 @@ extension SetTagViewController: UITableViewDelegate {
 
         let editButton = UITableViewRowAction(style: .normal, title: "수정") { (action, indexPath) in
             // here is yours custom action
-            self.viewModel.inputs.updateItem(indexPath: indexPath)
+            self.viewModel.inputs.updateTag(indexPath: indexPath)
             return
         }
         return [deleteButton, editButton]

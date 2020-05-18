@@ -17,8 +17,8 @@ protocol SetTagViewModelInputs {
     var selectedTag: BehaviorRelay<Tag> { get set }
     var createTag: PublishSubject<Void> { get set }
     func fetcTagList()
-    func removeItem(indexPath: IndexPath)
-    func updateItem(indexPath: IndexPath)
+    func removeTag(indexPath: IndexPath, tag: Tag)
+    func updateTag(indexPath: IndexPath)
 }
 
 protocol SetTagViewModelOutputs {
@@ -40,15 +40,20 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     var selectedTag = BehaviorRelay<Tag>(value: Tag(name: "미지정", hex: "#cecece")) // tag
     var createTag = PublishSubject<Void>()
     
-    func removeItem(indexPath: IndexPath) {
-        var updateSections = sections.value
-        var items = updateSections[indexPath.section].items
-        items.remove(at: indexPath.row)
-        updateSections[indexPath.section] = AddTagSectionModel(original: updateSections[indexPath.section], items: items)
-        sections.accept(updateSections)
+    func removeTag(indexPath: IndexPath, tag: Tag) {
+        
+        storage.deleteTag(tag: tag)
+            .subscribe(onNext: { [unowned self] _ in
+                var updateSections = self.sections.value
+                var items = updateSections[indexPath.section].items
+                items.remove(at: indexPath.row)
+                updateSections[indexPath.section] = AddTagSectionModel(original: updateSections[indexPath.section], items: items)
+                self.sections.accept(updateSections)
+            })
+            .disposed(by: disposeBag)
     }
     
-    func updateItem(indexPath: IndexPath) {
+    func updateTag(indexPath: IndexPath) {
         let item = sections.value[indexPath.section].items[indexPath.row]
         
         if case let .TagListItem(tag) = item {
