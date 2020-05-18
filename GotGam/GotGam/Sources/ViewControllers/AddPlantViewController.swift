@@ -89,7 +89,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(viewModel)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -157,9 +156,11 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 
                 if !arrive, !leave {
                     self.alertErrorLabel.isHidden = false
+                    self.saveButton.isEnabled = false
                     return
                 } else {
                     self.alertErrorLabel.isHidden = true
+                    self.saveButton.isEnabled = true
                 }
                 
                 var msg = ""

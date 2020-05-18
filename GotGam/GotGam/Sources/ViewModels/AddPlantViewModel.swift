@@ -65,7 +65,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     // MARK: - Methods
     
     private func pushAddTagVC() {
-        // TODO: tag 가져오기
         let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         
         if let tag = tag.value {
@@ -127,6 +126,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
    
     
     // MARK: - Initializing
+    
     var inputs: AddPlantViewModelInputs { return self }
     var outputs: AddPlantViewModelOutputs { return self }
     
