@@ -12,6 +12,7 @@ import RxCocoa
 
 protocol GotListViewModelInputs {
 	func showVC()
+    func fetchRequest()
 }
 
 protocol GotListViewModelOutputs {
@@ -29,6 +30,20 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     
     // Inputs
+    
+    func fetchRequest() {
+        storage.fetchTagList()
+            .subscribe(onNext: { [weak self] in
+                self?.tagList.accept($0)
+            })
+            .disposed(by: disposeBag)
+        
+        storage.fetchGotList()
+            .subscribe(onNext: { list in
+                self.gotList.onNext(list)
+            })
+            .disposed(by: disposeBag)
+    }
     
     // Outputs
     
@@ -53,24 +68,6 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
-        
-        storage.fetchGotList()
-            .subscribe(onNext: { list in
-                self.gotList.onNext(list)
-            })
-            .disposed(by: disposeBag)
-        
-        // MARK: tag 더미데이터 수정
-        storage.fetchTagList()
-            .subscribe(onNext: { list in
-                self.tagList.accept(list)
-            }).disposed(by: disposeBag)
-        
-//        storage.fetchTagList()
-//            .subscribe(onNext: { tag in
-//                self.tagList.onNext(tag)
-//            })
-//            .disposed(by: disposeBag)
         
     }
 }

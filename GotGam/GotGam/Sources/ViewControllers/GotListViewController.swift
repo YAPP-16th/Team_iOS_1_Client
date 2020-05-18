@@ -34,9 +34,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     }
   
     override func viewWillAppear(_ animated: Bool) {
-        //memos = DBManager.share.fetchGotgam()
-        //gotListTableView.reloadData()
-        
+        viewModel.inputs.fetchRequest()
     }
     
     // MARK: - Initializing
@@ -52,8 +50,8 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         tagCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
     
         viewModel.outputs.gotList
-            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: GotListTableViewCell.self)) { (index, got, cell) in
-                cell.configure(got)
+            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: GotListTableViewCell.self)) { [unowned self] (index, got, cell) in
+                cell.configure(viewModel: self.viewModel, got)
             }
             .disposed(by: disposeBag)
 
@@ -100,7 +98,7 @@ extension GotListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 5, left: 16, bottom: -5, right: 0)
+        return .init(top: 5, left: 16, bottom: 5, right: 0)
     }
 }
     
