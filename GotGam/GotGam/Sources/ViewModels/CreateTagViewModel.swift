@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 
 enum TagColor: String, CaseIterable {
-    case veryLightPink
+    case orangeRed
     case softBlue
     case heather
     case saffron
@@ -28,7 +28,7 @@ enum TagColor: String, CaseIterable {
     
     var hex: String {
         switch self {
-        case .veryLightPink:    return "#cecece"
+        case .orangeRed:    return "#ff3b3b"
         case .softBlue:        return "#6bb4e2"
         case .heather:         return "#b579ba"
         case .saffron:         return "#ffa608"
@@ -45,7 +45,7 @@ enum TagColor: String, CaseIterable {
     
     var color: UIColor {
         switch self {
-        case .veryLightPink,
+        case .orangeRed,
              .softBlue,
              .heather,
              .saffron,

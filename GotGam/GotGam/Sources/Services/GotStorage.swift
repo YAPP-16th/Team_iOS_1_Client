@@ -76,7 +76,7 @@ class GotStorage: GotStorageType {
     func create(tag: Tag) -> Observable<Tag>{
         do {
             let managedTag = NSEntityDescription.insertNewObject(forEntityName: "ManagedTag", into: self.context) as! ManagedTag
-            managedTag.from(tag)
+            managedTag.fromTag(tag: tag)
             try self.context.save()
             return .just(tag)
         } catch let error{
