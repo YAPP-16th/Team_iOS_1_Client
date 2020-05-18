@@ -60,6 +60,25 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func fetchTag(hex: String) -> Observable<Tag> {
+        do {
+            let fetchReqeust = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            let p1 = NSPredicate(format: "hex == %@", hex)
+            fetchReqeust.predicate = p1
+            
+            let results = try self.context.fetch(fetchReqeust)
+            
+            if let managedTag = results.first {
+                return .just(managedTag.toTag())
+            } else {
+                return .error(GotStorageError.fetchError("해당 tag를 찾을 수 없음"))
+            }
+            
+        } catch let error {
+            return .error(GotStorageError.fetchError(error.localizedDescription))
+        }
+    }
+    
     func createGot(gotToCreate: Got) -> Observable<Got>{
         do{
             var got = gotToCreate
@@ -73,7 +92,7 @@ class GotStorage: GotStorageType {
         }
     }
     
-    func create(tag: Tag) -> Observable<Tag>{
+    func create(tag: Tag) -> Observable<Tag> {
         do {
             let managedTag = NSEntityDescription.insertNewObject(forEntityName: "ManagedTag", into: self.context) as! ManagedTag
             managedTag.fromTag(tag: tag)
@@ -101,6 +120,52 @@ class GotStorage: GotStorageType {
                 return .error(GotStorageError.fetchError("해당 데이터에 대한 Got을 찾을 수 없음"))
             }
         }catch let error{
+            return .error(GotStorageError.updateError(error.localizedDescription))
+        }
+    }
+    
+    func updateTag(_ updatedTag: Tag) -> Observable<Tag> {
+        do {
+            let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            fetchRequest.predicate = NSPredicate(format: "hex == %@", updatedTag.hex)
+            let results = try self.context.fetch(fetchRequest)
+            
+            if let managedTag = results.first {
+                managedTag.fromTag(tag: updatedTag)
+                
+                do {
+                    try self.context.save()
+                    return .just(updatedTag)
+                } catch let error {
+                    return .error(error)
+                }
+            } else {
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Tag를 찾을 수 없음"))
+            }
+        } catch let error {
+            return .error(GotStorageError.updateError(error.localizedDescription))
+        }
+    }
+    
+    func update(tag origin: Tag, to updated: Tag) -> Observable<Tag> {
+        do {
+            let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            fetchRequest.predicate = NSPredicate(format: "hex == %@", origin.hex)
+            let results = try self.context.fetch(fetchRequest)
+            
+            if let managedTag = results.first {
+                managedTag.fromTag(tag: updated)
+                
+                do {
+                    try self.context.save()
+                    return .just(updated)
+                } catch let error {
+                    return .error(error)
+                }
+            } else {
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Tag를 찾을 수 없음"))
+            }
+        } catch let error {
             return .error(GotStorageError.updateError(error.localizedDescription))
         }
     }
