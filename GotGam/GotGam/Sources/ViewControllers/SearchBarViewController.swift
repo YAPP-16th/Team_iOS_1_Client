@@ -119,6 +119,7 @@ extension SearchBarViewController: UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
 		if indexPath.section == 1 {
 			let place = self.placeList[indexPath.row]
 			if let tabVC = self.presentingViewController as? TabBarController{
@@ -134,4 +135,5 @@ extension SearchBarViewController: UITableViewDelegate {
 			}
 		}
 	}
+	
 }
