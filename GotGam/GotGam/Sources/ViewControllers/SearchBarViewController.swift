@@ -117,4 +117,21 @@ extension SearchBarViewController: UITableViewDelegate {
 			return 90
 		} else { return 48 }
 	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if indexPath.section == 1 {
+			let place = self.placeList[indexPath.row]
+			if let tabVC = self.presentingViewController as? TabBarController{
+				let mapVC = tabVC.viewControllers?.first as? MapViewController
+				mapVC?.x = Double(place.x)!
+				mapVC?.y = Double(place.y)!
+				mapVC?.placeName = place.placeName
+				mapVC?.addressName = place.addressName
+				
+				self.dismiss(animated: true) {
+					mapVC?.updateAddress()
+				}
+			}
+		}
+	}
 }

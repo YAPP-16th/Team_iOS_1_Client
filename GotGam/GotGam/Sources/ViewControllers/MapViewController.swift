@@ -54,6 +54,12 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
         }
     }
+	
+	//search value
+	var x: Double = 0.0
+	var y: Double = 0.0
+	var addressName: String = ""
+	var placeName: String = ""
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -291,6 +297,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         circle.circleRadius = 100
       mapView.addCircle(circle)
     }
+	
+	func updateAddress() {
+		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
+	}
 }
 
 extension MapViewController: MTMapViewDelegate{
