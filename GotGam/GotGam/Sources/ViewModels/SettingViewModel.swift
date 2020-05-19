@@ -7,14 +7,17 @@
 //
 
 import Foundation
+import RxSwift
 
 
 protocol SettingViewModelInputs {
-    
+    func showAlarmDetailVC()
+	func showOtherDetailVC()
+	func showPlaceDetailVC()
 }
 
 protocol SettingViewModelOutputs {
-    
+	var settingMenu: Observable<[String]> { get }
 }
 
 protocol SettingViewModelType {
@@ -24,10 +27,32 @@ protocol SettingViewModelType {
 
 
 class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelInputs, SettingViewModelOutputs {
-    
+	
+	func showAlarmDetailVC() {
+		
+		let movesettingalarmVM = SettingAlarmViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .settingAlarm(movesettingalarmVM), using: .push, animated: true)
+	}
+	
+	func showOtherDetailVC() {
+		
+		let movesettingotherVM = SettingOtherViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .settingOther(movesettingotherVM), using: .push, animated: true)
+	}
+	
+	func showPlaceDetailVC() {
+		
+		let movesettingplaceVM = SettingPlaceViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .settingPlace(movesettingplaceVM), using: .push, animated: true)
+	}
+	
+	var settingMenu = Observable<[String]>.just(["푸시 알람 설정", "자주 가는 장소 설정", "약관 및 정책"])
+	
     var inputs: SettingViewModelInputs { return self }
     var outputs: SettingViewModelOutputs { return self }
     
 
+	
+	
     
 }

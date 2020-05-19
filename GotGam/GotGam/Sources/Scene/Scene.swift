@@ -15,6 +15,9 @@ enum Scene {
     case setTag(SetTagViewModel)
     case createTag(CreateTagViewModel)
     case tabBar(TabBarViewModel)
+	case settingAlarm(SettingAlarmViewModel)
+	case settingOther(SettingOtherViewModel)
+	case settingPlace(SettingPlaceViewModel)
 }
 
 extension Scene {
@@ -82,7 +85,32 @@ extension Scene {
             tabBar.bind(viewModel: viewModel)
             
             return tabBar
-    
+			
+		case .settingAlarm(let viewModel):
+			guard var settingAlarmVC = storyboard.instantiateViewController(withIdentifier: "SettingAlarm") as? SettingAlarmViewController else {
+				fatalError()
+			}
+		
+			settingAlarmVC.bind(viewModel: viewModel)
+			return settingAlarmVC
+			
+			
+		case .settingOther(let viewModel):
+			guard var settingOtherVC = storyboard.instantiateViewController(withIdentifier: "settingOther") as? SettingOtherViewController else {
+				fatalError()
+			}
+			
+			settingOtherVC.bind(viewModel: viewModel)
+			return settingOtherVC
+			
+		case .settingPlace(let viewModel):
+			guard var settingPlaceVC = storyboard.instantiateViewController(withIdentifier: "settingPlace") as? SettingPlaceViewController else {
+				fatalError()
+			}
+			
+			settingPlaceVC.bind(viewModel: viewModel)
+			return settingPlaceVC
+
         }
     }
 }
