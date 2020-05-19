@@ -29,9 +29,9 @@ class SettingAlarmViewController: BaseViewController, ViewModelBindableType {
 		
 		viewModel.outputs.settingAlarmMenu
 			.bind(to: settingAlarmTableView.rx.items(cellIdentifier: "settingToggleCell")) {
-				(index: Int, element: String, cell: UITableViewCell) in
+				(index: Int, element: String, cell: SettingAlarmCell) in
 				
-				cell.textLabel?.text = element
+				cell.settingAlarmListLabel?.text = element
 				
 				
 		}.disposed(by: disposeBag)
@@ -61,4 +61,13 @@ extension SettingAlarmViewController: UITableViewDelegate {
         view.backgroundColor = .clear
         return view
     }
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		settingAlarmTableView.deselectRow(at: indexPath, animated: true)
+	}
+}
+
+class SettingAlarmCell: UITableViewCell {
+	
+	@IBOutlet var settingAlarmListLabel: UILabel!
 }

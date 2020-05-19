@@ -29,9 +29,9 @@ class SettingOtherViewController: BaseViewController, ViewModelBindableType {
 		
 		viewModel.outputs.settingOtherMenu
 			.bind(to: settingOtherTableView.rx.items(cellIdentifier: "settingOtherCell")) {
-				(index: Int, element: String, cell: UITableViewCell) in
+				(index: Int, element: String, cell: SettingOtherCell) in
 				
-				cell.textLabel?.text = element
+				cell.settingOtherLabel?.text = element
 				
 				
 		}.disposed(by: disposeBag)
@@ -47,4 +47,13 @@ extension SettingOtherViewController: UITableViewDelegate {
         view.backgroundColor = .clear
         return view
     }
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		settingOtherTableView.deselectRow(at: indexPath, animated: true)
+	}
+}
+
+class SettingOtherCell: UITableViewCell {
+	
+	@IBOutlet var settingOtherLabel: UILabel!
 }

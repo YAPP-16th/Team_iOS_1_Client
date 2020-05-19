@@ -36,7 +36,7 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 
 		}.disposed(by: disposeBag)
 		
-
+		
 		
 		settingTableView.rx.itemSelected
 			.subscribe(onNext: { [weak self] (indexPath) in
@@ -74,6 +74,10 @@ extension SettingViewController: UITableViewDelegate {
         view.backgroundColor = .clear
         return view
     }
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		settingTableView.deselectRow(at: indexPath, animated: true)
+	}
 }
 
 class SettingListCell: UITableViewCell {
