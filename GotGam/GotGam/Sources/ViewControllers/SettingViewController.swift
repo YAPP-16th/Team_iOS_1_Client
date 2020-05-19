@@ -16,10 +16,19 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 
 	@IBOutlet var settingTableView: UITableView!
 	
+	@IBOutlet var loginView: UIView!
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
+		loginView.isUserInteractionEnabled = true
+		let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(loginTapped))
+		loginView.addGestureRecognizer(tapRecognizer)
 		
+	}
+	
+	func loginTapped(sender: UIView) {
+		print("login tapped!!!!!")
 	}
 	
 	func bindViewModel() {
@@ -49,6 +58,7 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 				}
 			})
 			.disposed(by: disposeBag)
+				
 		
 	}
 }

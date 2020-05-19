@@ -19,6 +19,7 @@
 		2972784D2473C9E300B75AC7 /* SettingPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */; };
 		2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */; };
 		297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */; };
+		29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727852247451C500B75AC7 /* SettingLoginViewController.swift */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -147,6 +148,7 @@
 		2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPlaceViewModel.swift; sourceTree = "<group>"; };
 		2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewController.swift; sourceTree = "<group>"; };
 		297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewModel.swift; sourceTree = "<group>"; };
+		29727852247451C500B75AC7 /* SettingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewController.swift; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -401,6 +403,7 @@
 				2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */,
 				297278482473C97E00B75AC7 /* SettingPlaceViewController.swift */,
 				297278462473C96800B75AC7 /* SettingOtherViewController.swift */,
+				29727852247451C500B75AC7 /* SettingLoginViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 				4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */,
+				29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,

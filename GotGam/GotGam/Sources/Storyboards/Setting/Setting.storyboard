@@ -100,12 +100,107 @@
                     <navigationItem key="navigationItem" title="설정" id="267-ij-Rdf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="loginView" destination="D0H-h0-rKX" id="k2R-tc-jfN"/>
                         <outlet property="settingTableView" destination="3cg-9K-bK3" id="rET-ne-USs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPe-5h-Bom" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="109.82142857142857"/>
+        </scene>
+        <!--계정 정보-->
+        <scene sceneID="n0n-Q9-uwF">
+            <objects>
+                <viewController storyboardIdentifier="SettingLoginViewController" id="A11-TP-DNv" customClass="SettingLoginViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dbF-7B-MfG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="abi-ep-dfv" userLabel="로그인View">
+                                <rect key="frame" x="0.0" y="88" width="414" height="154"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icsettingLogin" translatesAutoresizingMaskIntoConstraints="NO" id="XxF-V9-MKx">
+                                        <rect key="frame" x="16" y="47" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="UO0-6V-SeB"/>
+                                            <constraint firstAttribute="width" constant="60" id="xaV-Cv-4Xy"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ilq-Bj-wbb">
+                                        <rect key="frame" x="101" y="58.5" width="297" height="37"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="곳감" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cir-k0-dmG">
+                                                <rect key="frame" x="0.0" y="0.0" width="297" height="23"/>
+                                                <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
+                                                <color key="textColor" name="black"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="yapp@gmail.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0X-zV-xRL">
+                                                <rect key="frame" x="0.0" y="23" width="297" height="14"/>
+                                                <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                                <color key="textColor" name="brownishGrey"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="37" id="R29-Hb-dLO"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="Ilq-Bj-wbb" firstAttribute="centerY" secondItem="abi-ep-dfv" secondAttribute="centerY" id="DDW-hg-BYV"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ilq-Bj-wbb" secondAttribute="trailing" constant="16" id="DEM-fi-qYN"/>
+                                    <constraint firstItem="Ilq-Bj-wbb" firstAttribute="leading" secondItem="XxF-V9-MKx" secondAttribute="trailing" constant="25" id="NdQ-Hg-ZoP"/>
+                                    <constraint firstItem="XxF-V9-MKx" firstAttribute="leading" secondItem="abi-ep-dfv" secondAttribute="leading" constant="16" id="S9i-2n-BD8"/>
+                                    <constraint firstItem="XxF-V9-MKx" firstAttribute="centerY" secondItem="abi-ep-dfv" secondAttribute="centerY" id="VHl-vx-NCA"/>
+                                    <constraint firstAttribute="height" constant="154" id="xMp-uy-aMj"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XIc-rK-mid">
+                                <rect key="frame" x="0.0" y="242" width="414" height="620"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="ivP-bh-fOV">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ivP-bh-fOV" id="syh-cz-6YQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="382.5" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gh4-wI-iOR">
+                                                    <rect key="frame" x="16" y="12.5" width="39.5" height="19"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
+                                                    <color key="textColor" name="black"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Gh4-wI-iOR" firstAttribute="centerY" secondItem="syh-cz-6YQ" secondAttribute="centerY" id="5zE-qc-ZkW"/>
+                                                <constraint firstItem="Gh4-wI-iOR" firstAttribute="leading" secondItem="syh-cz-6YQ" secondAttribute="leading" constant="16" id="Zdz-zl-yRe"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="XIc-rK-mid" firstAttribute="leading" secondItem="mSY-am-NdB" secondAttribute="leading" id="2Nj-v9-VBe"/>
+                            <constraint firstItem="abi-ep-dfv" firstAttribute="leading" secondItem="mSY-am-NdB" secondAttribute="leading" id="KeN-IH-j5q"/>
+                            <constraint firstItem="XIc-rK-mid" firstAttribute="top" secondItem="abi-ep-dfv" secondAttribute="bottom" id="fuf-QH-iTB"/>
+                            <constraint firstItem="mSY-am-NdB" firstAttribute="bottom" secondItem="XIc-rK-mid" secondAttribute="bottom" id="iDf-t0-TOe"/>
+                            <constraint firstItem="mSY-am-NdB" firstAttribute="trailing" secondItem="XIc-rK-mid" secondAttribute="trailing" id="kXU-KY-gs5"/>
+                            <constraint firstItem="abi-ep-dfv" firstAttribute="trailing" secondItem="mSY-am-NdB" secondAttribute="trailing" id="lJu-1d-mpp"/>
+                            <constraint firstItem="abi-ep-dfv" firstAttribute="top" secondItem="mSY-am-NdB" secondAttribute="top" id="oKM-Zm-AfP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mSY-am-NdB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="계정 정보" id="gE6-S1-eQb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pMT-EP-pMh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1047.8260869565217" y="807.58928571428567"/>
         </scene>
         <!--자주 가는 장소-->
         <scene sceneID="JNp-hz-uMv">
@@ -339,11 +434,32 @@
             </objects>
             <point key="canvasLocation" x="2848" y="-610"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="i22-VD-7kd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="u8t-gQ-XBl" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="r3r-XD-LqL">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="A11-TP-DNv" kind="relationship" relationship="rootViewController" id="XuN-Ml-1D7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ddH-c8-Jf8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138" y="808"/>
+        </scene>
     </scenes>
     <resources>
         <image name="icsettingLogin" width="60" height="60"/>
         <namedColor name="black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="brownishGrey">
+            <color red="0.3919999897480011" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
