@@ -33,7 +33,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인이 필요합니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7I-08-5TT">
-                                        <rect key="frame" x="101" y="39" width="136.5" height="16"/>
+                                        <rect key="frame" x="101" y="39" width="129.5" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="HEz-iF-2Gd"/>
                                         </constraints>
@@ -56,7 +56,7 @@
                                 <rect key="frame" x="0.0" y="301.5" width="414" height="511.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="settingCell" rowHeight="44" id="773-iS-eeF">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="settingCell" rowHeight="44" id="773-iS-eeF" customClass="SettingListCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="773-iS-eeF" id="5nn-fJ-A1g">
@@ -64,7 +64,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhj-gV-Vbn">
-                                                    <rect key="frame" x="16" y="14.5" width="41" height="16"/>
+                                                    <rect key="frame" x="16" y="14.5" width="39.5" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="hmL-97-OM0"/>
                                                     </constraints>
@@ -78,6 +78,9 @@
                                                 <constraint firstItem="Uhj-gV-Vbn" firstAttribute="top" secondItem="5nn-fJ-A1g" secondAttribute="top" constant="14.6" id="Hye-d4-zoT"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="settingListLabel" destination="Uhj-gV-Vbn" id="lxF-8N-fLB"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -97,7 +100,7 @@
                     <navigationItem key="navigationItem" title="설정" id="267-ij-Rdf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="settingTableView" destination="3cg-9K-bK3" id="se8-8q-8zg"/>
+                        <outlet property="settingTableView" destination="3cg-9K-bK3" id="rET-ne-USs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPe-5h-Bom" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

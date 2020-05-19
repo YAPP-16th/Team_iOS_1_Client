@@ -14,10 +14,9 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 	
     var viewModel: SettingViewModel!
 
-	
 	@IBOutlet var settingTableView: UITableView!
 	
-	
+	var settingList: [String] = ["푸시 알람 설정", "자주 가는 장소 설정", "약관 및 정책"]
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,19 +26,21 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 	
 	func bindViewModel() {
 		
-		settingTableView.rx.setDelegate(self)
-			.disposed(by: disposeBag)
+//		settingTableView.rx.setDelegate(self)
+//			.disposed(by: disposeBag)
+//
+//
+//		viewModel.outputs.settingMenu
+//			.bind(to: settingTableView.rx.items(cellIdentifier: "settingCell")) {
+//				(index: Int, element: String, cell: UITableViewCell) in
+//
+//				cell.textLabel?.text = element
+//
+//
+//		}.disposed(by: disposeBag)
 		
+
 		
-		viewModel.outputs.settingMenu
-			.bind(to: settingTableView.rx.items(cellIdentifier: "settingCell")) {
-				(index: Int, element: String, cell: UITableViewCell) in
-				
-				cell.textLabel?.text = element
-				
-				
-		}.disposed(by: disposeBag)
-			
 		settingTableView.rx.itemSelected
 			.subscribe(onNext: { [weak self] (indexPath) in
 				if indexPath.row == 0 {
@@ -55,9 +56,9 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 	}
 }
 
+
+
 extension SettingViewController: UITableViewDelegate {
-	
-	
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let view = UIView()
@@ -76,4 +77,21 @@ extension SettingViewController: UITableViewDelegate {
         view.backgroundColor = .clear
         return view
     }
+}
+
+extension SettingViewController: UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return self.settingList.count
+	}
+	
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "settingCell", for: indexPath) as! SettingListCell
+		cell.settingListLabel.text = settingList[indexPath.row]
+		return cell
+	}
+}
+
+class SettingListCell: UITableViewCell {
+	@IBOutlet var settingListLabel: UILabel!
 }

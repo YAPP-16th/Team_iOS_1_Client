@@ -396,11 +396,11 @@
 				4CBD535B245B133B00B235D5 /* SetTagViewController.swift */,
 				4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */,
 				4C5F0F60246538B700C7A6E9 /* AlarmViewController.swift */,
-				4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */,
 				A125E79324695B80007767D7 /* LoginViewController.swift */,
-				297278462473C96800B75AC7 /* SettingOtherViewController.swift */,
-				297278482473C97E00B75AC7 /* SettingPlaceViewController.swift */,
+				4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */,
 				2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */,
+				297278482473C97E00B75AC7 /* SettingPlaceViewController.swift */,
+				297278462473C96800B75AC7 /* SettingOtherViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
