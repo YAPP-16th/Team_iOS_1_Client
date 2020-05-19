@@ -18,6 +18,7 @@ enum Scene {
 	case settingAlarm(SettingAlarmViewModel)
 	case settingOther(SettingOtherViewModel)
 	case settingPlace(SettingPlaceViewModel)
+	case settingLogin(SettingLoginViewModel)
 }
 
 extension Scene {
@@ -111,6 +112,13 @@ extension Scene {
 			settingPlaceVC.bind(viewModel: viewModel)
 			return settingPlaceVC
 
+		case .settingLogin(let viewModel):
+			guard var settingLoginVC = storyboard.instantiateViewController(withIdentifier: "settingLogin") as? SettingLoginViewController else {
+				fatalError()
+			}
+			
+			settingLoginVC.bind(viewModel: viewModel)
+			return settingLoginVC
         }
     }
 }

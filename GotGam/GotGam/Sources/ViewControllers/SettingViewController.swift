@@ -27,8 +27,8 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 		
 	}
 	
-	func loginTapped(sender: UIView) {
-		print("login tapped!!!!!")
+	@objc func loginTapped(sender: UIView) {
+		self.viewModel.inputs.showLoginDetailVC()
 	}
 	
 	func bindViewModel() {
@@ -71,7 +71,7 @@ extension SettingViewController: UITableViewDelegate {
 		let view = UIView()
 		view.backgroundColor = .white
 		view.layer.borderWidth = 0.3
-		view.layer.borderColor = UIColor.gray.cgColor
+		view.layer.borderColor = UIColor.lightGray.cgColor
 		return view
 	}
 	
