@@ -217,6 +217,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.currentGot
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] got in
+                self?.mapView.isHidden = false
                 guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
                 self?.drawSeed(point: point)
                 self?.drawCircle(center: point, radius: Float(got.radius ?? 100))

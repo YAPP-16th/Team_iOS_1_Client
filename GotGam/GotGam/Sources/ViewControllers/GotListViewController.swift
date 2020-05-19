@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class GotListViewController: BaseViewController, ViewModelBindableType {
     
@@ -21,7 +22,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
 	@IBOutlet var listAddButton: UIButton!
 	@IBAction func moveAddVC(_ sender: Any) {
-		viewModel.inputs.showVC()
+        viewModel.inputs.editGot(got: nil)
 
 	}
 	// MARK: - View Life Cycle
@@ -48,11 +49,23 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         
         gotListTableView.rx.setDelegate(self).disposed(by: disposeBag)
         tagCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
-    
-        viewModel.outputs.gotList
-            .bind(to: gotListTableView.rx.items(cellIdentifier: "gotListCell", cellType: GotListTableViewCell.self)) { [unowned self] (index, got, cell) in
-                cell.configure(viewModel: self.viewModel, got)
+        
+        // Inputs
+        
+        Observable.zip(gotListTableView.rx.itemDeleted, gotListTableView.rx.modelDeleted(ListItem.self))
+            .bind { [weak self] indexPath, gotItem in
+                if case let .gotItem(got) = gotItem {
+                    self?.viewModel.inputs.removeGot(indexPath: indexPath, got: got)
+                }
+                
             }
+            .disposed(by: disposeBag)
+        
+        // Outputes
+        
+        let dataSource = GotListViewController.dataSource(viewModel: viewModel)
+        viewModel.outputs.gotSections
+            .bind(to: gotListTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
         viewModel.outputs.tagList
@@ -62,6 +75,8 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
                 cell.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 3), opacity: 0.2)
             }
             .disposed(by: disposeBag)
+        
+        
     }
 
     
@@ -71,17 +86,85 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var tagCollectionView: UICollectionView!
 }
 
+extension GotListViewController {
+    static func dataSource(viewModel: GotListViewModel) -> RxTableViewSectionedAnimatedDataSource<ListSectionModel> {
+        return RxTableViewSectionedAnimatedDataSource<ListSectionModel>(
+            animationConfiguration: AnimationConfiguration(
+                insertAnimation: .top,
+                reloadAnimation: .fade,
+                deleteAnimation: .left),
+            configureCell: { dataSource, tableView, indexPath, _ in
+                switch dataSource[indexPath] {
+                case let .gotItem(got):
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath) as? GotListTableViewCell else { return UITableViewCell() }
+                    cell.configure(viewModel: viewModel, got)
+                    
+                    return cell
+                }
+            },
+            titleForHeaderInSection: { dataSource, index in
+                let section = dataSource[index]
+                return section.title
+            },
+            canEditRowAtIndexPath: { dataSource, index in
+                let section = dataSource[index]
+                switch section {
+                case .gotItem(_):
+                    return true
+                }
+            }
+        )
+    }
+}
+
+// MARK: - UITableView Delegate
+
+extension GotListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let gamAction = UIContextualAction(style: .normal, title: "감") { (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+
+            guard let cell = tableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
+
+            cell.isChecked = true
+
+            success(true)
+        }
+
+        let editAction = UIContextualAction(style: .normal, title: "수정") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+
+            guard let cell = tableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
+
+            self?.viewModel.inputs.editGot(got: cell.got)
+
+            success(true)
+        }
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+
+            self.gotListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+
+            success(true)
+        }
+
+        gamAction.backgroundColor = .saffron
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAction, gamAction])
+    }
+}
+
+// MARK: - UICollectionView Delegate
+
 extension GotListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
 
-extension GotListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
+// MARK: - UICollectionView Delegate FlowLayout
 
 extension GotListViewController: UICollectionViewDelegateFlowLayout {
     
