@@ -31,7 +31,7 @@ protocol AddPlantViewModelOutputs {
     
     // 테이블 뷰, 지도, 이미지, 이름, 주소 초기값
 
-    var currentGot: BehaviorSubject<Got?> { get }
+    var currentGot: BehaviorRelay<Got?> { get }
     var placeText: BehaviorRelay<String> { get }
     var tag: BehaviorRelay<Tag?> { get }
     var sectionsSubject: BehaviorRelay<[InputSectionModel]> { get }
@@ -61,7 +61,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     // MARK: - Output
     
-    var currentGot = BehaviorSubject<Got?>(value: nil)
+    var currentGot = BehaviorRelay<Got?>(value: nil)
     var placeText = BehaviorRelay<String>(value: "")
     var tag = BehaviorRelay<Tag?>(value: nil)
     var sectionsSubject = BehaviorRelay<[InputSectionModel]>(value: [])
@@ -121,6 +121,38 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         sections[section.rawValue] = InputSectionModel(original: sections[section.rawValue], items: items)
         sectionsSubject.accept(sections)
     }
+    
+    private func saveGot() {
+        if var currentGot = currentGot.value {
+            currentGot.title = nameText.value
+            currentGot.place = placeText.value
+            //currentGot.insertedDate = date
+            currentGot.tag = tag.value == nil ? [] : [tag.value!]
+            storage.updateGot(gotToUpdate: currentGot)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.sceneCoordinator.close(animated: true)
+                })
+                .disposed(by: disposeBag)
+        } else {
+            let got = Got(
+                id: Int64(arc4random()),
+                tag: tag.value == nil ? [] : [tag.value!],
+                title: nameText.value,
+                content: arriveText.value,
+                latitude: .zero,
+                longitude: .zero,
+                radius: 100,
+                isDone: false,
+                place: placeText.value,
+                insertedDate: Date()
+            )
+            storage.createGot(gotToCreate: got)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.sceneCoordinator.close(animated: true)
+                })
+                .disposed(by: disposeBag)
+        }
+    }
    
     
     // MARK: - Initializing
@@ -140,7 +172,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     private func fetchGot(got: Got?) {
         guard let got = got else { return }
         
-        currentGot.onNext(got)
+        currentGot.accept(got)
         nameText.accept(got.title ?? "")
         placeText.accept(got.place ?? "")
     }
@@ -149,6 +181,12 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         close
             .subscribe(onNext: { _ in
                 sceneCoordinator.close(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        save
+            .subscribe(onNext: { [weak self] _ in
+                self?.saveGot()
             })
             .disposed(by: disposeBag)
         

@@ -79,6 +79,7 @@ class GotListTableViewCell: UITableViewCell {
     func configure(viewModel: GotListViewModel, _ got: Got) {
         self.viewModel = viewModel
         self.got = got
+        isChecked = false
     }
 
     override func awakeFromNib() {
