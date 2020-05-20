@@ -16,7 +16,7 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 	
 	@IBOutlet var settingPlaceTableView: UITableView!
 	
-	var placeList: [String] = ["1", "1", "1"] {
+	var placeList: [String] = ["우리집", "학교", "사무실"] {
 		didSet{
 			DispatchQueue.main.async {
 				self.settingPlaceTableView.reloadData()
