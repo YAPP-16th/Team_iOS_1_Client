@@ -12,4 +12,5 @@ target 'GotGam' do
   pod 'Action'
   pod 'RxDataSources'
   pod 'CenteredCollectionView'
+  pod 'Moya/RxSwift', '~> 14.0'
 end

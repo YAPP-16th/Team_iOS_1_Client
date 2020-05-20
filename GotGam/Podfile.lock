@@ -5,6 +5,11 @@ PODS:
   - Alamofire (5.0.2)
   - CenteredCollectionView (2.2.2)
   - Differentiator (4.0.1)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
+    - Moya/Core
+    - RxSwift (~> 5.0)
   - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -20,6 +25,7 @@ DEPENDENCIES:
   - Action
   - Alamofire
   - CenteredCollectionView
+  - Moya/RxSwift (~> 14.0)
   - RxCocoa (~> 5)
   - RxDataSources
   - RxSwift (~> 5)
@@ -30,6 +36,7 @@ SPEC REPOS:
     - Alamofire
     - CenteredCollectionView
     - Differentiator
+    - Moya
     - RxCocoa
     - RxDataSources
     - RxRelay
@@ -40,11 +47,12 @@ SPEC CHECKSUMS:
   Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
   CenteredCollectionView: a9217908a698c386cbb98af11b596da48900b908
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
 
-PODFILE CHECKSUM: 846c82719358a2d19dc73af2c8d6860d6a2a3e12
+PODFILE CHECKSUM: 8c56e514fa66bf4aeaac707c562feacc9e35babb
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.8.4

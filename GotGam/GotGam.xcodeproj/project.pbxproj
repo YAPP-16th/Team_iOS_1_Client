@@ -117,6 +117,7 @@
 		A16439722454001100C740F4 /* MapTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16439702454001100C740F4 /* MapTagCell.swift */; };
 		A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16439732454002300C740F4 /* MapQuickAddView.xib */; };
 		A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164397524540A0F00C740F4 /* MapQuickAddView.swift */; };
+		A1A5DEAE2475658B00AFA9D5 /* GotAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DEAD2475658B00AFA9D5 /* GotAPIService.swift */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
 		A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */; };
@@ -247,6 +248,7 @@
 		A16439702454001100C740F4 /* MapTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTagCell.swift; sourceTree = "<group>"; };
 		A16439732454002300C740F4 /* MapQuickAddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapQuickAddView.xib; sourceTree = "<group>"; };
 		A164397524540A0F00C740F4 /* MapQuickAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuickAddView.swift; sourceTree = "<group>"; };
+		A1A5DEAD2475658B00AFA9D5 /* GotAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotAPIService.swift; sourceTree = "<group>"; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
 		A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Bold.ttf"; sourceTree = "<group>"; };
@@ -487,6 +489,7 @@
 				4CE037DE2438CA780093E39D /* GotStorage.swift */,
 				A157E115245572F4001E310D /* LocationManager.swift */,
 				A157E116245572F4001E310D /* LocationManagerType.swift */,
+				A1A5DEAD2475658B00AFA9D5 /* GotAPIService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A127E717246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift in Sources */,
+				A1A5DEAE2475658B00AFA9D5 /* GotAPIService.swift in Sources */,
 				4CE3B6F82458709800A53BF8 /* (null) in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
