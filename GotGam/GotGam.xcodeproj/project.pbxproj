@@ -408,6 +408,8 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				29D4F2482475489900C4A791 /* History+CoreDataClass.swift */,
+				29D4F2492475489900C4A791 /* History+CoreDataProperties.swift */,
 				A127E710246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift */,
 				A127E711246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift */,
 				A127E712246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift */,
@@ -513,6 +515,8 @@
 				A157E115245572F4001E310D /* LocationManager.swift */,
 				A157E116245572F4001E310D /* LocationManagerType.swift */,
 				29727818246FDAAE00B75AC7 /* APIManager.swift */,
+				29D4F24C247548DB00C4A791 /* SearchStorageType.swift */,
+				29D4F24E247549A300C4A791 /* SearchStorage.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -831,6 +835,8 @@
 				4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */,
 				2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */,
 				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,
+				29D4F24A2475489900C4A791 /* History+CoreDataClass.swift in Sources */,
+				29D4F24F247549A300C4A791 /* SearchStorage.swift in Sources */,
 				4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */,
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
@@ -864,9 +870,11 @@
 				29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
+				29D4F24D247548DB00C4A791 /* SearchStorageType.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
 				4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */,
+				29D4F24B2475489900C4A791 /* History+CoreDataProperties.swift in Sources */,
 				4C5F0F61246538B700C7A6E9 /* AlarmViewController.swift in Sources */,
 				4CBD5362245CEEC100B235D5 /* SetTagListTableViewCell.swift in Sources */,
 				297278472473C96800B75AC7 /* SettingOtherViewController.swift in Sources */,

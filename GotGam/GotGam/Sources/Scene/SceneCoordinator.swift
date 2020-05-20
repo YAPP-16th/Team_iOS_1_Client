@@ -77,6 +77,8 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
 			target = scene.instantiate(from: "Setting")
 		case .settingPlace:
 			target = scene.instantiate(from: "Setting")
+		case .searchBar:
+            target = scene.instantiate(from: "SearchBar")
         }
         
         switch style {

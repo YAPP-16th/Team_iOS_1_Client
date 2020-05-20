@@ -18,6 +18,7 @@ enum Scene {
 	case settingAlarm(SettingAlarmViewModel)
 	case settingOther(SettingOtherViewModel)
 	case settingPlace(SettingPlaceViewModel)
+	case searchBar(SearchBarViewModel)
 }
 
 extension Scene {
@@ -111,6 +112,14 @@ extension Scene {
 			settingPlaceVC.bind(viewModel: viewModel)
 			return settingPlaceVC
 
+			
+		case .searchBar(let viewModel):
+			guard var searchVC = storyboard.instantiateViewController(withIdentifier: "SearchBarViewController") as? SearchBarViewController else {
+				fatalError()
+			}
+			
+			searchVC.bind(viewModel: viewModel)
+			return searchVC
         }
     }
 }

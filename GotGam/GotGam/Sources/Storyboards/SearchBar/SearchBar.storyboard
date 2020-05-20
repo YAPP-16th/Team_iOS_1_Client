@@ -21,7 +21,7 @@
         <!--Search Bar View Controller-->
         <scene sceneID="RRE-Dg-eDQ">
             <objects>
-                <viewController id="bUb-3f-gKL" customClass="SearchBarViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchBarViewController" id="bUb-3f-gKL" customClass="SearchBarViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lMg-IM-X2J">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -13,6 +13,7 @@ import Action
 
 protocol MapViewModelInputs {
     func createGot(got: Got)
+	func showSearchVC()
 }
 
 protocol MapViewModelOutputs {
@@ -26,6 +27,7 @@ protocol MapViewModelType {
 }
 
 class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapViewModelOutputs {
+
     var input: MapViewModelInputs { return self }
     var output: MapViewModelOutputs { return self }
     
@@ -126,4 +128,10 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             self.tagList.onNext(tagList)
         }.disposed(by: self.disposeBag)
     }
+	
+	func showSearchVC() {
+		let movesearchVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .modal, animated: true)
+	}
+	
 }
