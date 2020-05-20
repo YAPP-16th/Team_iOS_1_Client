@@ -49,6 +49,9 @@ protocol GotStorageType {
     func deleteGot(id: Int64) -> Observable<Got>
     
     @discardableResult
+    func deleteGot(got: Got) -> Observable<Got>
+    
+    @discardableResult
     func deleteTag(hex: String) -> Observable<Tag>
     
     @discardableResult

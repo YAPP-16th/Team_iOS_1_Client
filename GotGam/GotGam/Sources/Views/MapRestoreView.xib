@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -30,19 +30,19 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWm-LE-hGN">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWm-LE-hGN">
                     <rect key="frame" x="147" y="0.0" width="48" height="48"/>
                     <color key="backgroundColor" name="white"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="8PP-xK-0yo"/>
                         <constraint firstAttribute="width" constant="48" id="uKc-TH-G0E"/>
                     </constraints>
-                    <state key="normal" title="버튼">
+                    <state key="normal" image="icMapRestore">
                         <color key="titleColor" red="0.99740535019999998" green="0.71073418860000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="OWm-LE-hGN" firstAttribute="top" secondItem="0Fb-YI-ihV" secondAttribute="top" id="1Ja-Xe-Cfa"/>
                 <constraint firstAttribute="trailing" secondItem="OWm-LE-hGN" secondAttribute="trailing" id="m1R-Y2-QNo"/>
@@ -58,6 +58,7 @@
         </view>
     </objects>
     <resources>
+        <image name="icMapRestore" width="18" height="22.5"/>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

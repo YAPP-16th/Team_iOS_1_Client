@@ -192,6 +192,10 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func deleteGot(got: Got) -> Observable<Got> {
+        deleteGot(id: got.id!)
+    }
+    
     func deleteTag(hex: String) -> Observable<Tag> {
         do{
             let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")

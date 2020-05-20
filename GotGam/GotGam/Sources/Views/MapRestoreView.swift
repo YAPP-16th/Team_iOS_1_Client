@@ -30,8 +30,10 @@ class MapRestoreView: UIView{
     }
     override func layoutSubviews() {
         super.layoutSubviews()
+      
+        self.backgroundColor = .clear
         self.layer.applySketchShadow(color: .black, alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
-        roundCorners(corners: [.topRight, .bottomRight], radius: 24.0)
+        contentView.roundCorners(corners: [.topRight, .bottomRight], radius: 24.0)
         restoreButton.layer.cornerRadius = 24.0
         restoreButton.layer.applySketchShadow(color: .black, alpha: 0.16, x: 0, y: 3, blur: 6, spread: 0)
     }

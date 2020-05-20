@@ -9,13 +9,19 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 protocol GotListViewModelInputs {
-	func showVC()
+    func removeGot(indexPath: IndexPath, got: Got)
+    func editGot(got: Got?)
+    func updateFinish(of got: Got)
+    var updatedGot: PublishSubject<Got> { get set }
+    func fetchRequest()
 }
 
 protocol GotListViewModelOutputs {
-    var gotList: BehaviorSubject<[Got]> { get }
+    var gotSections: BehaviorRelay<[ListSectionModel]> { get }
+    //var gotList: BehaviorRelay<[Got]> { get }
     var tagList: BehaviorRelay<[Tag]> { get }
 }
 
@@ -30,9 +36,48 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     // Inputs
     
+    func removeGot(indexPath: IndexPath, got: Got) {
+        storage.deleteGot(got: got)
+            .subscribe(onNext: { [weak self] got in
+                if var list = self?.gotList.value {
+                    list.remove(at: indexPath.row)
+                    self?.gotList.accept(list)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func editGot(got: Got? = nil) {
+        
+        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
+        sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
+    }
+    
+    func updateFinish(of got: Got) {
+        storage.updateGot(gotToUpdate: got)
+    }
+    
+    var updatedGot = PublishSubject<Got>()
+    
+    func fetchRequest() {
+        storage.fetchTagList()
+            .subscribe(onNext: { [weak self] in
+                self?.tagList.accept($0)
+            })
+            .disposed(by: disposeBag)
+        
+        storage.fetchGotList()
+            .map { $0.filter { $0.isDone != true }}
+            .subscribe(onNext: { list in
+                self.gotList.accept(list)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     // Outputs
     
-    var gotList = BehaviorSubject<[Got]>(value: [])
+    var gotSections = BehaviorRelay<[ListSectionModel]>(value: [])
+    var gotList = BehaviorRelay<[Got]>(value: [])
     var tagList = BehaviorRelay<[Tag]>(value: [])
     
 //    var gotList: Observable<[Got]> {
@@ -44,33 +89,74 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     var inputs: GotListViewModelInputs { return self }
     var outputs: GotListViewModelOutputs { return self }
     
-	func showVC() {
-        let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
-            let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
-            sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
-	}
-    
-    
     override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator, storage: storage)
         
-        storage.fetchGotList()
-            .subscribe(onNext: { list in
-                self.gotList.onNext(list)
+        gotList
+            .subscribe(onNext: { [unowned self] gotList in
+                self.gotSections.accept(self.configureDataSource(gotList: gotList))
             })
             .disposed(by: disposeBag)
-        
-        // MARK: tag 더미데이터 수정
-        storage.fetchTagList()
-            .subscribe(onNext: { list in
-                self.tagList.accept(list)
-            }).disposed(by: disposeBag)
-        
-//        storage.fetchTagList()
-//            .subscribe(onNext: { tag in
-//                self.tagList.onNext(tag)
-//            })
-//            .disposed(by: disposeBag)
-        
+    }
+    
+    func configureDataSource(gotList: [Got]) -> [ListSectionModel] {
+        return [
+            .listSection(title: "", items: gotList.map {
+                ListItem.gotItem(got: $0)
+            })
+        ]
+    }
+}
+
+enum ListItem {
+    case gotItem(got: Got)
+}
+
+extension ListItem: IdentifiableType, Equatable {
+   typealias Identity = Int64
+
+   var identity: Identity {
+       switch self {
+       case let .gotItem(got): return got.id!
+       }
+   }
+}
+
+enum ListSectionModel {
+    case listSection(title: String, items: [ListItem])
+}
+
+extension ListSectionModel: AnimatableSectionModelType {
+    
+    typealias Identity = String
+    typealias Item = ListItem
+    
+    var identity: String {
+        switch self {
+        case let .listSection(title, _): return title
+        }
+    }
+
+    var items: [Item] {
+        switch self {
+        case .listSection(_, items: let items):
+            return items.map { $0 }
+        }
+    }
+    
+    init(original: ListSectionModel, items: [Item]) {
+        switch original {
+        case let .listSection(title, items: _):
+            self = .listSection(title: title, items: items)
+        }
+    }
+}
+
+extension ListSectionModel {
+    var title: String {
+        switch self {
+        case .listSection(title: let title, items: _):
+            return title
+        }
     }
 }
