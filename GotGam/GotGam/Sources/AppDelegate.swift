@@ -27,19 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    coordinator.transition(to: mapScene, using: .root, animated: false)
     
     
-    let storage = GotStorage()
+    let gotStorage = GotStorage()
+    let alarmStorage = AlarmStorage()
     let coordinator = SceneCoordinator(window: window!)
-    coordinator.createTabBar(gotService: storage)
+    coordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)
     
-    let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, storage: storage)
+    let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator)
 
     coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
-    
-    
-    
-    
-    
-    
     
     return true
   }

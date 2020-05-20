@@ -27,6 +27,7 @@ extension ManagedGot {
     @NSManaged public var place: String?
     @NSManaged public var title: String?
     @NSManaged public var tag: NSSet?
+    @NSManaged public var alarm: NSSet?
 
 }
 
@@ -44,5 +45,22 @@ extension ManagedGot {
 
     @objc(removeTag:)
     @NSManaged public func removeFromTag(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for alarm
+extension ManagedGot {
+
+    @objc(addAlarmObject:)
+    @NSManaged public func addToAlarm(_ value: ManagedAlarm)
+
+    @objc(removeAlarmObject:)
+    @NSManaged public func removeFromAlarm(_ value: ManagedAlarm)
+
+    @objc(addAlarm:)
+    @NSManaged public func addToAlarm(_ values: NSSet)
+
+    @objc(removeAlarm:)
+    @NSManaged public func removeFromAlarm(_ values: NSSet)
 
 }

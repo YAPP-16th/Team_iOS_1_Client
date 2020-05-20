@@ -159,9 +159,11 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     var inputs: AddPlantViewModelInputs { return self }
     var outputs: AddPlantViewModelOutputs { return self }
+    var storage: GotStorageType!
     
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, got: Got? = nil) {
-        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
         
         
         fetchGot(got: got)

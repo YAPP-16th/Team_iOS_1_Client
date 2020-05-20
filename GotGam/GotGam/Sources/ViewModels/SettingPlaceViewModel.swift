@@ -29,6 +29,11 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 	
     var inputs: SettingPlaceViewModelInputs { return self }
     var outputs: SettingPlaceViewModelOutputs { return self }
+    var storage: GotStorageType!
     
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+    }
   
 }

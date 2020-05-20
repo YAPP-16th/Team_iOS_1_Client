@@ -35,6 +35,8 @@ protocol GotListViewModelType {
 class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelInputs, GotListViewModelOutputs {
     
     
+    
+    
     // Inputs
     
     func fetchRequest() {
@@ -91,9 +93,11 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     var inputs: GotListViewModelInputs { return self }
     var outputs: GotListViewModelOutputs { return self }
+    var storage: GotStorageType!
     
-    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
         
         gotList
             .subscribe(onNext: { [unowned self] gotList in
@@ -112,8 +116,30 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
                 }
             })
             .disposed(by: disposeBag)
-        
     }
+    
+//    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+//        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+//
+//        gotList
+//            .subscribe(onNext: { [unowned self] gotList in
+//                self.gotSections.accept(self.configureDataSource(gotList: gotList))
+//            })
+//            .disposed(by: disposeBag)
+//
+//        filteredTagSubject
+//            .subscribe(onNext: {  [weak self] tags in
+//                if let filteredGot = self?.gotList.value.filter ({ got in
+//                        guard let gotTag = got.tag?.first else { return false }
+//                        return !tags.contains(gotTag)
+//                    }) {
+//
+//                    self?.gotSections.accept(self?.configureDataSource(gotList: filteredGot) ?? [])
+//                }
+//            })
+//            .disposed(by: disposeBag)
+//
+//    }
     
     func configureDataSource(gotList: [Got]) -> [ListSectionModel] {
         return [

@@ -30,6 +30,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
 
     var input: MapViewModelInputs { return self }
     var output: MapViewModelOutputs { return self }
+    var storage: GotStorageType!
     
     var gotList = BehaviorSubject<[Got]>(value: [])
     var tagList = BehaviorSubject<[Tag]>(value: [])
@@ -134,4 +135,9 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .modal, animated: true)
 	}
 	
+    
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+    }
 }

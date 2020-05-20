@@ -21,5 +21,5 @@ protocol SceneCoordinatorType {
     func pop(animated: Bool) -> Completable
     
     @discardableResult
-    func createTabBar(gotService: GotStorageType) -> Completable
+    func createTabBar(gotService: GotStorageType, alarmService: AlarmStorageType) -> Completable
 }
