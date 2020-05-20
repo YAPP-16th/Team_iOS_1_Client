@@ -47,6 +47,14 @@ extension SettingPlaceViewController: UITableViewDelegate {
 		view.backgroundColor = .clear
 		return view
 	}
+	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 99
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		settingPlaceTableView.deselectRow(at: indexPath, animated: true)
+	}
 
 }
 
@@ -64,15 +72,18 @@ extension SettingPlaceViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 1 {
+		if indexPath.section == 0 {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath) as! PlaceCell
+			cell.placeNameLabel.text = placeList[indexPath.row]
+			return cell
+		}else {
 //			let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: nil)
 			let cell = tableView.dequeueReusableCell(withIdentifier: "placeAddCell", for: indexPath) as! PlaceAddCell
 			cell.placeAddButton.layer.cornerRadius = cell.placeAddButton.bounds.height/2
 			cell.placeAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
 			
+			cell.placeAddLabel.text = "자주 가는 장소 등록"
 			return cell
-		} else {
-			fatalError()
 		}
 	}
 	
@@ -81,5 +92,11 @@ extension SettingPlaceViewController: UITableViewDataSource {
 class PlaceAddCell: UITableViewCell {
 	
 	@IBOutlet var placeAddButton: UIButton!
+	@IBOutlet var placeAddLabel: UILabel!
+}
+
+class PlaceCell: UITableViewCell{
+	@IBOutlet var placeNameLabel: UILabel!
+	@IBOutlet var placeAddressLabel: UILabel!
 	
 }
