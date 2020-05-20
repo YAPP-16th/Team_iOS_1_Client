@@ -21,7 +21,7 @@
         <!--Map-->
         <scene sceneID="iDK-gr-kjY">
             <objects>
-                <viewController storyboardIdentifier="MapVC" id="KGN-0W-myJ" customClass="MapViewController" customModule="곳감" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapVC" id="KGN-0W-myJ" customClass="MapViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lcW-sk-zKN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -70,7 +70,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MapTagCell" id="2JE-Pv-o9V" customClass="MapTagCell" customModule="곳감" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MapTagCell" id="2JE-Pv-o9V" customClass="MapTagCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="-7" width="128" height="67"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="49g-NL-kKS">
@@ -149,7 +149,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MapCardCollectionViewCell" id="HxD-Qd-aV0" customClass="MapCardCollectionViewCell" customModule="곳감" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MapCardCollectionViewCell" id="HxD-Qd-aV0" customClass="MapCardCollectionViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="195" height="158"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nbG-JQ-IuW">
@@ -157,13 +157,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="케이블사기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vp2-6v-xZj">
-                                                    <rect key="frame" x="19" y="15" width="69.5" height="19"/>
+                                                    <rect key="frame" x="19" y="15" width="74" height="24"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r35-lJ-7h0">
-                                                    <rect key="frame" x="96.5" y="17.5" width="14" height="14"/>
+                                                    <rect key="frame" x="101" y="20" width="14" height="14"/>
                                                     <color key="backgroundColor" name="veryLightPink"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="9aD-OO-hkS"/>
@@ -181,19 +181,19 @@
                                                     <state key="normal" image="candCancel"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 강남구 역삼72" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
-                                                    <rect key="frame" x="19" y="42" width="124" height="14"/>
+                                                    <rect key="frame" x="19" y="47" width="130.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감 일시 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23O-JI-yYF">
-                                                    <rect key="frame" x="19" y="69" width="79.5" height="14"/>
+                                                    <rect key="frame" x="19" y="78" width="83" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메모 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VfK-3O-Idv">
-                                                    <rect key="frame" x="19" y="87" width="55.5" height="14"/>
+                                                    <rect key="frame" x="19" y="100" width="58" height="18"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
@@ -242,7 +242,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pep-Z7-O3k" customClass="MapQuickAddView" customModule="곳감" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pep-Z7-O3k" customClass="MapQuickAddView" customModule="GotGam" customModuleProvider="target">
                                 <rect key="frame" x="16" y="810" width="382" height="52"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -256,7 +256,7 @@
                                     <constraint firstAttribute="width" constant="35.799999999999997" id="ruh-M6-PMr"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYk-0N-bqg" customClass="MapRestoreView" customModule="곳감" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYk-0N-bqg" customClass="MapRestoreView" customModule="GotGam" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="630" width="195" height="48"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GKi-uU-MMK">
@@ -327,7 +327,7 @@
         <!--Title-->
         <scene sceneID="xwa-ip-OSW">
             <objects>
-                <viewController storyboardIdentifier="AddVC" id="9o4-1I-vlQ" customClass="AddPlantViewController" customModule="곳감" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddVC" id="9o4-1I-vlQ" customClass="AddPlantViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RV1-gH-Au6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -339,7 +339,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icGam" translatesAutoresizingMaskIntoConstraints="NO" id="25x-KR-Vbp">
-                                                <rect key="frame" x="-15" y="-18.5" width="130" height="137"/>
+                                                <rect key="frame" x="17.5" y="16" width="65" height="68.5"/>
                                             </imageView>
                                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-rh-HKX">
                                                 <rect key="frame" x="25" y="25" width="50" height="50"/>
@@ -394,11 +394,11 @@
                                     <constraint firstItem="5lv-AR-bWD" firstAttribute="leading" secondItem="cge-2P-ReM" secondAttribute="trailing" constant="5" id="tXN-yz-oRL"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ONd-Cp-AX0">
-                                <rect key="frame" x="0.0" y="188" width="414" height="269"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ONd-Cp-AX0">
+                                <rect key="frame" x="0.0" y="188" width="414" height="0.0"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsO-E7-ZOT">
-                                        <rect key="frame" x="334" y="189" width="80" height="80"/>
+                                        <rect key="frame" x="334" y="-80" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="7Bj-iP-Gkf"/>
                                             <constraint firstAttribute="height" constant="80" id="tQd-22-zoC"/>
@@ -408,14 +408,14 @@
                                             <action selector="didTapEditMapButton:" destination="9o4-1I-vlQ" eventType="touchUpInside" id="wso-r0-7a5"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="떠날 때만 알려줍니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaG-8z-suT" customClass="PaddingLabel" customModule="곳감" customModuleProvider="target">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="떠날 때만 알려줍니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaG-8z-suT" customClass="PaddingLabel" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="155" y="14" width="104" height="14.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="둘 중 하나는 선택해야 합니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buG-hM-P5B" customClass="PaddingLabel" customModule="곳감" customModuleProvider="target">
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="둘 중 하나는 선택해야 합니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buG-hM-P5B" customClass="PaddingLabel" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="138.5" y="14" width="137" height="14.5"/>
                                         <color key="backgroundColor" name="orangeyRed"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
@@ -426,6 +426,7 @@
                                 <constraints>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="53n-Ju-icp"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="NwI-WF-PxO"/>
+                                    <constraint firstAttribute="height" priority="750" id="PdC-3I-Zoh"/>
                                     <constraint firstAttribute="trailing" secondItem="YsO-E7-ZOT" secondAttribute="trailing" id="VXU-Yk-Bgx"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="gJA-ET-guz"/>
                                     <constraint firstAttribute="bottom" secondItem="YsO-E7-ZOT" secondAttribute="bottom" id="hat-Mj-7jc"/>
@@ -433,10 +434,10 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6cX-Sb-v1L">
-                                <rect key="frame" x="0.0" y="457" width="414" height="405"/>
+                                <rect key="frame" x="0.0" y="188" width="414" height="674"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="inputTagCell" rowHeight="61" id="hrQ-hx-hSU" customClass="InputTagTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="inputTagCell" rowHeight="61" id="hrQ-hx-hSU" customClass="InputTagTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hrQ-hx-hSU" id="e0D-7s-JTh">
@@ -479,7 +480,7 @@
                                             <outlet property="titleLabel" destination="7m6-m5-0WZ" id="dbG-Lt-WPc"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="toggleableCell" rowHeight="65" id="uEw-C4-hpA" customClass="ToggleableTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="toggleableCell" rowHeight="65" id="uEw-C4-hpA" customClass="ToggleableTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="89" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uEw-C4-hpA" id="y84-X2-Wfw">
@@ -509,7 +510,7 @@
                                             <outlet property="titleLabel" destination="wOX-4u-Tul" id="H8J-46-r26"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="textFieldCell" rowHeight="65" id="1Bp-ug-j8k" customClass="TextFieldTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="textFieldCell" rowHeight="65" id="1Bp-ug-j8k" customClass="TextFieldTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="154" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Bp-ug-j8k" id="y0y-56-Diy">
@@ -538,7 +539,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="FBO-QS-FrG" firstAttribute="trailing" secondItem="6cX-Sb-v1L" secondAttribute="trailing" id="3Td-LC-7Lr"/>
                             <constraint firstItem="6cX-Sb-v1L" firstAttribute="leading" secondItem="FBO-QS-FrG" secondAttribute="leading" id="7RU-vn-1LP"/>
@@ -550,7 +551,7 @@
                             <constraint firstItem="tvn-px-jfx" firstAttribute="top" secondItem="FBO-QS-FrG" secondAttribute="top" id="ZiL-yV-frf"/>
                             <constraint firstItem="FBO-QS-FrG" firstAttribute="trailing" secondItem="ONd-Cp-AX0" secondAttribute="trailing" id="byk-O6-RCh"/>
                             <constraint firstItem="6cX-Sb-v1L" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="bottom" id="pHh-m4-GMb"/>
-                            <constraint firstItem="ONd-Cp-AX0" firstAttribute="height" secondItem="RV1-gH-Au6" secondAttribute="height" multiplier="0.3" id="wxc-eC-Fdd"/>
+                            <constraint firstItem="ONd-Cp-AX0" firstAttribute="height" secondItem="RV1-gH-Au6" secondAttribute="height" multiplier="0.3" priority="500" id="wxc-eC-Fdd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FBO-QS-FrG"/>
                     </view>
@@ -565,6 +566,7 @@
                         <outlet property="cancelButton" destination="Utf-dX-ju4" id="NgA-dZ-FKc"/>
                         <outlet property="editButton" destination="YsO-E7-ZOT" id="IFo-T5-KGp"/>
                         <outlet property="inputTableView" destination="6cX-Sb-v1L" id="uN2-cd-HbU"/>
+                        <outlet property="mapBackgroundHiddenConstraint" destination="PdC-3I-Zoh" id="oIN-Ot-wc1"/>
                         <outlet property="mapBackgroundView" destination="ONd-Cp-AX0" id="SR6-Sj-Lrx"/>
                         <outlet property="placeTextView" destination="tIh-9N-K2z" id="g95-ZN-Pdt"/>
                         <outlet property="saveButton" destination="hjn-bF-KUB" id="Rk3-oU-SzG"/>
@@ -578,7 +580,7 @@
         <!--태그 설정-->
         <scene sceneID="IMK-wr-d6a">
             <objects>
-                <viewController storyboardIdentifier="AddTag" id="gUV-Fs-8wH" customClass="SetTagViewController" customModule="곳감" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddTag" id="gUV-Fs-8wH" customClass="SetTagViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yZ6-IR-blX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -587,7 +589,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="selectedTagCell" rowHeight="54" id="NCX-Qi-3bA" customClass="SetSelectedTagTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="selectedTagCell" rowHeight="54" id="NCX-Qi-3bA" customClass="SetSelectedTagTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NCX-Qi-3bA" id="md6-8b-6vP">
@@ -630,7 +632,7 @@
                                             <outlet property="titleLabel" destination="Ucx-AG-A27" id="Bwp-CV-1Xz"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tagListCell" rowHeight="71" id="BwV-bx-iIN" customClass="SetTagListTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tagListCell" rowHeight="71" id="BwV-bx-iIN" customClass="SetTagListTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="82" width="414" height="71"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BwV-bx-iIN" id="sHR-DF-eYC">
@@ -646,13 +648,13 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0K-5k-dj2">
-                                                    <rect key="frame" x="44" y="15.5" width="42" height="40"/>
+                                                    <rect key="frame" x="44" y="25.5" width="42" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="oAA-Xy-mjo">
-                                                    <rect key="frame" x="354" y="15.5" width="40" height="40"/>
+                                                    <rect key="frame" x="374" y="25.5" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="oAA-Xy-mjo" secondAttribute="height" multiplier="1:1" id="chZ-Zx-dos"/>
                                                     </constraints>
@@ -678,11 +680,11 @@
                                         <rect key="frame" x="0.0" y="153" width="414" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7bO-c7-syu" id="ENt-vx-Nt2">
-                                            <rect key="frame" x="0.0" y="0.0" width="382.5" height="63"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="63"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="새로운 태그를 생성합니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kWQ-v9-Tkm">
-                                                    <rect key="frame" x="20" y="0.0" width="354.5" height="63"/>
+                                                    <rect key="frame" x="20" y="0.0" width="355" height="63"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="brownGrey"/>
@@ -718,7 +720,7 @@
         <!--새 태그 만들기-->
         <scene sceneID="j58-r3-ONW">
             <objects>
-                <viewController storyboardIdentifier="CreateTag" id="CoK-Az-QqR" customClass="CreateTagViewController" customModule="곳감" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateTag" id="CoK-Az-QqR" customClass="CreateTagViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H8f-Bc-hU7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -727,7 +729,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="createNameCell" rowHeight="59" id="Gbf-dP-VsW" customClass="CreateTextFieldTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="createNameCell" rowHeight="59" id="Gbf-dP-VsW" customClass="CreateTextFieldTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="59"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gbf-dP-VsW" id="h8v-GY-PN3">
@@ -751,7 +753,7 @@
                                             <outlet property="nameTextField" destination="pSe-Lu-WMQ" id="61x-8V-qqw"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="createGridCell" rowHeight="150" id="32J-CM-lbX" customClass="CreateGridTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="createGridCell" rowHeight="150" id="32J-CM-lbX" customClass="CreateGridTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="87" width="414" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="32J-CM-lbX" id="lni-Ge-iow">
@@ -771,7 +773,7 @@
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="tagColorCell" id="AKu-F5-JWR" customClass="TagColorCollectionViewCell" customModule="곳감" customModuleProvider="target">
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="tagColorCell" id="AKu-F5-JWR" customClass="TagColorCollectionViewCell" customModule="GotGam" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="68" height="68"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="NFw-X4-Rt9">

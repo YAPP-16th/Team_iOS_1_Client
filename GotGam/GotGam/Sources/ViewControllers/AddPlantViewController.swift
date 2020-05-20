@@ -79,7 +79,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //navigationController?.presentationController?.delegate = self
         setupViews()
         setupMapView()
@@ -90,6 +89,8 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        titleTextView.centerVertically()
+        placeTextView.centerVertically()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -133,7 +134,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             mapView.translatesAutoresizingMaskIntoConstraints = false
             mapView.delegate = self
             mapView.baseMapType = .standard
-            mapView.isHidden = true
             mapBackgroundView.insertSubview(mapView, at: 0)
             
             NSLayoutConstraint.activate([
@@ -149,10 +149,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         
         // Input
         
-//        saveButton.rx.tap
-//            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-//            .bind(to: viewModel.inputs.save)
-//            .disposed(by: disposeBag)
+        saveButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.save)
+            .disposed(by: disposeBag)
         
         cancelButton.rx.tap
             .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
@@ -202,7 +202,11 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         
         viewModel.outputs.currentGot
             .compactMap { $0?.title }
-            .bind(to: titleTextView.rx.text)
+            .subscribe(onNext: { [weak self] title in
+                self?.titleTextView.text = title
+                self?.titleTextView.textColor = .black
+                self?.titleTextView.centerVertically()
+            })
             .disposed(by: disposeBag)
         
         viewModel.outputs.currentGot
@@ -211,20 +215,20 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 self?.placeTextView.text = place
                 self?.placeTextView.textColor = .black
                 self?.placeTextView.isEditable = false
+                self?.placeTextView.centerVertically()
             })
             .disposed(by: disposeBag)
         
         viewModel.outputs.currentGot
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] got in
-                self?.mapView.isHidden = false
+                self?.mapBackgroundHiddenConstraint.isActive = false
+                self?.mapBackgroundView.isHidden = false
                 guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
                 self?.drawSeed(point: point)
                 self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
             })
             .disposed(by: disposeBag)
-        
-        
 //        placeLabel.text = viewModel.outputs.currentGot.value?.place
         
     }
@@ -236,7 +240,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     @IBOutlet var titleTextView: UITextView!
     @IBOutlet var placeTextView: UITextView!
-    
     @IBOutlet var mapBackgroundView: UIView!
     @IBOutlet var alertDefaultLabel: PaddingLabel!
     @IBOutlet var alertErrorLabel: PaddingLabel!
@@ -244,6 +247,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var addIconButton: UIButton!
     @IBOutlet var inputTableView: UITableView!
     @IBOutlet var editButton: UIButton!
+    @IBOutlet var mapBackgroundHiddenConstraint: NSLayoutConstraint!
 }
 
 // MARK: - config Data Sources
@@ -360,7 +364,7 @@ extension AddPlantViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         
-        if textView == titleTextView {
+        if textView == titleTextView, titleTextView.textColor != .black {
             DispatchQueue.main.async {
                 textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
             }
