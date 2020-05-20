@@ -46,4 +46,10 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 	
 	var inputs: SearchBarViewModelInputs { return self }
     var outputs: SearchBarViewModelOutputs { return self }
+    var storage: GotStorageType!
+    
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+    }
 }

@@ -47,7 +47,6 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
 	}
 	
 	func showLoginDetailVC() {
-		
 		let movesettingloginVM = SettingLoginViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         sceneCoordinator.transition(to: .settingLogin(movesettingloginVM), using: .push, animated: true)
 	}
