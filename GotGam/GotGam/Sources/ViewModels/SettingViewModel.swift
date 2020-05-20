@@ -41,8 +41,7 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
 	}
 	
 	func showPlaceDetailVC() {
-		
-		let movesettingplaceVM = SettingPlaceViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let movesettingplaceVM = SettingPlaceViewModel(sceneCoordinator: sceneCoordinator, storage: self.storage)
         sceneCoordinator.transition(to: .settingPlace(movesettingplaceVM), using: .push, animated: true)
 	}
 	
@@ -50,9 +49,13 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
 	
     var inputs: SettingViewModelInputs { return self }
     var outputs: SettingViewModelOutputs { return self }
+    var storage: GotStorageType!
     
 
-	
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+    }
 	
     
 }

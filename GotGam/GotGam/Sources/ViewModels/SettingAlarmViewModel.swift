@@ -32,6 +32,11 @@ class SettingAlarmViewModel: CommonViewModel, SettingAlarmViewModelType, Setting
 	
     var inputs: SettingAlarmViewModelInputs { return self }
     var outputs: SettingAlarmViewModelOutputs { return self }
+    var storage: GotStorageType!
     
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+    }
     
 }

@@ -28,6 +28,7 @@ protocol MapViewModelType {
 class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapViewModelOutputs {
     var input: MapViewModelInputs { return self }
     var output: MapViewModelOutputs { return self }
+    var storage: GotStorageType!
     
     var gotList = BehaviorSubject<[Got]>(value: [])
     var tagList = BehaviorSubject<[Tag]>(value: [])
@@ -125,5 +126,10 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         self.storage.fetchTagList().bind { (tagList) in
             self.tagList.onNext(tagList)
         }.disposed(by: self.disposeBag)
+    }
+    
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
     }
 }

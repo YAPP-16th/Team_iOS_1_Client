@@ -30,7 +30,7 @@ class TextFieldTableViewCell: UITableViewCell {
         textField.placeholder = placeholder
         
         viewModel = vm
-        guard let viewModel = viewModel else { return }
+        guard viewModel != nil else { return }
         
         if isDate {
             textField.inputView = datePicker

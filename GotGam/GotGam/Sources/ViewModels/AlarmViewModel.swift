@@ -37,18 +37,22 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
 
     var inputs: AlarmViewModelInputs { return self }
     var outputs: AlarmViewModelOutputs { return self }
+    var storage: AlarmStorageType!
     
     let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
     
-    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+    init(sceneCoordinator: SceneCoordinatorType, storage: AlarmStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+        
+        
         
         dataSource = configureDataSource()
     }
     
     func configureDataSource() -> Observable<[AlarmSectionModel]> {
        return Observable<[AlarmSectionModel]>.just([
-           .AlarmSection(title: "오늘", items: [
+           .TodaySection(title: "오늘", items: [
                 .ArriveItem(got: self.got)
            ])
         ])
@@ -58,7 +62,10 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
 
 
 enum AlarmSectionModel {
-    case AlarmSection(title: String, items: [AlarmItem])
+    case TodaySection(title: String, items: [AlarmItem])
+    case YesterdaySection(title: String, items: [AlarmItem])
+    case WeekSection(title: String, items: [AlarmItem])
+    case MonthSection(title: String, items: [AlarmItem])
 }
 
 enum AlarmItem {
@@ -72,15 +79,27 @@ extension AlarmSectionModel: SectionModelType {
     
     var items: [AlarmItem] {
         switch self {
-        case .AlarmSection(title: _, items: let items):
+        case .TodaySection(title: _, items: let items):
+            return items.map { $0 }
+        case .YesterdaySection(_, let items):
+            return items.map { $0 }
+        case .WeekSection(_, let items):
+            return items.map { $0 }
+        case .MonthSection(_, let items):
             return items.map { $0 }
         }
     }
     
     init(original: AlarmSectionModel, items: [Item]) {
         switch original {
-        case let .AlarmSection(title: title, items: _):
-            self = .AlarmSection(title: title, items: items)
+        case let .TodaySection(title: title, items: _):
+            self = .TodaySection(title: title, items: items)
+        case .YesterdaySection(let title, let items):
+            self = .YesterdaySection(title: title, items: items)
+        case .WeekSection(let title, let items):
+            self = .WeekSection(title: title, items: items)
+        case .MonthSection(let title, let items):
+            self = .MonthSection(title: title, items: items)
         }
     }
 }
@@ -89,7 +108,13 @@ extension AlarmSectionModel: SectionModelType {
 extension AlarmSectionModel {
     var title: String {
         switch self {
-        case .AlarmSection(title: let title, items: _):
+        case .TodaySection(title: let title, _):
+            return title
+        case .YesterdaySection(let title, _):
+            return title
+        case .WeekSection(let title, _):
+            return title
+        case .MonthSection(let title, _):
             return title
         }
     }

@@ -93,9 +93,11 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     
     var inputs: SetTagViewModelInputs { return self }
     var outputs: SetTagViewModelOutputs { return self }
+    var storage: GotStorageType!
     
-    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
         
         tagList
             .map { [Tag(name: "미지정", hex: "#cecece")] + $0 }
