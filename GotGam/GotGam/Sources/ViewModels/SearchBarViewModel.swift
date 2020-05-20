@@ -11,11 +11,12 @@ import RxSwift
 
 
 protocol SearchBarViewModelInputs {
-	
+	func addKeyword(keyword: String)
+	func readKeyword()
 }
 
 protocol SearchBarViewModelOutputs {
-	
+	var keywords: BehaviorSubject<[String]> { get set }
 }
 
 protocol SearchBarViewModelType {
@@ -24,6 +25,24 @@ protocol SearchBarViewModelType {
 }
 
 class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarViewModelOutputs, SearchBarViewModelType {
+	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
+	
+		
+	func addKeyword(keyword: String) {
+		let storage = SearchStorage()
+		storage.createKeyword(keyword: keyword).bind { _ in
+			self.readKeyword()
+			} .disposed(by: disposeBag)
+	}
+	
+	func readKeyword() {
+		let storage = SearchStorage()
+		storage.fetchKeyword().bind { (keywordList) in
+			self.keywords.onNext(keywordList)
+			} .disposed(by: disposeBag)
+	}
+	
+	
 	
 	var inputs: SearchBarViewModelInputs { return self }
     var outputs: SearchBarViewModelOutputs { return self }

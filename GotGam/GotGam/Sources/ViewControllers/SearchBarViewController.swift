@@ -16,7 +16,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	
 	@IBOutlet var SearchBar: UITextField!
 	@IBAction func moveMap(_ sender: Any) {
-		self.dismiss(animated: true)
+		viewModel.sceneCoordinator.close(animated: true)
 	}
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -49,10 +49,22 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 			self.historyList.insert(text, at: 0)
 			self.searchKeyword(keyword: text)
 			}).disposed(by: disposeBag)
+		
+		self.viewModel.inputs.readKeyword()
 	}
 	
 	
 	func bindViewModel() {
+		
+		self.viewModel.outputs.keywords.bind { (List) in
+			self.historyList = List
+			} .disposed(by: disposeBag)
+		
+		self.SearchBar.rx.controlEvent(.primaryActionTriggered)
+			.subscribe(onNext: {
+				var keyword = self.SearchBar.text ?? ""
+				self.viewModel.inputs.addKeyword(keyword: keyword)
+			}) .disposed(by: disposeBag)
 	}
 	
 	

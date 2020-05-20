@@ -31,13 +31,18 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
     
-	@IBAction func moveSearch(_ sender: Any) {
-		let bundle = Bundle.main
-		let sb = UIStoryboard(name: "SearchBar", bundle: bundle)
-		guard let hvc = sb.instantiateInitialViewController() else { return }
+	@IBAction func moveSearch(_ sender: UITextField) {
+//		let bundle = Bundle.main
+//		let sb = UIStoryboard(name: "SearchBar", bundle: bundle)
+//		guard let hvc = sb.instantiateInitialViewController() else { return }
+//
+//		hvc.modalPresentationStyle = .fullScreen
+//		self.present(hvc, animated: false)
+		if sender.isFirstResponder{
+			sender.resignFirstResponder()
+		}
+		viewModel.input.showSearchVC()
 		
-		hvc.modalPresentationStyle = .fullScreen
-		self.present(hvc, animated: false)
 	}
 	
     var centeredCollectionViewFlowLayout = CenteredCollectionViewFlowLayout()
