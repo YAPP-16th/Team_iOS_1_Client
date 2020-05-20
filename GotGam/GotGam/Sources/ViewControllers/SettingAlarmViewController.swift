@@ -64,7 +64,16 @@ extension SettingAlarmViewController: UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		settingAlarmTableView.deselectRow(at: indexPath, animated: true)
+		if indexPath.row == 0 {
+			if #available(iOS 10.0, *) {
+				let settingsUrl = NSURL(string:UIApplication.openSettingsURLString)! as URL
+				UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+			}
+		} else {
+			fatalError()
+		}
 	}
+	
 }
 
 class SettingAlarmCell: UITableViewCell {

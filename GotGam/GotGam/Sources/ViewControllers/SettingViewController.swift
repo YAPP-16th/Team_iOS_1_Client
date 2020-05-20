@@ -16,10 +16,19 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 
 	@IBOutlet var settingTableView: UITableView!
 	
+	@IBOutlet var loginView: UIView!
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
+		loginView.isUserInteractionEnabled = true
+		let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(loginTapped))
+		loginView.addGestureRecognizer(tapRecognizer)
 		
+	}
+	
+	@objc func loginTapped(sender: UIView) {
+		self.viewModel.inputs.showLoginDetailVC()
 	}
 	
 	func bindViewModel() {
@@ -49,6 +58,7 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 				}
 			})
 			.disposed(by: disposeBag)
+				
 		
 	}
 }
@@ -61,7 +71,7 @@ extension SettingViewController: UITableViewDelegate {
 		let view = UIView()
 		view.backgroundColor = .white
 		view.layer.borderWidth = 0.3
-		view.layer.borderColor = UIColor.gray.cgColor
+		view.layer.borderColor = UIColor.lightGray.cgColor
 		return view
 	}
 	

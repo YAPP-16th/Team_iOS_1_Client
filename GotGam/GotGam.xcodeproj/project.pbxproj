@@ -19,11 +19,8 @@
 		2972784D2473C9E300B75AC7 /* SettingPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */; };
 		2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */; };
 		297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */; };
-		29D4F25124755BE400C4A791 /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25024755BE400C4A791 /* BadgeButton.swift */; };
-		29D4F25324755C0200C4A791 /* SearchStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25224755C0200C4A791 /* SearchStorage.swift */; };
-		29D4F25524755C0900C4A791 /* SearchStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25424755C0900C4A791 /* SearchStorageType.swift */; };
-		29D4F25824755C2F00C4A791 /* History+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25624755C2F00C4A791 /* History+CoreDataClass.swift */; };
-		29D4F25924755C2F00C4A791 /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25724755C2F00C4A791 /* History+CoreDataProperties.swift */; };
+		29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727852247451C500B75AC7 /* SettingLoginViewController.swift */; };
+		2972785524745A3400B75AC7 /* SettingLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972785424745A3400B75AC7 /* SettingLoginViewModel.swift */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -152,11 +149,8 @@
 		2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPlaceViewModel.swift; sourceTree = "<group>"; };
 		2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewController.swift; sourceTree = "<group>"; };
 		297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewModel.swift; sourceTree = "<group>"; };
-		29D4F25024755BE400C4A791 /* BadgeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
-		29D4F25224755C0200C4A791 /* SearchStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorage.swift; sourceTree = "<group>"; };
-		29D4F25424755C0900C4A791 /* SearchStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorageType.swift; sourceTree = "<group>"; };
-		29D4F25624755C2F00C4A791 /* History+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+CoreDataClass.swift"; sourceTree = "<group>"; };
-		29D4F25724755C2F00C4A791 /* History+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		29727852247451C500B75AC7 /* SettingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewController.swift; sourceTree = "<group>"; };
+		2972785424745A3400B75AC7 /* SettingLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewModel.swift; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -411,6 +405,7 @@
 				2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */,
 				297278482473C97E00B75AC7 /* SettingPlaceViewController.swift */,
 				297278462473C96800B75AC7 /* SettingOtherViewController.swift */,
+				29727852247451C500B75AC7 /* SettingLoginViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -499,6 +494,7 @@
 				2972784A2473C9CB00B75AC7 /* SettingOtherViewModel.swift */,
 				2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */,
 				297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */,
+				2972785424745A3400B75AC7 /* SettingLoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -882,6 +878,7 @@
 				4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */,
+				29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
@@ -891,6 +888,7 @@
 				4CBD5362245CEEC100B235D5 /* SetTagListTableViewCell.swift in Sources */,
 				297278472473C96800B75AC7 /* SettingOtherViewController.swift in Sources */,
 				A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */,
+				2972785524745A3400B75AC7 /* SettingLoginViewModel.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
 				4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */,
 				4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */,

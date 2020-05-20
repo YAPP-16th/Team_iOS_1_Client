@@ -14,6 +14,7 @@ protocol SettingViewModelInputs {
     func showAlarmDetailVC()
 	func showOtherDetailVC()
 	func showPlaceDetailVC()
+	func showLoginDetailVC()
 }
 
 protocol SettingViewModelOutputs {
@@ -44,6 +45,12 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
 		
 		let movesettingplaceVM = SettingPlaceViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         sceneCoordinator.transition(to: .settingPlace(movesettingplaceVM), using: .push, animated: true)
+	}
+	
+	func showLoginDetailVC() {
+		
+		let movesettingloginVM = SettingLoginViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .settingLogin(movesettingloginVM), using: .push, animated: true)
 	}
 	
 	var settingMenu = Observable<[String]>.just(["푸시 알람 설정", "자주 가는 장소 설정", "약관 및 정책"])

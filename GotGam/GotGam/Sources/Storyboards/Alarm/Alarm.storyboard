@@ -12,7 +12,7 @@
         <!--Alarm View Controller-->
         <scene sceneID="i1V-jZ-N07">
             <objects>
-                <viewController id="Tzo-cJ-4eF" customClass="AlarmViewController" customModule="곳감" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Tzo-cJ-4eF" customClass="AlarmViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hr8-u7-T7l">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" name="white"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="arriveCell" rowHeight="83" id="ZxQ-Oc-uVc" customClass="AlarmArriveTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="arriveCell" rowHeight="83" id="ZxQ-Oc-uVc" customClass="AlarmArriveTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZxQ-Oc-uVc" id="C7L-AC-fzq">
@@ -202,7 +202,7 @@
                                             <outlet property="titleLabel" destination="2X4-jz-sq0" id="3Ng-5K-aT7"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="leaveCell" rowHeight="83" id="mWu-Tb-1gq" customClass="AlarmLeaveTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="leaveCell" rowHeight="83" id="mWu-Tb-1gq" customClass="AlarmLeaveTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="111" width="414" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mWu-Tb-1gq" id="e2l-Ef-Kd5">
