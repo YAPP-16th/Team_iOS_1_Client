@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ManagedAlarm" representedClassName="ManagedAlarm" syncable="YES" codeGenerationType="class">
+    <entity name="ManagedAlarm" representedClassName="ManagedAlarm" syncable="YES">
         <attribute name="checkedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -26,8 +26,8 @@
         <relationship name="got" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ManagedGot" inverseName="tag" inverseEntity="ManagedGot"/>
     </entity>
     <elements>
+        <element name="ManagedAlarm" positionX="-135" positionY="180" width="128" height="118"/>
         <element name="ManagedGot" positionX="-54" positionY="90" width="128" height="208"/>
         <element name="ManagedTag" positionX="-232.640625" positionY="80.38671875" width="128" height="88"/>
-        <element name="ManagedAlarm" positionX="-135" positionY="180" width="128" height="118"/>
     </elements>
 </model>
