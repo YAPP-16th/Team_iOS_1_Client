@@ -27,6 +27,7 @@
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
 		4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */; };
+		4C5185E924754E66009E1B08 /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185E824754E66009E1B08 /* BadgeButton.swift */; };
 		4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */; };
 		4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */; };
 		4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */; };
@@ -157,6 +158,7 @@
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+centerVertically.swift"; sourceTree = "<group>"; };
+		4C5185E824754E66009E1B08 /* BadgeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 				A125E7A52469B2D1007767D7 /* MapRestoreView.swift */,
 				A125E7A72469B300007767D7 /* MapRestoreView.xib */,
 				4C620D11246C370300B25B86 /* PaddingLabel.swift */,
+				4C5185E824754E66009E1B08 /* BadgeButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -819,6 +822,7 @@
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
 				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
+				4C5185E924754E66009E1B08 /* BadgeButton.swift in Sources */,
 				4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */,
 				4CF1D0AB24499F1B00B45751 /* GotListViewController.swift in Sources */,
 				4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */,

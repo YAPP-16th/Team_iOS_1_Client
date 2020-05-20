@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,16 +12,37 @@
         <!--Alarm View Controller-->
         <scene sceneID="i1V-jZ-N07">
             <objects>
-                <viewController id="Tzo-cJ-4eF" customClass="AlarmViewController" customModule="곳감" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Tzo-cJ-4eF" customClass="AlarmViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hr8-u7-T7l">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="k4l-7c-Rev">
+                                <rect key="frame" x="0.0" y="88" width="160" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPd-tT-Yay" customClass="BadgeButton" customModule="GotGam" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="50"/>
+                                        <state key="normal" title="활동">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MfR-1w-c8t" customClass="BadgeButton" customModule="GotGam" customModuleProvider="target">
+                                        <rect key="frame" x="80" y="0.0" width="80" height="50"/>
+                                        <state key="normal" title="공유">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="160" id="F5t-Io-Eai"/>
+                                    <constraint firstAttribute="height" constant="50" id="fD2-79-APQ"/>
+                                </constraints>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AWn-vZ-kXB">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="138" width="414" height="675"/>
                                 <color key="backgroundColor" name="white"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="arriveCell" rowHeight="83" id="ZxQ-Oc-uVc" customClass="AlarmArriveTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="arriveCell" rowHeight="83" id="ZxQ-Oc-uVc" customClass="AlarmArriveTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZxQ-Oc-uVc" id="C7L-AC-fzq">
@@ -33,7 +54,7 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xwa-Cg-NMV">
                                                             <rect key="frame" x="31.5" y="31.5" width="20" height="20"/>
-                                                            <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="ams-FI-Uu8"/>
                                                                 <constraint firstAttribute="width" secondItem="Xwa-Cg-NMV" secondAttribute="height" multiplier="1:1" id="tGo-Vg-ee8"/>
@@ -202,7 +223,7 @@
                                             <outlet property="titleLabel" destination="2X4-jz-sq0" id="3Ng-5K-aT7"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="leaveCell" rowHeight="83" id="mWu-Tb-1gq" customClass="AlarmLeaveTableViewCell" customModule="곳감" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="leaveCell" rowHeight="83" id="mWu-Tb-1gq" customClass="AlarmLeaveTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="111" width="414" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mWu-Tb-1gq" id="e2l-Ef-Kd5">
@@ -214,7 +235,7 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdP-G7-67e">
                                                             <rect key="frame" x="31.5" y="31.5" width="20" height="20"/>
-                                                            <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="flL-NV-toG"/>
                                                                 <constraint firstAttribute="width" secondItem="fdP-G7-67e" secondAttribute="height" multiplier="1:1" id="lQg-Dh-xRx"/>
@@ -375,15 +396,18 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="k4l-7c-Rev" firstAttribute="leading" secondItem="5xi-Mn-R9l" secondAttribute="leading" id="4GH-bW-o2Z"/>
                             <constraint firstItem="5xi-Mn-R9l" firstAttribute="trailing" secondItem="AWn-vZ-kXB" secondAttribute="trailing" id="6MP-aL-41X"/>
+                            <constraint firstItem="k4l-7c-Rev" firstAttribute="top" secondItem="5xi-Mn-R9l" secondAttribute="top" id="7FE-i2-dal"/>
                             <constraint firstItem="5xi-Mn-R9l" firstAttribute="bottom" secondItem="AWn-vZ-kXB" secondAttribute="bottom" id="IZ0-Iq-uME"/>
                             <constraint firstItem="AWn-vZ-kXB" firstAttribute="leading" secondItem="5xi-Mn-R9l" secondAttribute="leading" id="Nvd-8e-kTN"/>
-                            <constraint firstItem="AWn-vZ-kXB" firstAttribute="top" secondItem="5xi-Mn-R9l" secondAttribute="top" id="r2s-4s-1fH"/>
+                            <constraint firstItem="AWn-vZ-kXB" firstAttribute="top" secondItem="k4l-7c-Rev" secondAttribute="bottom" id="iqi-63-29T"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5xi-Mn-R9l"/>
                     </view>
                     <navigationItem key="navigationItem" id="Dvj-3W-ZSH"/>
                     <connections>
+                        <outlet property="activeButton" destination="cPd-tT-Yay" id="bsy-wc-muW"/>
                         <outlet property="alarmTableView" destination="AWn-vZ-kXB" id="Xt3-uE-U3d"/>
                     </connections>
                 </viewController>

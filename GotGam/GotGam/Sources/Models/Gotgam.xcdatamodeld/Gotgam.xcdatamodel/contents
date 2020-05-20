@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ManagedAlarm" representedClassName="ManagedAlarm" syncable="YES" codeGenerationType="class">
+        <attribute name="checkedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="got" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedGot" inverseName="alarms" inverseEntity="ManagedGot"/>
+    </entity>
     <entity name="ManagedGot" representedClassName="ManagedGot" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -10,6 +17,7 @@
         <attribute name="place" optional="YES" attributeType="String"/>
         <attribute name="radius" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="alarms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ManagedAlarm" inverseName="got" inverseEntity="ManagedAlarm"/>
         <relationship name="tag" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ManagedTag" inverseName="got" inverseEntity="ManagedTag"/>
     </entity>
     <entity name="ManagedTag" representedClassName="ManagedTag" syncable="YES">
@@ -18,7 +26,8 @@
         <relationship name="got" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ManagedGot" inverseName="tag" inverseEntity="ManagedGot"/>
     </entity>
     <elements>
-        <element name="ManagedGot" positionX="-54" positionY="90" width="128" height="193"/>
+        <element name="ManagedGot" positionX="-54" positionY="90" width="128" height="208"/>
         <element name="ManagedTag" positionX="-232.640625" positionY="80.38671875" width="128" height="88"/>
+        <element name="ManagedAlarm" positionX="-135" positionY="180" width="128" height="118"/>
     </elements>
 </model>
