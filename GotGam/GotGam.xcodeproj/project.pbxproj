@@ -19,6 +19,11 @@
 		2972784D2473C9E300B75AC7 /* SettingPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */; };
 		2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */; };
 		297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */; };
+		29D4F25124755BE400C4A791 /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25024755BE400C4A791 /* BadgeButton.swift */; };
+		29D4F25324755C0200C4A791 /* SearchStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25224755C0200C4A791 /* SearchStorage.swift */; };
+		29D4F25524755C0900C4A791 /* SearchStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25424755C0900C4A791 /* SearchStorageType.swift */; };
+		29D4F25824755C2F00C4A791 /* History+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25624755C2F00C4A791 /* History+CoreDataClass.swift */; };
+		29D4F25924755C2F00C4A791 /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D4F25724755C2F00C4A791 /* History+CoreDataProperties.swift */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -147,6 +152,11 @@
 		2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPlaceViewModel.swift; sourceTree = "<group>"; };
 		2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewController.swift; sourceTree = "<group>"; };
 		297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewModel.swift; sourceTree = "<group>"; };
+		29D4F25024755BE400C4A791 /* BadgeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
+		29D4F25224755C0200C4A791 /* SearchStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorage.swift; sourceTree = "<group>"; };
+		29D4F25424755C0900C4A791 /* SearchStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorageType.swift; sourceTree = "<group>"; };
+		29D4F25624755C2F00C4A791 /* History+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+CoreDataClass.swift"; sourceTree = "<group>"; };
+		29D4F25724755C2F00C4A791 /* History+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -408,8 +418,8 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				29D4F2482475489900C4A791 /* History+CoreDataClass.swift */,
-				29D4F2492475489900C4A791 /* History+CoreDataProperties.swift */,
+				29D4F25624755C2F00C4A791 /* History+CoreDataClass.swift */,
+				29D4F25724755C2F00C4A791 /* History+CoreDataProperties.swift */,
 				A127E710246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift */,
 				A127E711246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift */,
 				A127E712246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift */,
@@ -515,8 +525,8 @@
 				A157E115245572F4001E310D /* LocationManager.swift */,
 				A157E116245572F4001E310D /* LocationManagerType.swift */,
 				29727818246FDAAE00B75AC7 /* APIManager.swift */,
-				29D4F24C247548DB00C4A791 /* SearchStorageType.swift */,
-				29D4F24E247549A300C4A791 /* SearchStorage.swift */,
+				29D4F25224755C0200C4A791 /* SearchStorage.swift */,
+				29D4F25424755C0900C4A791 /* SearchStorageType.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -625,6 +635,7 @@
 				A164397524540A0F00C740F4 /* MapQuickAddView.swift */,
 				4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */,
 				4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */,
+				29D4F25024755BE400C4A791 /* BadgeButton.swift */,
 				4CBD536D245EB97E00B235D5 /* Add */,
 				4CBD536E245EB98C00B235D5 /* SetTag */,
 				4C65BFA724630EDE00FF17BC /* CreateTag */,
@@ -820,14 +831,17 @@
 				A157E11D2455754A001E310D /* Extensions.swift in Sources */,
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
+				29D4F25324755C0200C4A791 /* SearchStorage.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
 				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
+				29D4F25124755BE400C4A791 /* BadgeButton.swift in Sources */,
 				4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */,
 				4CF1D0AB24499F1B00B45751 /* GotListViewController.swift in Sources */,
 				4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */,
 				4CBD536A245E3AF400B235D5 /* TextFieldTableViewCell.swift in Sources */,
 				4CF1D0B3244AABC000B45751 /* TabBarViewModel.swift in Sources */,
+				29D4F25524755C0900C4A791 /* SearchStorageType.swift in Sources */,
 				4CF1D0AD24499F4200B45751 /* GotListViewModel.swift in Sources */,
 				A16439712454001100C740F4 /* MapCardCollectionViewCell.swift in Sources */,
 				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
@@ -835,8 +849,6 @@
 				4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */,
 				2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */,
 				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,
-				29D4F24A2475489900C4A791 /* History+CoreDataClass.swift in Sources */,
-				29D4F24F247549A300C4A791 /* SearchStorage.swift in Sources */,
 				4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */,
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
@@ -844,10 +856,12 @@
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				295C03C32464652700789967 /* SearchBarViewController.swift in Sources */,
 				2972784D2473C9E300B75AC7 /* SettingPlaceViewModel.swift in Sources */,
+				29D4F25824755C2F00C4A791 /* History+CoreDataClass.swift in Sources */,
 				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
 				A127E714246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */,
+				29D4F25924755C2F00C4A791 /* History+CoreDataProperties.swift in Sources */,
 				2972781B246FDADD00B75AC7 /* KakaoResponse.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+.swift in Sources */,
@@ -870,11 +884,9 @@
 				29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
-				29D4F24D247548DB00C4A791 /* SearchStorageType.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
 				4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */,
-				29D4F24B2475489900C4A791 /* History+CoreDataProperties.swift in Sources */,
 				4C5F0F61246538B700C7A6E9 /* AlarmViewController.swift in Sources */,
 				4CBD5362245CEEC100B235D5 /* SetTagListTableViewCell.swift in Sources */,
 				297278472473C96800B75AC7 /* SettingOtherViewController.swift in Sources */,
