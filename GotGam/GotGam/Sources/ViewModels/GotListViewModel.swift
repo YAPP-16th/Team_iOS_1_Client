@@ -12,11 +12,12 @@ import RxCocoa
 import RxDataSources
 
 protocol GotListViewModelInputs {
+    func fetchRequest()
     func removeGot(indexPath: IndexPath, got: Got)
     func editGot(got: Got?)
     func updateFinish(of got: Got)
-    var updatedGot: PublishSubject<Got> { get set }
-    func fetchRequest()
+    var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
+    
 }
 
 protocol GotListViewModelOutputs {
@@ -35,6 +36,21 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     
     // Inputs
+    
+    func fetchRequest() {
+       storage.fetchTagList()
+           .subscribe(onNext: { [weak self] in
+               self?.tagList.accept($0)
+           })
+           .disposed(by: disposeBag)
+       
+       storage.fetchGotList()
+           .map { $0.filter { $0.isDone != true }}
+           .subscribe(onNext: { list in
+               self.gotList.accept(list)
+           })
+           .disposed(by: disposeBag)
+    }
     
     func removeGot(indexPath: IndexPath, got: Got) {
         storage.deleteGot(got: got)
@@ -57,22 +73,9 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
         storage.updateGot(gotToUpdate: got)
     }
     
-    var updatedGot = PublishSubject<Got>()
+    var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
     
-    func fetchRequest() {
-        storage.fetchTagList()
-            .subscribe(onNext: { [weak self] in
-                self?.tagList.accept($0)
-            })
-            .disposed(by: disposeBag)
-        
-        storage.fetchGotList()
-            .map { $0.filter { $0.isDone != true }}
-            .subscribe(onNext: { list in
-                self.gotList.accept(list)
-            })
-            .disposed(by: disposeBag)
-    }
+   
     
     // Outputs
     
@@ -97,6 +100,19 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
                 self.gotSections.accept(self.configureDataSource(gotList: gotList))
             })
             .disposed(by: disposeBag)
+        
+        filteredTagSubject
+            .subscribe(onNext: {  [weak self] tags in
+                if let filteredGot = self?.gotList.value.filter ({ got in
+                        guard let gotTag = got.tag?.first else { return false }
+                        return !tags.contains(gotTag)
+                    }) {
+                    
+                    self?.gotSections.accept(self?.configureDataSource(gotList: filteredGot) ?? [])
+                }
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     func configureDataSource(gotList: [Got]) -> [ListSectionModel] {

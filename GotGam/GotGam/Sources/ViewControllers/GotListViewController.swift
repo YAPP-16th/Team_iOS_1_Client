@@ -71,6 +71,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
   
     override func viewWillAppear(_ animated: Bool) {
         viewModel.inputs.fetchRequest()
+        tagCollectionView.allowsMultipleSelection = true
     }
     
     // MARK: - Initializing
@@ -84,6 +85,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         
         gotListTableView.rx.setDelegate(self).disposed(by: disposeBag)
         tagCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        tagCollectionView.allowsSelection = true
         
         // Inputs
         
@@ -91,6 +93,24 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
             .bind { [weak self] indexPath, gotItem in
                 if case let .gotItem(got) = gotItem {
                     self?.viewModel.inputs.removeGot(indexPath: indexPath, got: got)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
+            .bind { [weak self] indexPath, tag in
+                if var tags = self?.viewModel.inputs.filteredTagSubject.value {
+                    tags.append(tag)
+                    self?.viewModel.inputs.filteredTagSubject.accept(tags)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.zip(tagCollectionView.rx.itemDeselected, tagCollectionView.rx.modelDeselected(Tag.self))
+            .bind { [weak self] indexPath, tag in
+                if var tags = self?.viewModel.inputs.filteredTagSubject.value, let index = tags.firstIndex(of: tag) {
+                    tags.remove(at: index)
+                    self?.viewModel.inputs.filteredTagSubject.accept(tags)
                 }
             }
             .disposed(by: disposeBag)
@@ -198,8 +218,26 @@ extension GotListViewController: UITableViewDelegate {
 
 extension GotListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        //collectionView.deselectItem(at: indexPath, animated: true)
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagListCollectionViewCell {
+            cell.contentView.alpha = 0.3
+        }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagListCollectionViewCell {
+            
+            cell.contentView.alpha = 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagListCollectionViewCell {
+            cell.contentView.alpha = 0.3
+        }
+    }
+    
+    
 }
 
 // MARK: - UICollectionView Delegate FlowLayout
