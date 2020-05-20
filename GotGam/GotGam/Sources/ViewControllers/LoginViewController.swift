@@ -11,7 +11,15 @@ import AuthenticationServices
 import FBSDKLoginKit
 import GoogleSignIn
 
-class LoginViewController: UIViewController{
+enum LoginType: String{
+    case google
+    case kakao
+    case apple
+}
+
+class LoginViewController: UIViewController, ViewModelBindableType{
+    
+    var viewModel: LoginViewModel!
     
     //MARK: Views
     lazy var facebookLoginButton: FacebookButton = {
@@ -205,6 +213,10 @@ class LoginViewController: UIViewController{
                 print("로그아웃 상태: \(success ? "성공" : "실패")")
             }
         })
+    }
+    
+    func bindViewModel() {
+        
     }
 }
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding{

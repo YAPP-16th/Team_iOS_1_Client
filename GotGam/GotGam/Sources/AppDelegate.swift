@@ -49,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         if let session = KOSession.shared(){
             if session.isOpen(){
                 print("카카오로 로그인 된 상태")
+                UserDefaults.standard.set(LoginType.kakao.rawValue, forDefines: .loginType)
             }else{
                 print("카카오로 로그인이 안된 상태")
             }
@@ -59,6 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
         if KOSession.isKakaoAccountLoginCallback(url) {
+            
+            
             return KOSession.handleOpen(url)
         }else{
             GIDSignIn.sharedInstance().handle(url)
@@ -94,6 +97,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             return
         }
+        UserDefaults.standard.set(LoginType.google.rawValue, forDefines: .loginType)
+        
+        //Todo: Google 로그인에 대한 후처리 로직 만들기
         let userId = user.userID                  // 클라이언트에서만 사용할 ID
         let idToken = user.authentication.idToken // 서버에 보낼 토큰
         let fullName = user.profile.name
