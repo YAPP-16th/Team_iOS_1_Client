@@ -14,12 +14,14 @@ import RxDataSources
 protocol GotListViewModelInputs {
     func removeGot(indexPath: IndexPath, got: Got)
     func editGot(got: Got?)
+    func updateFinish(of got: Got)
+    var updatedGot: PublishSubject<Got> { get set }
     func fetchRequest()
 }
 
 protocol GotListViewModelOutputs {
     var gotSections: BehaviorRelay<[ListSectionModel]> { get }
-    var gotList: BehaviorRelay<[Got]> { get }
+    //var gotList: BehaviorRelay<[Got]> { get }
     var tagList: BehaviorRelay<[Tag]> { get }
 }
 
@@ -51,6 +53,12 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     
+    func updateFinish(of got: Got) {
+        storage.updateGot(gotToUpdate: got)
+    }
+    
+    var updatedGot = PublishSubject<Got>()
+    
     func fetchRequest() {
         storage.fetchTagList()
             .subscribe(onNext: { [weak self] in
@@ -59,6 +67,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
             .disposed(by: disposeBag)
         
         storage.fetchGotList()
+            .map { $0.filter { $0.isDone != true }}
             .subscribe(onNext: { list in
                 self.gotList.accept(list)
             })

@@ -112,26 +112,26 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="gotListCell" id="UXA-Sp-RyR" customClass="GotListTableViewCell" customModule="GotGam" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="490.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="493.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UXA-Sp-RyR" id="awT-hN-1Be">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="490.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="493.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Ufg-M5-6ld">
-                                                    <rect key="frame" x="69" y="11" width="287" height="468.5"/>
+                                                    <rect key="frame" x="69" y="11" width="287" height="471.5"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HtP-GR-FpJ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="287" height="156"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="287" height="157"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="멍게비빔밥 맛집" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CzE-K1-K65">
-                                                                    <rect key="frame" x="30" y="68.5" width="101.5" height="19"/>
+                                                                    <rect key="frame" x="30" y="69" width="101.5" height="19"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
                                                                     <color key="textColor" name="brownishGrey"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VfX-Ih-PhZ">
-                                                                    <rect key="frame" x="139.5" y="71" width="14" height="14"/>
+                                                                    <rect key="frame" x="139.5" y="71.5" width="14" height="14"/>
                                                                     <color key="backgroundColor" name="softBlue"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="14" id="HFN-hh-8b8"/>
@@ -139,7 +139,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hqx-x5-Jpc">
-                                                                    <rect key="frame" x="0.0" y="63" width="30" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="63.5" width="30" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="sVz-h2-0Bn"/>
                                                                         <constraint firstAttribute="width" secondItem="Hqx-x5-Jpc" secondAttribute="height" multiplier="1:1" id="tRs-Z8-v69"/>
@@ -161,10 +161,10 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51g-Gz-xGi">
-                                                            <rect key="frame" x="0.0" y="156" width="287" height="156.5"/>
+                                                            <rect key="frame" x="0.0" y="157" width="287" height="157.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 서대문구 가재울로4길 47길 남도정식  시 서대문구 가재울로4길 47길 남도정식 " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6b-pW-MlV">
-                                                                    <rect key="frame" x="5" y="64.5" width="282" height="28"/>
+                                                                    <rect key="frame" x="5" y="65" width="282" height="28"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                                     <color key="textColor" name="brownGrey"/>
                                                                     <nil key="highlightedColor"/>
@@ -179,10 +179,10 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iDZ-yZ-oaC">
-                                                            <rect key="frame" x="0.0" y="312.5" width="287" height="156"/>
+                                                            <rect key="frame" x="0.0" y="314.5" width="287" height="157"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020. 5. 24. 일." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wHK-bb-Fj0">
-                                                                    <rect key="frame" x="5" y="72" width="80.5" height="12"/>
+                                                                    <rect key="frame" x="5" y="72.5" width="80.5" height="12"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="12" id="aXd-lB-9F0"/>
                                                                     </constraints>
@@ -191,7 +191,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="꼭 방문하기!!!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NV7-MX-Vxp">
-                                                                    <rect key="frame" x="95.5" y="72" width="65" height="12"/>
+                                                                    <rect key="frame" x="95.5" y="72.5" width="65" height="12"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="12" id="nao-iU-0YP"/>
                                                                     </constraints>
@@ -213,7 +213,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWr-tD-7Yt">
-                                                    <rect key="frame" x="30" y="236" width="19" height="19"/>
+                                                    <rect key="frame" x="30" y="237.5" width="19" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19" id="1PO-jI-xuo"/>
                                                         <constraint firstAttribute="width" secondItem="OWr-tD-7Yt" secondAttribute="height" multiplier="1:1" id="Kte-RX-bsb"/>
@@ -227,7 +227,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nhw-hc-LZO">
-                                                    <rect key="frame" x="364" y="235.5" width="20" height="20"/>
+                                                    <rect key="frame" x="364" y="237" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="qdD-cz-DFj"/>
                                                         <constraint firstAttribute="height" constant="20" id="sV6-um-k9j"/>
@@ -235,9 +235,12 @@
                                                     <state key="normal" image="icMore"/>
                                                     <state key="disabled" image="icMore_hide"/>
                                                     <state key="highlighted" image="icMore_hide"/>
+                                                    <connections>
+                                                        <action selector="didTapMoreButton:" destination="UXA-Sp-RyR" eventType="touchUpInside" id="yVc-Hk-xek"/>
+                                                    </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rIg-U2-uzf" customClass="MapRestoreView" customModule="GotGam" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="221.5" width="200" height="48"/>
+                                                    <rect key="frame" x="0.0" y="223" width="200" height="48"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="48" id="P0J-j2-eR6"/>

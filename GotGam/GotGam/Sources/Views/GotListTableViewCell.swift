@@ -15,22 +15,28 @@ class GotListTableViewCell: UITableViewCell {
     var viewModel: GotListViewModel!
     let disposeBag = DisposeBag()
     var tagColor: UIColor?
+    var moreAction: (() -> Void)?
     var got: Got? {
         didSet {
+            guard let got = got else { return }
             tagColor = self.got?.tag?.first?.hex.hexToColor()
                 
-            titleLabel.text = got?.title
+            titleLabel.text = got.title
             tagView.backgroundColor = tagColor
-            placeLabel.text = got?.place
-            dateLabel.text = got?.insertedDate?.endTime
+            placeLabel.text = got.place
+            dateLabel.text = got.insertedDate?.endTime
             restoreView.restoreAction = { [weak self] in
                 self?.isChecked = false
             }
         }
     }
     
-    var isChecked = false {
+    var isChecked: Bool = false {
         didSet {
+            guard var got = got else { return }
+            got.isDone = isChecked
+            viewModel.inputs.updateFinish(of: got)
+            
             if isChecked {
                 finishButton.isSelected = true
                 titleLabel.textColor = .veryLightPink
@@ -60,6 +66,9 @@ class GotListTableViewCell: UITableViewCell {
         }
     }
     
+    @IBAction func didTapMoreButton(_ sender: Any) {
+        self.moreAction?()
+    }
     
     @IBAction func didTapFinish(_ sender: UIButton) {
         isChecked.toggle()
@@ -68,6 +77,7 @@ class GotListTableViewCell: UITableViewCell {
     // MARK: - Intializing
     
     func configure(viewModel: GotListViewModel, _ got: Got) {
+        self.viewModel = viewModel
         self.got = got
     }
 

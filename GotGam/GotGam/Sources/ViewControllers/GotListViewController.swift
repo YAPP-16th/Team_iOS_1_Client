@@ -23,8 +23,43 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
 	@IBOutlet var listAddButton: UIButton!
 	@IBAction func moveAddVC(_ sender: Any) {
         viewModel.inputs.editGot(got: nil)
-
 	}
+    
+    func showMoreActionSheet(at indexPath: IndexPath) {
+        
+        guard let cell = gotListTableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
+        
+        let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        let gamAction = UIAlertAction(title: "감", style: .default) { (action) in
+            cell.isChecked = true
+        }
+        
+        let editAction = UIAlertAction(title: "수정", style: .default) { [weak self] (action) in
+            self?.viewModel.inputs.editGot(got: cell.got)
+        }
+        
+        let deleteAction = UIAlertAction(title: "삭제", style: .default) { [weak self] (action) in
+            if let vc = self {
+                vc.gotListTableView.dataSource?.tableView?(vc.gotListTableView, commit: .delete, forRowAt: indexPath)
+            }
+            
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
+            
+        }
+        
+        actionSheet.addAction(gamAction)
+        actionSheet.addAction(editAction)
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true) {
+            
+        }
+    }
+    
 	// MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -57,13 +92,12 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
                 if case let .gotItem(got) = gotItem {
                     self?.viewModel.inputs.removeGot(indexPath: indexPath, got: got)
                 }
-                
             }
             .disposed(by: disposeBag)
         
         // Outputes
         
-        let dataSource = GotListViewController.dataSource(viewModel: viewModel)
+        let dataSource = GotListViewController.dataSource(viewModel: viewModel, vc: self)
         viewModel.outputs.gotSections
             .bind(to: gotListTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -87,7 +121,8 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
 }
 
 extension GotListViewController {
-    static func dataSource(viewModel: GotListViewModel) -> RxTableViewSectionedAnimatedDataSource<ListSectionModel> {
+    
+    static func dataSource(viewModel: GotListViewModel, vc: GotListViewController?) -> RxTableViewSectionedAnimatedDataSource<ListSectionModel> {
         return RxTableViewSectionedAnimatedDataSource<ListSectionModel>(
             animationConfiguration: AnimationConfiguration(
                 insertAnimation: .top,
@@ -98,7 +133,10 @@ extension GotListViewController {
                 case let .gotItem(got):
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath) as? GotListTableViewCell else { return UITableViewCell() }
                     cell.configure(viewModel: viewModel, got)
-                    
+                    cell.moreButton.tag = indexPath.row
+                    cell.moreAction = {
+                        vc?.showMoreActionSheet(at: indexPath)
+                    }
                     return cell
                 }
             },
@@ -144,9 +182,9 @@ extension GotListViewController: UITableViewDelegate {
             success(true)
         }
 
-        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
 
-            self.gotListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+            self?.gotListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
 
             success(true)
         }
