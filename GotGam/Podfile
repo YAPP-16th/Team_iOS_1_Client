@@ -13,4 +13,5 @@ target 'GotGam' do
   pod 'RxDataSources'
   pod 'CenteredCollectionView'
   pod 'FBSDKLoginKit'
+  pod 'GoogleSignIn'
 end

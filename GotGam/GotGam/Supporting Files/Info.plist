@@ -34,6 +34,14 @@
 				<string>kakao2adddb0b954e5719faf629488ad67b56</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.842168227804-t42u931svmolch20us3n495m7mtj0o45</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -45,6 +53,9 @@
 	<string>2adddb0b954e5719faf629488ad67b56</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>kakao2adddb0b954e5719faf629488ad67b56</string>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
 		<string>fbapi</string>
 		<string>fbapi20130214</string>
 		<string>fbapi20130410</string>

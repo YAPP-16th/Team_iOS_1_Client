@@ -12,6 +12,7 @@ import CoreLocation
 enum GGUserDefaultKey: String{
     case location = "GGUSERDEFAULT_KEY_LOCATION"
     case userID = "GGUSERDEFAULT_KEY_USER_ID"
+    case loginType = "GGUSERDEFAULT_LOGIN_TYPE"
 }
 
 // MARK: - GGUserDefaultProtocol

@@ -9,9 +9,11 @@
 import UIKit
 import AuthenticationServices
 import FBSDKLoginKit
+import GoogleSignIn
 
 class LoginViewController: UIViewController{
     
+    //MARK: Views
     lazy var facebookLoginButton: FacebookButton = {
         let b = FacebookButton()
         b.translatesAutoresizingMaskIntoConstraints = false
@@ -26,23 +28,25 @@ class LoginViewController: UIViewController{
         return b
     }()
     
-    
+    lazy var googleLoginButton: GIDSignInButton = {
+        let b = GIDSignInButton()
+        b.translatesAutoresizingMaskIntoConstraints = false
+//        b.addTarget(self, action: #selector(googleLoginTapped), for: .touchUpInside)
+        return b
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        prepareFacebookLoginButton()
-        prepareKakaoLoginButton()
-        if #available(iOS 13.0, *) {
-            prepareSignInApple()
-        }
         
+        
+        //MARK: - Facebook Token 가져오기
         if let token = AccessToken.current, !token.isExpired { // User is logged in, do work such as go to next view controller.
             print(token)
         }
         
-        // Swift // // Extend the code sample from 6a. Add Facebook Login to Your Code // Add to your viewDidLoad method:
         
+        prepareLoginButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +59,15 @@ class LoginViewController: UIViewController{
     @objc func appleIDStateRevoked(){
         if #available(iOS 13.0, *){
             NotificationCenter.default.removeObserver(self, name: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil)
+        }
+    }
+    
+    private func prepareLoginButtons(){
+        prepareFacebookLoginButton()
+        prepareKakaoLoginButton()
+        prepareSignInGoogle()
+        if #available(iOS 13.0, *) {
+            prepareSignInApple()
         }
     }
     
@@ -85,6 +98,21 @@ class LoginViewController: UIViewController{
         ])
         facebookLoginButton.permissions = ["public_profile", "email"]
     }
+    
+    private func prepareSignInGoogle(){
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+        
+        self.view.addSubview(googleLoginButton)
+        
+        NSLayoutConstraint.activate([
+            googleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+            googleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+            googleLoginButton.bottomAnchor.constraint(equalTo: self.kakaoLoginButton.topAnchor, constant: -8),
+            googleLoginButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+    }
+    
     @available(iOS 13.0, *)
     private func prepareSignInApple(){
         let siwaButton = ASAuthorizationAppleIDButton()
@@ -93,7 +121,7 @@ class LoginViewController: UIViewController{
         NSLayoutConstraint.activate([
             siwaButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
             siwaButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-            siwaButton.bottomAnchor.constraint(equalTo: self.kakaoLoginButton.topAnchor, constant: -8),
+            siwaButton.bottomAnchor.constraint(equalTo: self.googleLoginButton.topAnchor, constant: -8),
             siwaButton.heightAnchor.constraint(equalToConstant: 45)
         ])
         
@@ -131,25 +159,42 @@ class LoginViewController: UIViewController{
     @objc func kakaoLoginTapped(){
         KOSession.shared()?.close()
         KOSession.shared()?.open(completionHandler: { [weak self] (error) in
+            
             if let error = error{
                 print(error)
             }else{
                 print("로그인 성공")
                 self?.checkKakaoToken()
-                
             }
-            
-        })
+            }, parameters: nil, authTypes: [NSNumber(value: KOAuthType.talk.rawValue), NSNumber(value: KOAuthType.account.rawValue)])
+    }
+    @objc private func googleLoginTapped(){
+        GIDSignIn.sharedInstance()?.signIn()
+    }
+    
+    @objc private func googleLogoutTapped(){
+        GIDSignIn.sharedInstance()?.signOut()
     }
     
     func checkKakaoToken(){
+        guard let token = KOSession.shared()?.token else { return }
+        let accessToken = token.accessToken
+        print("토큰", accessToken)
         KOSessionTask.accessTokenInfoTask { (tokenInfo, error) in
             if let error = error as NSError?{
                 print("예기치 못한 에러, 서버 에러")
             }else{
                 print("토큰 정보: \(tokenInfo)")
+                
             }
         }
+        KOSessionTask.userMeTask { (error, user) in
+            print(user?.account)
+        }
+        KOSessionTask.accessTokenInfoTask { (info, error) in
+            print(info)
+        }
+
     }
     
     @objc func kakaoLogoutTapped(){

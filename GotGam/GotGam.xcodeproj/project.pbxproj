@@ -118,6 +118,7 @@
 		A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16439732454002300C740F4 /* MapQuickAddView.xib */; };
 		A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164397524540A0F00C740F4 /* MapQuickAddView.swift */; };
 		A1A5DE042471132C00AFA9D5 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */; };
+		A1A5DEA024753CC100AFA9D5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1A5DE9F24753CC100AFA9D5 /* credentials.plist */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
 		A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */; };
@@ -249,6 +250,7 @@
 		A16439732454002300C740F4 /* MapQuickAddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapQuickAddView.xib; sourceTree = "<group>"; };
 		A164397524540A0F00C740F4 /* MapQuickAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuickAddView.swift; sourceTree = "<group>"; };
 		A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
+		A1A5DE9F24753CC100AFA9D5 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
 		A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Bold.ttf"; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */,
 				A157E0D224555A90001E310D /* DaumMap.embeddedframework */,
 				4269388D24306B68007B60FD /* Info.plist */,
+				A1A5DE9F24753CC100AFA9D5 /* credentials.plist */,
 				4CF1D097243E0F7200B45751 /* Bridging_Header.h */,
 			);
 			path = "Supporting Files";
@@ -642,6 +645,7 @@
 				4269387924306B66007B60FD /* Frameworks */,
 				4269387A24306B66007B60FD /* Resources */,
 				2AB90A935FAB23479487F0D3 /* [CP] Embed Pods Frameworks */,
+				44F53BBC1254961526D8FD04 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -732,6 +736,7 @@
 				A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */,
 				A157E10C24555A90001E310D /* noimage256.png in Resources */,
 				A157E0FA24555A90001E310D /* map_pin_custom.png in Resources */,
+				A1A5DEA024753CC100AFA9D5 /* credentials.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +758,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GotGam/Pods-GotGam-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		44F53BBC1254961526D8FD04 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GotGam/Pods-GotGam-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GotGam/Pods-GotGam-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GotGam/Pods-GotGam-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB9BED60E9527C932239ABC4 /* [CP] Check Pods Manifest.lock */ = {
