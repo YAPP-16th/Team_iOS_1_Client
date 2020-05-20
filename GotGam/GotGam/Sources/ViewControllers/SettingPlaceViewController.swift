@@ -16,9 +16,19 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 	
 	@IBOutlet var settingPlaceTableView: UITableView!
 	
+	var placeList: [String] = ["1", "1", "1"] {
+		didSet{
+			DispatchQueue.main.async {
+				self.settingPlaceTableView.reloadData()
+			}
+		}
+		
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.largeTitleDisplayMode = .never
+		
 	}
 	
 	func bindViewModel() {
@@ -32,9 +42,44 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 
 extension SettingPlaceViewController: UITableViewDelegate {
 		
-		func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-			let view = UIView()
-			view.backgroundColor = .clear
-			return view
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+		let view = UIView()
+		view.backgroundColor = .clear
+		return view
+	}
+
+}
+
+extension SettingPlaceViewController: UITableViewDataSource {
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 2
+	}
+	
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if section == 0 {
+			return self.placeList.count
+		} else {
+			return 2
 		}
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if indexPath.section == 1 {
+//			let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: nil)
+			let cell = tableView.dequeueReusableCell(withIdentifier: "placeAddCell", for: indexPath) as! PlaceAddCell
+			cell.placeAddButton.layer.cornerRadius = cell.placeAddButton.bounds.height/2
+			cell.placeAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
+			
+			return cell
+		} else {
+			fatalError()
+		}
+	}
+	
+}
+
+class PlaceAddCell: UITableViewCell {
+	
+	@IBOutlet var placeAddButton: UIButton!
+	
 }
