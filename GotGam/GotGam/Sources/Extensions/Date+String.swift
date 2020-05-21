@@ -16,6 +16,13 @@ extension Date {
         df.dateFormat = "yyyy.MM.dd.E"
         return df.string(from: self)
     }
+    
+    func format(_ format: String) -> String {
+        let df = DateFormatter()
+        df.locale = .init(identifier: "ko-KR")
+        df.dateFormat = format
+        return df.string(from: self)
+    }
 }
 
 

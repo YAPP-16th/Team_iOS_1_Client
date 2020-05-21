@@ -20,21 +20,66 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
 
         navigationController?.isNavigationBarHidden = true
         alarmTableView.layer.borderWidth = 0.2
-        activeButton.addbadgetobutton(badge: "10")
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.inputs.fetchAlarmList()
     }
 
     func bindViewModel() {
         alarmTableView.rx.setDelegate(self).disposed(by: disposeBag)
         
+        // Inputs
+        
+        Observable.zip(alarmTableView.rx.itemSelected, alarmTableView.rx.modelSelected(AlarmItem.self))
+            .subscribe(onNext: { [weak self] (indexPath, item) in
+                switch item {
+                case let .ArriveItem(alarm):
+                    self?.viewModel.inputs.checkAlarm.onNext(alarm)
+//                    guard let cell = self?.alarmTableView.cellForRow(at: indexPath) as? AlarmArriveTableViewCell else { return }
+                    
+                case let .DepartureItem(alarm):
+                    self?.viewModel.inputs.checkAlarm.onNext(alarm)
+                case let .ShareItem(alarm):
+                    self?.viewModel.inputs.checkAlarm.onNext(alarm)
+                }
+                //if let cell = alarmTableView.cellForRow(at: indexPath) as?
+
+            })
+            .disposed(by: disposeBag)
+        
+        // Outputs
+        
+        viewModel.outputs.activeBadgeCount
+            .subscribe(onNext: { [weak self] count in
+                if count == 0 {
+                    self?.activeButton.addbadgetobutton(badge: nil)
+                } else {
+                    self?.activeButton.addbadgetobutton(badge: "\(count)")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.sharedBadgeCount
+            .subscribe(onNext: { [weak self] count in
+                if count == 0 {
+                    self?.shareButton.addbadgetobutton(badge: nil)
+                } else {
+                    self?.shareButton.addbadgetobutton(badge: "\(count)")
+                }
+            })
+            .disposed(by: disposeBag)
+        
         let dataSource = AlarmViewController.dataSource(viewModel: viewModel)
-        viewModel.outputs.dataSource
+        viewModel.outputs.activeDataSource
             .bind(to: alarmTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
     
     @IBOutlet var alarmTableView: UITableView!
     @IBOutlet var activeButton: BadgeButton!
+    @IBOutlet var shareButton: BadgeButton!
     
 }
 
@@ -43,13 +88,19 @@ extension AlarmViewController {
         return RxTableViewSectionedReloadDataSource<AlarmSectionModel>(
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
-                case let .ArriveItem(got):
+                case let .ArriveItem(alarm):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "arriveCell", for: indexPath) as? AlarmArriveTableViewCell else { return UITableViewCell()}
-                    cell.configure(viewModel: viewModel, got: got)
+                    print("arrivecell")
+                    cell.configure(viewModel: viewModel, alarm: alarm)
                     return cell
                     
-                case .LeaveItem:
-                    guard let cell = table.dequeueReusableCell(withIdentifier: "createGridCell", for: indexPath) as? AlarmLeaveTableViewCell else { return UITableViewCell()}
+                case let .DepartureItem(alarm):
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "departureCell", for: indexPath) as? AlarmDepartureTableViewCell else { return UITableViewCell()}
+                    cell.configure(viewModel: viewModel, alarm: alarm)
+                    return cell
+                case .ShareItem(let alarm):
+                    // TODO: - share item cell 변경
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "createGridCell", for: indexPath) as? AlarmDepartureTableViewCell else { return UITableViewCell()}
                     cell.viewModel = viewModel
                     return cell
                 }

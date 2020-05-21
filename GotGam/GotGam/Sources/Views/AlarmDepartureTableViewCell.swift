@@ -1,5 +1,5 @@
 //
-//  AlarmArriveTableViewCell.swift
+//  AlarmLeaveTableViewCell.swift
 //  GotGam
 //
 //  Created by woong on 08/05/2020.
@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class AlarmArriveTableViewCell: UITableViewCell {
+class AlarmDepartureTableViewCell: UITableViewCell {
     
     var viewModel: AlarmViewModel!
     var disposeBag = DisposeBag()
@@ -20,12 +20,15 @@ class AlarmArriveTableViewCell: UITableViewCell {
         guard let got = alarm.got else { return }
         
         titleLabel.text = got.title
-        memoLabel.text = got.arriveMsg
+        messageLabel.text = got.deparetureMsg
         tagView.backgroundColor = got.tag?.first?.hex.hexToColor()
         
         if let date = got.insertedDate {
-            dateLabel.text = date.endTime
+            insertedDateLabel.text = date.endTime
             // 현재시간 기준 계산
+            dateDescriptionLabel.text = "까지 방문해야 합니다."
+        } else {
+            dateDescriptionLabel.text = "마감일시가 없습니다."
         }
         
         if let createdDate = alarm.createdDate {
@@ -39,14 +42,14 @@ class AlarmArriveTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         tagView.layer.cornerRadius = tagView.bounds.height/2
     }
     
     @IBOutlet var tagView: UIView!
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var memoLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var dateCommentLabel: UILabel!
+    @IBOutlet var messageLabel: UILabel!
+    @IBOutlet var insertedDateLabel: UILabel!
+    @IBOutlet var dateDescriptionLabel: UILabel!
     @IBOutlet var agoTimeLabel: UILabel!
-    
 }

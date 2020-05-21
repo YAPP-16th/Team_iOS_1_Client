@@ -53,10 +53,10 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="83" height="83"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xwa-Cg-NMV">
-                                                            <rect key="frame" x="31.5" y="31.5" width="20" height="20"/>
-                                                            <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <rect key="frame" x="34.5" y="34.5" width="14" height="14"/>
+                                                            <color key="backgroundColor" name="veryLightPink"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="20" id="ams-FI-Uu8"/>
+                                                                <constraint firstAttribute="height" constant="14" id="ams-FI-Uu8"/>
                                                                 <constraint firstAttribute="width" secondItem="Xwa-Cg-NMV" secondAttribute="height" multiplier="1:1" id="tGo-Vg-ee8"/>
                                                             </constraints>
                                                         </view>
@@ -223,7 +223,7 @@
                                             <outlet property="titleLabel" destination="2X4-jz-sq0" id="3Ng-5K-aT7"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="leaveCell" rowHeight="83" id="mWu-Tb-1gq" customClass="AlarmLeaveTableViewCell" customModule="GotGam" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="departureCell" rowHeight="83" id="mWu-Tb-1gq" customClass="AlarmDepartureTableViewCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="111" width="414" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mWu-Tb-1gq" id="e2l-Ef-Kd5">
@@ -234,15 +234,14 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="83" height="83"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdP-G7-67e">
-                                                            <rect key="frame" x="31.5" y="31.5" width="20" height="20"/>
-                                                            <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <rect key="frame" x="34.5" y="34.5" width="14" height="14"/>
+                                                            <color key="backgroundColor" name="veryLightPink"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="20" id="flL-NV-toG"/>
+                                                                <constraint firstAttribute="height" constant="14" id="flL-NV-toG"/>
                                                                 <constraint firstAttribute="width" secondItem="fdP-G7-67e" secondAttribute="height" multiplier="1:1" id="lQg-Dh-xRx"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="hkd-wi-63l" secondAttribute="height" multiplier="1:1" id="8yP-F7-WPQ"/>
                                                         <constraint firstItem="fdP-G7-67e" firstAttribute="centerX" secondItem="hkd-wi-63l" secondAttribute="centerX" id="QSh-TX-WqK"/>
@@ -280,7 +279,6 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <constraints>
                                                                 <constraint firstItem="6Zh-Oj-7Zy" firstAttribute="leading" secondItem="V5R-rJ-prw" secondAttribute="trailing" id="2wh-Un-KTk"/>
                                                                 <constraint firstAttribute="bottom" secondItem="gfi-02-jes" secondAttribute="bottom" id="9jY-WU-bPN"/>
@@ -325,7 +323,6 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <constraints>
                                                                 <constraint firstItem="sbR-SE-701" firstAttribute="leading" secondItem="pbr-s2-scL" secondAttribute="leading" id="4Fc-9J-X0t"/>
                                                                 <constraint firstItem="95j-tr-KvL" firstAttribute="leading" secondItem="x0D-TJ-D0u" secondAttribute="trailing" id="5MR-TE-Z8t"/>
@@ -364,7 +361,6 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="bottom" secondItem="aOp-WA-bfa" secondAttribute="bottom" id="GpB-7z-0Km"/>
                                                                 <constraint firstItem="aOp-WA-bfa" firstAttribute="top" secondItem="pPO-dF-EiM" secondAttribute="top" id="KM8-xY-xU8"/>
@@ -390,6 +386,14 @@
                                                 <constraint firstItem="AdN-P7-p5T" firstAttribute="bottom" secondItem="e2l-Ef-Kd5" secondAttribute="bottomMargin" id="XTz-uT-5Qn"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="agoTimeLabel" destination="DP8-Oq-LnT" id="bmX-rN-lL8"/>
+                                            <outlet property="dateDescriptionLabel" destination="aOp-WA-bfa" id="tFE-EU-8ne"/>
+                                            <outlet property="insertedDateLabel" destination="zGh-G2-zQG" id="gup-r2-Aob"/>
+                                            <outlet property="messageLabel" destination="x0D-TJ-D0u" id="meO-Bt-ttL"/>
+                                            <outlet property="tagView" destination="fdP-G7-67e" id="r1D-av-hIf"/>
+                                            <outlet property="titleLabel" destination="gfi-02-jes" id="1Br-RF-qqA"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -409,6 +413,7 @@
                     <connections>
                         <outlet property="activeButton" destination="cPd-tT-Yay" id="bsy-wc-muW"/>
                         <outlet property="alarmTableView" destination="AWn-vZ-kXB" id="Xt3-uE-U3d"/>
+                        <outlet property="shareButton" destination="MfR-1w-c8t" id="3sk-Gg-g9b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tiw-tP-gCZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -439,6 +444,9 @@
     <resources>
         <namedColor name="brownishGrey">
             <color red="0.3919999897480011" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="veryLightPink">
+            <color red="0.80800002813339233" green="0.80800002813339233" blue="0.80800002813339233" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
