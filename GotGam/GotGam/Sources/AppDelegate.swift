@@ -8,41 +8,115 @@
 
 import UIKit
 import RxSwift
-
+import GoogleSignIn
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-  var window: UIWindow?
-
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
-//    let storage = GotStorage()
-//    let coordinator = SceneCoordinator(window: window!)
-//    coordinator.createTabBar(gotService: storage)
+    var window: UIWindow?
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        //    let storage = GotStorage()
+        //    let coordinator = SceneCoordinator(window: window!)
+        //    coordinator.createTabBar(gotService: storage)
+        //
+        //    let mapViewModel = MapViewModel(sceneCoordinator: coordinator, storage: storage)
+        //
+        //    let mapScene = Scene.map(mapViewModel)
+        //
+        //    coordinator.transition(to: mapScene, using: .root, animated: false)
+        GIDSignIn.sharedInstance().clientID = "842168227804-t42u931svmolch20us3n495m7mtj0o45.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().delegate = self
+        KOSession.shared()?.isAutomaticPeriodicRefresh = true
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(kakaoSessionDidChange(notification:)),
+                                               name: Notification.Name.KOSessionDidChange,
+                                               object: nil)
+//        let storage = GotStorage()
+//        let coordinator = SceneCoordinator(window: window!)
+//        coordinator.createTabBar(gotService: storage)
 //
-//    let mapViewModel = MapViewModel(sceneCoordinator: coordinator, storage: storage)
+//        let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, storage: storage)
 //
-//    let mapScene = Scene.map(mapViewModel)
-//
-//    coordinator.transition(to: mapScene, using: .root, animated: false)
+//        coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = LoginViewController()
+        window?.makeKeyAndVisible()
+        return true
+    }
+    @objc func kakaoSessionDidChange(notification: Notification){
+        if let session = KOSession.shared(){
+            if session.isOpen(){
+                print("카카오로 로그인 된 상태")
+                UserDefaults.standard.set(LoginType.kakao.rawValue, forDefines: .loginType)
+            }else{
+                print("카카오로 로그인이 안된 상태")
+            }
+        }
+    }
     
     
-    let storage = GotStorage()
-    let coordinator = SceneCoordinator(window: window!)
-    coordinator.createTabBar(gotService: storage)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        if KOSession.isKakaoAccountLoginCallback(url) {
+            
+            
+            return KOSession.handleOpen(url)
+        }else{
+            GIDSignIn.sharedInstance().handle(url)
+        }
+        
+        return true
+    }
     
-    let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, storage: storage)
-
-    coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        if KOSession.isKakaoAccountLoginCallback(url) {
+            return KOSession.handleOpen(url)
+        }else{
+            GIDSignIn.sharedInstance().handle(url)
+        }
+        
+        return true
+    }
     
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        KOSession.handleDidEnterBackground()
+    }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        KOSession.handleDidBecomeActive()
+    }
     
-    
-    
-    
-    
-    return true
-  }
-
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
+                print("구글로그인: 유저가 로그인한 적이 없거나, 로그아웃했습니다.")
+            }else{
+                print(error.localizedDescription)
+            }
+            return
+        }
+        UserDefaults.standard.set(LoginType.google.rawValue, forDefines: .loginType)
+        
+        //Todo: Google 로그인에 대한 후처리 로직 만들기
+        let userId = user.userID                  // 클라이언트에서만 사용할 ID
+        let idToken = user.authentication.idToken // 서버에 보낼 토큰
+        let fullName = user.profile.name
+        let givenName = user.profile.givenName
+        let familyName = user.profile.familyName
+        let email = user.profile.email
+        
+        print("userId: ", userId)
+        print("idToken: ", idToken)
+        print("fullName: ", fullName)
+        print("givenName: ", givenName)
+        print("familyName: ", familyName)
+        print("email: ", email)
+    }
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        //구글 사용자가 로그아웃 했을시 해당 메소드 호출됨. 후처리해주기
+        
+    }
 }
 

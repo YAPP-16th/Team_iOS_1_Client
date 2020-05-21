@@ -10,5 +10,5 @@
 #define Bridging_Header_h
 
 #import <DaumMap/MTMapView.h>
-
+#import <KakaoOpenSDK/KakaoOpenSDK.h>
 #endif /* Bridging_Header_h */
