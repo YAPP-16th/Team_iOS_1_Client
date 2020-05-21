@@ -131,7 +131,7 @@ extension GotAPIService: TargetType{
                 "dueDate": "dateStirng or nil"
             ],
             encoding: JSONEncoding.default)
-        case .getTasks:
+        case .getTasks, .getTask:
             return .requestPlain
             //Tag
         case .createTag:
@@ -147,7 +147,7 @@ extension GotAPIService: TargetType{
                 ]
             ],
             encoding: JSONEncoding.default)
-        case .getTags:
+        case .getTags, .getTag:
             return .requestPlain
             //Frequents
         case .createFrequents:
@@ -161,9 +161,7 @@ extension GotAPIService: TargetType{
             encoding: JSONEncoding.default)
         case .getFrequents, .getFrequent:
             return .requestPlain
-        }
-        
-        
+      }
     }
     var headers: [String : String]? {
         switch self{
@@ -181,6 +179,8 @@ fileprivate extension String {
     }
 
     var utf8Encoded: Data {
+        
         return data(using: .utf8)!
+        
     }
 }
