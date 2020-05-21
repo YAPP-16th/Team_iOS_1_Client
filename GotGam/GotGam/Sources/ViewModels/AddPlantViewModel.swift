@@ -136,16 +136,21 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         } else {
             let got = Got(
                 id: Int64(arc4random()),
-                tag: tag.value == nil ? [] : [tag.value!],
+                createdDate: Date(),
                 title: nameText.value,
-                content: arriveText.value,
                 latitude: .zero,
                 longitude: .zero,
                 radius: 100,
-                isDone: false,
                 place: placeText.value,
-                insertedDate: Date()
-            )
+                arriveMsg: arriveText.value,
+                deparetureMsg: leaveText.value,
+                insertedDate: nil, // TODO: dateText.value -> Date
+                onArrive: isOnArrive.value,
+                onDeparture: isOnLeave.value,
+                onDate: isOnDate.value,
+                tag: tag.value == nil ? [] : [tag.value!],
+                isDone: false)
+
             storage.createGot(gotToCreate: got)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true)

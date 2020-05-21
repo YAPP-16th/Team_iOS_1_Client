@@ -15,6 +15,7 @@ public class ManagedAlarm: NSManagedObject {
     func toAlarm() -> Alarm {
         return .init(
             id: id,
+            type: AlarmType(rawValue: type)!,
             checkedDate: checkedDate,
             isChecked: isChecked,
             got: got?.toGot())
@@ -26,6 +27,7 @@ public class ManagedAlarm: NSManagedObject {
         managedGot.fromGot(got: got)
        
         self.id = alarm.id
+        self.type = alarm.type.rawValue
         self.createdDate = alarm.createdDate
         self.checkedDate = alarm.checkedDate
         self.isChecked = alarm.isChecked

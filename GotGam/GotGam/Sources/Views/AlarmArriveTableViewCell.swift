@@ -18,7 +18,7 @@ class AlarmArriveTableViewCell: UITableViewCell {
         self.viewModel = viewModel
         
         titleLabel.text = got.title
-        memoLabel.text = got.content
+        memoLabel.text = got.arriveMsg != "" ? got.arriveMsg : got.deparetureMsg
         
         if let date = got.insertedDate {
             dateLabel.text = date.endTime

@@ -18,6 +18,7 @@ extension ManagedAlarm {
     }
 
     @NSManaged public var id: Int64
+    @NSManaged public var type: Int16
     @NSManaged public var createdDate: Date?
     @NSManaged public var isChecked: Bool
     @NSManaged public var checkedDate: Date?
