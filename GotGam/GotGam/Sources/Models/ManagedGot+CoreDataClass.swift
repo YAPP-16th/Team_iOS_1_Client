@@ -21,18 +21,23 @@ public class ManagedGot: NSManagedObject {
       }
     }
     
-      return Got.init(
-          id: id,
-          tag: tags,
-          title: title!,
-          content: content,
-          latitude: latitude,
-          longitude: longitude,
-          radius: radius,
-          isDone: isDone,
-          place: place,
-          insertedDate: insertedDate
-      )
+    return Got.init(
+        id: id,
+        createdDate: createdDate,
+        title: title,
+        latitude: latitude,
+        longitude: longitude,
+        radius: radius,
+        place: place,
+        arriveMsg: arriveMsg,
+        deparetureMsg: departureMsg,
+        insertedDate: insertedDate,
+        onArrive: onArrive,
+        onDeparture: onDeparture,
+        onDate: onDate,
+        tag: tags,
+        isDone: isDone)
+      
   }
   
   func fromGot(got: Got){
@@ -44,15 +49,20 @@ public class ManagedGot: NSManagedObject {
         managedTags.append(managedTag)
       }
     }
-      self.id = got.id!
-      self.tag = NSSet.init(array: managedTags)
-      self.title = got.title
-      self.content = got.content
-      self.latitude = got.latitude!
-      self.longitude = got.longitude!
-      self.radius = got.radius!
-      self.isDone = got.isDone
-      self.place = got.place
-      self.insertedDate = got.insertedDate
+    self.id = got.id!
+    self.createdDate = got.createdDate
+    self.tag = NSSet.init(array: managedTags)
+    self.title = got.title
+    self.latitude = got.latitude!
+    self.longitude = got.longitude!
+    self.radius = got.radius!
+    self.isDone = got.isDone
+    self.place = got.place
+    self.insertedDate = got.insertedDate
+    self.arriveMsg = got.arriveMsg
+    self.departureMsg = got.deparetureMsg
+    self.onArrive = got.onArrive
+    self.onDeparture = got.onDeparture
+    self.onDate = got.onDate
   }
 }

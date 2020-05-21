@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 import RxDataSources
 
-
 protocol AlarmViewModelInputs {
     
 }
@@ -39,13 +38,15 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     var outputs: AlarmViewModelOutputs { return self }
     var storage: AlarmStorageType!
     
-    let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
+    //let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
     
     init(sceneCoordinator: SceneCoordinatorType, storage: AlarmStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
         
+        //storage.createAlarm(Alarm(id: Int64(arc4random()), type: .arrive, createdDate: Date(), checkedDate: nil, isChecked: false, got: <#T##Got?#>))
         
+        //storage.fetchAlarmList()
         
         dataSource = configureDataSource()
     }
@@ -53,8 +54,11 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     func configureDataSource() -> Observable<[AlarmSectionModel]> {
        return Observable<[AlarmSectionModel]>.just([
            .TodaySection(title: "오늘", items: [
-                .ArriveItem(got: self.got)
-           ])
+                //.ArriveItem(got: self.got)
+           ]),
+           .YesterdaySection(title: "어제", items: []),
+           .WeekSection(title: "이번주", items: []),
+           .MonthSection(title: "이번달", items: [])
         ])
    }
 }

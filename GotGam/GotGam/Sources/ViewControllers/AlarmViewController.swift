@@ -18,6 +18,7 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.isNavigationBarHidden = true
         alarmTableView.layer.borderWidth = 0.2
         activeButton.addbadgetobutton(badge: "10")
         
