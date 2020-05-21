@@ -10,14 +10,24 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Action
+import CoreLocation
 
 protocol MapViewModelInputs {
     func createGot(got: Got)
+    func showAddVC()
+    func updateGot(got: Got)
+    func setGotDone(got: inout Got)
+    func deleteGot(got: Got)
+    func updateList()
+    func updateTagList()
+    func quickAdd(text: String, location: CLLocationCoordinate2D)
 }
 
 protocol MapViewModelOutputs {
     var gotList: BehaviorSubject<[Got]> { get }
     var tagList: BehaviorSubject<[Tag]> { get }
+    
+    var doneAction: PublishSubject<Got> { get }
 }
 
 protocol MapViewModelType {
@@ -26,11 +36,16 @@ protocol MapViewModelType {
 }
 
 class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapViewModelOutputs {
-    var input: MapViewModelInputs { return self }
-    var output: MapViewModelOutputs { return self }
     
+    //MARK: - Model Input
+    var input: MapViewModelInputs { return self }
+    
+    
+    //MARK: - Model Output
+    var output: MapViewModelOutputs { return self }
     var gotList = BehaviorSubject<[Got]>(value: [])
     var tagList = BehaviorSubject<[Tag]>(value: [])
+    var doneAction = PublishSubject<Got>()
     
     enum SeedState{
         case none
@@ -47,50 +62,42 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     
-    func createGot(got: Got){
-        self.storage.createGot(gotToCreate: got).subscribe { event in
-            switch event{
-            case .next:
-                print("추가 성공")
-            case .error(let error):
-                self.handleError(error: error)
-            case .completed:
-                print("저장 완료 또는 실패")
-                self.updateList()
-                self.updateTagList()
-            }
-        }.disposed(by: disposeBag)
+    func quickAdd(text: String, location: CLLocationCoordinate2D) {
+        let got = Got(id: Int64(arc4random()), tag: [], title: text, content: "", latitude: location.latitude, longitude: location.longitude, isDone: false, place: "", insertedDate: Date())
         
+        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+            self.seedState.onNext(.none)
+            self.updateList()
+            self.updateTagList()
+        }).disposed(by: self.disposeBag)
+    }
+    
+    func createGot(got: Got){
+        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+            self.updateList()
+            self.updateTagList()
+        }).disposed(by: self.disposeBag)
+    }
+    
+    func setGotDone(got: inout Got){
+        got.isDone = true
+        self.storage.updateGot(gotToUpdate: got).bind{ got in
+            self.doneAction.onNext(got)
+        }.disposed(by: self.disposeBag)
     }
     
     func updateGot(got: Got){
-        self.storage.updateGot(gotToUpdate: got).subscribe { event in
-            switch event{
-            case .next:
-                print("수정 성공")
-            case .error(let error):
-                self.handleError(error: error)
-            case .completed:
-                print("수정 완료 또는 실패")
-                self.updateList()
-                self.updateTagList()
-            }
-        }.disposed(by: disposeBag)
+        self.storage.updateGot(gotToUpdate: got).bind { _ in
+            self.updateList()
+            self.updateTagList()
+        }.disposed(by: self.disposeBag)
     }
     
     func deleteGot(got: Got){
-        self.storage.deleteGot(id: got.id!).subscribe({ event in
-            switch event{
-            case .next:
-                print("제거 성공")
-            case .error(let error):
-                self.handleError(error: error)
-            case .completed:
-                print("제거 완료 또는 실패")
-                self.updateList()
-                self.updateTagList()
-            }
-            }).disposed(by: disposeBag)
+        self.storage.deleteGot(id: got.id!).bind { _ in
+            self.updateList()
+            self.updateTagList()
+        }.disposed(by: self.disposeBag)
     }
     
     func handleError(error: Error){
@@ -109,15 +116,8 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     }
     
     func updateList(){
-        self.storage.fetchGotList().subscribe { (event) in
-            switch event{
-            case .next(let gotList):
-                self.gotList.onNext(gotList)
-            case .completed:
-                print("조회 성공 또는 실패")
-            case .error(let error):
-                self.handleError(error: error)
-            }
+        self.storage.fetchGotList().bind{ list in
+            self.gotList.onNext(list)
         }.disposed(by: self.disposeBag)
     }
     
