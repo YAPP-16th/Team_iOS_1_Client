@@ -51,6 +51,18 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
         
         // Outputs
         
+        viewModel.outputs.currentAlarm
+            .subscribe(onNext: { [weak self] alarmType in
+                if alarmType == .active {
+                    self?.activeButton.titleLabel?.font = .boldSystemFont(ofSize: 14)
+                    self?.shareButton.titleLabel?.font = .systemFont(ofSize: 14)
+                } else if alarmType == .share {
+                    self?.activeButton.titleLabel?.font = .systemFont(ofSize: 14)
+                    self?.shareButton.titleLabel?.font = .boldSystemFont(ofSize: 14)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.outputs.activeBadgeCount
             .subscribe(onNext: { [weak self] count in
                 if count == 0 {
@@ -67,6 +79,14 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
                     self?.shareButton.addbadgetobutton(badge: nil)
                 } else {
                     self?.shareButton.addbadgetobutton(badge: "\(count)")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(viewModel.outputs.activeBadgeCount, viewModel.outputs.sharedBadgeCount)
+            .subscribe(onNext: { [weak self] active, shared in
+                if let tabItems = self?.tabBarController?.tabBar.items {
+                    tabItems[2].badgeValue = "\(active + shared)"
                 }
             })
             .disposed(by: disposeBag)

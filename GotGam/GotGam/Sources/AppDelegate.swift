@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let coordinator = SceneCoordinator(window: window!)
     coordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)
     
-    let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator)
+    let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, alarmStorage: alarmStorage)
 
     coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
     

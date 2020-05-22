@@ -24,8 +24,10 @@ class AlarmArriveTableViewCell: UITableViewCell {
         tagView.backgroundColor = got.tag?.first?.hex.hexToColor()
         
         if let date = got.insertedDate {
-            dateLabel.text = date.endTime
-            // 현재시간 기준 계산
+            insertedDateLabel.text = date.endTime
+            dateDescriptionLabel.text = "까지 방문해야 합니다."
+        } else {
+            dateDescriptionLabel.text = "마감일시가 없습니다."
         }
         
         if let createdDate = alarm.createdDate {
@@ -45,8 +47,8 @@ class AlarmArriveTableViewCell: UITableViewCell {
     @IBOutlet var tagView: UIView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var memoLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var dateCommentLabel: UILabel!
+    @IBOutlet var insertedDateLabel: UILabel!
+    @IBOutlet var dateDescriptionLabel: UILabel!
     @IBOutlet var agoTimeLabel: UILabel!
     
 }

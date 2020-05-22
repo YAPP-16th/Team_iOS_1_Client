@@ -11,12 +11,18 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+enum AlarmCategoryType {
+    case active
+    case share
+}
+
 protocol AlarmViewModelInputs {
     func fetchAlarmList()
     var checkAlarm: PublishSubject<Alarm> { get set }
 }
 
 protocol AlarmViewModelOutputs {
+    var currentAlarm: BehaviorSubject<AlarmCategoryType> { get }
     var activeBadgeCount: BehaviorRelay<Int> { get }
     var sharedBadgeCount: BehaviorRelay<Int> { get }
     var activeDataSource: BehaviorRelay<[AlarmSectionModel]> { get }
@@ -52,6 +58,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     
     // MARK: Outputs
     
+    var currentAlarm = BehaviorSubject<AlarmCategoryType>(value: .active)
     var activeBadgeCount = BehaviorRelay<Int>(value: 0)
     var sharedBadgeCount = BehaviorRelay<Int>(value: 0)
     var activeDataSource = BehaviorRelay<[AlarmSectionModel]>(value: [])
