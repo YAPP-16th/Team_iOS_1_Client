@@ -194,8 +194,8 @@ fileprivate extension String {
     }
 }
 
-class APIManager{
-    static let shared = APIManager()
+class NetworkAPIManager{
+    static let shared = NetworkAPIManager()
     var provider: MoyaProvider<GotAPIService>!
     private init(){
         self.provider = MoyaProvider<GotAPIService>()

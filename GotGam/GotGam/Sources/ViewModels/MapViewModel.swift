@@ -37,14 +37,11 @@ protocol MapViewModelType {
 }
 
 class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapViewModelOutputs {
-<<<<<<<
+
     
     //MARK: - Model Input
-=======
 
->>>>>>>
     var input: MapViewModelInputs { return self }
-    var output: MapViewModelOutputs { return self }
     var storage: GotStorageType!
     
     
@@ -70,13 +67,13 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     }
     
     func quickAdd(text: String, location: CLLocationCoordinate2D) {
-        let got = Got(id: Int64(arc4random()), tag: [], title: text, content: "", latitude: location.latitude, longitude: location.longitude, isDone: false, place: "", insertedDate: Date())
-        
-        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
-            self.seedState.onNext(.none)
-            self.updateList()
-            self.updateTagList()
-        }).disposed(by: self.disposeBag)
+//        let got = Got(id: Int64(arc4random()), createdDate: Date(), title: text, latitude: location.latitude, longitude: location.longitude, radius: false, place: "", arriveMsg: Date())
+//        
+//        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+//            self.seedState.onNext(.none)
+//            self.updateList()
+//            self.updateTagList()
+//        }).disposed(by: self.disposeBag)
     }
     
     func createGot(got: Got){

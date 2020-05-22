@@ -17,15 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //    let storage = GotStorage()
-        //    let coordinator = SceneCoordinator(window: window!)
-        //    coordinator.createTabBar(gotService: storage)
-        //
-        //    let mapViewModel = MapViewModel(sceneCoordinator: coordinator, storage: storage)
-        //
-        //    let mapScene = Scene.map(mapViewModel)
-        //
-        //    coordinator.transition(to: mapScene, using: .root, animated: false)
         GIDSignIn.sharedInstance().clientID = "842168227804-t42u931svmolch20us3n495m7mtj0o45.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
         KOSession.shared()?.isAutomaticPeriodicRefresh = true
@@ -41,13 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator)
 
-        let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, storage: storage)
 
         coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
-        
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//        window?.rootViewController = LoginViewController()
-//        window?.makeKeyAndVisible()
         return true
     }
     @objc func kakaoSessionDidChange(notification: Notification){
