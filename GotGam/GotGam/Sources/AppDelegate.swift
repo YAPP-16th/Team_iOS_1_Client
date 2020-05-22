@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import GoogleSignIn
+import Moya
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
@@ -32,24 +33,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                selector: #selector(kakaoSessionDidChange(notification:)),
                                                name: Notification.Name.KOSessionDidChange,
                                                object: nil)
-//        let storage = GotStorage()
-//        let coordinator = SceneCoordinator(window: window!)
-//        coordinator.createTabBar(gotService: storage)
-//
-//        let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, storage: storage)
-//
-//        coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
+        let storage = GotStorage()
+        let coordinator = SceneCoordinator(window: window!)
+        coordinator.createTabBar(gotService: storage)
+
+        let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, storage: storage)
+
+        coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = LoginViewController()
-        window?.makeKeyAndVisible()
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.rootViewController = LoginViewController()
+//        window?.makeKeyAndVisible()
         return true
     }
     @objc func kakaoSessionDidChange(notification: Notification){
         if let session = KOSession.shared(){
             if session.isOpen(){
                 print("카카오로 로그인 된 상태")
-                UserDefaults.standard.set(LoginType.kakao.rawValue, forDefines: .loginType)
+//                UserDefaults.standard.set(LoginType.kakao.rawValue, forDefines: .loginType)
             }else{
                 print("카카오로 로그인이 안된 상태")
             }
@@ -97,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             return
         }
-        UserDefaults.standard.set(LoginType.google.rawValue, forDefines: .loginType)
+//        UserDefaults.standard.set(LoginType.google.rawValue, forDefines: .loginType)
         
         //Todo: Google 로그인에 대한 후처리 로직 만들기
         let userId = user.userID                  // 클라이언트에서만 사용할 ID
@@ -113,6 +114,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         print("givenName: ", givenName)
         print("familyName: ", familyName)
         print("email: ", email)
+        
+        let provider = MoyaProvider<GotAPIService>()
+        
+        if let id = userId, let email = email, let token = idToken{
+            let loginInfo = SocialLoginInfo(id: id, email: email, token: token)
+            provider.request(.login(.google(loginInfo))) { (result) in
+                switch result{
+                case .success(let response):
+                    let data = response.data
+                    let decoder = JSONDecoder()
+                    do{
+                        let loginResponse = try decoder.decode(LoginResponse.self, from: data)
+                        let token = loginResponse.user.token
+                        UserDefaults.standard.set(token, forDefines: .userToken)
+                        UserDefaults.standard.set(true, forDefines: .isLogined)
+                        
+                        if let LoginVC = self.window?.rootViewController as? LoginViewController{
+                            LoginVC.viewModel.close()
+                        }
+                    }catch let error{
+                        print(error)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+        
     }
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
         //구글 사용자가 로그아웃 했을시 해당 메소드 호출됨. 후처리해주기

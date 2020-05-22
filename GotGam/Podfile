@@ -13,4 +13,7 @@ target 'GotGam' do
   pod 'RxDataSources'
   pod 'CenteredCollectionView'
   pod 'Moya/RxSwift', '~> 14.0'
+  pod 'FBSDKLoginKit'
+  pod 'GoogleSignIn'
+
 end

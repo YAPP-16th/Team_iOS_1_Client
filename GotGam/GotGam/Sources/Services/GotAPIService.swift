@@ -10,11 +10,6 @@ import Foundation
 import Moya
 
 enum GotAPIService{
-    enum LoginType{
-        case google
-        case naver
-        case kakao
-    }
     
     //User
     case login(LoginType)
@@ -49,8 +44,6 @@ extension GotAPIService: TargetType{
             switch type{
             case .google:
                 return "users/google"
-            case .naver:
-                return "users/naver"
             case .kakao:
                 return "users/kakao"
             }
@@ -102,16 +95,29 @@ extension GotAPIService: TargetType{
     var task: Task{
         switch self {
             //User
-        case .login:
-            return .requestParameters(
-                parameters:
-                [
-                    "id":"",
-                    "email":"",
-                    "access_token":"",
-                    
-                ],
-                encoding: JSONEncoding.default)
+        case .login(let type):
+            switch type{
+            case .kakao(let info):
+                return .requestParameters(
+                    parameters:
+                    [
+                        "id":"\(info.id)",
+                        "email":info.email,
+                        "access_token":info.token,
+                        
+                    ],
+                    encoding: JSONEncoding.default)
+            case .google(let info):
+                return .requestParameters(
+                    parameters:
+                    [
+                        "id":"\(info.id)",
+                        "email":info.email,
+                        "access_token":info.token,
+                        
+                    ],
+                    encoding: JSONEncoding.default)
+            }
         case .getUser:
             return .requestPlain
             //Task
@@ -166,7 +172,10 @@ extension GotAPIService: TargetType{
     var headers: [String : String]? {
         switch self{
         case .getUser, .createTask, .getTasks, .getTask, .createTag, .getTags, .getTag, .createFrequents, .getFrequents, .getFrequent:
-            return ["Authorization": "Token tokenString"]
+             guard let token = UserDefaults.standard.string(forDefines: .userToken) else {
+                return [:]
+            }
+            return ["Authorization": "Token \(token)"]
         default:
             return ["Content-type": "application/json"]
         }
@@ -182,5 +191,64 @@ fileprivate extension String {
         
         return data(using: .utf8)!
         
+    }
+}
+
+class APIManager{
+    static let shared = APIManager()
+    var provider: MoyaProvider<GotAPIService>!
+    private init(){
+        self.provider = MoyaProvider<GotAPIService>()
+    }
+  
+    func createTask(got: Got){
+        
+    }
+    
+    func getTasks(){
+        provider.request(.getTasks) { (result) in
+            switch result{
+            case .success(let response):
+                print(String(data: response.data, encoding: .utf8))
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    func getTask(id: String){
+        provider.request(.getTask(id)) { (result) in
+            switch result{
+            case .success(let response):
+                print(String(data: response.data, encoding: .utf8))
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func createTag(tag: Tag){
+        
+    }
+    
+    func getTags(){
+        provider.request(.getTags) { (result) in
+            switch result{
+            case .success(let response):
+                print(String(data: response.data, encoding: .utf8))
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getTag(id: String){
+        provider.request(.getTag(id)) { (result) in
+            switch result{
+            case .success(let response):
+                print(String(data: response.data, encoding: .utf8))
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

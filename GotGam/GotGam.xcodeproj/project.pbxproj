@@ -121,6 +121,8 @@
 		A1A5DEA024753CC100AFA9D5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1A5DE9F24753CC100AFA9D5 /* credentials.plist */; };
 		A1A5DEA2247544AE00AFA9D5 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DEA1247544AE00AFA9D5 /* LoginManager.swift */; };
 		A1A5DEAC24755B7B00AFA9D5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DEAB24755B7B00AFA9D5 /* LoginViewModel.swift */; };
+		A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */; };
+		A1A5DF562476E71E00AFA9D5 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF552476E71E00AFA9D5 /* LoginResponse.swift */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
 		A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */; };
@@ -255,6 +257,8 @@
 		A1A5DE9F24753CC100AFA9D5 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		A1A5DEA1247544AE00AFA9D5 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		A1A5DEAB24755B7B00AFA9D5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GotAPIService.swift; sourceTree = "<group>"; };
+		A1A5DF552476E71E00AFA9D5 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
 		A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Bold.ttf"; sourceTree = "<group>"; };
@@ -403,6 +407,7 @@
 				4C620CEF246AB62A00B25B86 /* Tag.swift */,
 				4CE037EF2438D6990093E39D /* Got.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
+				A1A5DF552476E71E00AFA9D5 /* LoginResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -494,6 +499,7 @@
 		4CE037DB2438CA3E0093E39D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */,
 				A159DBF32459C1B9004FCA66 /* DBManager.swift */,
 				4CE037DC2438CA590093E39D /* GotStorageType.swift */,
 				4CE037DE2438CA780093E39D /* GotStorage.swift */,
@@ -814,6 +820,7 @@
 			files = (
 				A127E717246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift in Sources */,
 				4CE3B6F82458709800A53BF8 /* (null) in Sources */,
+				A1A5DF562476E71E00AFA9D5 /* LoginResponse.swift in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
 				4C5F0F6624654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift in Sources */,
@@ -831,6 +838,7 @@
 				4CF1D0AD24499F4200B45751 /* GotListViewModel.swift in Sources */,
 				A16439712454001100C740F4 /* MapCardCollectionViewCell.swift in Sources */,
 				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
+				A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */,
 				4CE3B6FA2458744D00A53BF8 /* (null) in Sources */,
 				4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */,
 				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,

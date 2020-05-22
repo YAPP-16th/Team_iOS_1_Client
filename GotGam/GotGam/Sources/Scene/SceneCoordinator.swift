@@ -67,6 +67,8 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             target = scene.instantiate(from: "Map")
         case .createTag:
             target = scene.instantiate(from: "Map")
+        case .login:
+            target = scene.instantiate()
         case .tabBar:
             target = scene.instantiate(from: "Main")
         }
