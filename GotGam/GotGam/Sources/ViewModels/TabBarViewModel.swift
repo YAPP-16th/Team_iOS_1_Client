@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class TabBarViewModel: CommonViewModel {
     
@@ -14,4 +16,20 @@ class TabBarViewModel: CommonViewModel {
 //        sceneCoordinator.switchTab(to: index).asObservable()
 //        
 //    }
+    
+    
+    var alarmBadgeCount = BehaviorRelay<Int>(value: 0)
+    var alarmStorage: AlarmStorageType!
+    
+    init(sceneCoordinator: SceneCoordinatorType, alarmStorage: AlarmStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        
+        alarmStorage.fetchAlarmList()
+            .subscribe(onNext: { [weak self] alarmList in
+                let badgeCount = alarmList.filter { $0.isChecked == false }.count
+                
+                self?.alarmBadgeCount.accept(badgeCount)
+            })
+            .disposed(by: disposeBag)
+    }
 }

@@ -29,7 +29,7 @@ class BadgeButton: UIButton {
         }
     }
 
-    public var badgeFont = UIFont.systemFont(ofSize: 9.0) {
+    public var badgeFont = UIFont.boldSystemFont(ofSize: 9.0) {
         didSet {
             badgeLabel.font = badgeFont
         }

@@ -12,6 +12,7 @@ import RxSwift
 class TabBarController: UITabBarController, ViewModelBindableType {
     
     var viewModel: TabBarViewModel!
+    var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,9 @@ class TabBarController: UITabBarController, ViewModelBindableType {
     
     func bindViewModel() {
         
+        let count = viewModel.alarmBadgeCount.value
+        tabBar.items?[2].badgeValue = count == 0 ? nil : "\(viewModel.alarmBadgeCount.value)"
+
 //        rx.didSelect
 //            .map { [weak self] in
 //                (self?.viewControllers?.firstIndex(of: $0) ?? 0)
