@@ -22,6 +22,7 @@ protocol AddPlantViewModelInputs {
     var isOnArrive: BehaviorRelay<Bool> { get set }
     var isOnLeave: BehaviorRelay<Bool> { get set }
     
+    var save: PublishSubject<Void> { get set }
     var close: PublishSubject<Void> { get set }
     var tapTag: PublishSubject<Void> { get set }
 }
@@ -30,8 +31,9 @@ protocol AddPlantViewModelOutputs {
     
     // 테이블 뷰, 지도, 이미지, 이름, 주소 초기값
 
-    var placeText: BehaviorRelay<String> { get set }
-    var tag: BehaviorRelay<String?> { get set }
+    var currentGot: BehaviorRelay<Got?> { get }
+    var placeText: BehaviorRelay<String> { get }
+    var tag: BehaviorRelay<Tag?> { get }
     var sectionsSubject: BehaviorRelay<[InputSectionModel]> { get }
 }
 
@@ -53,30 +55,33 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var isOnArrive = BehaviorRelay<Bool>(value: true)
     var isOnLeave = BehaviorRelay<Bool>(value: false)
     
+    var save = PublishSubject<Void>()
     var close = PublishSubject<Void>()
     var tapTag = PublishSubject<Void>()
     
     // MARK: - Output
     
+    var currentGot = BehaviorRelay<Got?>(value: nil)
     var placeText = BehaviorRelay<String>(value: "")
-    var tag = BehaviorRelay<String?>(value: nil)
+    var tag = BehaviorRelay<Tag?>(value: nil)
     var sectionsSubject = BehaviorRelay<[InputSectionModel]>(value: [])
 
     // MARK: - Methods
     
     private func pushAddTagVC() {
-        // TODO: tag 가져오기
-        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag.value ?? nil)
-        sceneCoordinator.transition(to: .setTag(addTagViewModel), using: .push, animated: true)
-    }
-    
-    private func fetchGot(got: Got?) {
-        guard let got = got else { return }
+        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         
-        nameText.accept(got.title ?? "")
-        //placeText.accept(got.place)
-        //tag.accept(got.tag)
-        tag.accept("#123123")
+        if let tag = tag.value {
+            addTagViewModel.selectedTag.accept(tag)
+        }
+        
+        addTagViewModel.save
+            .subscribe(onNext: { [weak self] _ in
+                self?.tag.accept(addTagViewModel.selectedTag.value)
+            })
+            .disposed(by: disposeBag)
+        
+        sceneCoordinator.transition(to: .setTag(addTagViewModel), using: .push, animated: true)
     }
     
     private func removeItem(section: InputItemType) {
@@ -116,28 +121,83 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         sections[section.rawValue] = InputSectionModel(original: sections[section.rawValue], items: items)
         sectionsSubject.accept(sections)
     }
+    
+    private func saveGot() {
+        if var currentGot = currentGot.value {
+            currentGot.title = nameText.value
+            currentGot.place = placeText.value
+            //currentGot.insertedDate = date
+            currentGot.tag = tag.value == nil ? [] : [tag.value!]
+            storage.updateGot(gotToUpdate: currentGot)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.sceneCoordinator.close(animated: true)
+                })
+                .disposed(by: disposeBag)
+        } else {
+            let got = Got(
+                id: Int64(arc4random()),
+                createdDate: Date(),
+                title: nameText.value,
+                latitude: .zero,
+                longitude: .zero,
+                radius: 100,
+                place: placeText.value,
+                arriveMsg: arriveText.value,
+                deparetureMsg: leaveText.value,
+                insertedDate: nil, // TODO: dateText.value -> Date
+                onArrive: isOnArrive.value,
+                onDeparture: isOnLeave.value,
+                onDate: isOnDate.value,
+                tag: tag.value == nil ? [] : [tag.value!],
+                isDone: false)
+
+            storage.createGot(gotToCreate: got)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.sceneCoordinator.close(animated: true)
+                })
+                .disposed(by: disposeBag)
+        }
+    }
    
     
     // MARK: - Initializing
+    
     var inputs: AddPlantViewModelInputs { return self }
     var outputs: AddPlantViewModelOutputs { return self }
+    var storage: GotStorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, got: Got?) {
-        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, got: Got? = nil) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+        
         
         fetchGot(got: got)
         sectionsSubject.accept(configureDataSource(got: got))
         configureBind(sceneCoordinator: sceneCoordinator)
     }
     
-    func configureBind(sceneCoordinator: SceneCoordinatorType) {
-        close.asObserver()
+    private func fetchGot(got: Got?) {
+        guard let got = got else { return }
+        
+        currentGot.accept(got)
+        nameText.accept(got.title ?? "")
+        placeText.accept(got.place ?? "")
+    }
+    
+    private func configureBind(sceneCoordinator: SceneCoordinatorType) {
+        close
             .subscribe(onNext: { _ in
                 sceneCoordinator.close(animated: true)
             })
             .disposed(by: disposeBag)
         
-        tapTag.asObserver()
+        save
+            .subscribe(onNext: { [weak self] _ in
+                self?.saveGot()
+            })
+            .disposed(by: disposeBag)
+        
+        tapTag
             .subscribe(onNext: { [unowned self] _ in
                 self.pushAddTagVC()
             })
@@ -145,44 +205,47 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         
         isOnDate
             .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .date) : self.removeItem(section: .date)
+                b ? self.insertItem(section: .date)
+                  : self.removeItem(section: .date)
             })
             .disposed(by: disposeBag)
 
         isOnArrive
             .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .arrive) : self.removeItem(section: .arrive)
+                b ? self.insertItem(section: .arrive)
+                  : self.removeItem(section: .arrive)
             })
             .disposed(by: disposeBag)
 
         isOnLeave
             .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .leave) : self.removeItem(section: .leave)
+                b ? self.insertItem(section: .leave)
+                  : self.removeItem(section: .leave)
             })
             .disposed(by: disposeBag)
     }
     
-    func configureDataSource(got: Got?) -> [InputSectionModel] {
+    private func configureDataSource(got: Got?) -> [InputSectionModel] {
         return [
-            .TagSection(section: InputItemType.tag.rawValue, title: " ", items: [.TagItem(title: InputItemType.tag.title, tag: self.tag.value)]),
+            .TagSection(section: InputItemType.tag.rawValue, title: " ", items: [.TagItem(title: InputItemType.tag.title)]),
             .ToggleableSection(
                 section: InputItemType.date.rawValue,
                 title: " ",
                 items: [
-                    .ToggleableItem(title: InputItemType.date.title, enabled: got?.insertedDate != nil)
+                    .ToggleableItem(title: InputItemType.date.title)
                     //.TextFieldItem(text: dateText.value, placeholder: InputItemType.date.placeholder, enabled: false, isDate: true)
                 ]),
             .ToggleableSection(
                 section: InputItemType.arrive.rawValue,
                 title: " ",
                 items: [
-                    .ToggleableItem(title: InputItemType.arrive.title, enabled: got?.insertedDate != nil)
+                    .ToggleableItem(title: InputItemType.arrive.title)
                 ]),
             .ToggleableSection(
                 section: InputItemType.leave.rawValue,
                 title: " ",
                 items: [
-                    .ToggleableItem(title: InputItemType.leave.title, enabled: got?.insertedDate != nil)
+                    .ToggleableItem(title: InputItemType.leave.title)
                 ])
         ]
     }
@@ -214,8 +277,8 @@ enum InputItemType: Int {
 }
 
 enum InputItem {
-    case TagItem(title: String, tag: String?) // String -> Tag
-    case ToggleableItem(title: String, enabled: Bool)
+    case TagItem(title: String)
+    case ToggleableItem(title: String)
     case TextFieldItem(text: String, placeholder: String, enabled: Bool, isDate: Bool = false)
 }
 
@@ -223,8 +286,8 @@ extension InputItem: IdentifiableType, Equatable {
     typealias Identity = String
     var identity: Identity {
         switch self {
-        case let .TagItem(title, _): return title
-        case let .ToggleableItem(title, _): return title
+        case let .TagItem(title): return title
+        case let .ToggleableItem(title): return title
         case let .TextFieldItem(_, placeholder, _, _): return placeholder
         }
     }

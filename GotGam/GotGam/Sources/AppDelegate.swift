@@ -33,9 +33,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                selector: #selector(kakaoSessionDidChange(notification:)),
                                                name: Notification.Name.KOSessionDidChange,
                                                object: nil)
-        let storage = GotStorage()
-        let coordinator = SceneCoordinator(window: window!)
-        coordinator.createTabBar(gotService: storage)
+    
+    let gotStorage = GotStorage()
+    let alarmStorage = AlarmStorage()
+    let coordinator = SceneCoordinator(window: window!)
+    coordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)
+    
+    let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator)
 
         let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, storage: storage)
 

@@ -60,6 +60,25 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func fetchTag(hex: String) -> Observable<Tag> {
+        do {
+            let fetchReqeust = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            let p1 = NSPredicate(format: "hex == %@", hex)
+            fetchReqeust.predicate = p1
+            
+            let results = try self.context.fetch(fetchReqeust)
+            
+            if let managedTag = results.first {
+                return .just(managedTag.toTag())
+            } else {
+                return .error(GotStorageError.fetchError("해당 tag를 찾을 수 없음"))
+            }
+            
+        } catch let error {
+            return .error(GotStorageError.fetchError(error.localizedDescription))
+        }
+    }
+    
     func createGot(gotToCreate: Got) -> Observable<Got>{
         do{
             var got = gotToCreate
@@ -69,6 +88,17 @@ class GotStorage: GotStorageType {
             try self.context.save()
             return .just(got)
         }catch let error{
+            return .error(GotStorageError.createError(error.localizedDescription))
+        }
+    }
+    
+    func create(tag: Tag) -> Observable<Tag> {
+        do {
+            let managedTag = NSEntityDescription.insertNewObject(forEntityName: "ManagedTag", into: self.context) as! ManagedTag
+            managedTag.fromTag(tag: tag)
+            try self.context.save()
+            return .just(tag)
+        } catch let error{
             return .error(GotStorageError.createError(error.localizedDescription))
         }
     }
@@ -94,6 +124,52 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func updateTag(_ updatedTag: Tag) -> Observable<Tag> {
+        do {
+            let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            fetchRequest.predicate = NSPredicate(format: "hex == %@", updatedTag.hex)
+            let results = try self.context.fetch(fetchRequest)
+            
+            if let managedTag = results.first {
+                managedTag.fromTag(tag: updatedTag)
+                
+                do {
+                    try self.context.save()
+                    return .just(updatedTag)
+                } catch let error {
+                    return .error(error)
+                }
+            } else {
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Tag를 찾을 수 없음"))
+            }
+        } catch let error {
+            return .error(GotStorageError.updateError(error.localizedDescription))
+        }
+    }
+    
+    func update(tag origin: Tag, to updated: Tag) -> Observable<Tag> {
+        do {
+            let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            fetchRequest.predicate = NSPredicate(format: "hex == %@", origin.hex)
+            let results = try self.context.fetch(fetchRequest)
+            
+            if let managedTag = results.first {
+                managedTag.fromTag(tag: updated)
+                
+                do {
+                    try self.context.save()
+                    return .just(updated)
+                } catch let error {
+                    return .error(error)
+                }
+            } else {
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Tag를 찾을 수 없음"))
+            }
+        } catch let error {
+            return .error(GotStorageError.updateError(error.localizedDescription))
+        }
+    }
+    
     func deleteGot(id: Int64) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
@@ -114,6 +190,37 @@ class GotStorage: GotStorageType {
         }catch let error{
             return .error(GotStorageError.deleteError(error.localizedDescription))
         }
+    }
+    
+    func deleteGot(got: Got) -> Observable<Got> {
+        deleteGot(id: got.id!)
+    }
+    
+    func deleteTag(hex: String) -> Observable<Tag> {
+        do{
+            let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            fetchRequest.predicate = NSPredicate(format: "hex == %@", hex)
+            let results = try self.context.fetch(fetchRequest)
+            if let managedTag = results.first{
+                let tag = managedTag.toTag()
+                self.context.delete(managedTag)
+                
+                do{
+                    try self.context.save()
+                    return .just(tag)
+                }catch{
+                    return .error(GotStorageError.deleteError("hex가 \(hex)인 Tag를 제거하는데 오류 발생"))
+                }
+            }else{
+                return .error(GotStorageError.fetchError("해당 데이터에 대한 Tag를 찾을 수 없음"))
+            }
+        }catch let error{
+            return .error(GotStorageError.deleteError(error.localizedDescription))
+        }
+    }
+    
+    func deleteTag(tag: Tag) -> Observable<Tag> {
+        deleteTag(hex: tag.hex)
     }
     
     //MARK: - Helper

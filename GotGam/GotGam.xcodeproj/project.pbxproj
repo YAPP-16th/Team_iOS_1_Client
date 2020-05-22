@@ -11,6 +11,15 @@
 		295C03C12464646300789967 /* SearchBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295C03C02464646300789967 /* SearchBar.storyboard */; };
 		295C03C32464652700789967 /* SearchBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C22464652700789967 /* SearchBarViewController.swift */; };
 		295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C42464655100789967 /* SearchBarViewModel.swift */; };
+		29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727818246FDAAE00B75AC7 /* APIManager.swift */; };
+		2972781B246FDADD00B75AC7 /* KakaoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972781A246FDADD00B75AC7 /* KakaoResponse.swift */; };
+		297278472473C96800B75AC7 /* SettingOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278462473C96800B75AC7 /* SettingOtherViewController.swift */; };
+		297278492473C97E00B75AC7 /* SettingPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278482473C97E00B75AC7 /* SettingPlaceViewController.swift */; };
+		2972784B2473C9CB00B75AC7 /* SettingOtherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784A2473C9CB00B75AC7 /* SettingOtherViewModel.swift */; };
+		2972784D2473C9E300B75AC7 /* SettingPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */; };
+		2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */; };
+		297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */; };
+		29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727852247451C500B75AC7 /* SettingLoginViewController.swift */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -18,6 +27,10 @@
 		4269388724306B66007B60FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388524306B66007B60FD /* Main.storyboard */; };
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
+		4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */; };
+		4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */; };
+		4C5185ED2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */; };
+		4C5185EF247550B8009E1B08 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EE247550B8009E1B08 /* Alarm.swift */; };
 		4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */; };
 		4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */; };
 		4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */; };
@@ -35,6 +48,14 @@
 		4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */; };
 		4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */; };
 		4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */; };
+		4CA2351C24758DBB005323EF /* AlarmStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351A24758DBA005323EF /* AlarmStorage.swift */; };
+		4CA2351D24758DBB005323EF /* AlarmStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351B24758DBA005323EF /* AlarmStorageType.swift */; };
+		4CA2352024758DC3005323EF /* SearchStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351E24758DC3005323EF /* SearchStorage.swift */; };
+		4CA2352124758DC3005323EF /* SearchStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351F24758DC3005323EF /* SearchStorageType.swift */; };
+		4CA2352324758F1F005323EF /* SettingLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352224758F1F005323EF /* SettingLoginViewModel.swift */; };
+		4CA2352524758F5D005323EF /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352424758F5D005323EF /* BadgeButton.swift */; };
+		4CA2352824758F8D005323EF /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352624758F8D005323EF /* History+CoreDataProperties.swift */; };
+		4CA2352924758F8D005323EF /* History+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352724758F8D005323EF /* History+CoreDataClass.swift */; };
 		4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */; };
 		4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */; };
 		4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD535B245B133B00B235D5 /* SetTagViewController.swift */; };
@@ -136,6 +157,15 @@
 		295C03C02464646300789967 /* SearchBar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchBar.storyboard; sourceTree = "<group>"; };
 		295C03C22464652700789967 /* SearchBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewController.swift; sourceTree = "<group>"; };
 		295C03C42464655100789967 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
+		29727818246FDAAE00B75AC7 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		2972781A246FDADD00B75AC7 /* KakaoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoResponse.swift; sourceTree = "<group>"; };
+		297278462473C96800B75AC7 /* SettingOtherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherViewController.swift; sourceTree = "<group>"; };
+		297278482473C97E00B75AC7 /* SettingPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPlaceViewController.swift; sourceTree = "<group>"; };
+		2972784A2473C9CB00B75AC7 /* SettingOtherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherViewModel.swift; sourceTree = "<group>"; };
+		2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPlaceViewModel.swift; sourceTree = "<group>"; };
+		2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewController.swift; sourceTree = "<group>"; };
+		297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewModel.swift; sourceTree = "<group>"; };
+		29727852247451C500B75AC7 /* SettingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewController.swift; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +175,10 @@
 		4269388824306B68007B60FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+centerVertically.swift"; sourceTree = "<group>"; };
+		4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4C5185EE247550B8009E1B08 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
@@ -162,6 +196,14 @@
 		4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewController.swift; sourceTree = "<group>"; };
 		4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGridTableViewCell.swift; sourceTree = "<group>"; };
+		4CA2351A24758DBA005323EF /* AlarmStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmStorage.swift; sourceTree = "<group>"; };
+		4CA2351B24758DBA005323EF /* AlarmStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmStorageType.swift; sourceTree = "<group>"; };
+		4CA2351E24758DC3005323EF /* SearchStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorage.swift; sourceTree = "<group>"; };
+		4CA2351F24758DC3005323EF /* SearchStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorageType.swift; sourceTree = "<group>"; };
+		4CA2352224758F1F005323EF /* SettingLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewModel.swift; sourceTree = "<group>"; };
+		4CA2352424758F5D005323EF /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
+		4CA2352624758F8D005323EF /* History+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4CA2352724758F8D005323EF /* History+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4CB00DE8244AB4B000EA39E7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4CB00DEA244C991F00EA39E7 /* Tab+ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab+ViewController.swift"; sourceTree = "<group>"; };
 		4CBD535B245B133B00B235D5 /* SetTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTagViewController.swift; sourceTree = "<group>"; };
@@ -336,8 +378,8 @@
 			children = (
 				A125E79224695AF8007767D7 /* GotGam.entitlements */,
 				4CE037CD2438BDD10093E39D /* Resources */,
-				4CE037CE2438BDD80093E39D /* Sources */,
 				4CE037CF2438BDDE0093E39D /* Supporting Files */,
+				4CE037CE2438BDD80093E39D /* Sources */,
 			);
 			path = GotGam;
 			sourceTree = "<group>";
@@ -391,8 +433,12 @@
 				4CBD535B245B133B00B235D5 /* SetTagViewController.swift */,
 				4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */,
 				4C5F0F60246538B700C7A6E9 /* AlarmViewController.swift */,
-				4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */,
 				A125E79324695B80007767D7 /* LoginViewController.swift */,
+				4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */,
+				2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */,
+				297278482473C97E00B75AC7 /* SettingPlaceViewController.swift */,
+				297278462473C96800B75AC7 /* SettingOtherViewController.swift */,
+				29727852247451C500B75AC7 /* SettingLoginViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -400,14 +446,19 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4CE037EF2438D6990093E39D /* Got.swift */,
 				A127E710246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift */,
 				A127E711246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift */,
+				4C620CEF246AB62A00B25B86 /* Tag.swift */,
 				A127E712246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift */,
 				A127E713246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift */,
-				4C620CEF246AB62A00B25B86 /* Tag.swift */,
-				4CE037EF2438D6990093E39D /* Got.swift */,
+				4C5185EE247550B8009E1B08 /* Alarm.swift */,
+				4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */,
+				4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */,
+				4CA2352724758F8D005323EF /* History+CoreDataClass.swift */,
+				4CA2352624758F8D005323EF /* History+CoreDataProperties.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
-				A1A5DF552476E71E00AFA9D5 /* LoginResponse.swift */,
+				2972781A246FDADD00B75AC7 /* KakaoResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -478,7 +529,10 @@
 				4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */,
 				4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */,
 				4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */,
-				A1A5DEAB24755B7B00AFA9D5 /* LoginViewModel.swift */,
+				2972784A2473C9CB00B75AC7 /* SettingOtherViewModel.swift */,
+				2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */,
+				297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */,
+				4CA2352224758F1F005323EF /* SettingLoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -505,7 +559,11 @@
 				4CE037DE2438CA780093E39D /* GotStorage.swift */,
 				A157E115245572F4001E310D /* LocationManager.swift */,
 				A157E116245572F4001E310D /* LocationManagerType.swift */,
-				A1A5DEA1247544AE00AFA9D5 /* LoginManager.swift */,
+				29727818246FDAAE00B75AC7 /* APIManager.swift */,
+				4CA2351A24758DBA005323EF /* AlarmStorage.swift */,
+				4CA2351B24758DBA005323EF /* AlarmStorageType.swift */,
+				4CA2351E24758DC3005323EF /* SearchStorage.swift */,
+				4CA2351F24758DC3005323EF /* SearchStorageType.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -600,6 +658,7 @@
 				4CE3B6FF2459E36000A53BF8 /* UIView+.swift */,
 				4C65BF812462BFF700FF17BC /* String+hexToColor.swift */,
 				4C5F0F692465540700C7A6E9 /* Date+String.swift */,
+				4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -621,6 +680,7 @@
 				A125E7A52469B2D1007767D7 /* MapRestoreView.swift */,
 				A125E7A72469B300007767D7 /* MapRestoreView.xib */,
 				4C620D11246C370300B25B86 /* PaddingLabel.swift */,
+				4CA2352424758F5D005323EF /* BadgeButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -822,12 +882,15 @@
 				4CE3B6F82458709800A53BF8 /* (null) in Sources */,
 				A1A5DF562476E71E00AFA9D5 /* LoginResponse.swift in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
+				2972784B2473C9CB00B75AC7 /* SettingOtherViewModel.swift in Sources */,
+				4CA2352024758DC3005323EF /* SearchStorage.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
 				4C5F0F6624654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift in Sources */,
 				A157E11D2455754A001E310D /* Extensions.swift in Sources */,
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
+				4CA2352124758DC3005323EF /* SearchStorageType.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
 				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
 				4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */,
@@ -841,6 +904,7 @@
 				A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */,
 				4CE3B6FA2458744D00A53BF8 /* (null) in Sources */,
 				4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */,
+				2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */,
 				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,
 				4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */,
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
@@ -848,36 +912,52 @@
 				A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */,
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				295C03C32464652700789967 /* SearchBarViewController.swift in Sources */,
+				2972784D2473C9E300B75AC7 /* SettingPlaceViewModel.swift in Sources */,
 				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
 				A1A5DEA2247544AE00AFA9D5 /* LoginManager.swift in Sources */,
 				A127E714246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift in Sources */,
 				A1A5DEAC24755B7B00AFA9D5 /* LoginViewModel.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
 				A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */,
+				2972781B246FDADD00B75AC7 /* KakaoResponse.swift in Sources */,
+				4CA2351C24758DBB005323EF /* AlarmStorage.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+.swift in Sources */,
 				4C620D12246C370300B25B86 /* PaddingLabel.swift in Sources */,
 				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
+				4C5185ED2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift in Sources */,
 				4C5F0F682465503200C7A6E9 /* AlarmLeaveTableViewCell.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
 				4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */,
 				A127E716246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift in Sources */,
 				A125E79424695B80007767D7 /* LoginViewController.swift in Sources */,
+				4C5185EF247550B8009E1B08 /* Alarm.swift in Sources */,
+				297278492473C97E00B75AC7 /* SettingPlaceViewController.swift in Sources */,
+				4CA2352524758F5D005323EF /* BadgeButton.swift in Sources */,
 				4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */,
 				4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */,
 				4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */,
 				A127E715246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
+				4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */,
+				4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
+				29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */,
+				4CA2352324758F1F005323EF /* SettingLoginViewModel.swift in Sources */,
+				29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */,
+				4CA2352824758F8D005323EF /* History+CoreDataProperties.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
 				4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */,
+				4CA2352924758F8D005323EF /* History+CoreDataClass.swift in Sources */,
 				4C5F0F61246538B700C7A6E9 /* AlarmViewController.swift in Sources */,
 				4CBD5362245CEEC100B235D5 /* SetTagListTableViewCell.swift in Sources */,
+				297278472473C96800B75AC7 /* SettingOtherViewController.swift in Sources */,
 				A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */,
+				4CA2351D24758DBB005323EF /* AlarmStorageType.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
 				4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */,
 				4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */,
@@ -885,6 +965,7 @@
 				4C620CF7246ACDBE00B25B86 /* GotListTableViewCell.swift in Sources */,
 				4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
+				297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
 				4CBD535E245B134A00B235D5 /* SetTagViewModel.swift in Sources */,
 			);
@@ -1099,7 +1180,7 @@
 					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
-				PRODUCT_NAME = GotGam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)$(PROJECT_DIR)/GotGam/Supporting Files/Bridging_Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1179,7 +1260,7 @@
 					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kr.co.yapp.ios.GotGam;
-				PRODUCT_NAME = GotGam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)$(PROJECT_DIR)/GotGam/Supporting Files/Bridging_Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

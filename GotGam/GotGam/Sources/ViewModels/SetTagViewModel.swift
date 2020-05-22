@@ -14,10 +14,11 @@ import RxDataSources
 protocol SetTagViewModelInputs {
     var back: PublishSubject<Void> { get set }
     var save: PublishSubject<Void> { get set }
-    var selectedTag: BehaviorRelay<String> { get set }
+    var selectedTag: BehaviorRelay<Tag> { get set }
     var createTag: PublishSubject<Void> { get set }
-    func removeItem(indexPath: IndexPath)
-    func updateItem(indexPath: IndexPath)
+    func fetcTagList()
+    func removeTag(indexPath: IndexPath, tag: Tag)
+    func updateTag(indexPath: IndexPath)
 }
 
 protocol SetTagViewModelOutputs {
@@ -31,31 +32,40 @@ protocol SetTagViewModelType {
 }
 
 class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInputs, SetTagViewModelOutputs {
-    
-    
-    
+
     // MARK: - Inputs
     
     var back = PublishSubject<Void>()
     var save = PublishSubject<Void>()
-    var selectedTag = BehaviorRelay<String>(value: "") // tag
+    var selectedTag = BehaviorRelay<Tag>(value: Tag(name: "미지정", hex: "#cecece")) // tag
     var createTag = PublishSubject<Void>()
     
-    func removeItem(indexPath: IndexPath) {
-        var updateSections = sections.value
-        var items = updateSections[indexPath.section].items
-        items.remove(at: indexPath.row)
-        updateSections[indexPath.section] = AddTagSectionModel(original: updateSections[indexPath.section], items: items)
-        sections.accept(updateSections)
+    func removeTag(indexPath: IndexPath, tag: Tag) {
+        
+        storage.deleteTag(tag: tag)
+            .subscribe(onNext: { [unowned self] _ in
+                var updateSections = self.sections.value
+                var items = updateSections[indexPath.section].items
+                items.remove(at: indexPath.row)
+                updateSections[indexPath.section] = AddTagSectionModel(original: updateSections[indexPath.section], items: items)
+                self.sections.accept(updateSections)
+            })
+            .disposed(by: disposeBag)
     }
     
-    func updateItem(indexPath: IndexPath) {
+    func updateTag(indexPath: IndexPath) {
         let item = sections.value[indexPath.section].items[indexPath.row]
         
-        if case let .TagListItem(tag, selected) = item {
+        if case let .TagListItem(tag) = item {
             let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag)
             sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
         }
+    }
+    
+    func fetcTagList() {
+        storage.fetchTagList()
+            .subscribe(onNext: { [weak self] in self?.tagList.onNext($0) })
+            .disposed(by: disposeBag)
     }
     
     
@@ -64,42 +74,57 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     
     var sections = BehaviorRelay<[AddTagSectionModel]>(value: [])
     
-    // MARK: - Initializing
-    
-    var inputs: SetTagViewModelInputs { return self }
-    var outputs: SetTagViewModelOutputs { return self }
     
     // MARK: - Methods
     
     func pushCreateVC() {
-
         let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
     }
     
+    func pop() {
+        sceneCoordinator.pop(animated: true)
+    }
+    
     // MARK: - Initializing
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: String?) {
-        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
-        if let tag = tag {
-            selectedTag.accept(tag)
-        }
-        //sections = configureDataSource(tags: ["#FFFFFF", "#ffa608", "#6bb4e2"])
-        sections.accept(configureDataSource(tags: ["#FFFFFF", "#ffa608", "#6bb4e2"]))
+    //private var tagList = PublishSubject<[Tag]>()
+    private var tagList = PublishSubject<[Tag]>()
+    
+    var inputs: SetTagViewModelInputs { return self }
+    var outputs: SetTagViewModelOutputs { return self }
+    var storage: GotStorageType!
+    
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+        
+        tagList
+            .map { [Tag(name: "미지정", hex: "#cecece")] + $0 }
+            .subscribe(onNext: { [unowned self] tagList in
+                self.sections.accept(self.configureDataSource(tags: tagList))
+            })
+            .disposed(by: disposeBag)
         
         createTag.asObserver()
-            .subscribe(onNext: {[unowned self] _ in self.pushCreateVC()})
+            .subscribe(onNext: {[weak self] _ in self?.pushCreateVC()})
+            .disposed(by: disposeBag)
+        
+        save
+            .subscribe(onNext: {
+                [weak self] _ in self?.pop()
+            })
             .disposed(by: disposeBag)
         
     }
     
-    func configureDataSource(tags: [String]) -> [AddTagSectionModel] {
+    func configureDataSource(tags: [Tag]) -> [AddTagSectionModel] {
         return [
                 .SelectedSection(title: "", items: [
-                    .SelectedTagItem(title: "선택된 태그", tag: selectedTag.value)
+                    .SelectedTagItem(title: "선택된 태그")
                 ]),
-                .ListSection(title: "태그 목록", items: tags.map{
-                    AddTagItem.TagListItem(tag: $0, selected: selectedTag.value == $0)
+                .ListSection(title: "태그 목록", items: tags.map {
+                    AddTagItem.TagListItem(tag: $0)
                 }),
                 .NewSection(title: "새 태그 만들기", items: [
                     .CreateTagItem(title: "새로운 태그를 생성합니다")
@@ -111,8 +136,8 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
 // MARK: - for DataSources
 
 enum AddTagItem {
-    case SelectedTagItem(title: String, tag: String?)
-    case TagListItem(tag: String, selected: Bool = false)
+    case SelectedTagItem(title: String)
+    case TagListItem(tag: Tag)
     case CreateTagItem(title: String)
 }
 
@@ -120,8 +145,8 @@ extension AddTagItem: IdentifiableType, Equatable {
     typealias Identity = String
     var identity: Identity {
         switch self {
-        case let .SelectedTagItem(title, _): return title
-        case let .TagListItem(tag, _): return tag
+        case let .SelectedTagItem(title): return title
+        case let .TagListItem(tag): return tag.hex
         case let .CreateTagItem(title): return title
         }
     }

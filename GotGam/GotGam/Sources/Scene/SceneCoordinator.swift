@@ -50,6 +50,8 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
         self.currentVC = window.rootViewController!
     }
     
+    // MARK: - Methods
+    
     @discardableResult
     func transition(to scene: Scene, using style: Transition, animated: Bool) -> Completable {
         
@@ -71,6 +73,16 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             target = scene.instantiate()
         case .tabBar:
             target = scene.instantiate(from: "Main")
+		case .settingAlarm:
+			target = scene.instantiate(from: "Setting")
+		case .settingOther:
+			target = scene.instantiate(from: "Setting")
+		case .settingPlace:
+			target = scene.instantiate(from: "Setting")
+		case .settingLogin:
+			target = scene.instantiate(from: "Setting")
+		case .searchBar:
+            target = scene.instantiate(from: "SearchBar")
         }
         
         switch style {
@@ -137,11 +149,29 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
     }
     
     @discardableResult
-    func createTabBar(gotService: GotStorageType) -> Completable {
+    func pop(animated: Bool) -> Completable {
+        let subject = PublishSubject<Void>()
+        
+        if let nav = currentVC.navigationController {
+            guard nav.popViewController(animated: animated) != nil else {
+                subject.onError(TransitionError.cannotPop)
+                return subject.ignoreElements()
+            }
+
+            currentVC = nav.viewControllers.last!
+            print(currentVC)
+            subject.onCompleted()
+        }
+        
+        return subject.ignoreElements()
+    }
+    
+    @discardableResult
+    func createTabBar(gotService: GotStorageType, alarmService: AlarmStorageType) -> Completable {
         
         let mapViewModel = MapViewModel(sceneCoordinator: self, storage: gotService)
         let gotListViewModel = GotListViewModel(sceneCoordinator: self, storage: gotService)
-        let alarmViewModel = AlarmViewModel(sceneCoordinator: self, storage: gotService)
+        let alarmViewModel = AlarmViewModel(sceneCoordinator: self, storage: alarmService)
         let settingViewModel = SettingViewModel(sceneCoordinator: self, storage: gotService)
         
         let mapTab = Tab.map(viewModel: mapViewModel)

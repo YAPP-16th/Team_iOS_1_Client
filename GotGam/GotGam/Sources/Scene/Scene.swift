@@ -16,6 +16,11 @@ enum Scene {
     case createTag(CreateTagViewModel)
     case login(LoginViewModel)
     case tabBar(TabBarViewModel)
+	case settingAlarm(SettingAlarmViewModel)
+	case settingOther(SettingOtherViewModel)
+	case settingPlace(SettingPlaceViewModel)
+	case settingLogin(SettingLoginViewModel)
+	case searchBar(SearchBarViewModel)
 }
 
 extension Scene {
@@ -87,7 +92,47 @@ extension Scene {
             tabBar.bind(viewModel: viewModel)
             
             return tabBar
-    
+			
+		case .settingAlarm(let viewModel):
+			guard var settingAlarmVC = storyboard.instantiateViewController(withIdentifier: "SettingAlarm") as? SettingAlarmViewController else {
+				fatalError()
+			}
+		
+			settingAlarmVC.bind(viewModel: viewModel)
+			return settingAlarmVC
+			
+			
+		case .settingOther(let viewModel):
+			guard var settingOtherVC = storyboard.instantiateViewController(withIdentifier: "settingOther") as? SettingOtherViewController else {
+				fatalError()
+			}
+			
+			settingOtherVC.bind(viewModel: viewModel)
+			return settingOtherVC
+			
+		case .settingPlace(let viewModel):
+			guard var settingPlaceVC = storyboard.instantiateViewController(withIdentifier: "settingPlace") as? SettingPlaceViewController else {
+				fatalError()
+			}
+			
+			settingPlaceVC.bind(viewModel: viewModel)
+			return settingPlaceVC
+
+		case .settingLogin(let viewModel):
+			guard var settingLoginVC = storyboard.instantiateViewController(withIdentifier: "settingLogin") as? SettingLoginViewController else {
+				fatalError()
+			}
+			
+			settingLoginVC.bind(viewModel: viewModel)
+			return settingLoginVC
+			
+		case .searchBar(let viewModel):
+			guard var searchVC = storyboard.instantiateViewController(withIdentifier: "SearchBarViewController") as? SearchBarViewController else {
+				fatalError()
+			}
+			
+			searchVC.bind(viewModel: viewModel)
+			return searchVC
         }
     }
 }

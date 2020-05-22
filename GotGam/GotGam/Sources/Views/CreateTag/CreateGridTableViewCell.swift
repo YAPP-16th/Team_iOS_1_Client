@@ -24,17 +24,14 @@ class CreateGridTableViewCell: UITableViewCell {
         
         viewModel.outputs.tagColors
             .bind(to: colorCollectionView.rx.items(cellIdentifier: "tagColorCell", cellType: TagColorCollectionViewCell.self)) { indexPath, tagColor, cell in
-                
                 cell.configure(viewModel: self.viewModel, tagColor: tagColor)
                 cell.layer.cornerRadius = cell.bounds.height/2
-        }
-        .disposed(by: disposeBag)
-        
+            }
+            .disposed(by: disposeBag)
+            
         colorCollectionView.rx.modelSelected(TagColor.self)
-            //.map {}  MARK: TODO: 중복체크
-            .subscribe(onNext: { [unowned self] (tagColor) in
-                self.viewModel.inputs.newTag.accept(tagColor.hex)
-            })
+            .map { $0.hex }
+            .bind(to: viewModel.inputs.tagSelected)
             .disposed(by: disposeBag)
     }
 
@@ -49,7 +46,16 @@ class CreateGridTableViewCell: UITableViewCell {
 extension CreateGridTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: 50, height: 50)
+        
+
+        
+        let width = ((collectionView.bounds.width - 32 - 55 )/6).rounded(.down)
+        
+        return .init(width: width, height: width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 11
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -57,10 +63,12 @@ extension CreateGridTableViewCell: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 20, left: 10, bottom: 20, right: 10)
+        return .init(top: 20, left: 16, bottom: 20, right: 16)
     }
     
 }
+
+// MARK: - TagColor Cell
 
 class TagColorCollectionViewCell: UICollectionViewCell {
     
@@ -75,10 +83,22 @@ class TagColorCollectionViewCell: UICollectionViewCell {
         self.tagColor = tagColor
         backgroundColor = tagColor.color
         
-        viewModel.newTag
-            .map { !($0 == tagColor.hex) } // MARK: TODO: string -> color로 바꾸가
-            .bind(to: checkImageView.rx.isHidden)
+        
+        viewModel.newTagHex
+            .map { $0 == tagColor.hex }
+            .subscribe(onNext: { [unowned self] isPick in
+                if isPick {
+                    self.layer.shadowOpacity = 0.3
+                } else {
+                    self.layer.shadowOpacity = 0
+                }
+            })
             .disposed(by: disposeBag)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.shadow(radius: 10, color: .black, offset: .zero, opacity: 0)
     }
 }
 

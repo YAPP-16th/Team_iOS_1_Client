@@ -17,7 +17,7 @@ class ToggleableTableViewCell: UITableViewCell {
     
     var disposedBag = DisposeBag()
     
-    func configure(viewModel vm: AddPlantViewModel, title: String, enabled: Bool) {
+    func configure(viewModel vm: AddPlantViewModel, title: String) {
         viewModel = vm
         titleLabel.text = title
     }

@@ -21,6 +21,7 @@ protocol MapViewModelInputs {
     func updateList()
     func updateTagList()
     func quickAdd(text: String, location: CLLocationCoordinate2D)
+	func showSearchVC()
 }
 
 protocol MapViewModelOutputs {
@@ -36,9 +37,15 @@ protocol MapViewModelType {
 }
 
 class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapViewModelOutputs {
+<<<<<<<
     
     //MARK: - Model Input
+=======
+
+>>>>>>>
     var input: MapViewModelInputs { return self }
+    var output: MapViewModelOutputs { return self }
+    var storage: GotStorageType!
     
     
     //MARK: - Model Output
@@ -57,8 +64,8 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var seedState = PublishSubject<SeedState>()
     
     func showAddVC() {
-        let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, isDone: false, place: "맛집", insertedDate: Date())
-        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
+        //let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
+        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: nil)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     
@@ -125,5 +132,16 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         self.storage.fetchTagList().bind { (tagList) in
             self.tagList.onNext(tagList)
         }.disposed(by: self.disposeBag)
+    }
+	
+	func showSearchVC() {
+		let movesearchVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .modal, animated: true)
+	}
+	
+    
+    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
     }
 }

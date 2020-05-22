@@ -17,17 +17,16 @@ class SetSelectedTagTableViewCell: UITableViewCell {
     @IBOutlet var tagColorView: UIView!
     @IBOutlet var tagLabel: UILabel!
     
-    func configure(viewModel: SetTagViewModel, title: String, tag: String?) {
+    func configure(viewModel: SetTagViewModel, title: String) {
         titleLabel.text = title
         
         viewModel.selectedTag
-            //.compactMap { $0?.name }
+            .compactMap { $0.name }
             .bind(to: tagLabel.rx.text)
             .disposed(by: disposeBag)
     
         viewModel.selectedTag
-            //.compactMap { $0?.color }
-            .map { $0.hexToColor() }
+            .compactMap { $0.hex.hexToColor() }
             .bind(to: tagColorView.rx.backgroundColor)
             .disposed(by: disposeBag)
     }

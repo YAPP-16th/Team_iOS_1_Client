@@ -21,6 +21,12 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.inputs.fetcTagList()
+    }
+    
     func bindViewModel() {
         
         tagTableView.rx.setDelegate(self)
@@ -28,10 +34,15 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
         
         // Inputs
         
+        saveButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.save)
+            .disposed(by: disposeBag)
+        
         
         tagTableView.rx.modelSelected(AddTagSectionModel.Item.self)
             .subscribe(onNext: { item in
-                if case let .TagListItem(tag, selected) = item {
+                if case let .TagListItem(tag) = item {
                     self.viewModel.selectedTag.accept(tag)
                 }
             })
@@ -45,10 +56,14 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
-        tagTableView.rx.itemDeleted
-            .subscribe (onNext: { [unowned self] indexPath in
-                self.viewModel.inputs.removeItem(indexPath: indexPath)
-            })
+        Observable.zip(tagTableView.rx.itemDeleted, tagTableView.rx.modelDeleted(AddTagItem.self))
+            .bind { [unowned self] indexPath, tagItem in
+                
+                if case let .TagListItem(tag) = tagItem {
+                    self.viewModel.inputs.removeTag(indexPath: indexPath, tag: tag)
+                }
+                
+            }
             .disposed(by: disposeBag)
         
         // Outputs
@@ -61,6 +76,7 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
     }
     
     @IBOutlet var tagTableView: UITableView!
+    @IBOutlet var saveButton: UIBarButtonItem!
     
 }
 
@@ -74,13 +90,13 @@ extension SetTagViewController {
 
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
-                case let .SelectedTagItem(title, tag):
+                case let .SelectedTagItem(title):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "selectedTagCell", for: indexPath) as? SetSelectedTagTableViewCell else { return UITableViewCell()}
-                    cell.configure(viewModel: viewModel, title: title, tag: tag)
+                    cell.configure(viewModel: viewModel, title: title)
                     return cell
-                case let .TagListItem(tag, selectedTag):
+                case let .TagListItem(tag):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "tagListCell", for: indexPath) as? SetTagListTableViewCell else { return UITableViewCell()}
-                    cell.configure(viewModel: viewModel,tag: tag, selected: selectedTag)
+                    cell.configure(viewModel: viewModel,tag: tag)
                     return cell
                 case .CreateTagItem(let title):
                     let cell = table.dequeueReusableCell(withIdentifier: "newTagCell", for: indexPath)
@@ -95,7 +111,7 @@ extension SetTagViewController {
             canEditRowAtIndexPath: { dataSource, index in
                 let section = dataSource[index]
                 switch section {
-                case .TagListItem(_, _):
+                case .TagListItem(_):
                     return true
                 default: return false
                 }
@@ -123,7 +139,7 @@ extension SetTagViewController: UITableViewDelegate {
 
         let editButton = UITableViewRowAction(style: .normal, title: "수정") { (action, indexPath) in
             // here is yours custom action
-            self.viewModel.inputs.updateItem(indexPath: indexPath)
+            self.viewModel.inputs.updateTag(indexPath: indexPath)
             return
         }
         return [deleteButton, editButton]

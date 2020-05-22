@@ -18,6 +18,10 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.isNavigationBarHidden = true
+        alarmTableView.layer.borderWidth = 0.2
+        activeButton.addbadgetobutton(badge: "10")
+        
     }
 
     func bindViewModel() {
@@ -30,6 +34,8 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
     }
     
     @IBOutlet var alarmTableView: UITableView!
+    @IBOutlet var activeButton: BadgeButton!
+    
 }
 
 extension AlarmViewController {

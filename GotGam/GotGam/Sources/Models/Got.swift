@@ -11,25 +11,54 @@ import Foundation
 struct Got: Equatable {
    
     var id: Int64?
-    var tag : [Tag]?
+    var createdDate: Date?
     var title: String?
-    var content : String?
     var latitude: Double?
     var longitude: Double?
-    var isDone: Bool
-	var place: String?
+    var radius: Double?
+    var place: String?
+    var arriveMsg: String?
+    var deparetureMsg: String?
     var insertedDate: Date?
+    var onArrive: Bool
+    var onDeparture: Bool
+    var onDate: Bool
+    var tag : [Tag]?
+    var isDone: Bool
      
-    init(id: Int64?, tag: [Tag]?, title: String?, content: String?, latitude: Double, longitude: Double?, isDone: Bool, place: String?, insertedDate: Date?){
+    init(
+        id: Int64?,
+        createdDate: Date? = Date(),
+        title: String?,
+        latitude: Double,
+        longitude: Double?,
+        radius: Double? = 100,
+        place: String?,
+        arriveMsg: String? = "",
+        deparetureMsg: String? = "",
+        insertedDate: Date?,
+        onArrive: Bool = false,
+        onDeparture: Bool = false,
+        onDate: Bool = false,
+        tag: [Tag]?,
+        isDone: Bool = false
+    ) {
         self.id = id
-        self.tag = tag
+        self.createdDate = createdDate
         self.title = title ?? ""
-        self.content = content
         self.latitude = latitude
         self.longitude = longitude
-        self.isDone = isDone
+        self.radius = radius
         self.place = place
+        self.arriveMsg = arriveMsg
+        self.deparetureMsg = deparetureMsg
         self.insertedDate = insertedDate
+        self.onArrive = onArrive
+        self.onDeparture = onDeparture
+        self.onDate = onDate
+        self.tag = tag
+        self.isDone = isDone
+        
     }
     
 	
@@ -45,7 +74,6 @@ func ==(lhs: Got, rhs: Got) -> Bool{
     return lhs.id == rhs.id
         && lhs.tag == rhs.tag
         && lhs.title == rhs.title
-        && lhs.content == rhs.content
         && lhs.latitude == rhs.latitude
         && lhs.longitude == rhs.longitude
         && lhs.isDone == rhs.isDone
