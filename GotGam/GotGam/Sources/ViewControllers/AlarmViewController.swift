@@ -14,6 +14,24 @@ import RxDataSources
 class AlarmViewController: BaseViewController, ViewModelBindableType {
     
     var viewModel: AlarmViewModel!
+    
+    // MARK: - Methods
+    
+    func moveIndicator(to category: AlarmCategoryType) {
+        if category == .active {
+            UIView.animate(withDuration: 0.5) {
+                self.activeIndeicatorView.transform = .identity
+            }
+        } else if category == .share {
+            UIView.animate(withDuration: 0.5) {
+                self.activeIndeicatorView.transform = CGAffineTransform(translationX: self.activeButton.frame.width, y: 0)
+            }
+            
+        }
+        
+    }
+    
+    // MARK: - Initializing
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +79,7 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
         
         viewModel.outputs.currentAlarm
             .subscribe(onNext: { [weak self] alarmType in
+                self?.moveIndicator(to: alarmType)
                 if alarmType == .active {
                     self?.activeButton.titleLabel?.font = .boldSystemFont(ofSize: 14)
                     self?.shareButton.titleLabel?.font = .systemFont(ofSize: 14)
@@ -108,6 +127,7 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var alarmTableView: UITableView!
     @IBOutlet var activeButton: BadgeButton!
     @IBOutlet var shareButton: BadgeButton!
+    @IBOutlet var activeIndeicatorView: UIView!
     
 }
 

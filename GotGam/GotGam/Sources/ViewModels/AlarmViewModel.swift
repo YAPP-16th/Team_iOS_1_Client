@@ -107,6 +107,9 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
         self.alarmStorage = alarmStorage
         self.gotStorage = gotStorage
         
+        // MARK: Test Alarms 생성코드
+        // 현재있는 곳으로 알람을 만듬
+        
 //        gotStorage.fetchGotList()
 //            .compactMap { [weak self] in self?.makeAlarm($0) }
 //            .subscribe(onNext: { [weak self] alarmList in
@@ -193,29 +196,6 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
                 }
             })
             .disposed(by: disposeBag)
-        
-        
-        
-        
-//        alarmList
-//            .subscribe(onNext: { [unowned self] alarmList in
-//
-//                let activeCount = activeAlarmList.filter { $0.isChecked == false }.count
-//                self.activeDataSource.accept( self.configureDataSource(activeAlarmList))
-//                self.activeBadgeCount.accept(activeCount)
-//
-//
-//
-//                let sharedCount = sharedAlarmList.filter { $0.isChecked == false }.count
-//                self.sharedDataSource.accept(self.configureDataSource(sharedAlarmList))
-//                self.sharedBadgeCount.accept(sharedCount)
-//            })
-//            .disposed(by: disposeBag)
-//
-//        storage.createAlarm(Alarm(id: Int64(arc4random()), type: .arrive, createdDate: Date(), checkedDate: nil, isChecked: false, got: <#T##Got?#>))
-        
-        //storage.fetchAlarmList()
-        
     }
     
     func configureDataSource(_ alarmList: [Alarm]) -> [AlarmSectionModel] {

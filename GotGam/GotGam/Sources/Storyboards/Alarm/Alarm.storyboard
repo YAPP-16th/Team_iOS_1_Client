@@ -38,6 +38,13 @@
                                     <constraint firstAttribute="height" constant="50" id="fD2-79-APQ"/>
                                 </constraints>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bQg-pU-FSA">
+                                <rect key="frame" x="0.0" y="136" width="70" height="2"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="uoZ-6B-XV9"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AWn-vZ-kXB">
                                 <rect key="frame" x="0.0" y="138" width="414" height="675"/>
                                 <color key="backgroundColor" name="white"/>
@@ -401,17 +408,21 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="k4l-7c-Rev" firstAttribute="leading" secondItem="5xi-Mn-R9l" secondAttribute="leading" id="4GH-bW-o2Z"/>
+                            <constraint firstItem="bQg-pU-FSA" firstAttribute="bottom" secondItem="k4l-7c-Rev" secondAttribute="bottom" id="4ug-6e-7pY"/>
                             <constraint firstItem="5xi-Mn-R9l" firstAttribute="trailing" secondItem="AWn-vZ-kXB" secondAttribute="trailing" id="6MP-aL-41X"/>
                             <constraint firstItem="k4l-7c-Rev" firstAttribute="top" secondItem="5xi-Mn-R9l" secondAttribute="top" id="7FE-i2-dal"/>
                             <constraint firstItem="5xi-Mn-R9l" firstAttribute="bottom" secondItem="AWn-vZ-kXB" secondAttribute="bottom" id="IZ0-Iq-uME"/>
                             <constraint firstItem="AWn-vZ-kXB" firstAttribute="leading" secondItem="5xi-Mn-R9l" secondAttribute="leading" id="Nvd-8e-kTN"/>
                             <constraint firstItem="AWn-vZ-kXB" firstAttribute="top" secondItem="k4l-7c-Rev" secondAttribute="bottom" id="iqi-63-29T"/>
+                            <constraint firstItem="bQg-pU-FSA" firstAttribute="leading" secondItem="k4l-7c-Rev" secondAttribute="leading" id="t8g-Jb-LBE"/>
+                            <constraint firstItem="bQg-pU-FSA" firstAttribute="width" secondItem="cPd-tT-Yay" secondAttribute="width" id="wOC-1F-IVe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5xi-Mn-R9l"/>
                     </view>
                     <navigationItem key="navigationItem" id="Dvj-3W-ZSH"/>
                     <connections>
                         <outlet property="activeButton" destination="cPd-tT-Yay" id="bsy-wc-muW"/>
+                        <outlet property="activeIndeicatorView" destination="bQg-pU-FSA" id="1f9-dI-lRE"/>
                         <outlet property="alarmTableView" destination="AWn-vZ-kXB" id="Xt3-uE-U3d"/>
                         <outlet property="shareButton" destination="MfR-1w-c8t" id="3sk-Gg-g9b"/>
                     </connections>
