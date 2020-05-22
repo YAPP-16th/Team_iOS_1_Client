@@ -18,6 +18,7 @@ enum AlarmCategoryType {
 
 protocol AlarmViewModelInputs {
     func fetchAlarmList()
+    func removeAlarm(indexPath: IndexPath, alarm: Alarm)
     var checkAlarm: PublishSubject<Alarm> { get set }
     var tappedActive: PublishSubject<Void> { get set }
     var tappedShare: PublishSubject<Void> { get set }
@@ -57,6 +58,41 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
                 self?.sharedAlarmList.accept(sharedAlarmList)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func removeAlarm(indexPath: IndexPath, alarm: Alarm) {
+        
+//        if alarm.type != .share
+//             {
+//            var list = self.activeAlarmList.value
+//            if let index = list.firstIndex(of: alarm) {
+//                    list.remove(at: index)
+//            }
+//            self.activeAlarmList.accept(list)
+//        } else if alarm.type == .share {
+//            var list = self.sharedAlarmList.value
+//            if let index = list.firstIndex(of: alarm) {
+//                list.remove(at: index)
+//            }
+//            self.sharedAlarmList.accept(list)
+//        }
+        
+        alarmStorage.deleteAlarm(alarm: alarm)
+            .subscribe(onNext: { [weak self] alarm in
+                if alarm.type != .share,
+                    var list = self?.activeAlarmList.value,
+                    let index = list.firstIndex(of: alarm) {
+                    list.remove(at: index)
+                    self?.activeAlarmList.accept(list)
+                } else if alarm.type == .share,
+                    var list = self?.sharedAlarmList.value,
+                    let index = list.firstIndex(of: alarm) {
+                    list.remove(at: index)
+                    self?.sharedAlarmList.accept(list)
+                }
+            })
+            .disposed(by: disposeBag)
+    
     }
     
     var checkAlarm = PublishSubject<Alarm>()
@@ -254,7 +290,16 @@ enum AlarmSectionModel {
     case BeforeSection(title: String, items: [AlarmItem])
 }
 
-enum AlarmItem: Equatable {
+enum AlarmItem: IdentifiableType, Equatable {
+    typealias Identity = Int64
+    var identity: Identity {
+        switch self {
+        case let .ArriveItem(alarm): return alarm.id
+        case let .DepartureItem(alarm): return alarm.id
+        case let .ShareItem(alarm): return alarm.id
+        }
+    }
+    
     case ArriveItem(alarm: Alarm)
     case DepartureItem(alarm: Alarm)
     case ShareItem(alarm: Alarm)
@@ -268,9 +313,20 @@ enum AlarmItem: Equatable {
     }
 }
 
-extension AlarmSectionModel: SectionModelType {
+extension AlarmSectionModel: AnimatableSectionModelType {
     
+    typealias Identify = String
     typealias Item = AlarmItem
+    
+    var identity: String {
+        switch self {
+        case let .TodaySection(title, _): return title
+        case let .YesterdaySection(title, _): return title
+        case let .WeekSection(title, _): return title
+        case let .MonthSection(title, _): return title
+        case let .BeforeSection(title, _): return title
+        }
+    }
     
     var items: [AlarmItem] {
         switch self {

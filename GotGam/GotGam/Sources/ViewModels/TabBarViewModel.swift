@@ -27,6 +27,7 @@ class TabBarViewModel: CommonViewModel {
         alarmStorage.fetchAlarmList()
             .subscribe(onNext: { [weak self] alarmList in
                 let badgeCount = alarmList.filter { $0.isChecked == false }.count
+                
                 self?.alarmBadgeCount.accept(badgeCount)
             })
             .disposed(by: disposeBag)

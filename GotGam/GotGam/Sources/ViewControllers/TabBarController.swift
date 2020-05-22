@@ -35,7 +35,8 @@ class TabBarController: UITabBarController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        tabBar.items?[2].badgeValue = "\(viewModel.alarmBadgeCount.value)"
+        let count = viewModel.alarmBadgeCount.value
+        tabBar.items?[2].badgeValue = count == 0 ? nil : "\(viewModel.alarmBadgeCount.value)"
 
 //        rx.didSelect
 //            .map { [weak self] in

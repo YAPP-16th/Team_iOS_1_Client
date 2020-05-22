@@ -57,10 +57,10 @@ class SetTagViewController: BaseViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
         
         Observable.zip(tagTableView.rx.itemDeleted, tagTableView.rx.modelDeleted(AddTagItem.self))
-            .bind { [unowned self] indexPath, tagItem in
+            .bind { [weak self] indexPath, tagItem in
                 
                 if case let .TagListItem(tag) = tagItem {
-                    self.viewModel.inputs.removeTag(indexPath: indexPath, tag: tag)
+                    self?.viewModel.inputs.removeTag(indexPath: indexPath, tag: tag)
                 }
                 
             }

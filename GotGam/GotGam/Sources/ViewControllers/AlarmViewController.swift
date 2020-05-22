@@ -75,6 +75,19 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
+        Observable.zip(alarmTableView.rx.itemDeleted, alarmTableView.rx.modelDeleted(AlarmItem.self))
+            .bind { [weak self] indexPath, item in
+                 switch item {
+                 case let .ArriveItem(alarm):
+                     self?.viewModel.inputs.removeAlarm(indexPath: indexPath, alarm: alarm)
+                 case let .DepartureItem(alarm):
+                     self?.viewModel.inputs.removeAlarm(indexPath: indexPath, alarm: alarm)
+                 case let .ShareItem(alarm):
+                     self?.viewModel.inputs.removeAlarm(indexPath: indexPath, alarm: alarm)
+                 }
+            }
+            .disposed(by: disposeBag)
+        
         // Outputs
         
         viewModel.outputs.currentAlarm
@@ -113,7 +126,9 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
         Observable.combineLatest(viewModel.outputs.activeBadgeCount, viewModel.outputs.sharedBadgeCount)
             .subscribe(onNext: { [weak self] active, shared in
                 if let tabItems = self?.tabBarController?.tabBar.items {
-                    tabItems[2].badgeValue = "\(active + shared)"
+                    let count = active + shared
+                    
+                    tabItems[2].badgeValue = count == 0 ? nil : "\(active + shared)"
                 }
             })
             .disposed(by: disposeBag)
@@ -132,8 +147,13 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
 }
 
 extension AlarmViewController {
-    static func dataSource(viewModel: AlarmViewModel) -> RxTableViewSectionedReloadDataSource<AlarmSectionModel> {
-        return RxTableViewSectionedReloadDataSource<AlarmSectionModel>(
+    static func dataSource(viewModel: AlarmViewModel) -> RxTableViewSectionedAnimatedDataSource<AlarmSectionModel> {
+        return RxTableViewSectionedAnimatedDataSource<AlarmSectionModel>(
+            animationConfiguration: AnimationConfiguration(
+                insertAnimation: .none,
+                reloadAnimation: .fade,
+                deleteAnimation: .none),
+            
             configureCell: { dataSource, table, indexPath, _ in
                 switch dataSource[indexPath] {
                 case let .ArriveItem(alarm):
@@ -147,7 +167,7 @@ extension AlarmViewController {
                     return cell
                 case .ShareItem(let alarm):
                     // TODO: - share item cell 변경
-                    guard let cell = table.dequeueReusableCell(withIdentifier: "createGridCell", for: indexPath) as? AlarmDepartureTableViewCell else { return UITableViewCell()}
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "departureCell", for: indexPath) as? AlarmDepartureTableViewCell else { return UITableViewCell()}
                     cell.viewModel = viewModel
                     return cell
                 }
@@ -155,6 +175,9 @@ extension AlarmViewController {
             titleForHeaderInSection: { dataSource, index in
                 let section = dataSource[index]
                 return section.title
+            },
+            canEditRowAtIndexPath: { dataSource, index in
+                return true
             }
         )
     }
@@ -174,5 +197,18 @@ extension AlarmViewController: UITableViewDelegate {
         let view = UIView()
         view.backgroundColor = .clear
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .normal, title: "삭제") { [weak self] (action, view, success: (Bool) -> Void) in
+            
+            self?.alarmTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+            
+            success(true)
+        }
+        
+        deleteAction.backgroundColor = .saffron
+        return .init(actions: [deleteAction])
     }
 }
