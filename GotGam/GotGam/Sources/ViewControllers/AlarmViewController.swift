@@ -32,13 +32,21 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
         
         // Inputs
         
+        activeButton.rx.tap
+            .throttle(.microseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.tappedActive)
+            .disposed(by: disposeBag)
+        
+        shareButton.rx.tap
+            .throttle(.microseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.tappedShare)
+            .disposed(by: disposeBag)
+        
         Observable.zip(alarmTableView.rx.itemSelected, alarmTableView.rx.modelSelected(AlarmItem.self))
             .subscribe(onNext: { [weak self] (indexPath, item) in
                 switch item {
                 case let .ArriveItem(alarm):
                     self?.viewModel.inputs.checkAlarm.onNext(alarm)
-//                    guard let cell = self?.alarmTableView.cellForRow(at: indexPath) as? AlarmArriveTableViewCell else { return }
-                    
                 case let .DepartureItem(alarm):
                     self?.viewModel.inputs.checkAlarm.onNext(alarm)
                 case let .ShareItem(alarm):
@@ -92,7 +100,7 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
         
         let dataSource = AlarmViewController.dataSource(viewModel: viewModel)
-        viewModel.outputs.activeDataSource
+        viewModel.outputs.currentDataSource
             .bind(to: alarmTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -110,7 +118,6 @@ extension AlarmViewController {
                 switch dataSource[indexPath] {
                 case let .ArriveItem(alarm):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "arriveCell", for: indexPath) as? AlarmArriveTableViewCell else { return UITableViewCell()}
-                    print("arrivecell")
                     cell.configure(viewModel: viewModel, alarm: alarm)
                     return cell
                     

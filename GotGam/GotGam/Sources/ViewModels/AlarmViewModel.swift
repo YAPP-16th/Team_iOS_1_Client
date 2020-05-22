@@ -19,14 +19,17 @@ enum AlarmCategoryType {
 protocol AlarmViewModelInputs {
     func fetchAlarmList()
     var checkAlarm: PublishSubject<Alarm> { get set }
+    var tappedActive: PublishSubject<Void> { get set }
+    var tappedShare: PublishSubject<Void> { get set }
 }
 
 protocol AlarmViewModelOutputs {
-    var currentAlarm: BehaviorSubject<AlarmCategoryType> { get }
+    var currentAlarm: BehaviorRelay<AlarmCategoryType> { get }
     var activeBadgeCount: BehaviorRelay<Int> { get }
     var sharedBadgeCount: BehaviorRelay<Int> { get }
-    var activeDataSource: BehaviorRelay<[AlarmSectionModel]> { get }
-    var sharedDataSource: BehaviorRelay<[AlarmSectionModel]> { get }
+    var currentDataSource: BehaviorRelay<[AlarmSectionModel]> { get }
+//    var activeDataSource: BehaviorRelay<[AlarmSectionModel]> { get }
+//    var sharedDataSource: BehaviorRelay<[AlarmSectionModel]> { get }
 }
 
 protocol AlarmViewModelType {
@@ -40,6 +43,8 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     
     // MARK: Inputs
     
+    var tappedActive = PublishSubject<Void>()
+    var tappedShare = PublishSubject<Void>()
     func fetchAlarmList() {
         alarmStorage.fetchAlarmList()
             .subscribe(onNext: { [weak self] alarmList in
@@ -58,11 +63,11 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     
     // MARK: Outputs
     
-    var currentAlarm = BehaviorSubject<AlarmCategoryType>(value: .active)
+    var currentDataSource = BehaviorRelay<[AlarmSectionModel]>(value: [])
+    var currentAlarm = BehaviorRelay<AlarmCategoryType>(value: .active)
     var activeBadgeCount = BehaviorRelay<Int>(value: 0)
     var sharedBadgeCount = BehaviorRelay<Int>(value: 0)
-    var activeDataSource = BehaviorRelay<[AlarmSectionModel]>(value: [])
-    var sharedDataSource = BehaviorRelay<[AlarmSectionModel]>(value: [])
+    
     
     
     // MARK: - Methods
@@ -89,6 +94,8 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     
     private var activeAlarmList = BehaviorRelay<[Alarm]>(value: [])
     private var sharedAlarmList = BehaviorRelay<[Alarm]>(value: [])
+    private var activeDataSource = BehaviorRelay<[AlarmSectionModel]>(value: [])
+    private var sharedDataSource = BehaviorRelay<[AlarmSectionModel]>(value: [])
     
     var inputs: AlarmViewModelInputs { return self }
     var outputs: AlarmViewModelOutputs { return self }
@@ -109,6 +116,28 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
 //                }
 //            })
 //            .disposed(by: disposeBag)
+        
+        checkAlarm
+            .subscribe(onNext: { [weak self] alarm in
+                var newAlarm = alarm
+                newAlarm.isChecked = true
+                alarmStorage.updateAlarm(to: newAlarm)
+                
+                if alarm.type == .share {
+                    guard var list = self?.sharedAlarmList.value else { return }
+                    if let index = list.firstIndex(of: alarm) {
+                        list[index].isChecked = true
+                        self?.sharedAlarmList.accept(list)
+                    }
+                } else {
+                    guard var list = self?.activeAlarmList.value else { return }
+                    if let index = list.firstIndex(of: alarm) {
+                        list[index].isChecked = true
+                        self?.activeAlarmList.accept(list)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
         
         activeAlarmList
             .compactMap { [weak self] in self?.configureDataSource($0) }
@@ -132,27 +161,40 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
             .bind(to: sharedBadgeCount)
             .disposed(by: disposeBag)
         
-        checkAlarm
-            .subscribe(onNext: { [weak self] alarm in
-                var newAlarm = alarm
-                newAlarm.isChecked = true
-                alarmStorage.updateAlarm(to: newAlarm)
-                
-                if alarm.type == .share {
-                    guard var list = self?.sharedAlarmList.value else { return }
-                    if let index = list.firstIndex(of: alarm) {
-                        list[index].isChecked = true
-                        self?.sharedAlarmList.accept(list)
-                    }
+        Observable
+            .combineLatest(activeDataSource, sharedDataSource)
+            .subscribe(onNext: { [weak self] activeDS, shareDS in
+                if self?.currentAlarm.value == .active {
+                    self?.currentDataSource.accept(activeDS)
                 } else {
-                    guard var list = self?.activeAlarmList.value else { return }
-                    if let index = list.firstIndex(of: alarm) {
-                        list[index].isChecked = true
-                        self?.activeAlarmList.accept(list)
-                    }
+                    self?.currentDataSource.accept(shareDS)
                 }
             })
             .disposed(by: disposeBag)
+
+        tappedActive
+            .subscribe(onNext: { [weak self] _ in
+                self?.currentAlarm.accept(.active)
+            })
+            .disposed(by: disposeBag)
+        
+        tappedShare
+            .subscribe(onNext: { [weak self] _ in
+                self?.currentAlarm.accept(.share)
+            })
+            .disposed(by: disposeBag)
+        
+        currentAlarm
+            .subscribe(onNext: { [weak self] type in
+                if type == .active {
+                    self?.currentDataSource.accept(self?.activeDataSource.value ?? [])
+                } else {
+                    self?.currentDataSource.accept(self?.sharedDataSource.value ?? [])
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
         
         
 //        alarmList
@@ -213,7 +255,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
         } else if !monthItems.isEmpty {
             let section: AlarmSectionModel = .WeekSection(title: "이번달", items: monthItems)
             alarmSection.append(section)
-        } else {
+        } else if !beforeItems.isEmpty {
             let section: AlarmSectionModel = .BeforeSection(title: "이전활동", items: beforeItems)
             alarmSection.append(section)
         }
