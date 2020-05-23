@@ -11,6 +11,13 @@ import RxSwift
 
 extension UIViewController {
     var sceneViewController: UIViewController {
+        
+        if let tabBarController = self as? UITabBarController {
+            let index = tabBarController.selectedIndex
+            let currentVC = tabBarController.viewControllers?[index]
+            return currentVC?.children.first ?? self
+        }
+        
         return self.children.first ?? self
     }
 }
@@ -63,6 +70,8 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             target = scene.instantiate(from: "Map")
         case .list:
             target = scene.instantiate(from: "List")
+        case .gotBox:
+            target = scene.instantiate(from: "List")
         case .add:
             target = scene.instantiate(from: "Map")
         case .setTag:
@@ -84,6 +93,8 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
 		case .searchBar:
             target = scene.instantiate(from: "SearchBar")
         }
+        
+        print("✅ will transition, currentVC: \(currentVC)")
         
         switch style {
         case .root:
@@ -121,6 +132,7 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             currentVC = target.sceneViewController
         }
         
+        print("✅ did transition, currentVC: \(currentVC)")
         return subject.ignoreElements()
     }
     
@@ -128,9 +140,12 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
     func close(animated: Bool) -> Completable {
         let subject = PublishSubject<Void>()
 
+        print("✅ will close, currentVC: \(currentVC)")
+        
         if let presentingVC = currentVC.presentingViewController {
             currentVC.dismiss(animated: animated) {
                 self.currentVC = presentingVC.sceneViewController
+                print("✅ did close, currentVC: \(self.currentVC)")
                 subject.onCompleted()
             }
         } else if let nav = currentVC.navigationController {
@@ -140,17 +155,21 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             }
 
             currentVC = nav.viewControllers.last!
+            print("✅ did close, currentVC: \(self.currentVC)")
             subject.onCompleted()
         } else {
             subject.onError(TransitionError.unknown)
         }
 
+        
         return subject.ignoreElements()
     }
     
     @discardableResult
     func pop(animated: Bool) -> Completable {
         let subject = PublishSubject<Void>()
+        
+        print("✅ will pop, currentVC: \(currentVC)")
         
         if let nav = currentVC.navigationController {
             guard nav.popViewController(animated: animated) != nil else {
@@ -163,6 +182,7 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             subject.onCompleted()
         }
         
+        print("✅ did pop, currentVC: \(currentVC)")
         return subject.ignoreElements()
     }
     
