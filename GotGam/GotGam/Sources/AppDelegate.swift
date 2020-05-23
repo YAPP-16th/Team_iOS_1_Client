@@ -98,13 +98,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         let familyName = user.profile.familyName
         let email = user.profile.email
         
-        print("userId: ", userId)
-        print("idToken: ", idToken)
-        print("fullName: ", fullName)
-        print("givenName: ", givenName)
-        print("familyName: ", familyName)
-        print("email: ", email)
-        
         let provider = MoyaProvider<GotAPIService>()
         
         if let id = userId, let email = email, let token = idToken{
@@ -119,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         let token = loginResponse.user.token
                         UserDefaults.standard.set(token, forDefines: .userToken)
                         UserDefaults.standard.set(true, forDefines: .isLogined)
-                        
+                        UserDefaults.standard.set(email, forDefines: .userID)
                         if let LoginVC = self.window?.rootViewController as? LoginViewController{
                             LoginVC.viewModel.close()
                         }
@@ -138,4 +131,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
     }
 }
-
