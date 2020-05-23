@@ -11,14 +11,26 @@ import UIKit
 class GotBoxTableViewCell: UITableViewCell {
     
     var viewModel: GotBoxViewModel!
+    var got: Got!
+    var moreAction: (() -> Void)?
+    
+    // MARK: - Methods
+    
+    @IBAction func didTapMoreButton(_ sender: UIButton) {
+        self.moreAction?()
+    }
+    
+    // MARK: - Initializing
     
     func configure(viewModel: GotBoxViewModel, got: Got) {
         self.viewModel = viewModel
+        self.got = got
+        
+        tagView.backgroundColor = got.tag?.first?.hex.hexToColor()
         titleLabel.text = got.title
         placeLabel.text = got.place
         
         messageLabel.text = got.arriveMsg == "" ? got.deparetureMsg :  got.arriveMsg
-        
     }
 
     override func awakeFromNib() {

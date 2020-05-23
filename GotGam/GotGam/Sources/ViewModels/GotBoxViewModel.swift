@@ -13,6 +13,8 @@ import RxDataSources
 
 protocol GotBoxViewModelInputs {
     func fetchRequest()
+    func recover(got: Got, at indexPath: IndexPath)
+    func delete(got: Got, at indexPath: IndexPath)
 }
 
 protocol GotBoxViewModelOutputs {
@@ -37,6 +39,25 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
             .map { $0.filter { $0.isDone == true }}
             .bind(to: boxListRelay )
             .disposed(by: disposeBag)
+    }
+    
+    func recover(got: Got, at indexPath: IndexPath) {
+        var updatedGot = got
+        updatedGot.isDone = false
+        storage.updateGot(gotToUpdate: updatedGot)
+        
+        var box = boxListRelay.value
+        box.remove(at: indexPath.row)
+        boxListRelay.accept(box)
+        
+    }
+    
+    func delete(got: Got, at indexPath: IndexPath) {
+        storage.deleteGot(got: got)
+        
+        var box = boxListRelay.value
+        box.remove(at: indexPath.row)
+        boxListRelay.accept(box)
     }
     
     // MARK: - Outpus

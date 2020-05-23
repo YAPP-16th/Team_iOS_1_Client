@@ -14,6 +14,40 @@ import RxDataSources
 class GotBoxViewController: BaseViewController, ViewModelBindableType {
     
     var viewModel: GotBoxViewModel!
+    
+    // MARK: - Methods
+    
+    func showMoreActionSheet(at indexPath: IndexPath) {
+        
+        guard let cell = gotBoxListTableView.cellForRow(at: indexPath) as? GotBoxTableViewCell else { return }
+        
+        let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        let recoverAction = UIAlertAction(title: "되돌리기", style: .default) { [weak self] (action) in
+            self?.viewModel.inputs.recover(got: cell.got, at: indexPath)
+        }
+        
+        let deleteAction = UIAlertAction(title: "삭제", style: .default) { [weak self] (action) in
+            if let vc = self {
+                vc.gotBoxListTableView.dataSource?.tableView?(vc.gotBoxListTableView, commit: .delete, forRowAt: indexPath)
+            }
+            
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
+            
+        }
+        
+        actionSheet.addAction(recoverAction)
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true) {
+            
+        }
+    }
+    
+    // MARK: - Initailizing
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +64,20 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
+        gotBoxListTableView.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        // Inputs
+        
+        Observable.zip(gotBoxListTableView.rx.itemDeleted, gotBoxListTableView.rx.modelDeleted(BoxItem.self))
+            .subscribe(onNext: { [weak self] (indexPath, item) in
+                switch item {
+                case let .gotItem(got):
+                    self?.viewModel.inputs.delete(got: got, at: indexPath)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
         // Outputs
         
         let dataSource = GotBoxViewController.dataSource(viewModel: viewModel, vc: self)
@@ -43,7 +91,6 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
 }
 
 extension GotBoxViewController {
-    
     static func dataSource(viewModel: GotBoxViewModel, vc: GotBoxViewController?) -> RxTableViewSectionedAnimatedDataSource<BoxSectionModel> {
         return RxTableViewSectionedAnimatedDataSource<BoxSectionModel>(
             animationConfiguration: AnimationConfiguration(
@@ -55,6 +102,7 @@ extension GotBoxViewController {
                 case let .gotItem(got):
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: "gotBoxCell", for: indexPath) as? GotBoxTableViewCell else { return UITableViewCell() }
                     cell.configure(viewModel: viewModel, got: got)
+                    cell.moreAction = { vc?.showMoreActionSheet(at: indexPath) }
 //                    cell.moreButton.tag = indexPath.row
 //                    cell.moreAction = {
 //                        vc?.showMoreActionSheet(at: indexPath)
@@ -74,5 +122,29 @@ extension GotBoxViewController {
                 }
             }
         )
+    }
+}
+
+extension GotBoxViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let recoverAction = UIContextualAction(style: .normal, title: "되돌리기") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+
+            guard let cell = tableView.cellForRow(at: indexPath) as? GotBoxTableViewCell else { return }
+
+            self?.viewModel.inputs.recover(got: cell.got, at: indexPath)
+
+            success(true)
+        }
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+
+            self?.gotBoxListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+
+            success(true)
+        }
+        
+        recoverAction.backgroundColor = .saffron
+        return .init(actions: [deleteAction, recoverAction])
     }
 }
