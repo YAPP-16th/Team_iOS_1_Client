@@ -53,8 +53,8 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
         super.viewDidLoad()
 
         let nibName = UINib(nibName: "TagCollectionViewCell", bundle: nil)
-
-        gotBoxListTableView.register(nibName, forCellReuseIdentifier: "tagCell")
+        tagCollectionView.register(nibName, forCellWithReuseIdentifier: "tagCell")
+        tagCollectionView.allowsMultipleSelection = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,7 +64,9 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
+        
         gotBoxListTableView.rx.setDelegate(self).disposed(by: disposeBag)
+        tagCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
         // Inputs
         
@@ -80,6 +82,13 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
         
         // Outputs
         
+        viewModel.outputs.tagListRelay
+            .bind(to: tagCollectionView.rx.items(cellIdentifier: "tagCell", cellType: TagCollectionViewCell.self)) { (index, tag, cell) in
+                cell.configure(tag)
+                cell.layer.cornerRadius = cell.bounds.height/2
+            }
+            .disposed(by: disposeBag)
+        
         let dataSource = GotBoxViewController.dataSource(viewModel: viewModel, vc: self)
         viewModel.outputs.boxSections
             .bind(to: gotBoxListTableView.rx.items(dataSource: dataSource))
@@ -88,6 +97,7 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
     }
     
     @IBOutlet var gotBoxListTableView: UITableView!
+    @IBOutlet var tagCollectionView: UICollectionView!
 }
 
 extension GotBoxViewController {
@@ -146,5 +156,46 @@ extension GotBoxViewController: UITableViewDelegate {
         
         recoverAction.backgroundColor = .saffron
         return .init(actions: [deleteAction, recoverAction])
+    }
+}
+
+extension GotBoxViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //collectionView.deselectItem(at: indexPath, animated: true)
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 0.3
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            
+            cell.contentView.alpha = 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 0.3
+        }
+    }
+}
+
+extension GotBoxViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let title = viewModel.outputs.tagListRelay.value[indexPath.item].name
+        let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 30), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
+        
+        // 8 + 태그뷰 + 8 + 글자 +
+        let width: CGFloat = 8 + 15 + 8 + rect.width + 8
+        // cell height - inset(10)
+        let height: CGFloat = 30
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 5, left: 16, bottom: 5, right: 0)
     }
 }

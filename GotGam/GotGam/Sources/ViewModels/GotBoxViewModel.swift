@@ -20,7 +20,7 @@ protocol GotBoxViewModelInputs {
 protocol GotBoxViewModelOutputs {
     var boxSections: BehaviorRelay<[BoxSectionModel]> { get }
     //var gotList: BehaviorRelay<[Got]> { get }
-    var tagList: BehaviorRelay<[Tag]> { get }
+    var tagListRelay: BehaviorRelay<[Tag]> { get }
 }
 
 protocol GotBoxViewModelType {
@@ -38,6 +38,10 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
         storage.fetchGotList()
             .map { $0.filter { $0.isDone == true }}
             .bind(to: boxListRelay )
+            .disposed(by: disposeBag)
+        
+        storage.fetchTagList()
+            .bind(to: tagListRelay)
             .disposed(by: disposeBag)
     }
     
@@ -63,7 +67,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     // MARK: - Outpus
     
     var boxSections = BehaviorRelay<[BoxSectionModel]>(value: [])
-    var tagList = BehaviorRelay<[Tag]>(value: [])
+    var tagListRelay = BehaviorRelay<[Tag]>(value: [])
     
     // MARK: - Initializing
     

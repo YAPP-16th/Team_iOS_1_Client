@@ -4,9 +4,15 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Spoqa Han Sans Bold.ttf">
+            <string>SpoqaHanSans-Bold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -18,7 +24,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TrT-QT-4Yd">
-                        <rect key="frame" x="0.0" y="19" width="15" height="15"/>
+                        <rect key="frame" x="16" y="19" width="15" height="15"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="NSd-ow-dCK"/>
@@ -26,9 +32,9 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBd-KC-iep">
-                        <rect key="frame" x="23" y="16.5" width="158" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <rect key="frame" x="39" y="18.5" width="142" height="16.5"/>
+                        <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="14"/>
+                        <color key="textColor" name="brownishGrey"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -39,7 +45,7 @@
                 <constraint firstItem="lBd-KC-iep" firstAttribute="leading" secondItem="TrT-QT-4Yd" secondAttribute="trailing" constant="8" id="QYv-wU-Ctw"/>
                 <constraint firstItem="lBd-KC-iep" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="aaX-tp-afi"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lBd-KC-iep" secondAttribute="bottom" id="elL-3B-pDA"/>
-                <constraint firstItem="TrT-QT-4Yd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="rnP-GE-mRX"/>
+                <constraint firstItem="TrT-QT-4Yd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="rnP-GE-mRX"/>
                 <constraint firstAttribute="trailing" secondItem="lBd-KC-iep" secondAttribute="trailing" constant="8" id="s5U-hU-1jz"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -51,4 +57,9 @@
             <point key="canvasLocation" x="238.40579710144928" y="96.763392857142847"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <namedColor name="brownishGrey">
+            <color red="0.3919999897480011" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

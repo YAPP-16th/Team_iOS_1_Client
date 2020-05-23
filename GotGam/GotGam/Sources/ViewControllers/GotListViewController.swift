@@ -67,11 +67,15 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         //configureSearchController()
         listAddButton.layer.cornerRadius = listAddButton.bounds.height/2
         listAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
+        
+        let nibName = UINib(nibName: "TagCollectionViewCell", bundle: nil)
+        tagCollectionView.register(nibName, forCellWithReuseIdentifier: "tagCell")
+        tagCollectionView.allowsMultipleSelection = true
     }
   
     override func viewWillAppear(_ animated: Bool) {
         viewModel.inputs.fetchRequest()
-        tagCollectionView.allowsMultipleSelection = true
+        
     }
     
     // MARK: - Initializing
@@ -128,10 +132,10 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
 
         viewModel.outputs.tagList
-            .bind(to: tagCollectionView.rx.items(cellIdentifier: "tagListCell", cellType: TagListCollectionViewCell.self)) { (index, tag, cell) in
+            .bind(to: tagCollectionView.rx.items(cellIdentifier: "tagCell", cellType: TagCollectionViewCell.self)) { (index, tag, cell) in
                 cell.configure(tag)
                 cell.layer.cornerRadius = cell.bounds.height/2
-                cell.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 3), opacity: 0.2)
+                //cell.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 3), opacity: 0.2)
             }
             .disposed(by: disposeBag)
         
@@ -225,25 +229,23 @@ extension GotListViewController: UITableViewDelegate {
 extension GotListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //collectionView.deselectItem(at: indexPath, animated: true)
-        if let cell = collectionView.cellForItem(at: indexPath) as? TagListCollectionViewCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
             cell.contentView.alpha = 0.3
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? TagListCollectionViewCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
             
             cell.contentView.alpha = 1
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? TagListCollectionViewCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
             cell.contentView.alpha = 0.3
         }
     }
-    
-    
 }
 
 // MARK: - UICollectionView Delegate FlowLayout
