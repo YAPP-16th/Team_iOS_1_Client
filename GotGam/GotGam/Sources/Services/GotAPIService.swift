@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import Alamofire
 import Moya
+import RxSwift
 
 enum GotAPIService{
     
@@ -201,17 +203,52 @@ class NetworkAPIManager{
         self.provider = MoyaProvider<GotAPIService>()
     }
   
+    func getUser(token: String, completion: @escaping (User?) -> Void){
+        provider.request(.getUser(token)) { (result) in
+            switch result{
+            case .success(let response):
+                do{
+                    let jsonDecoder = JSONDecoder()
+                    let user = try jsonDecoder.decode(LoginResponse.self, from: response.data)
+                    completion(user.user)
+                }catch let error{
+                    print(error.localizedDescription)
+                    completion(nil)
+                }
+            case .failure(let error):
+                print(error)
+                completion(nil)
+            }
+        }
+    }
+    
+    func getProfileImage(url urlString: String, completion: @escaping ((UIImage) -> Void)){
+        AF.download(urlString).responseData { result in
+            if let data = result.value, let image = UIImage(data: data){
+                completion(image)
+            }
+        }
+    }
+        
     func createTask(got: Got){
         
     }
     
-    func getTasks(){
+    func getTasks(completion: @escaping (User?) -> Void){
         provider.request(.getTasks) { (result) in
             switch result{
             case .success(let response):
-                print(String(data: response.data, encoding: .utf8))
+                do{
+                    let jsonDecoder = JSONDecoder()
+                    let user = try jsonDecoder.decode(User.self, from: response.data)
+                    completion(user)
+                }catch let error{
+                    print(error.localizedDescription)
+                    completion(nil)
+                }
             case .failure(let error):
                 print(error)
+                completion(nil)
             }
         }
     }

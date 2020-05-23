@@ -19,7 +19,7 @@ class MapQuickAddView: UIView{
     var contentView: UIView!
     var viewModel: MapQuickAddViewModel!
     
-    var addAction: ((String?) -> Void)? = { _ in }
+    var addAction: ((String?) -> Void)?
     
     @IBAction func quickAddAction(){
         if addField.isFirstResponder{

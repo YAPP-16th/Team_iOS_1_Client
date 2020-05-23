@@ -17,7 +17,11 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 	@IBOutlet var settingTableView: UITableView!
 	
 	@IBOutlet var loginView: UIView!
-	
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    
+    
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -26,6 +30,10 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 		loginView.addGestureRecognizer(tapRecognizer)
 		
 	}
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel.inputs.updateUserInfo()
+    }
 	
 	@objc func loginTapped(sender: UIView) {
 		self.viewModel.inputs.showLoginDetailVC()
@@ -59,7 +67,14 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 			})
 			.disposed(by: disposeBag)
 				
-		
+        self.viewModel.outputs.userInfo.bind { user in
+            self.nicknameLabel.text = user.nickname
+            self.emailLabel.text = user.userID
+            self.viewModel.inputs.getProfileImage(url: user.profileImageURL)
+        }.disposed(by: disposeBag)
+        
+        self.viewModel.profileImage.bind(to: self.profileImageView.rx.image)
+        .disposed(by: disposeBag)
 	}
 }
 

@@ -11,6 +11,8 @@ import RxSwift
 
 
 protocol SettingViewModelInputs {
+    func updateUserInfo()
+    func getProfileImage(url: String)
     func showAlarmDetailVC()
 	func showOtherDetailVC()
 	func showPlaceDetailVC()
@@ -19,6 +21,8 @@ protocol SettingViewModelInputs {
 
 protocol SettingViewModelOutputs {
 	var settingMenu: Observable<[String]> { get }
+    var userInfo: PublishSubject<User> { get set }
+    var profileImage: PublishSubject<UIImage> { get set }
 }
 
 protocol SettingViewModelType {
@@ -28,7 +32,26 @@ protocol SettingViewModelType {
 
 
 class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelInputs, SettingViewModelOutputs {
-	
+	var userInfo = PublishSubject<User>()
+    var profileImage = PublishSubject<UIImage>()
+    
+    func updateUserInfo() {
+        if UserDefaults.standard.bool(forDefines: .isLogined), let userId = UserDefaults.standard.string(forDefines: .userID){
+            NetworkAPIManager.shared.getUser(token: userId) { user in
+                if let user = user{
+                    self.userInfo.onNext(user)
+                }
+            }
+        }
+    }
+    
+    
+    func getProfileImage(url: String) {
+        NetworkAPIManager.shared.getProfileImage(url: url) { (image) in
+            self.profileImage.onNext(image)
+        }
+    }
+    
 	func showAlarmDetailVC() {
 		
 		let movesettingalarmVM = SettingAlarmViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
@@ -47,8 +70,14 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
 	}
 	
 	func showLoginDetailVC() {
-		let movesettingloginVM = SettingLoginViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-        sceneCoordinator.transition(to: .settingLogin(movesettingloginVM), using: .push, animated: true)
+        if !UserDefaults.standard.bool(forDefines: .isLogined){
+            let loginViewModel = LoginViewModel(sceneCoordinator: sceneCoordinator)
+            sceneCoordinator.transition(to: .login(loginViewModel), using: .modal, animated: true)
+        }else{
+            let movesettingloginVM = SettingLoginViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+            sceneCoordinator.transition(to: .settingLogin(movesettingloginVM), using: .push, animated: true)
+        }
+		
 	}
 	
 	var settingMenu = Observable<[String]>.just(["푸시 알람 설정", "자주 가는 장소 설정", "약관 및 정책"])
@@ -62,6 +91,4 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
     }
-	
-    
 }

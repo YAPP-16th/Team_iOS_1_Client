@@ -32,12 +32,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
     
 	@IBAction func moveSearch(_ sender: UITextField) {
-//		let bundle = Bundle.main
-//		let sb = UIStoryboard(name: "SearchBar", bundle: bundle)
-//		guard let hvc = sb.instantiateInitialViewController() else { return }
-//
-//		hvc.modalPresentationStyle = .fullScreen
-//		self.present(hvc, animated: false)
 		if sender.isFirstResponder{
 			sender.resignFirstResponder()
 		}
@@ -77,8 +71,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.seedImageView.isHidden = true
         self.restoreView.isHidden = true
         
-        self.quickAddView.addAction = { [weak self] text in
-            guard let self = self else { return }
+        
+    }
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.quickAddView.addAction = { text in
             
             let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
             let got = Got(id: Int64(arc4random()), title: text, latitude: centerPoint.latitude, longitude: centerPoint.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
@@ -89,12 +89,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.cardCollectionView.isHidden = false
             self.view.layoutIfNeeded()
         }
-    }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         LocationManager.shared.startUpdatingLocation()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)

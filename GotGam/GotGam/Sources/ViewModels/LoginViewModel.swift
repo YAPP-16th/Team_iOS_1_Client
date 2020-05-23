@@ -74,6 +74,7 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
                                 let token = loginResponse.user.token
                                 UserDefaults.standard.set(token, forDefines: .userToken)
                                 UserDefaults.standard.set(true, forDefines: .isLogined)
+                                UserDefaults.standard.set(loginResponse.user.userID, forDefines: .userID)
                                 self.close()
                             }catch let error{
                                 print(error)

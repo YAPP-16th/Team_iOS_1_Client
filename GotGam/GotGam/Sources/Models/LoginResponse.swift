@@ -24,7 +24,8 @@ struct User: Codable {
     let taskIDS: [String]
     let frequentIDS: [String]
     let tagIDS: [String]
-    let id, userID, nickname, token: String
+    let id, userID, nickname: String
+    let token: String?
     let joinedDate: String
     let v: Int
 
