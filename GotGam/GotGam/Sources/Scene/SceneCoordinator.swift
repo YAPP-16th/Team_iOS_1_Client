@@ -9,48 +9,11 @@
 import Foundation
 import RxSwift
 
-extension UIViewController {
-    var sceneViewController: UIViewController {
-        
-        if let tabBarController = self as? UITabBarController {
-            let index = tabBarController.selectedIndex
-            let currentVC = tabBarController.viewControllers?[index]
-            return currentVC?.children.first ?? self
-        }
-        
-        return self.children.first ?? self
-    }
-}
-
 class SceneCoordinator: NSObject, SceneCoordinatorType {
-    
-    static func actualViewController(for viewController: UIViewController) -> UIViewController {
-        var controller = viewController
-        if let tabBarController = controller as? UITabBarController {
-            guard let selectedViewController = tabBarController.selectedViewController else {
-                return tabBarController
-            }
-            controller = selectedViewController
-            
-            return actualViewController(for: controller)
-        }
 
-        if let navigationController = viewController as? UINavigationController {
-            controller = navigationController.viewControllers.first!
-            
-            return actualViewController(for: controller)
-        }
-        return controller
-    }
-    
     var disposeBag = DisposeBag()
-    
     var window: UIWindow
-    var currentVC: UIViewController {
-        didSet {
-            currentVC.tabBarController?.delegate = self
-        }
-    }
+    var currentVC: UIViewController
     
     required init(window: UIWindow) {
         self.window = window
@@ -64,42 +27,14 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
         
         let subject = PublishSubject<Void>()
         var target: UIViewController
-        
-        switch scene{
-        case .map:
-            target = scene.instantiate(from: "Map")
-        case .list:
-            target = scene.instantiate(from: "List")
-        case .gotBox:
-            target = scene.instantiate(from: "List")
-        case .add:
-            target = scene.instantiate(from: "Map")
-        case .setTag:
-            target = scene.instantiate(from: "Map")
-        case .createTag:
-            target = scene.instantiate(from: "Map")
-        case .login:
-            target = scene.instantiate()
-        case .tabBar:
-            target = scene.instantiate(from: "Main")
-		case .settingAlarm:
-			target = scene.instantiate(from: "Setting")
-		case .settingOther:
-			target = scene.instantiate(from: "Setting")
-		case .settingPlace:
-			target = scene.instantiate(from: "Setting")
-		case .settingLogin:
-			target = scene.instantiate(from: "Setting")
-		case .searchBar:
-            target = scene.instantiate(from: "SearchBar")
-        }
+        target = scene.target
         
         print("✅ will transition, currentVC: \(currentVC)")
-        
         switch style {
         case .root:
             currentVC = target.sceneViewController
             window.rootViewController = target
+            currentVC.tabBarController?.delegate = self
             subject.onCompleted()
             
         case .push:
@@ -204,10 +139,46 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
         return Completable.empty()
     }
     
+    // MARK: - Helpers
+    
+    static func actualViewController(for viewController: UIViewController) -> UIViewController {
+        var controller = viewController
+        if let tabBarController = controller as? UITabBarController {
+            guard let selectedViewController = tabBarController.selectedViewController else {
+                return tabBarController
+            }
+            controller = selectedViewController
+            
+            return actualViewController(for: controller)
+        }
+
+        if let navigationController = viewController as? UINavigationController {
+            controller = navigationController.viewControllers.first!
+            
+            return actualViewController(for: controller)
+        }
+        return controller
+    }
+}
+
+extension UIViewController {
+    var sceneViewController: UIViewController {
+        
+        if let tabBarController = self as? UITabBarController {
+            let index = tabBarController.selectedIndex
+            if let currentVC = tabBarController.viewControllers?[index] {
+                return currentVC.children.first ?? currentVC
+            }
+        }
+        
+        return self.children.first ?? self
+    }
+    
 }
 
 extension SceneCoordinator: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         currentVC = SceneCoordinator.actualViewController(for: viewController)
+        print("✅ did change tab, currentVC: \(currentVC)")
     }
 }
