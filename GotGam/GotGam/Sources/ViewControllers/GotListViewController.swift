@@ -145,7 +145,7 @@ extension GotListViewController {
     static func dataSource(viewModel: GotListViewModel, vc: GotListViewController?) -> RxTableViewSectionedAnimatedDataSource<ListSectionModel> {
         return RxTableViewSectionedAnimatedDataSource<ListSectionModel>(
             animationConfiguration: AnimationConfiguration(
-                insertAnimation: .top,
+                insertAnimation: .left,
                 reloadAnimation: .fade,
                 deleteAnimation: .left),
             configureCell: { dataSource, tableView, indexPath, _ in

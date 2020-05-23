@@ -171,7 +171,7 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
         
         let mapViewModel = MapViewModel(sceneCoordinator: self, storage: gotService)
         let gotListViewModel = GotListViewModel(sceneCoordinator: self, storage: gotService)
-        let alarmViewModel = AlarmViewModel(sceneCoordinator: self, storage: alarmService)
+        let alarmViewModel = AlarmViewModel(sceneCoordinator: self, alarmStorage: alarmService, gotStorage: gotService)
         let settingViewModel = SettingViewModel(sceneCoordinator: self, storage: gotService)
         
         let mapTab = Tab.map(viewModel: mapViewModel)

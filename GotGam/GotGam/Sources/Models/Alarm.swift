@@ -10,7 +10,7 @@ import Foundation
 
 enum AlarmType: Int16 {
     case arrive = 0
-    case leave = 1
+    case departure = 1
     case share = 2
 }
 
@@ -22,7 +22,14 @@ struct Alarm: Equatable {
     var checkedDate: Date?
     var got: Got?
     
-    init(id: Int64, type: AlarmType, createdDate: Date? = Date(), checkedDate: Date?, isChecked: Bool = false, got: Got?) {
+    init(
+        id: Int64,
+        type: AlarmType,
+        createdDate: Date? = Date(),
+        checkedDate: Date? = nil,
+        isChecked: Bool = false,
+        got: Got?
+    ) {
         self.id = id
         self.type = type
         self.createdDate = createdDate
