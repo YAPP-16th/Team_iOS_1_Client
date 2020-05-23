@@ -48,9 +48,10 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
            .disposed(by: disposeBag)
        
        storage.fetchGotList()
+           // .do(onNext: { print($0)})
            .map { $0.filter { $0.isDone != true }}
-           .subscribe(onNext: { list in
-               self.gotList.accept(list)
+           .subscribe(onNext: { [weak self] list in
+               self?.gotList.accept(list)
            })
            .disposed(by: disposeBag)
     }

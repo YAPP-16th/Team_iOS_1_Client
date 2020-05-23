@@ -34,11 +34,8 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     
     func fetchRequest() {
         storage.fetchGotList()
-            .subscribe(onNext: { [weak self] gotList in
-                print(gotList)
-                let boxList = gotList.filter { $0.isDone == true }
-                self?.boxListRelay.accept(boxList)
-            })
+            .map { $0.filter { $0.isDone == true }}
+            .bind(to: boxListRelay )
             .disposed(by: disposeBag)
     }
     
@@ -61,7 +58,6 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
         
         boxListRelay
             .subscribe(onNext: { [weak self] (boxList) in
-                print(boxList)
                 self?.boxSections.accept(self?.configureDataSource(boxList: boxList) ?? [])
             })
             .disposed(by: disposeBag)

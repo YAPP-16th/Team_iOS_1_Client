@@ -20,8 +20,12 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
 
         let nibName = UINib(nibName: "TagCollectionViewCell", bundle: nil)
 
-
         gotBoxListTableView.register(nibName, forCellReuseIdentifier: "tagCell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.inputs.fetchRequest()
     }
     
     func bindViewModel() {
@@ -49,7 +53,7 @@ extension GotBoxViewController {
             configureCell: { dataSource, tableView, indexPath, _ in
                 switch dataSource[indexPath] {
                 case let .gotItem(got):
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath) as? GotBoxTableViewCell else { return UITableViewCell() }
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: "gotBoxCell", for: indexPath) as? GotBoxTableViewCell else { return UITableViewCell() }
                     cell.configure(viewModel: viewModel, got: got)
 //                    cell.moreButton.tag = indexPath.row
 //                    cell.moreAction = {

@@ -27,6 +27,7 @@
 		4269388724306B66007B60FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388524306B66007B60FD /* Main.storyboard */; };
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
+		4C00F8DF24796045006AD726 /* Scene+target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C00F8DE24796045006AD726 /* Scene+target.swift */; };
 		4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */; };
 		4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */; };
 		4C5185ED2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */; };
@@ -67,6 +68,11 @@
 		4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD536F245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift */; };
 		4CC5AC07247672AD00FE9034 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5AC06247672AD00FE9034 /* Date+.swift */; };
 		4CC5AC092476B9F800FE9034 /* AlarmShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5AC082476B9F800FE9034 /* AlarmShareTableViewCell.swift */; };
+		4CC5AC0B2477E59400FE9034 /* GotBoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5AC0A2477E59400FE9034 /* GotBoxViewModel.swift */; };
+		4CD03D6C2478CC0C00210353 /* GotBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD03D6B2478CC0C00210353 /* GotBoxViewController.swift */; };
+		4CD03D6F2478D35C00210353 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD03D6D2478D35C00210353 /* TagCollectionViewCell.swift */; };
+		4CD03D702478D35C00210353 /* TagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CD03D6E2478D35C00210353 /* TagCollectionViewCell.xib */; };
+		4CD03D742479056F00210353 /* GotBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD03D732479056F00210353 /* GotBoxTableViewCell.swift */; };
 		4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037D92438C9330093E39D /* ViewModelBindableType.swift */; };
 		4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DC2438CA590093E39D /* GotStorageType.swift */; };
 		4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE037DE2438CA780093E39D /* GotStorage.swift */; };
@@ -174,6 +180,7 @@
 		4269388824306B68007B60FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		4C00F8DE24796045006AD726 /* Scene+target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+target.swift"; sourceTree = "<group>"; };
 		4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+centerVertically.swift"; sourceTree = "<group>"; };
 		4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -214,6 +221,11 @@
 		4CBD536F245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSelectedTagTableViewCell.swift; sourceTree = "<group>"; };
 		4CC5AC06247672AD00FE9034 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		4CC5AC082476B9F800FE9034 /* AlarmShareTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmShareTableViewCell.swift; sourceTree = "<group>"; };
+		4CC5AC0A2477E59400FE9034 /* GotBoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotBoxViewModel.swift; sourceTree = "<group>"; };
+		4CD03D6B2478CC0C00210353 /* GotBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotBoxViewController.swift; sourceTree = "<group>"; };
+		4CD03D6D2478D35C00210353 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		4CD03D6E2478D35C00210353 /* TagCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCollectionViewCell.xib; sourceTree = "<group>"; };
+		4CD03D732479056F00210353 /* GotBoxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotBoxTableViewCell.swift; sourceTree = "<group>"; };
 		4CE037D92438C9330093E39D /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		4CE037DC2438CA590093E39D /* GotStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorageType.swift; sourceTree = "<group>"; };
 		4CE037DE2438CA780093E39D /* GotStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotStorage.swift; sourceTree = "<group>"; };
@@ -443,6 +455,7 @@
 				297278482473C97E00B75AC7 /* SettingPlaceViewController.swift */,
 				297278462473C96800B75AC7 /* SettingOtherViewController.swift */,
 				29727852247451C500B75AC7 /* SettingLoginViewController.swift */,
+				4CD03D6B2478CC0C00210353 /* GotBoxViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -539,6 +552,7 @@
 				2972784C2473C9E300B75AC7 /* SettingPlaceViewModel.swift */,
 				297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */,
 				4CA2352224758F1F005323EF /* SettingLoginViewModel.swift */,
+				4CC5AC0A2477E59400FE9034 /* GotBoxViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -548,6 +562,7 @@
 			children = (
 				4CE037E02438CA930093E39D /* Transition.swift */,
 				4CE037E62438CB310093E39D /* Scene.swift */,
+				4C00F8DE24796045006AD726 /* Scene+target.swift */,
 				4CE037E42438CB0B0093E39D /* SceneCoordinatorType.swift */,
 				4CE037E82438CBD40093E39D /* SceneCoordinator.swift */,
 				4CF1D0AE244AA41D00B45751 /* Tab.swift */,
@@ -689,6 +704,9 @@
 				4C620D11246C370300B25B86 /* PaddingLabel.swift */,
 				4CA2352424758F5D005323EF /* BadgeButton.swift */,
 				4CC5AC082476B9F800FE9034 /* AlarmShareTableViewCell.swift */,
+				4CD03D6D2478D35C00210353 /* TagCollectionViewCell.swift */,
+				4CD03D6E2478D35C00210353 /* TagCollectionViewCell.xib */,
+				4CD03D732479056F00210353 /* GotBoxTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -789,6 +807,7 @@
 				A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */,
 				A157E10F24555A90001E310D /* map_present.png in Resources */,
 				A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */,
+				4CD03D702478D35C00210353 /* TagCollectionViewCell.xib in Resources */,
 				A1BE45572451A5D800B7467B /* Spoqa Han Sans Light.ttf in Resources */,
 				A157E11124555A90001E310D /* map_present_background_update.png in Resources */,
 				A157E0FD24555A90001E310D /* detail_button.png in Resources */,
@@ -904,6 +923,7 @@
 				A1A5DF5A2477D4FB00AFA9D5 /* LoginResponse.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
 				4C5F0F6624654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift in Sources */,
+				4CD03D742479056F00210353 /* GotBoxTableViewCell.swift in Sources */,
 				A157E11D2455754A001E310D /* Extensions.swift in Sources */,
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
@@ -911,6 +931,7 @@
 				4CA2352124758DC3005323EF /* SearchStorageType.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
 				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
+				4CD03D6C2478CC0C00210353 /* GotBoxViewController.swift in Sources */,
 				4CB00DE9244AB4B000EA39E7 /* TabBarController.swift in Sources */,
 				4CF1D0AB24499F1B00B45751 /* GotListViewController.swift in Sources */,
 				4CE037E92438CBD40093E39D /* SceneCoordinator.swift in Sources */,
@@ -924,6 +945,7 @@
 				A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */,
 				4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */,
 				2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */,
+				4CD03D6F2478D35C00210353 /* TagCollectionViewCell.swift in Sources */,
 				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,
 				4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */,
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
@@ -981,6 +1003,8 @@
 				A157E118245572F4001E310D /* LocationManagerType.swift in Sources */,
 				4C620CF7246ACDBE00B25B86 /* GotListTableViewCell.swift in Sources */,
 				4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */,
+				4CC5AC0B2477E59400FE9034 /* GotBoxViewModel.swift in Sources */,
+				4C00F8DF24796045006AD726 /* Scene+target.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
 				297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
@@ -1132,8 +1156,8 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 97C96KP84G;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
@@ -1212,8 +1236,8 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 97C96KP84G;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
