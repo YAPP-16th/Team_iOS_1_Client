@@ -76,10 +76,10 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Initializing
     
-//    func configureSearchController() {
-//        searchController.searchResultsUpdater = self
-//        navigationItem.searchController = searchController
-//    }
+    func configureSearchController() {
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+    }
     
     func bindViewModel() {
         
@@ -88,6 +88,11 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         tagCollectionView.allowsSelection = true
         
         // Inputs
+        
+        gotBoxButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.gotBoxSubject)
+            .disposed(by: disposeBag)
         
         Observable.zip(gotListTableView.rx.itemDeleted, gotListTableView.rx.modelDeleted(ListItem.self))
             .bind { [weak self] indexPath, gotItem in
@@ -138,6 +143,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
 
     @IBOutlet weak var gotListTableView: UITableView!
     @IBOutlet var tagCollectionView: UICollectionView!
+    @IBOutlet var gotBoxButton: UIBarButtonItem!
 }
 
 extension GotListViewController {
@@ -263,21 +269,8 @@ extension GotListViewController: UICollectionViewDelegateFlowLayout {
     
 
 
-//extension GotListViewController: UISearchResultsUpdating {
-//    func updateSearchResults(for searchController: UISearchController) {
-//        // filter
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return memos.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "gotListCell", for: indexPath)
-//        let amemos = memos[indexPath.row]
-//        cell.textLabel?.text = amemos.title
-//
-//        return cell
-//
-//    }
-//}
+extension GotListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        // filter
+    }
+}

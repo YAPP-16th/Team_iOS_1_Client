@@ -17,6 +17,7 @@ protocol GotListViewModelInputs {
     func editGot(got: Got?)
     func updateFinish(of got: Got)
     var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
+    var gotBoxSubject: PublishSubject<Void> { get set }
     
 }
 
@@ -37,7 +38,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     
     
-    // Inputs
+    // MARK: - Inputs
     
     func fetchRequest() {
        storage.fetchTagList()
@@ -77,19 +78,22 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
     
-   
+   var gotBoxSubject = PublishSubject<Void>()
     
-    // Outputs
+    // MARK: - Outputs
     
     var gotSections = BehaviorRelay<[ListSectionModel]>(value: [])
     var gotList = BehaviorRelay<[Got]>(value: [])
     var tagList = BehaviorRelay<[Tag]>(value: [])
     
-//    var gotList: Observable<[Got]> {
-//        return storage.fetchGotList()
-//    }
+    // MARK: - Methods
     
+    func pushGotBox() {
+        let gotBoxViewModel = GotBoxViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .gotBox(gotBoxViewModel), using: .push, animated: true)
+    }
     
+    // MARK: - Initializing
     
     var inputs: GotListViewModelInputs { return self }
     var outputs: GotListViewModelOutputs { return self }
@@ -98,6 +102,10 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
+        
+        gotBoxSubject
+            .subscribe(onNext: { [weak self] in self?.pushGotBox() })
+            .disposed(by: disposeBag)
         
         gotList
             .subscribe(onNext: { [unowned self] gotList in
@@ -117,29 +125,6 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
             })
             .disposed(by: disposeBag)
     }
-    
-//    override init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-//        super.init(sceneCoordinator: sceneCoordinator, storage: storage)
-//
-//        gotList
-//            .subscribe(onNext: { [unowned self] gotList in
-//                self.gotSections.accept(self.configureDataSource(gotList: gotList))
-//            })
-//            .disposed(by: disposeBag)
-//
-//        filteredTagSubject
-//            .subscribe(onNext: {  [weak self] tags in
-//                if let filteredGot = self?.gotList.value.filter ({ got in
-//                        guard let gotTag = got.tag?.first else { return false }
-//                        return !tags.contains(gotTag)
-//                    }) {
-//
-//                    self?.gotSections.accept(self?.configureDataSource(gotList: filteredGot) ?? [])
-//                }
-//            })
-//            .disposed(by: disposeBag)
-//
-//    }
     
     func configureDataSource(gotList: [Got]) -> [ListSectionModel] {
         return [
