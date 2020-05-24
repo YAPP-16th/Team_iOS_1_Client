@@ -21,7 +21,7 @@ protocol SettingViewModelInputs {
 
 protocol SettingViewModelOutputs {
 	var settingMenu: Observable<[String]> { get }
-    var userInfo: PublishSubject<User> { get set }
+    var userInfo: PublishSubject<User?> { get set }
     var profileImage: PublishSubject<UIImage> { get set }
 }
 
@@ -32,16 +32,16 @@ protocol SettingViewModelType {
 
 
 class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelInputs, SettingViewModelOutputs {
-	var userInfo = PublishSubject<User>()
+	var userInfo = PublishSubject<User?>()
     var profileImage = PublishSubject<UIImage>()
     
     func updateUserInfo() {
         if UserDefaults.standard.bool(forDefines: .isLogined), let userId = UserDefaults.standard.string(forDefines: .userID){
             NetworkAPIManager.shared.getUser(email: userId) { user in
-                if let user = user{
-                    self.userInfo.onNext(user)
-                }
+                self.userInfo.onNext(user)
             }
+        }else{
+            self.userInfo.onNext(nil)
         }
     }
     

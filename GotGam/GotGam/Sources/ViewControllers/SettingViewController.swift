@@ -68,9 +68,16 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 			.disposed(by: disposeBag)
 				
         self.viewModel.outputs.userInfo.bind { user in
-            self.nicknameLabel.text = user.nickname
-            self.emailLabel.text = user.userID
-            self.viewModel.inputs.getProfileImage(url: user.profileImageURL)
+            if let user = user{
+                self.nicknameLabel.text = user.nickname
+                self.emailLabel.text = user.userID
+                self.viewModel.inputs.getProfileImage(url: user.profileImageURL)
+            }else{
+                self.nicknameLabel.text = "로그인이 필요합니다"
+                self.emailLabel.text = ""
+                self.profileImageView.image = UIImage(named: "icsettingLogin")
+            }
+            
         }.disposed(by: disposeBag)
         
         self.viewModel.profileImage.bind(to: self.profileImageView.rx.image)

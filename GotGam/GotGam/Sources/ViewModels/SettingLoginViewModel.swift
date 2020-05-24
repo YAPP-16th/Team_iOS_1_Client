@@ -12,6 +12,7 @@ import RxSwift
 protocol SettingLoginViewModelInputs {
     func getUserInfo()
     func getProfileImage(url: String)
+    func logout()
 }
 
 protocol SettingLoginViewModelOutputs {
@@ -54,6 +55,14 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
         NetworkAPIManager.shared.getProfileImage(url: url) { (image) in
             self.profileImage.onNext(image)
         }
+    }
+    
+    func logout() {
+        UserDefaults.standard.set(false, forDefines: .isLogined)
+        UserDefaults.standard.set(nil, forDefines: .userID)
+        KOSession.shared()?.logoutAndClose(completionHandler: { (state, error) in
+            self.sceneCoordinator.close(animated: true)
+        })
     }
     
 }

@@ -27,7 +27,7 @@ class SettingLoginViewController: BaseViewController, ViewModelBindableType {
 		settingLoginTableView.rx.setDelegate(self)
 			.disposed(by: disposeBag)
 		
-		
+        
 		viewModel.outputs.settingLoginMenu
 			.bind(to: settingLoginTableView.rx.items(cellIdentifier: "settingLoginCell")) {
 				(index: Int, element: String, cell: SettingLoginCell) in
@@ -42,6 +42,7 @@ class SettingLoginViewController: BaseViewController, ViewModelBindableType {
         
         self.viewModel.outputs.profileImage.bind(to: self.profileImageView.rx.image)
         .disposed(by: disposeBag)
+        
 	}
 		
 }
@@ -63,6 +64,9 @@ extension SettingLoginViewController: UITableViewDelegate {
 		return 44
 	}
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0{
+            self.viewModel.inputs.logout()
+        }
 		settingLoginTableView.deselectRow(at: indexPath, animated: true)
 	}
 }
