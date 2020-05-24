@@ -74,8 +74,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
     }
     
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.quickAddView.addAction = { text in
@@ -88,6 +86,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.viewModel.seedState.onNext(.none)
             self.cardCollectionView.isHidden = false
             self.view.layoutIfNeeded()
+        }
+        
+        self.quickAddView.detailAction = {
+            self.viewModel.input.showAddVC()
+            self.viewModel.seedState.onNext(.none)
         }
         LocationManager.shared.startUpdatingLocation()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
