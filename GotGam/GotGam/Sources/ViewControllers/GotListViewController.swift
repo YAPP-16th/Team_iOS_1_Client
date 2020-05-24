@@ -26,26 +26,19 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
 	}
     
     func showMoreActionSheet(at indexPath: IndexPath) {
-        
         guard let cell = gotListTableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
-        
         let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
-        
         let gamAction = UIAlertAction(title: "감", style: .default) { (action) in
             cell.isChecked = true
         }
-        
         let editAction = UIAlertAction(title: "수정", style: .default) { [weak self] (action) in
             self?.viewModel.inputs.editGot(got: cell.got)
         }
-        
         let deleteAction = UIAlertAction(title: "삭제", style: .default) { [weak self] (action) in
             if let vc = self {
                 vc.gotListTableView.dataSource?.tableView?(vc.gotListTableView, commit: .delete, forRowAt: indexPath)
             }
-            
         }
-        
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
             
         }
@@ -64,7 +57,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //configureSearchController()
+         
         listAddButton.layer.cornerRadius = listAddButton.bounds.height/2
         listAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
         
@@ -74,16 +67,17 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
     }
   
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         viewModel.inputs.fetchRequest()
-        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
     }
     
     // MARK: - Initializing
-    
-    func configureSearchController() {
-        searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
-    }
     
     func bindViewModel() {
         
@@ -96,6 +90,11 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         gotBoxButton.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: viewModel.inputs.gotBoxSubject)
+            .disposed(by: disposeBag)
+        
+        searchTextField.rx.text.orEmpty
+            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.filteredGotSubject)
             .disposed(by: disposeBag)
         
         Observable.zip(gotListTableView.rx.itemDeleted, gotListTableView.rx.modelDeleted(ListItem.self))
@@ -138,8 +137,6 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
                 //cell.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 3), opacity: 0.2)
             }
             .disposed(by: disposeBag)
-        
-        
     }
 
     
@@ -147,7 +144,9 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
 
     @IBOutlet weak var gotListTableView: UITableView!
     @IBOutlet var tagCollectionView: UICollectionView!
-    @IBOutlet var gotBoxButton: UIBarButtonItem!
+    @IBOutlet var gotBoxButton: UIButton!
+    @IBOutlet var searchTextField: UITextField!
+    
 }
 
 extension GotListViewController {
@@ -193,32 +192,20 @@ extension GotListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
         let gamAction = UIContextualAction(style: .normal, title: "감") { (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-
             guard let cell = tableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
-
             cell.isChecked = true
-
             success(true)
         }
-
         let editAction = UIContextualAction(style: .normal, title: "수정") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-
             guard let cell = tableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
-
             self?.viewModel.inputs.editGot(got: cell.got)
-
             success(true)
         }
-
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-
             self?.gotListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
-
             success(true)
         }
-
         gamAction.backgroundColor = .saffron
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction, gamAction])
     }
@@ -266,13 +253,5 @@ extension GotListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 5, left: 16, bottom: 5, right: 0)
-    }
-}
-    
-
-
-extension GotListViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        // filter
     }
 }

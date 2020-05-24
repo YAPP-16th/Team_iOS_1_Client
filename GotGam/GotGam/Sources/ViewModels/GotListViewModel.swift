@@ -16,6 +16,7 @@ protocol GotListViewModelInputs {
     func removeGot(indexPath: IndexPath, got: Got)
     func editGot(got: Got?)
     func updateFinish(of got: Got)
+    var filteredGotSubject: BehaviorRelay<String> { get set }
     var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
     var gotBoxSubject: PublishSubject<Void> { get set }
     
@@ -68,7 +69,6 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     }
     
     func editGot(got: Got? = nil) {
-        
         let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
@@ -77,6 +77,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
         storage.updateGot(gotToUpdate: got)
     }
     
+    var filteredGotSubject = BehaviorRelay<String>(value: "")
     var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
     
    var gotBoxSubject = PublishSubject<Void>()
@@ -114,15 +115,20 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
             })
             .disposed(by: disposeBag)
         
-        filteredTagSubject
-            .subscribe(onNext: {  [weak self] tags in
-                if let filteredGot = self?.gotList.value.filter ({ got in
-                        guard let gotTag = got.tag?.first else { return true }
-                        return !tags.contains(gotTag)
-                    }) {
-                    
-                    self?.gotSections.accept(self?.configureDataSource(gotList: filteredGot) ?? [])
-                }
+        Observable.combineLatest(filteredGotSubject, filteredTagSubject)
+            .subscribe(onNext: { [weak self] (searchText, filteredTag) in
+                guard let gotList = self?.gotList.value else { return }
+                let filteredList = gotList.filter ({ got -> Bool in
+                    if let tag = got.tag?.first, filteredTag.contains(tag) {
+                        return false
+                    }
+                    if searchText != "", let title = got.title, !title.lowercased().contains(searchText.lowercased()) {
+                        return false
+                    }
+                    return true
+                })
+                let filteredDataSources = self?.configureDataSource(gotList: filteredList)
+                self?.gotSections.accept(filteredDataSources ?? [])
             })
             .disposed(by: disposeBag)
     }
