@@ -149,6 +149,10 @@
 		A1BE45572451A5D800B7467B /* Spoqa Han Sans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45532451A5D800B7467B /* Spoqa Han Sans Light.ttf */; };
 		A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BE45582451A72200B7467B /* UIColor+Extensions.swift */; };
 		A1BE455B2451A79900B7467B /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BE455A2451A79900B7467B /* Color.xcassets */; };
+		A1DF6367247A76E000444175 /* KakaoLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF6366247A76DF00444175 /* KakaoLink.framework */; };
+		A1DF6369247A771600444175 /* KakaoCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF6368247A771600444175 /* KakaoCommon.framework */; };
+		A1DF636B247A77A000444175 /* KakaoLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF636A247A77A000444175 /* KakaoLinkManager.swift */; };
+		A1DF636D247A782C00444175 /* KakaoMessageTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -310,6 +314,10 @@
 		A1BE45532451A5D800B7467B /* Spoqa Han Sans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Light.ttf"; sourceTree = "<group>"; };
 		A1BE45582451A72200B7467B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		A1BE455A2451A79900B7467B /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
+		A1DF6366247A76DF00444175 /* KakaoLink.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoLink.framework; sourceTree = "<group>"; };
+		A1DF6368247A771600444175 /* KakaoCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoCommon.framework; sourceTree = "<group>"; };
+		A1DF636A247A77A000444175 /* KakaoLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLinkManager.swift; sourceTree = "<group>"; };
+		A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoMessageTemplate.framework; sourceTree = "<group>"; };
 		C70114836B2FC2821FD2E0CE /* Pods-GotGam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.release.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -319,6 +327,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CF1D092243E0EED00B45751 /* libc++.tbd in Frameworks */,
+				A1DF6369247A771600444175 /* KakaoCommon.framework in Frameworks */,
+				A1DF636D247A782C00444175 /* KakaoMessageTemplate.framework in Frameworks */,
 				4CF1D08E243E0ED600B45751 /* CoreLocation.framework in Frameworks */,
 				4CF1D096243E0F0F00B45751 /* libsqlite3.tbd in Frameworks */,
 				4CF1D090243E0EDD00B45751 /* QuartzCore.framework in Frameworks */,
@@ -328,6 +338,7 @@
 				A1A5DE042471132C00AFA9D5 /* KakaoOpenSDK.framework in Frameworks */,
 				A157E11424555A90001E310D /* DaumMap.framework in Frameworks */,
 				4CF1D08A243E0EC700B45751 /* OpenGLES.framework in Frameworks */,
+				A1DF6367247A76E000444175 /* KakaoLink.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +509,9 @@
 		4CE037CF2438BDDE0093E39D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */,
+				A1DF6368247A771600444175 /* KakaoCommon.framework */,
+				A1DF6366247A76DF00444175 /* KakaoLink.framework */,
 				A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */,
 				A157E0D224555A90001E310D /* DaumMap.embeddedframework */,
 				4269388D24306B68007B60FD /* Info.plist */,
@@ -570,6 +584,7 @@
 				4CA2351B24758DBA005323EF /* AlarmStorageType.swift */,
 				4CA2351E24758DC3005323EF /* SearchStorage.swift */,
 				4CA2351F24758DC3005323EF /* SearchStorageType.swift */,
+				A1DF636A247A77A000444175 /* KakaoLinkManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -945,6 +960,7 @@
 				4C5185ED2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift in Sources */,
 				4C5F0F682465503200C7A6E9 /* AlarmDepartureTableViewCell.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
+				A1DF636B247A77A000444175 /* KakaoLinkManager.swift in Sources */,
 				4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */,
 				A127E716246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift in Sources */,
 				A125E79424695B80007767D7 /* LoginViewController.swift in Sources */,
@@ -1139,6 +1155,9 @@
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files/DaumMap.embeddedframework",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
+					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
+					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
+					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 				);
 				INFOPLIST_FILE = "GotGam/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1218,6 +1237,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files/DaumMap.embeddedframework",
+					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
+					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
+					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
 				);
 				INFOPLIST_FILE = "GotGam/Supporting Files/Info.plist";

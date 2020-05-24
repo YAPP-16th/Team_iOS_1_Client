@@ -11,4 +11,6 @@
 
 #import <DaumMap/MTMapView.h>
 #import <KakaoOpenSDK/KakaoOpenSDK.h>
+#import <KakaoLink/KakaoLink.h>
+#import <KakaoMessageTemplate/KakaoMessageTemplate.h>
 #endif /* Bridging_Header_h */
