@@ -29,7 +29,7 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
         var target: UIViewController
         target = scene.target
         
-        print("✅ will transition, currentVC: \(currentVC)")
+        //print("✅ will transition, currentVC: \(currentVC)")
         switch style {
         case .root:
             currentVC = target.sceneViewController
@@ -67,7 +67,7 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             currentVC = target.sceneViewController
         }
         
-        print("✅ did transition, currentVC: \(currentVC)")
+        //print("✅ did transition, currentVC: \(currentVC)")
         return subject.ignoreElements()
     }
     
@@ -75,12 +75,12 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
     func close(animated: Bool) -> Completable {
         let subject = PublishSubject<Void>()
 
-        print("✅ will close, currentVC: \(currentVC)")
+        //print("✅ will close, currentVC: \(currentVC)")
         
         if let presentingVC = currentVC.presentingViewController {
             currentVC.dismiss(animated: animated) {
                 self.currentVC = presentingVC.sceneViewController
-                print("✅ did close, currentVC: \(self.currentVC)")
+                //print("✅ did close, currentVC: \(self.currentVC)")
                 subject.onCompleted()
             }
         } else if let nav = currentVC.navigationController {
@@ -90,7 +90,7 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             }
 
             currentVC = nav.viewControllers.last!
-            print("✅ did close, currentVC: \(self.currentVC)")
+            //print("✅ did close, currentVC: \(self.currentVC)")
             subject.onCompleted()
         } else {
             subject.onError(TransitionError.unknown)
@@ -104,7 +104,7 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
     func pop(animated: Bool) -> Completable {
         let subject = PublishSubject<Void>()
         
-        print("✅ will pop, currentVC: \(currentVC)")
+        //print("✅ will pop, currentVC: \(currentVC)")
         
         if let nav = currentVC.navigationController {
             guard nav.popViewController(animated: animated) != nil else {
@@ -117,7 +117,7 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
             subject.onCompleted()
         }
         
-        print("✅ did pop, currentVC: \(currentVC)")
+        //print("✅ did pop, currentVC: \(currentVC)")
         return subject.ignoreElements()
     }
     
@@ -179,6 +179,6 @@ extension UIViewController {
 extension SceneCoordinator: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         currentVC = SceneCoordinator.actualViewController(for: viewController)
-        print("✅ did change tab, currentVC: \(currentVC)")
+        //print("✅ did change tab, currentVC: \(currentVC)")
     }
 }

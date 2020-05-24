@@ -15,6 +15,7 @@ protocol GotBoxViewModelInputs {
     func fetchRequest()
     func recover(got: Got, at indexPath: IndexPath)
     func delete(got: Got, at indexPath: IndexPath)
+    var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
 }
 
 protocol GotBoxViewModelOutputs {
@@ -64,6 +65,8 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
         boxListRelay.accept(box)
     }
     
+    var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
+    
     // MARK: - Outpus
     
     var boxSections = BehaviorRelay<[BoxSectionModel]>(value: [])
@@ -84,6 +87,18 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
         boxListRelay
             .subscribe(onNext: { [weak self] (boxList) in
                 self?.boxSections.accept(self?.configureDataSource(boxList: boxList) ?? [])
+            })
+            .disposed(by: disposeBag)
+        
+        filteredTagSubject
+            .subscribe(onNext: {  [weak self] tags in
+                if let filteredGot = self?.boxListRelay.value.filter ({ got in
+                        guard let gotTag = got.tag?.first else { return true }
+                        return !tags.contains(gotTag)
+                    }) {
+                    
+                    self?.boxSections.accept(self?.configureDataSource(boxList: filteredGot) ?? [])
+                }
             })
             .disposed(by: disposeBag)
     }

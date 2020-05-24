@@ -117,7 +117,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
         filteredTagSubject
             .subscribe(onNext: {  [weak self] tags in
                 if let filteredGot = self?.gotList.value.filter ({ got in
-                        guard let gotTag = got.tag?.first else { return false }
+                        guard let gotTag = got.tag?.first else { return true }
                         return !tags.contains(gotTag)
                     }) {
                     

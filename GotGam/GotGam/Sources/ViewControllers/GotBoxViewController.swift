@@ -79,6 +79,23 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
+        Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
+            .bind { [weak self] indexPath, tag in
+                if var tags = self?.viewModel.inputs.filteredTagSubject.value {
+                    tags.append(tag)
+                    self?.viewModel.inputs.filteredTagSubject.accept(tags)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.zip(tagCollectionView.rx.itemDeselected, tagCollectionView.rx.modelDeselected(Tag.self))
+            .bind { [weak self] indexPath, tag in
+                if var tags = self?.viewModel.inputs.filteredTagSubject.value, let index = tags.firstIndex(of: tag) {
+                    tags.remove(at: index)
+                    self?.viewModel.inputs.filteredTagSubject.accept(tags)
+                }
+            }
+            .disposed(by: disposeBag)
         
         // Outputs
         
@@ -159,6 +176,8 @@ extension GotBoxViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UICollectionView Delegate
+
 extension GotBoxViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //collectionView.deselectItem(at: indexPath, animated: true)
@@ -180,6 +199,8 @@ extension GotBoxViewController: UICollectionViewDelegate {
         }
     }
 }
+
+// MARK: - UICollectionView DelegateFlowLayout
 
 extension GotBoxViewController: UICollectionViewDelegateFlowLayout {
     
