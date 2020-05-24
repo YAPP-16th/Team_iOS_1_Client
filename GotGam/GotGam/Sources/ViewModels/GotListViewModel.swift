@@ -44,7 +44,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     func fetchRequest() {
        storage.fetchTagList()
            .subscribe(onNext: { [weak self] in
-               self?.tagList.accept($0)
+                self?.tagList.accept($0)
            })
            .disposed(by: disposeBag)
        

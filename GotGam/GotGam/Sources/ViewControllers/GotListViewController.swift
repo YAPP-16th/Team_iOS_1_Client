@@ -35,22 +35,25 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
             self?.viewModel.inputs.editGot(got: cell.got)
         }
         let deleteAction = UIAlertAction(title: "삭제", style: .default) { [weak self] (action) in
-            if let vc = self {
-                vc.gotListTableView.dataSource?.tableView?(vc.gotListTableView, commit: .delete, forRowAt: indexPath)
+            if let vc = self { vc.gotListTableView.dataSource?.tableView?(vc.gotListTableView, commit: .delete, forRowAt: indexPath)
             }
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (action) in
             
         }
-        
         actionSheet.addAction(gamAction)
         actionSheet.addAction(editAction)
         actionSheet.addAction(deleteAction)
         actionSheet.addAction(cancelAction)
         
-        present(actionSheet, animated: true) {
-            
-        }
+        present(actionSheet, animated: true)
+    }
+    
+    func appendEmptyTag(_ tags: [Tag]) -> [Tag] {
+        var tags = tags
+        let emptyTag = Tag(name: "", hex: "empty")
+        tags.append(emptyTag)
+        return tags
     }
     
 	// MARK: - View Life Cycle
@@ -61,9 +64,11 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         listAddButton.layer.cornerRadius = listAddButton.bounds.height/2
         listAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
         
-        let nibName = UINib(nibName: "TagCollectionViewCell", bundle: nil)
-        tagCollectionView.register(nibName, forCellWithReuseIdentifier: "tagCell")
         tagCollectionView.allowsMultipleSelection = true
+        let tagNibName = UINib(nibName: "TagCollectionViewCell", bundle: nil)
+        tagCollectionView.register(tagNibName, forCellWithReuseIdentifier: "tagCell")
+        let tagListNibName = UINib(nibName: "TagListCollectionViewCell", bundle: nil)
+        tagCollectionView.register(tagListNibName, forCellWithReuseIdentifier: "tagListCollectionViewCell")
     }
   
     override func viewWillAppear(_ animated: Bool) {
@@ -129,12 +134,20 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.gotSections
             .bind(to: gotListTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-
+        
         viewModel.outputs.tagList
-            .bind(to: tagCollectionView.rx.items(cellIdentifier: "tagCell", cellType: TagCollectionViewCell.self)) { (index, tag, cell) in
-                cell.configure(tag)
-                cell.layer.cornerRadius = cell.bounds.height/2
-                //cell.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 3), opacity: 0.2)
+            .compactMap { [weak self] in self?.appendEmptyTag($0) }
+            .bind(to: tagCollectionView.rx.items) { (collectionView, cellItem, tag) -> UICollectionViewCell in
+                if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
+                    cell.configure(tag)
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagListCollectionViewCell", for: IndexPath(item: cellItem, section: 0)) as? TagListCollectionViewCell else { return UICollectionViewCell()}
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -241,17 +254,22 @@ extension GotListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let title = viewModel.outputs.tagList.value[indexPath.item].name
+        // 8 + 태그뷰
+        var tagWidth: CGFloat = 0
+        var title = "태그 목록"
+        
+        //마지막 셀 = 태그목록
+        if indexPath.item != collectionView.numberOfItems(inSection: 0) - 1 {
+            tagWidth = 8 + 15
+            title = viewModel.outputs.tagList.value[indexPath.item].name
+        }
+        
         let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 30), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
         
-        // 8 + 태그뷰 + 8 + 글자 +
-        let width: CGFloat = 8 + 15 + 8 + rect.width + 8
+        // tagWidth + 8 + 글자
+        let width: CGFloat = tagWidth + 8 + rect.width + 8
         // cell height - inset(10)
         let height: CGFloat = 30
         return CGSize(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 5, left: 16, bottom: 5, right: 0)
     }
 }

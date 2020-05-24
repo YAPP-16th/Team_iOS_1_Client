@@ -42,7 +42,7 @@
             <constraints>
                 <constraint firstItem="TrT-QT-4Yd" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="4IN-96-csa"/>
                 <constraint firstItem="lBd-KC-iep" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" id="BGY-ZM-qms"/>
-                <constraint firstItem="lBd-KC-iep" firstAttribute="leading" secondItem="TrT-QT-4Yd" secondAttribute="trailing" constant="8" id="QYv-wU-Ctw"/>
+                <constraint firstItem="lBd-KC-iep" firstAttribute="leading" secondItem="TrT-QT-4Yd" secondAttribute="trailing" priority="500" constant="8" id="QYv-wU-Ctw"/>
                 <constraint firstItem="lBd-KC-iep" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="aaX-tp-afi"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lBd-KC-iep" secondAttribute="bottom" id="elL-3B-pDA"/>
                 <constraint firstItem="TrT-QT-4Yd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="rnP-GE-mRX"/>

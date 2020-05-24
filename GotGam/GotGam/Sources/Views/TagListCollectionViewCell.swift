@@ -2,7 +2,7 @@
 //  TagListCollectionViewCell.swift
 //  GotGam
 //
-//  Created by woong on 12/05/2020.
+//  Created by woong on 24/05/2020.
 //  Copyright © 2020 손병근. All rights reserved.
 //
 
@@ -10,16 +10,12 @@ import UIKit
 
 class TagListCollectionViewCell: UICollectionViewCell {
     
-    func configure(_ tag: Tag) {
-        tagView.backgroundColor = tag.hex.hexToColor()
-        tagNameLabel.text = tag.name
-    }
+    @IBOutlet var tagLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        tagView.layer.cornerRadius = tagView.bounds.height/2
+        
+        shadow(radius: 3, color: .black, offset: .init(width: 0, height: 3), opacity: 0.2)
     }
-    
-    @IBOutlet var tagView: UIView!
-    @IBOutlet var tagNameLabel: UILabel!
+
 }

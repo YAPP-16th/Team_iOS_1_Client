@@ -42,13 +42,14 @@
 		4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F692465540700C7A6E9 /* Date+String.swift */; };
 		4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CEF246AB62A00B25B86 /* Tag.swift */; };
 		4C620CF7246ACDBE00B25B86 /* GotListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */; };
-		4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */; };
 		4C620D12246C370300B25B86 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C620D11246C370300B25B86 /* PaddingLabel.swift */; };
 		4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF812462BFF700FF17BC /* String+hexToColor.swift */; };
 		4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */; };
 		4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */; };
 		4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */; };
 		4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */; };
+		4C96D36B247A60AF0014101F /* TagListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */; };
+		4C96D36C247A60AF0014101F /* TagListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */; };
 		4CA2351C24758DBB005323EF /* AlarmStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351A24758DBA005323EF /* AlarmStorage.swift */; };
 		4CA2351D24758DBB005323EF /* AlarmStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351B24758DBA005323EF /* AlarmStorageType.swift */; };
 		4CA2352024758DC3005323EF /* SearchStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351E24758DC3005323EF /* SearchStorage.swift */; };
@@ -195,13 +196,14 @@
 		4C5F0F692465540700C7A6E9 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		4C620CEF246AB62A00B25B86 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotListTableViewCell.swift; sourceTree = "<group>"; };
-		4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C620D11246C370300B25B86 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		4C65BF812462BFF700FF17BC /* String+hexToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+hexToColor.swift"; sourceTree = "<group>"; };
 		4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewModel.swift; sourceTree = "<group>"; };
 		4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewController.swift; sourceTree = "<group>"; };
 		4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGridTableViewCell.swift; sourceTree = "<group>"; };
+		4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListCollectionViewCell.swift; sourceTree = "<group>"; };
+		4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagListCollectionViewCell.xib; sourceTree = "<group>"; };
 		4CA2351A24758DBA005323EF /* AlarmStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmStorage.swift; sourceTree = "<group>"; };
 		4CA2351B24758DBA005323EF /* AlarmStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmStorageType.swift; sourceTree = "<group>"; };
 		4CA2351E24758DC3005323EF /* SearchStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorage.swift; sourceTree = "<group>"; };
@@ -693,7 +695,6 @@
 				A16439732454002300C740F4 /* MapQuickAddView.xib */,
 				A164397524540A0F00C740F4 /* MapQuickAddView.swift */,
 				4C620CF6246ACDBE00B25B86 /* GotListTableViewCell.swift */,
-				4C620CF8246AD6C200B25B86 /* TagListCollectionViewCell.swift */,
 				4CBD536D245EB97E00B235D5 /* Add */,
 				4CBD536E245EB98C00B235D5 /* SetTag */,
 				4C65BFA724630EDE00FF17BC /* CreateTag */,
@@ -707,6 +708,8 @@
 				4CD03D6D2478D35C00210353 /* TagCollectionViewCell.swift */,
 				4CD03D6E2478D35C00210353 /* TagCollectionViewCell.xib */,
 				4CD03D732479056F00210353 /* GotBoxTableViewCell.swift */,
+				4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */,
+				4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -809,6 +812,7 @@
 				A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */,
 				4CD03D702478D35C00210353 /* TagCollectionViewCell.xib in Resources */,
 				A1BE45572451A5D800B7467B /* Spoqa Han Sans Light.ttf in Resources */,
+				4C96D36C247A60AF0014101F /* TagListCollectionViewCell.xib in Resources */,
 				A157E11124555A90001E310D /* map_present_background_update.png in Resources */,
 				A157E0FD24555A90001E310D /* detail_button.png in Resources */,
 				4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */,
@@ -947,7 +951,6 @@
 				2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */,
 				4CD03D6F2478D35C00210353 /* TagCollectionViewCell.swift in Sources */,
 				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,
-				4C620CF9246AD6C200B25B86 /* TagListCollectionViewCell.swift in Sources */,
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */,
@@ -985,6 +988,7 @@
 				29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */,
 				4CA2352324758F1F005323EF /* SettingLoginViewModel.swift in Sources */,
 				29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */,
+				4C96D36B247A60AF0014101F /* TagListCollectionViewCell.swift in Sources */,
 				4CA2352824758F8D005323EF /* History+CoreDataProperties.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
