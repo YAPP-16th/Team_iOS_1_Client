@@ -37,7 +37,7 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
     
     func updateUserInfo() {
         if UserDefaults.standard.bool(forDefines: .isLogined), let userId = UserDefaults.standard.string(forDefines: .userID){
-            NetworkAPIManager.shared.getUser(token: userId) { user in
+            NetworkAPIManager.shared.getUser(email: userId) { user in
                 if let user = user{
                     self.userInfo.onNext(user)
                 }

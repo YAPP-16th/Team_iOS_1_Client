@@ -218,6 +218,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="계정 정보" id="gE6-S1-eQb"/>
                     <connections>
+                        <outlet property="emailLabel" destination="e0X-zV-xRL" id="Zny-po-8IC"/>
+                        <outlet property="nicknameLabel" destination="Cir-k0-dmG" id="iQE-7W-BKJ"/>
+                        <outlet property="profileImageView" destination="XxF-V9-MKx" id="mmL-RA-IZ9"/>
                         <outlet property="settingLoginTableView" destination="XIc-rK-mid" id="LPT-vn-o4f"/>
                     </connections>
                 </viewController>

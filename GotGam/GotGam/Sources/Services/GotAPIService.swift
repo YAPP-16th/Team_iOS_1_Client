@@ -203,8 +203,8 @@ class NetworkAPIManager{
         self.provider = MoyaProvider<GotAPIService>()
     }
   
-    func getUser(token: String, completion: @escaping (User?) -> Void){
-        provider.request(.getUser(token)) { (result) in
+    func getUser(email: String, completion: @escaping (User?) -> Void){
+        provider.request(.getUser(email)) { (result) in
             switch result{
             case .success(let response):
                 do{
