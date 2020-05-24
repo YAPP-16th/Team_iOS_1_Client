@@ -19,6 +19,7 @@ protocol GotListViewModelInputs {
     var filteredGotSubject: BehaviorRelay<String> { get set }
     var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
     var gotBoxSubject: PublishSubject<Void> { get set }
+    var tagListCellSelect: PublishSubject<Void> { get set }
     
 }
 
@@ -80,7 +81,8 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     var filteredGotSubject = BehaviorRelay<String>(value: "")
     var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
     
-   var gotBoxSubject = PublishSubject<Void>()
+    var gotBoxSubject = PublishSubject<Void>()
+    var tagListCellSelect = PublishSubject<Void>()
     
     // MARK: - Outputs
     
@@ -90,9 +92,14 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     // MARK: - Methods
     
-    func pushGotBox() {
+    func showGotBox() {
         let gotBoxViewModel = GotBoxViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         sceneCoordinator.transition(to: .gotBox(gotBoxViewModel), using: .push, animated: true)
+    }
+    
+    func showShareList() {
+        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .shareList(shareListVM), using: .push, animated: true)
     }
     
     // MARK: - Initializing
@@ -106,7 +113,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
         self.storage = storage
         
         gotBoxSubject
-            .subscribe(onNext: { [weak self] in self?.pushGotBox() })
+            .subscribe(onNext: { [weak self] in self?.showGotBox() })
             .disposed(by: disposeBag)
         
         gotList
@@ -130,6 +137,10 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
                 let filteredDataSources = self?.configureDataSource(gotList: filteredList)
                 self?.gotSections.accept(filteredDataSources ?? [])
             })
+            .disposed(by: disposeBag)
+        
+        tagListCellSelect
+            .subscribe(onNext: {[weak self] in self?.showShareList()})
             .disposed(by: disposeBag)
     }
     

@@ -14,6 +14,7 @@ extension Scene {
         case .map:        return instantiate(from: "Map")
         case .list:       return instantiate(from: "List")
         case .gotBox:      return instantiate(from: "List")
+        case .shareList:   return instantiate(from: "List")
         case .add:        return instantiate(from: "Map")
         case .setTag:      return instantiate(from: "Map")
         case .createTag:   return instantiate(from: "Map")

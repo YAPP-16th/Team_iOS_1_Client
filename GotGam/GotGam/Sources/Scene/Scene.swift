@@ -12,6 +12,7 @@ enum Scene {
     case map(MapViewModel)
     case list(GotListViewModel)
     case gotBox(GotBoxViewModel)
+    case shareList(ShareListViewModel)
     case add(AddPlantViewModel)
     case setTag(SetTagViewModel)
     case createTag(CreateTagViewModel)
@@ -52,11 +53,18 @@ extension Scene {
             return listNav
             
         case .gotBox(let viewModel):
-            guard var gotBoxVC = storyboard.instantiateViewController(withIdentifier: "GotBox") as? GotBoxViewController else {
+            guard var gotBoxVC = storyboard.instantiateViewController(withIdentifier: "GotBoxVC") as? GotBoxViewController else {
                 fatalError()
             }
             gotBoxVC.bind(viewModel: viewModel)
             return gotBoxVC
+            
+        case .shareList(let viewModel):
+            guard var shareListVC = storyboard.instantiateViewController(withIdentifier: "ShareListVC") as? ShareListViewController else {
+                fatalError()
+            }
+            shareListVC.bind(viewModel: viewModel)
+            return shareListVC
             
         case .add(let viewModel):
             guard let addNav = storyboard.instantiateViewController(withIdentifier: "AddNav") as? UINavigationController else {

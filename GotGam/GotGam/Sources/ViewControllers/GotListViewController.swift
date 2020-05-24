@@ -112,6 +112,11 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         
         Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
             .bind { [weak self] indexPath, tag in
+                
+                if let collectionView = self?.tagCollectionView, indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
+                    self?.viewModel.inputs.tagListCellSelect.onNext(())
+                }
+                
                 if var tags = self?.viewModel.inputs.filteredTagSubject.value {
                     tags.append(tag)
                     self?.viewModel.inputs.filteredTagSubject.accept(tags)
@@ -228,7 +233,6 @@ extension GotListViewController: UITableViewDelegate {
 
 extension GotListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //collectionView.deselectItem(at: indexPath, animated: true)
         if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
             cell.contentView.alpha = 0.3
         }

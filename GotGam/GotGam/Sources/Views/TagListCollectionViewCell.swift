@@ -15,6 +15,7 @@ class TagListCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        backgroundColor = .saffron
         shadow(radius: 3, color: .black, offset: .init(width: 0, height: 3), opacity: 0.2)
     }
 

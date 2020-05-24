@@ -30,7 +30,6 @@
                     </label>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="1" green="0.65417033430000004" blue="0.065232805909999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Zog-eI-Vhl" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" id="Zpb-k9-fhl"/>
                 <constraint firstItem="Zog-eI-Vhl" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="iOR-uU-n0G"/>
