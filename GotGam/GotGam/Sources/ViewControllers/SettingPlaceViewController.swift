@@ -76,6 +76,14 @@ extension SettingPlaceViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		settingPlaceTableView.deselectRow(at: indexPath, animated: true)
 	}
+	
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return 0.1
+	}
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 0.1
+	}
 
 }
 

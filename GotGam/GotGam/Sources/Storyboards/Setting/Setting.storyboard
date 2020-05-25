@@ -362,21 +362,25 @@
                                                 <color key="textColor" name="brownishGrey"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ks1-Gw-Cqx">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiV-nH-ULN">
                                                 <rect key="frame" x="50.5" y="45" width="40" height="40"/>
-                                                <color key="backgroundColor" name="saffron"/>
+                                                <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="8hs-cf-RBq"/>
-                                                    <constraint firstAttribute="width" constant="40" id="9N5-Dc-TW1"/>
+                                                    <constraint firstAttribute="height" constant="40" id="9oh-nT-w5F"/>
+                                                    <constraint firstAttribute="width" constant="40" id="pGh-EX-7ha"/>
                                                 </constraints>
-                                            </imageView>
+                                                <state key="normal" image="icFrequentsHome"/>
+                                                <connections>
+                                                    <action selector="icHome:" destination="uxc-ar-Peh" eventType="touchUpInside" id="QbX-iV-vSU"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="Ks1-Gw-Cqx" firstAttribute="centerX" secondItem="lJ1-O7-262" secondAttribute="centerX" id="E4k-c0-ACb"/>
-                                            <constraint firstItem="Ks1-Gw-Cqx" firstAttribute="centerY" secondItem="lJ1-O7-262" secondAttribute="centerY" id="P4T-Bf-icz"/>
-                                            <constraint firstItem="hnr-f5-y3i" firstAttribute="centerX" secondItem="lJ1-O7-262" secondAttribute="centerX" id="fgU-Pb-5rc"/>
-                                            <constraint firstItem="hnr-f5-y3i" firstAttribute="top" secondItem="Ks1-Gw-Cqx" secondAttribute="bottom" constant="9" id="tVf-vl-hCx"/>
+                                            <constraint firstItem="eiV-nH-ULN" firstAttribute="centerY" secondItem="lJ1-O7-262" secondAttribute="centerY" id="L4j-mM-Pww"/>
+                                            <constraint firstItem="eiV-nH-ULN" firstAttribute="centerX" secondItem="lJ1-O7-262" secondAttribute="centerX" id="PDI-5b-3PL"/>
+                                            <constraint firstItem="hnr-f5-y3i" firstAttribute="centerX" secondItem="lJ1-O7-262" secondAttribute="centerX" id="VPh-Qv-grb"/>
+                                            <constraint firstItem="hnr-f5-y3i" firstAttribute="top" secondItem="eiV-nH-ULN" secondAttribute="bottom" constant="9" id="Zd6-HS-gLX"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAz-AJ-uCP">
@@ -390,7 +394,7 @@
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tj0-Ur-93p">
                                                 <rect key="frame" x="50.5" y="45" width="40" height="40"/>
-                                                <color key="backgroundColor" name="saffron"/>
+                                                <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="PAs-Xf-6xD"/>
                                                     <constraint firstAttribute="width" constant="40" id="fJ9-Ez-kI9"/>
@@ -416,7 +420,7 @@
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="746-Ub-V9h">
                                                 <rect key="frame" x="50.5" y="45" width="40" height="40"/>
-                                                <color key="backgroundColor" name="saffron"/>
+                                                <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="63c-sA-ICX"/>
                                                     <constraint firstAttribute="height" constant="40" id="DmB-k4-bcr"/>
@@ -442,7 +446,7 @@
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IZP-Tf-zmI">
                                                 <rect key="frame" x="50.5" y="45" width="40" height="40"/>
-                                                <color key="backgroundColor" name="saffron"/>
+                                                <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="HX3-nJ-xWr"/>
                                                     <constraint firstAttribute="width" constant="40" id="V9p-CW-lN5"/>
@@ -502,6 +506,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addFrequents" destination="xMA-Nz-P52" id="oM3-zJ-Ced"/>
+                        <outlet property="icHomeBtn" destination="eiV-nH-ULN" id="1Tv-er-1BH"/>
                         <outlet property="placeAddress" destination="Zlm-Gf-ylR" id="lNt-SW-tKj"/>
                         <outlet property="placeName" destination="MfK-Lu-get" id="Qzz-d5-3eP"/>
                     </connections>
@@ -739,6 +744,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icFrequentsHome" width="20" height="20"/>
         <image name="icListAddBtn" width="18" height="18"/>
         <image name="icsettingLogin" width="60" height="60"/>
         <namedColor name="black">

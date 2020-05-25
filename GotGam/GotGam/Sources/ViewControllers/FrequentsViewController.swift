@@ -18,11 +18,20 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 	@IBOutlet var placeAddress: UITextField!
 	@IBOutlet var addFrequents: UIBarButtonItem!
 	
+	@IBOutlet var icHomeBtn: UIButton!
+	@IBAction func icHome(_ sender: Any) {
+		icHomeBtn.backgroundColor = UIColor.saffron
+	}
+	
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
 		
+		icHomeBtn.layer.cornerRadius = self.icHomeBtn.frame.height / 2
+
+
 	}
+
 	
 	func bindViewModel() {
 		
@@ -40,6 +49,8 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 				self?.viewModel.sceneCoordinator.close(animated: true)
 			}).disposed(by: disposeBag)
 
+	
+		
 	}
 	
 
