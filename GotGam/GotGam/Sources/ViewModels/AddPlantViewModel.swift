@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -29,13 +30,11 @@ protocol AddPlantViewModelInputs {
 }
 
 protocol AddPlantViewModelOutputs {
-    
-    // 테이블 뷰, 지도, 이미지, 이름, 주소 초기값
-
     var currentGot: BehaviorRelay<Got?> { get }
     var placeText: BehaviorRelay<String> { get }
     var tag: BehaviorRelay<Tag?> { get }
     var sectionsSubject: BehaviorRelay<[InputSectionModel]> { get }
+    var placeSubject: BehaviorSubject<CLLocationCoordinate2D?> { get }
 }
 
 protocol AddPlantViewModelType {
@@ -67,6 +66,10 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var placeText = BehaviorRelay<String>(value: "")
     var tag = BehaviorRelay<Tag?>(value: nil)
     var sectionsSubject = BehaviorRelay<[InputSectionModel]>(value: [])
+    
+    // MARK: - Private
+    
+    var placeSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
 
     // MARK: - Methods
     
@@ -163,6 +166,11 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     private func showMap(got: Got? = nil) {
         let mapVM = MapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        mapVM.seedState.onNext(.seeding)
+        mapVM.aimToPlace.onNext(true)
+        mapVM.placeSubject
+            .bind(to: placeSubject)
+            .disposed(by: disposeBag)
         sceneCoordinator.transition(to: .map(mapVM), using: .push, animated: true)
     }
    
@@ -187,6 +195,10 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         guard let got = got else { return }
         
         currentGot.accept(got)
+        if let lat = got.latitude, let long = got.longitude {
+            placeSubject.onNext(.init(latitude: lat, longitude: long))
+        }
+        
         nameText.accept(got.title ?? "")
         placeText.accept(got.place ?? "")
     }
@@ -234,6 +246,17 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         editPlace
             .subscribe(onNext: { [weak self] in
                 self?.showMap()
+            })
+            .disposed(by: disposeBag)
+        
+        placeSubject
+            .subscribe(onNext: { [weak self] location in
+                guard let location = location else { return }
+                print(location)
+                APIManager.shared.getPlace(longitude: Double(location.longitude), latitude: Double(location.latitude)) { (place) in
+                    print(place)
+                    self?.placeText.accept(place.first?.address?.addressName ?? "")
+                }
             })
             .disposed(by: disposeBag)
     }

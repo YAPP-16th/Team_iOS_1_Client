@@ -23,6 +23,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
 
     // MARK: - Methods
     
+    func setPlaceTextView(text: String) {
+        placeTextView.text = text
+        placeTextView.textColor = .black
+        placeTextView.isEditable = false
+        placeTextView.centerVertically()
+    }
+    
     func drawCircle(center: MTMapPoint, radius: Float) {
         let circle = MTMapCircle()
         circle.circleCenterPoint = center
@@ -216,25 +223,41 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             })
             .disposed(by: disposeBag)
         
-        viewModel.outputs.currentGot
-            .compactMap { $0?.place }
-            .subscribe(onNext: { [weak self] place in
-                self?.placeTextView.text = place
-                self?.placeTextView.textColor = .black
-                self?.placeTextView.isEditable = false
-                self?.placeTextView.centerVertically()
-            })
-            .disposed(by: disposeBag)
+//        viewModel.outputs.currentGot
+//            .compactMap { $0?.place }
+//            .subscribe(onNext: { [weak self] place in
+//                self?.setPlaceTextView(text: place)
+//            })
+//            .disposed(by: disposeBag)
         
-        viewModel.outputs.currentGot
+//        viewModel.outputs.currentGot
+//            .compactMap { $0 }
+//            .subscribe(onNext: { [weak self] got in
+//                self?.mapBackgroundZeroHeightConstraint.isActive = false
+//                self?.mapBackgroundView.isHidden = false
+//                self?.setupMapView()
+//                guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
+//                self?.drawSeed(point: point)
+//                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
+//            })
+//            .disposed(by: disposeBag)
+        
+        viewModel.outputs.placeSubject
             .compactMap { $0 }
-            .subscribe(onNext: { [weak self] got in
+            .subscribe(onNext: { [weak self] location in
                 self?.mapBackgroundZeroHeightConstraint.isActive = false
                 self?.mapBackgroundView.isHidden = false
                 self?.setupMapView()
-                guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
+                guard let point = MTMapPoint(geoCoord: .init(latitude: location.latitude, longitude: location.longitude)) else { return }
                 self?.drawSeed(point: point)
-                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
+//                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.placeText
+            .filter { $0 != "" }
+            .subscribe(onNext: { [weak self] place in
+                self?.setPlaceTextView(text: place)
             })
             .disposed(by: disposeBag)
     }
