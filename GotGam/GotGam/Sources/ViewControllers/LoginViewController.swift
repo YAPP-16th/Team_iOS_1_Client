@@ -8,12 +8,15 @@
 
 import UIKit
 import AuthenticationServices
+import FacebookCore
+import FacebookLogin
 import FBSDKLoginKit
 import GoogleSignIn
 
 enum LoginType{
     case google(SocialLoginInfo)
     case kakao(SocialLoginInfo)
+    case facebook(SocialLoginInfo)
 }
 
 struct SocialLoginInfo{
@@ -27,8 +30,9 @@ class LoginViewController: UIViewController, ViewModelBindableType{
     var viewModel: LoginViewModel!
     
     //MARK: Views
-    lazy var facebookLoginButton: FacebookButton = {
-        let b = FacebookButton()
+    lazy var facebookLoginButton: FBLoginButton = {
+        let b = FBLoginButton(frame: .zero, permissions: [.publicProfile])
+        b.delegate = self.viewModel
         b.translatesAutoresizingMaskIntoConstraints = false
         return b
     }()
@@ -51,12 +55,17 @@ class LoginViewController: UIViewController, ViewModelBindableType{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-
+        
         prepareLoginButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if let accessToken = AccessToken.current{
+            print("user is already logged in")
+            print(accessToken)
+        }
+        
         if #available(iOS 13.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(appleIDStateRevoked), name: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil)
         }
@@ -92,27 +101,6 @@ class LoginViewController: UIViewController, ViewModelBindableType{
         GIDSignIn.sharedInstance()?.signOut()
     }
     
-    func checkKakaoToken(){
-        guard let token = KOSession.shared()?.token else { return }
-        let accessToken = token.accessToken
-        print("토큰", accessToken)
-        KOSessionTask.accessTokenInfoTask { (tokenInfo, error) in
-            if let error = error as NSError?{
-                print("예기치 못한 에러, 서버 에러")
-            }else{
-                print("토큰 정보: \(tokenInfo)")
-                
-            }
-        }
-        KOSessionTask.userMeTask { (error, user) in
-            print(user?.account)
-        }
-        KOSessionTask.accessTokenInfoTask { (info, error) in
-            print(info)
-        }
-
-    }
-    
     @objc func kakaoLogoutTapped(){
         KOSession.shared()?.logoutAndClose(completionHandler: { (success, error) in
             if error != nil {
@@ -131,7 +119,7 @@ class LoginViewController: UIViewController, ViewModelBindableType{
 //MARK: - UI
 extension LoginViewController{
   private func prepareLoginButtons(){
-  //        prepareFacebookLoginButton()
+          prepareFacebookLoginButton()
           prepareKakaoLoginButton()
           prepareSignInGoogle()
           if #available(iOS 13.0, *) {
@@ -144,7 +132,7 @@ extension LoginViewController{
           NSLayoutConstraint.activate([
               kakaoLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
               kakaoLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-              kakaoLoginButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
+              kakaoLoginButton.bottomAnchor.constraint(equalTo: self.facebookLoginButton.topAnchor, constant: -8),
               kakaoLoginButton.heightAnchor.constraint(equalToConstant: 45)
           ])
       }
@@ -214,7 +202,6 @@ extension LoginViewController{
       }
 }
 
-
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding{
     @available(iOS 13.0, *)
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
@@ -274,6 +261,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate{
         }
     }
 }
+
+
 class FacebookButton: FBLoginButton {
     
     override func updateConstraints() {
@@ -310,3 +299,4 @@ class FacebookButton: FBLoginButton {
     }
     
 }
+

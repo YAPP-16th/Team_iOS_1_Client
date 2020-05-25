@@ -10,12 +10,15 @@ import UIKit
 import RxSwift
 import GoogleSignIn
 import Moya
+import FacebookCore
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         GIDSignIn.sharedInstance().clientID = "842168227804-t42u931svmolch20us3n495m7mtj0o45.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
@@ -58,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             GIDSignIn.sharedInstance().handle(url)
         }
         
-        return true
+        return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
