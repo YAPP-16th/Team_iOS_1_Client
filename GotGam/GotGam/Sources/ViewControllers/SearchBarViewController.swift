@@ -137,10 +137,10 @@ extension SearchBarViewController: UITableViewDelegate {
 			let place = self.placeList[indexPath.row]
 			if let tabVC = self.presentingViewController as? TabBarController{
 				let mapVC = tabVC.viewControllers?.first as? MapViewController
-				mapVC?.x = Double(place.x)!
-				mapVC?.y = Double(place.y)!
-				mapVC?.placeName = place.placeName
-				mapVC?.addressName = place.addressName
+				mapVC?.x = Double(place.x!)!
+				mapVC?.y = Double(place.y!)!
+				mapVC?.placeName = place.placeName!
+				mapVC?.addressName = place.addressName!
 				
 				self.dismiss(animated: true) {
 					mapVC?.updateAddress()
