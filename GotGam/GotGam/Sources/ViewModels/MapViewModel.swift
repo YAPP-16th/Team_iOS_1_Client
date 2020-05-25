@@ -133,7 +133,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
 	
 	func showSearchVC() {
 		let movesearchVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-        sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .modal, animated: true)
+        sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .fullScreen, animated: false)
 	}
 	
     

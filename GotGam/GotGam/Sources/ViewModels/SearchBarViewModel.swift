@@ -38,7 +38,7 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 	func readKeyword() {
 		let storage = SearchStorage()
 		storage.fetchKeyword().bind { (keywordList) in
-			self.keywords.onNext(keywordList)
+			self.keywords.onNext(keywordList.reversed())
 			} .disposed(by: disposeBag)
 	}
 	
