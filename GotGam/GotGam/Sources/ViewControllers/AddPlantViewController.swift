@@ -89,8 +89,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        titleTextView.centerVertically()
-        placeTextView.centerVertically()
+        DispatchQueue.main.async {
+            self.titleTextView.centerVertically()
+            self.placeTextView.centerVertically()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
