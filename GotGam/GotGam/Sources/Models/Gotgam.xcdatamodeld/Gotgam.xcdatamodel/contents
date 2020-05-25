@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="History" representedClassName="History" syncable="YES">
         <attribute name="keyword" optional="YES" attributeType="String"/>
     </entity>
@@ -10,6 +10,12 @@
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="got" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedGot" inverseName="alarms" inverseEntity="ManagedGot"/>
+    </entity>
+    <entity name="ManagedFrequents" representedClassName="ManagedFrequents" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="ManagedGot" representedClassName="ManagedGot" syncable="YES">
         <attribute name="arriveMsg" optional="YES" attributeType="String"/>
@@ -37,6 +43,7 @@
     <elements>
         <element name="History" positionX="-144" positionY="171" width="128" height="58"/>
         <element name="ManagedAlarm" positionX="-135" positionY="180" width="128" height="133"/>
+        <element name="ManagedFrequents" positionX="-144" positionY="216" width="128" height="103"/>
         <element name="ManagedGot" positionX="-54" positionY="90" width="128" height="283"/>
         <element name="ManagedTag" positionX="-232.640625" positionY="80.38671875" width="128" height="88"/>
     </elements>

@@ -65,7 +65,7 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
 	}
 	
 	func showPlaceDetailVC() {
-        let movesettingplaceVM = SettingPlaceViewModel(sceneCoordinator: sceneCoordinator, storage: self.storage)
+        let movesettingplaceVM = SettingPlaceViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         sceneCoordinator.transition(to: .settingPlace(movesettingplaceVM), using: .push, animated: true)
 	}
 	

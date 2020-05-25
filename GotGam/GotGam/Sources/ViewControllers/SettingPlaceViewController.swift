@@ -16,7 +16,7 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 	
 	@IBOutlet var settingPlaceTableView: UITableView!
 	
-	var placeList: [String] = ["우리집", "학교", "사무실"] {
+	var placeList: [Frequent] = [] {
 		didSet{
 			DispatchQueue.main.async {
 				self.settingPlaceTableView.reloadData()
@@ -31,14 +31,35 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 		
 	}
 	
-	func bindViewModel() {
-			
-			settingPlaceTableView.rx.setDelegate(self)
-				.disposed(by: disposeBag)
-
-		}
-		
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		viewModel.inputs.readFrequents()
 	}
+	
+	func bindViewModel() {
+		settingPlaceTableView.rx.setDelegate(self)
+			.disposed(by: disposeBag)
+		
+		settingPlaceTableView.rx.itemSelected
+		.subscribe(onNext: { [weak self] (indexPath) in
+		if indexPath.section == 1 {
+			self?.viewModel.inputs.showFrequentsDetailVC()
+			}
+		}) .disposed(by: disposeBag)
+		
+		viewModel.outputs.frequentsList
+					.bind { (List) in
+						self.placeList = List
+				} .disposed(by: disposeBag)
+				
+//		viewModel.outputs.frequentsList
+//		.bind(to: settingPlaceTableView.rx.items(cellIdentifier: "placeCell", cellType: PlaceCell.self)) { (index, place, cell) in
+//			cell.configure(place)
+//		}
+//		.disposed(by: disposeBag)
+	}
+		
+}
 
 extension SettingPlaceViewController: UITableViewDelegate {
 		
@@ -73,11 +94,13 @@ extension SettingPlaceViewController: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath) as! PlaceCell
-			cell.placeNameLabel.text = placeList[indexPath.row]
+			let place = placeList[indexPath.row]
+			let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath ) as! PlaceCell
+			cell.placeNameLabel.text = place.name
+			cell.placeAddressLabel.text = place.address
 			return cell
 		}else {
-//			let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: nil)
+
 			let cell = tableView.dequeueReusableCell(withIdentifier: "placeAddCell", for: indexPath) as! PlaceAddCell
 			cell.placeAddButton.layer.cornerRadius = cell.placeAddButton.bounds.height/2
 			cell.placeAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
@@ -96,6 +119,12 @@ class PlaceAddCell: UITableViewCell {
 }
 
 class PlaceCell: UITableViewCell{
+	
+	func configure(_ frequent: Frequent) {
+        placeNameLabel.text = frequent.name
+		placeAddressLabel.text = frequent.address
+    }
+	
 	@IBOutlet var placeNameLabel: UILabel!
 	@IBOutlet var placeAddressLabel: UILabel!
 	
