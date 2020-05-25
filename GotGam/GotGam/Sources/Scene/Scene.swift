@@ -23,6 +23,7 @@ enum Scene {
 	case settingPlace(SettingPlaceViewModel)
 	case settingLogin(SettingLoginViewModel)
 	case searchBar(SearchBarViewModel)
+	case frequents(FrequentsViewModel)
 }
 
 extension Scene {
@@ -149,6 +150,14 @@ extension Scene {
 			
 			searchVC.bind(viewModel: viewModel)
 			return searchVC
+			
+		case .frequents(let viewModel):
+			guard var frequentsVC = storyboard.instantiateViewController(withIdentifier: "FrequentsViewController") as? FrequentsViewController else {
+				fatalError()
+			}
+			
+			frequentsVC.bind(viewModel: viewModel)
+			return frequentsVC
         }
     }
 }
