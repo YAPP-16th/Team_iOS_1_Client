@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import FBSDKLoginKit
 
 protocol SettingLoginViewModelInputs {
     func getUserInfo()
@@ -60,6 +61,8 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
     func logout() {
         UserDefaults.standard.set(false, forDefines: .isLogined)
         UserDefaults.standard.set(nil, forDefines: .userID)
+        let loginManager = LoginManager()
+        loginManager.logOut()
         KOSession.shared()?.logoutAndClose(completionHandler: { (state, error) in
             self.sceneCoordinator.close(animated: true)
         })
