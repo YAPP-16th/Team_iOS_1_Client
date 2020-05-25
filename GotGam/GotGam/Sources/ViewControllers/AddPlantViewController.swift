@@ -81,10 +81,14 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         super.viewDidLoad()
         //navigationController?.presentationController?.delegate = self
         setupViews()
-        setupMapView()
+        //setupMapView()
         //setupMapCenter()
         //drawCircle(center: currentCenter, radius: 50)
         //drawSeed(point: currentCenter)
+        
+        
+//        mapBackgroundHeightConstraint.isActive = false
+//        mapBackgroundZeroHeightConstraint.isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +140,8 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             mapView.translatesAutoresizingMaskIntoConstraints = false
             mapView.delegate = self
             mapView.baseMapType = .standard
-            mapBackgroundView.insertSubview(mapView, at: 0)
+            //mapBackgroundView.insertSubview(mapView, at: 0)
+            mapBackgroundView.addSubview(mapView)
             
             NSLayoutConstraint.activate([
                 mapView.topAnchor.constraint(equalTo: mapBackgroundView.topAnchor, constant: 0),
@@ -224,15 +229,14 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.currentGot
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] got in
-                self?.mapBackgroundHiddenConstraint.isActive = false
+                self?.mapBackgroundZeroHeightConstraint.isActive = false
                 self?.mapBackgroundView.isHidden = false
+                self?.setupMapView()
                 guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
                 self?.drawSeed(point: point)
                 self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
             })
             .disposed(by: disposeBag)
-//        placeLabel.text = viewModel.outputs.currentGot.value?.place
-        
     }
     
     // MARK: - Views
@@ -249,7 +253,8 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var addIconButton: UIButton!
     @IBOutlet var inputTableView: UITableView!
     @IBOutlet var editButton: UIButton!
-    @IBOutlet var mapBackgroundHiddenConstraint: NSLayoutConstraint!
+    @IBOutlet var mapBackgroundZeroHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var mapBackgroundHeightConstraint: NSLayoutConstraint!
 }
 
 // MARK: - config Data Sources
@@ -372,6 +377,11 @@ extension AddPlantViewController: UITextViewDelegate {
             }
         } else if textView == placeTextView {
             // TODO: 플레이스를 클릭하면 지도 설정으로 이동
+            
+            view.endEditing(true)
+            viewModel.inputs.editPlace.onNext(())
+            
+            
         }
         
         

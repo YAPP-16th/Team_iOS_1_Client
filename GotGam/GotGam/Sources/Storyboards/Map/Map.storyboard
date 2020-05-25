@@ -425,9 +425,10 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="53n-Ju-icp"/>
+                                    <constraint firstAttribute="height" id="Mri-sG-y98"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="NwI-WF-PxO"/>
-                                    <constraint firstAttribute="height" priority="750" id="PdC-3I-Zoh"/>
                                     <constraint firstAttribute="trailing" secondItem="YsO-E7-ZOT" secondAttribute="trailing" id="VXU-Yk-Bgx"/>
+                                    <constraint firstAttribute="height" priority="700" constant="220" id="es1-ko-4db"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="gJA-ET-guz"/>
                                     <constraint firstAttribute="bottom" secondItem="YsO-E7-ZOT" secondAttribute="bottom" id="hat-Mj-7jc"/>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="lJW-fJ-C3o"/>
@@ -551,7 +552,6 @@
                             <constraint firstItem="tvn-px-jfx" firstAttribute="top" secondItem="FBO-QS-FrG" secondAttribute="top" id="ZiL-yV-frf"/>
                             <constraint firstItem="FBO-QS-FrG" firstAttribute="trailing" secondItem="ONd-Cp-AX0" secondAttribute="trailing" id="byk-O6-RCh"/>
                             <constraint firstItem="6cX-Sb-v1L" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="bottom" id="pHh-m4-GMb"/>
-                            <constraint firstItem="ONd-Cp-AX0" firstAttribute="height" secondItem="RV1-gH-Au6" secondAttribute="height" multiplier="0.3" priority="500" id="wxc-eC-Fdd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FBO-QS-FrG"/>
                     </view>
@@ -566,8 +566,9 @@
                         <outlet property="cancelButton" destination="Utf-dX-ju4" id="NgA-dZ-FKc"/>
                         <outlet property="editButton" destination="YsO-E7-ZOT" id="IFo-T5-KGp"/>
                         <outlet property="inputTableView" destination="6cX-Sb-v1L" id="uN2-cd-HbU"/>
-                        <outlet property="mapBackgroundHiddenConstraint" destination="PdC-3I-Zoh" id="oIN-Ot-wc1"/>
+                        <outlet property="mapBackgroundHeightConstraint" destination="es1-ko-4db" id="Bu8-ou-mRx"/>
                         <outlet property="mapBackgroundView" destination="ONd-Cp-AX0" id="SR6-Sj-Lrx"/>
+                        <outlet property="mapBackgroundZeroHeightConstraint" destination="Mri-sG-y98" id="pel-B7-CXh"/>
                         <outlet property="placeTextView" destination="tIh-9N-K2z" id="g95-ZN-Pdt"/>
                         <outlet property="saveButton" destination="hjn-bF-KUB" id="Rk3-oU-SzG"/>
                         <outlet property="titleTextView" destination="suR-zG-cLz" id="sl6-Ey-aFn"/>

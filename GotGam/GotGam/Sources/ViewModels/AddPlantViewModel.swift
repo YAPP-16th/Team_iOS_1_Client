@@ -25,6 +25,7 @@ protocol AddPlantViewModelInputs {
     var save: PublishSubject<Void> { get set }
     var close: PublishSubject<Void> { get set }
     var tapTag: PublishSubject<Void> { get set }
+    var editPlace: PublishSubject<Void> { get set }
 }
 
 protocol AddPlantViewModelOutputs {
@@ -58,6 +59,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var save = PublishSubject<Void>()
     var close = PublishSubject<Void>()
     var tapTag = PublishSubject<Void>()
+    var editPlace = PublishSubject<Void>()
     
     // MARK: - Output
     
@@ -158,6 +160,11 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 .disposed(by: disposeBag)
         }
     }
+    
+    private func showMap(got: Got? = nil) {
+        let mapVM = MapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .map(mapVM), using: .push, animated: true)
+    }
    
     
     // MARK: - Initializing
@@ -221,6 +228,12 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             .subscribe(onNext: { [unowned self] b in
                 b ? self.insertItem(section: .leave)
                   : self.removeItem(section: .leave)
+            })
+            .disposed(by: disposeBag)
+        
+        editPlace
+            .subscribe(onNext: { [weak self] in
+                self?.showMap()
             })
             .disposed(by: disposeBag)
     }
