@@ -18,6 +18,8 @@
 		29618D6B247C3C9C008E112E /* Frequents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618D6A247C3C9C008E112E /* Frequents.swift */; };
 		29618DB0247C4C70008E112E /* ManagedFrequents+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DAE247C4C6F008E112E /* ManagedFrequents+CoreDataClass.swift */; };
 		29618DB1247C4C70008E112E /* ManagedFrequents+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DAF247C4C70008E112E /* ManagedFrequents+CoreDataProperties.swift */; };
+		29618DB3247CEEF5008E112E /* FrequentsSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DB2247CEEF5008E112E /* FrequentsSearchViewModel.swift */; };
+		29618DB5247CEF3F008E112E /* FrequentsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DB4247CEF3F008E112E /* FrequentsSearchViewController.swift */; };
 		29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727818246FDAAE00B75AC7 /* APIManager.swift */; };
 		2972781B246FDADD00B75AC7 /* KakaoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972781A246FDADD00B75AC7 /* KakaoResponse.swift */; };
 		297278472473C96800B75AC7 /* SettingOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278462473C96800B75AC7 /* SettingOtherViewController.swift */; };
@@ -180,6 +182,8 @@
 		29618D6A247C3C9C008E112E /* Frequents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frequents.swift; sourceTree = "<group>"; };
 		29618DAE247C4C6F008E112E /* ManagedFrequents+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedFrequents+CoreDataClass.swift"; sourceTree = "<group>"; };
 		29618DAF247C4C70008E112E /* ManagedFrequents+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedFrequents+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		29618DB2247CEEF5008E112E /* FrequentsSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentsSearchViewModel.swift; sourceTree = "<group>"; };
+		29618DB4247CEF3F008E112E /* FrequentsSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentsSearchViewController.swift; sourceTree = "<group>"; };
 		29727818246FDAAE00B75AC7 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		2972781A246FDADD00B75AC7 /* KakaoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoResponse.swift; sourceTree = "<group>"; };
 		297278462473C96800B75AC7 /* SettingOtherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherViewController.swift; sourceTree = "<group>"; };
@@ -481,6 +485,7 @@
 				4C96D36F247A71470014101F /* ShareListViewController.swift */,
 				4C96D371247A7FFE0014101F /* ShareListTableViewCell.swift */,
 				29618D64247C3C37008E112E /* FrequentsViewController.swift */,
+				29618DB4247CEF3F008E112E /* FrequentsSearchViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -583,6 +588,7 @@
 				4CC5AC0A2477E59400FE9034 /* GotBoxViewModel.swift */,
 				4C96D36D247A71390014101F /* ShareListViewModel.swift */,
 				29618D62247C3C17008E112E /* FrequentsViewModel.swift */,
+				29618DB2247CEEF5008E112E /* FrequentsSearchViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1013,6 +1019,7 @@
 				4CA2352524758F5D005323EF /* BadgeButton.swift in Sources */,
 				4CBD535C245B133B00B235D5 /* SetTagViewController.swift in Sources */,
 				4C65BF842462CC5300FF17BC /* CreateTagViewModel.swift in Sources */,
+				29618DB3247CEEF5008E112E /* FrequentsSearchViewModel.swift in Sources */,
 				4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */,
 				A127E715246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
@@ -1030,6 +1037,7 @@
 				29618DB0247C4C70008E112E /* ManagedFrequents+CoreDataClass.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
+				29618DB5247CEF3F008E112E /* FrequentsSearchViewController.swift in Sources */,
 				4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */,
 				4CA2352924758F8D005323EF /* History+CoreDataClass.swift in Sources */,
 				4C5F0F61246538B700C7A6E9 /* AlarmViewController.swift in Sources */,

@@ -519,10 +519,10 @@
             </objects>
             <point key="canvasLocation" x="2848" y="808"/>
         </scene>
-        <!--View Controller-->
+        <!--Frequents Search View Controller-->
         <scene sceneID="v4o-Pa-RGe">
             <objects>
-                <viewController id="cfX-ea-Mo2" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FrequentsSearchViewController" id="cfX-ea-Mo2" customClass="FrequentsSearchViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UNi-Vo-cZM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -533,6 +533,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ck7-Na-W7J">
                                         <rect key="frame" x="16" y="14" width="9" height="22"/>
                                         <state key="normal" image="icSearchBtnBack"/>
+                                        <connections>
+                                            <action selector="moveBack:" destination="cfX-ea-Mo2" eventType="touchUpInside" id="jcs-JH-76W"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="주소, 곳 검색" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="93x-lZ-UfC">
                                         <rect key="frame" x="40.5" y="8" width="357.5" height="34"/>
@@ -599,15 +602,43 @@
                                 <rect key="frame" x="0.0" y="186" width="414" height="676"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="JWy-W7-86E">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" id="JWy-W7-86E" customClass="SearchCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JWy-W7-86E" id="WQ1-f3-FrR">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icSearchBtn" translatesAutoresizingMaskIntoConstraints="NO" id="IPn-gz-vJu">
+                                                    <rect key="frame" x="16" y="15.5" width="13" height="13"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="13" id="Ecb-QB-CNM"/>
+                                                        <constraint firstAttribute="width" constant="13" id="OQ7-Jr-cGp"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDU-ke-Sxx">
+                                                    <rect key="frame" x="39" y="10" width="43.5" height="24"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="aDU-ke-Sxx" firstAttribute="leading" secondItem="IPn-gz-vJu" secondAttribute="trailing" constant="10" id="GXG-eV-y7H"/>
+                                                <constraint firstItem="aDU-ke-Sxx" firstAttribute="centerY" secondItem="WQ1-f3-FrR" secondAttribute="centerY" id="Qcu-cu-WPD"/>
+                                                <constraint firstItem="IPn-gz-vJu" firstAttribute="leading" secondItem="WQ1-f3-FrR" secondAttribute="leading" constant="16" id="Rt7-m3-1o6"/>
+                                                <constraint firstItem="IPn-gz-vJu" firstAttribute="centerY" secondItem="WQ1-f3-FrR" secondAttribute="centerY" id="taS-k5-u2t"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="kewordLabel" destination="aDU-ke-Sxx" id="04u-YU-7s7"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="cfX-ea-Mo2" id="HRH-K7-qky"/>
+                                    <outlet property="delegate" destination="cfX-ea-Mo2" id="6cR-hb-PXr"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -626,6 +657,10 @@
                         <viewLayoutGuide key="safeArea" id="lSp-6Z-Ops"/>
                     </view>
                     <navigationItem key="navigationItem" id="NDd-tJ-KJ9"/>
+                    <connections>
+                        <outlet property="searchBar" destination="93x-lZ-UfC" id="Iy8-sz-pkz"/>
+                        <outlet property="tableView" destination="XaG-Tt-I31" id="LbB-Wd-Olg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6EG-8p-EC9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -756,7 +791,7 @@
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="YDp-ya-fgi">
-                        <rect key="frame" x="0.0" y="44" width="414" height="103.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -884,6 +919,7 @@
         <image name="icFrequentsSchool" width="20" height="20"/>
         <image name="icListAddBtn" width="18" height="18"/>
         <image name="icMapBtnMyLocation" width="20.5" height="20.5"/>
+        <image name="icSearchBtn" width="13" height="13"/>
         <image name="icSearchBtnBack" width="9" height="16"/>
         <image name="icsettingLogin" width="60" height="60"/>
         <namedColor name="black">
