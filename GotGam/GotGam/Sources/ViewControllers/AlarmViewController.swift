@@ -167,8 +167,8 @@ extension AlarmViewController {
                     return cell
                 case .ShareItem(let alarm):
                     // TODO: - share item cell 변경
-                    guard let cell = table.dequeueReusableCell(withIdentifier: "departureCell", for: indexPath) as? AlarmDepartureTableViewCell else { return UITableViewCell()}
-                    cell.viewModel = viewModel
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "departureCell", for: indexPath) as? AlarmShareTableViewCell else { return UITableViewCell()}
+                    cell.configure(viewModel: viewModel, alarm: alarm)
                     return cell
                 }
             },

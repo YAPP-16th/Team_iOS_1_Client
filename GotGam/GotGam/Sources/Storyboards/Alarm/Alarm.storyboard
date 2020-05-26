@@ -8,6 +8,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Spoqa Han Sans Regular.ttf">
+            <string>SpoqaHanSans-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Alarm View Controller-->
         <scene sceneID="i1V-jZ-N07">
@@ -400,6 +405,116 @@
                                             <outlet property="messageLabel" destination="x0D-TJ-D0u" id="meO-Bt-ttL"/>
                                             <outlet property="tagView" destination="fdP-G7-67e" id="r1D-av-hIf"/>
                                             <outlet property="titleLabel" destination="gfi-02-jes" id="1Br-RF-qqA"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="alarmShareCell" id="nz3-22-1i1" customClass="AlarmShareTableViewCell" customModule="GotGam" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="194" width="414" height="238.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nz3-22-1i1" id="9Kw-C6-oGQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="238.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="MSX-cM-6XY">
+                                                    <rect key="frame" x="20" y="11" width="374" height="216.5"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1SE-Xp-pon">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="72"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="곳감님이 알아서 찾아가라알아서 찾아가라알아서 찾아가라알아서 찾아가라알아서 찾아가라알아서 찾아가라알아서 찾아가라 태그를 공유했습니다" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHP-Or-dol">
+                                                                    <rect key="frame" x="0.0" y="11.5" width="374" height="49"/>
+                                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="14"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <constraints>
+                                                                <constraint firstItem="NHP-Or-dol" firstAttribute="centerY" secondItem="1SE-Xp-pon" secondAttribute="centerY" id="Bgd-0j-txu"/>
+                                                                <constraint firstItem="NHP-Or-dol" firstAttribute="leading" secondItem="1SE-Xp-pon" secondAttribute="leading" id="EG8-HX-mjt"/>
+                                                                <constraint firstItem="NHP-Or-dol" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1SE-Xp-pon" secondAttribute="top" id="Gi9-oC-zg7"/>
+                                                                <constraint firstAttribute="trailing" secondItem="NHP-Or-dol" secondAttribute="trailing" id="yYF-Rg-18I"/>
+                                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="NHP-Or-dol" secondAttribute="bottom" id="zdJ-vu-6X9"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PGj-ud-fmO">
+                                                            <rect key="frame" x="0.0" y="72" width="374" height="72.5"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수락하시겠습니까?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oS-vO-7Aj">
+                                                                    <rect key="frame" x="0.0" y="28" width="374" height="16.5"/>
+                                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="14"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <constraints>
+                                                                <constraint firstItem="9oS-vO-7Aj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PGj-ud-fmO" secondAttribute="top" id="1gu-k6-yEE"/>
+                                                                <constraint firstItem="9oS-vO-7Aj" firstAttribute="leading" secondItem="PGj-ud-fmO" secondAttribute="leading" id="2F4-hS-gOV"/>
+                                                                <constraint firstAttribute="trailing" secondItem="9oS-vO-7Aj" secondAttribute="trailing" id="8kC-ol-imD"/>
+                                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9oS-vO-7Aj" secondAttribute="bottom" id="OmC-a4-Ih9"/>
+                                                                <constraint firstItem="9oS-vO-7Aj" firstAttribute="centerY" secondItem="PGj-ud-fmO" secondAttribute="centerY" id="hW5-Vp-ET3"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W9s-nm-uO7">
+                                                            <rect key="frame" x="0.0" y="144.5" width="374" height="72"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIME 분" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaA-Al-ITo">
+                                                                    <rect key="frame" x="0.0" y="27.5" width="48.5" height="16.5"/>
+                                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="14"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Y6-wI-ybm">
+                                                                    <rect key="frame" x="326" y="24" width="48" height="24"/>
+                                                                    <color key="backgroundColor" red="1" green="0.65417033430000004" blue="0.065232805909999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="48" id="3Bp-pa-n7Y"/>
+                                                                        <constraint firstAttribute="height" constant="24" id="4GG-kW-W28"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="14"/>
+                                                                    <state key="normal" title="수락"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FZV-e3-zGZ">
+                                                                    <rect key="frame" x="266" y="24" width="48" height="24"/>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="24" id="j5B-h5-MSa"/>
+                                                                        <constraint firstAttribute="width" constant="48" id="u28-0h-o5H"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="14"/>
+                                                                    <state key="normal" title="거절">
+                                                                        <color key="titleColor" red="1" green="0.65417033430000004" blue="0.065232805909999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </state>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <constraints>
+                                                                <constraint firstItem="yaA-Al-ITo" firstAttribute="leading" secondItem="W9s-nm-uO7" secondAttribute="leading" id="2dL-U7-Zhf"/>
+                                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yaA-Al-ITo" secondAttribute="bottom" id="3Oq-as-uf0"/>
+                                                                <constraint firstItem="yaA-Al-ITo" firstAttribute="top" relation="greaterThanOrEqual" secondItem="W9s-nm-uO7" secondAttribute="top" id="901-2w-0fR"/>
+                                                                <constraint firstItem="FZV-e3-zGZ" firstAttribute="centerY" secondItem="W9s-nm-uO7" secondAttribute="centerY" id="Fx3-V9-AKT"/>
+                                                                <constraint firstItem="0Y6-wI-ybm" firstAttribute="centerY" secondItem="W9s-nm-uO7" secondAttribute="centerY" id="LgI-lb-B9E"/>
+                                                                <constraint firstItem="0Y6-wI-ybm" firstAttribute="leading" secondItem="FZV-e3-zGZ" secondAttribute="trailing" constant="12" id="ZAh-4t-UrN"/>
+                                                                <constraint firstItem="yaA-Al-ITo" firstAttribute="centerY" secondItem="W9s-nm-uO7" secondAttribute="centerY" id="llb-XA-fdL"/>
+                                                                <constraint firstItem="FZV-e3-zGZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yaA-Al-ITo" secondAttribute="trailing" id="wI1-lM-GGj"/>
+                                                                <constraint firstAttribute="trailing" secondItem="0Y6-wI-ybm" secondAttribute="trailing" id="zxC-wt-T2V"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MSX-cM-6XY" firstAttribute="leading" secondItem="9Kw-C6-oGQ" secondAttribute="leadingMargin" id="F0T-Is-0Zj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="MSX-cM-6XY" secondAttribute="trailing" id="psP-he-RAh"/>
+                                                <constraint firstItem="MSX-cM-6XY" firstAttribute="top" secondItem="9Kw-C6-oGQ" secondAttribute="topMargin" id="sdR-DT-vuz"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="MSX-cM-6XY" secondAttribute="bottom" id="vVl-1T-4r2"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="acceptButton" destination="0Y6-wI-ybm" id="30Y-jK-Pkk"/>
+                                            <outlet property="agoTimeLabel" destination="yaA-Al-ITo" id="Vj7-4d-tWc"/>
+                                            <outlet property="rejectButton" destination="FZV-e3-zGZ" id="AeQ-Ix-kOh"/>
+                                            <outlet property="shareTagLabel" destination="NHP-Or-dol" id="BcP-h7-Byf"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
