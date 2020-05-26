@@ -27,6 +27,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 			}
 		}
 	}
+	var collectionItems = [String]()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -43,6 +44,10 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 			let text = self.searchBar.text ?? ""
 			self.searchKeyword(keyword: text)
 			}).disposed(by: disposeBag)
+		
+		setCollectionItems()
+		
+		searchBar.borderStyle = .none
 	}
 	
 	func bindViewModel() {
@@ -59,10 +64,13 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		}
 	}
 	
+	func setCollectionItems() {NSLog("setCollectionItems")
+		collectionItems = ["내위치", "지도에서 선택"]
+	}
+
 }
 
 extension FrequentsSearchViewController: UITableViewDataSource{
-
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 			return self.placeList.count
@@ -81,6 +89,37 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 48
 	}
+}
+
+extension FrequentsSearchViewController: UICollectionViewDataSource{
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return collectionItems.count
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MoveMapCell", for: indexPath) as! MoveMapCell
+		cell.collectionLabel.text = collectionItems[indexPath.row]
+		if indexPath.row == 1 {
+			cell.collectionicon.image = UIImage(named:"icFrequentsSearch")
+		}
+		return cell
+	}
+
+}
+
+extension FrequentsSearchViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		if indexPath.row == 0{
+			return CGSize(width: 100, height: 48)
+		} else {
+			return CGSize(width: 150, height: 48)
+		}
+	}
+}
+
+class MoveMapCell: UICollectionViewCell{
+	@IBOutlet var collectionicon: UIImageView!
+	@IBOutlet var collectionLabel: UILabel!
 }
 
 class SearchCell: UITableViewCell{
