@@ -147,8 +147,8 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             mapView.translatesAutoresizingMaskIntoConstraints = false
             mapView.delegate = self
             mapView.baseMapType = .standard
-            //mapBackgroundView.insertSubview(mapView, at: 0)
-            mapBackgroundView.addSubview(mapView)
+            mapBackgroundView.insertSubview(mapView, at: 0)
+            //mapBackgroundView.addSubview(mapView)
             
             NSLayoutConstraint.activate([
                 mapView.topAnchor.constraint(equalTo: mapBackgroundView.topAnchor, constant: 0),
