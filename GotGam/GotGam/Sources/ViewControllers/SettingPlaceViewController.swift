@@ -84,6 +84,19 @@ extension SettingPlaceViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 0.1
 	}
+	
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let editAction = UIContextualAction(style: .normal, title: "수정") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+            guard let cell = tableView.cellForRow(at: indexPath) as? PlaceCell else { return }
+			//edit
+            success(true)
+        }
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+            self?.settingPlaceTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+            success(true)
+        }
+		return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+	}
 
 }
 
@@ -137,3 +150,5 @@ class PlaceCell: UITableViewCell{
 	@IBOutlet var placeAddressLabel: UILabel!
 	
 }
+
+
