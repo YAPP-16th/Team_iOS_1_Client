@@ -27,7 +27,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 			}
 		}
 	}
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.hidesBackButton = true
@@ -41,17 +41,16 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		
 		searchBar.rx.controlEvent(.primaryActionTriggered).subscribe(onNext: {
 			let text = self.searchBar.text ?? ""
-//			self.historyList.insert(text, at: 0)
 			self.searchKeyword(keyword: text)
 			}).disposed(by: disposeBag)
 	}
 	
 	func bindViewModel() {
 		self.searchBar.rx.controlEvent(.primaryActionTriggered)
-		.subscribe(onNext: {
-			let keyword = self.searchBar.text ?? ""
-			self.viewModel.inputs.addKeyword(keyword: keyword)
-		}) .disposed(by: disposeBag)
+			.subscribe(onNext: {
+				let keyword = self.searchBar.text ?? ""
+				self.viewModel.inputs.addKeyword(keyword: keyword)
+			}) .disposed(by: disposeBag)
 	}
 	
 	func searchKeyword(keyword: String){
@@ -63,16 +62,17 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 }
 
 extension FrequentsSearchViewController: UITableViewDataSource{
+
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.placeList.count
+			return self.placeList.count
 	}
 	
-	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let place = placeList[indexPath.row]
-		let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchCell
-		cell.kewordLabel.text = place.placeName
-		return cell
+			let place = placeList[indexPath.row]
+			let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchCell
+			cell.kewordLabel.text = place.placeName
+			return cell
 	}
 	
 }
@@ -86,3 +86,4 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 class SearchCell: UITableViewCell{
 	@IBOutlet var kewordLabel: UILabel!
 }
+
