@@ -119,6 +119,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
                 
                 if let collectionView = self?.tagCollectionView, indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
                     self?.viewModel.inputs.tagListCellSelect.onNext(())
+                    return
                 }
                 
                 if var tags = self?.viewModel.inputs.filteredTagSubject.value {

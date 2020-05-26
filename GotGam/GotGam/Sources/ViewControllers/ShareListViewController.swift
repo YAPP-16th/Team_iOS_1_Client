@@ -17,17 +17,17 @@ class ShareListViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Methods
     
-    func showShreAlert(tag: Tag, at: IndexPath) {
+    func showShareAlert(tag: Tag, at: IndexPath) {
         let alert = UIAlertController(title: "'\(tag.name)'태그를 공유하시겠습니까?", message: "태그를 공유해서 더 많은 사람들에게\n나의 공간들을 알려보아요.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "공유", style: .default) { (action) in
-            
+        let shareAction = UIAlertAction(title: "공유", style: .default) { [weak self] (action) in
+            self?.viewModel.inputs.share(tag: tag)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .default) { (action) in
             
         }
         
         alert.addAction(cancelAction)
-        alert.addAction(okAction)
+        alert.addAction(shareAction)
         present(alert, animated: true)
     }
     
@@ -92,7 +92,7 @@ extension ShareListViewController {
                         return UITableViewCell()
                     }
                     cell.configure(viewModel: viewModel, tag: tag)
-                    cell.shareAction = {vc.showShreAlert(tag: tag, at: indexPath)}
+                    cell.shareAction = {vc.showShareAlert(tag: tag, at: indexPath)}
                     return cell
                 }
             },

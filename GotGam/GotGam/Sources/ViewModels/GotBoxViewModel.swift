@@ -16,6 +16,7 @@ protocol GotBoxViewModelInputs {
     func recover(got: Got, at indexPath: IndexPath)
     func delete(got: Got, at indexPath: IndexPath)
     var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
+    var tagListCellSelect: PublishSubject<Void> { get set }
 }
 
 protocol GotBoxViewModelOutputs {
@@ -66,11 +67,19 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     }
     
     var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
+    var tagListCellSelect = PublishSubject<Void>()
     
     // MARK: - Outpus
     
     var boxSections = BehaviorRelay<[BoxSectionModel]>(value: [])
     var tagListRelay = BehaviorRelay<[Tag]>(value: [])
+    
+    // MARK: - Methods
+    
+    func showShareList() {
+        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .shareList(shareListVM), using: .push, animated: true)
+    }
     
     // MARK: - Initializing
     
@@ -100,6 +109,10 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
                     self?.boxSections.accept(self?.configureDataSource(boxList: filteredGot) ?? [])
                 }
             })
+            .disposed(by: disposeBag)
+        
+        tagListCellSelect
+            .subscribe(onNext: {[weak self] in self?.showShareList()})
             .disposed(by: disposeBag)
     }
     
