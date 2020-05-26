@@ -557,7 +557,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="YmK-s7-WN8">
                         <barButtonItem key="leftBarButtonItem" title="취소" id="Utf-dX-ju4"/>
-                        <barButtonItem key="rightBarButtonItem" title="저장" id="hjn-bF-KUB"/>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="저장" id="hjn-bF-KUB"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addIconButton" destination="8cl-rh-HKX" id="OAx-5w-xPz"/>

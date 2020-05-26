@@ -128,13 +128,18 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     }
     
     private func saveGot() {
+        guard let location = placeSubject.value else {
+            print("🚨 위치정보가 없습니다.")
+            return
+        }
+        
         if var currentGot = currentGot.value {
             currentGot.title = nameText.value
             currentGot.place = placeText.value
             //currentGot.insertedDate = date
             currentGot.tag = tag.value == nil ? [] : [tag.value!]
-            currentGot.latitude = placeSubject.value?.latitude
-            currentGot.longitude = placeSubject.value?.longitude
+            currentGot.latitude = location.latitude
+            currentGot.longitude = location.longitude
             
             storage.updateGot(gotToUpdate: currentGot)
                 .subscribe(onNext: { [weak self] _ in
@@ -146,8 +151,8 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 id: Int64(arc4random()),
                 createdDate: Date(),
                 title: nameText.value,
-                latitude: .zero,
-                longitude: .zero,
+                latitude: location.latitude,
+                longitude: location.longitude,
                 radius: 100,
                 place: placeText.value,
                 arriveMsg: arriveText.value,

@@ -182,14 +182,15 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .subscribe(onNext: { _ in self.viewModel.tapTag.onNext(()) })
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(viewModel.inputs.isOnArrive, viewModel.inputs.isOnLeave)
-            .subscribe(onNext: { [unowned self] arrive, leave in
+        Observable.combineLatest(viewModel.inputs.isOnArrive, viewModel.inputs.isOnLeave, viewModel.outputs.placeSubject)
+            .subscribe(onNext: { [unowned self] arrive, leave, place in
+
                 
                 if !arrive, !leave {
                     self.alertErrorLabel.isHidden = false
                     self.saveButton.isEnabled = false
                     return
-                } else {
+                } else if place != nil {
                     self.alertErrorLabel.isHidden = true
                     self.saveButton.isEnabled = true
                 }
@@ -245,6 +246,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.placeSubject
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] location in
+                //self?.saveButton.isEnabled = true
                 self?.mapBackgroundZeroHeightConstraint.isActive = false
                 self?.mapBackgroundView.isHidden = false
                 self?.setupMapView()
