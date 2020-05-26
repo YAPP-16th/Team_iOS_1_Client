@@ -18,6 +18,7 @@ protocol AddPlantViewModelInputs {
     var dateText: BehaviorRelay<String> { get set }
     var arriveText: BehaviorRelay<String> { get set }
     var leaveText: BehaviorRelay<String> { get set }
+    var insertedDateRelay: BehaviorRelay<Date?> { get set }
     
     var isOnDate: BehaviorRelay<Bool> { get set }
     var isOnArrive: BehaviorRelay<Bool> { get set }
@@ -50,6 +51,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var dateText = BehaviorRelay<String>(value: "")
     var arriveText = BehaviorRelay<String>(value: "")
     var leaveText = BehaviorRelay<String>(value: "")
+    var insertedDateRelay = BehaviorRelay<Date?>(value: nil)
     
     var isOnDate = BehaviorRelay<Bool>(value: false)
     var isOnArrive = BehaviorRelay<Bool>(value: true)
@@ -157,7 +159,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 place: placeText.value,
                 arriveMsg: arriveText.value,
                 deparetureMsg: leaveText.value,
-                insertedDate: nil, // TODO: dateText.value -> Date
+                insertedDate: insertedDateRelay.value,
                 onArrive: isOnArrive.value,
                 onDeparture: isOnLeave.value,
                 onDate: isOnDate.value,

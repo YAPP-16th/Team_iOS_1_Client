@@ -324,7 +324,7 @@
             </objects>
             <point key="canvasLocation" x="992.75362318840587" y="-882.58928571428567"/>
         </scene>
-        <!--Title-->
+        <!--상세 심기 설정-->
         <scene sceneID="xwa-ip-OSW">
             <objects>
                 <viewController storyboardIdentifier="AddVC" id="9o4-1I-vlQ" customClass="AddPlantViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
@@ -555,7 +555,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FBO-QS-FrG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="YmK-s7-WN8">
+                    <navigationItem key="navigationItem" title="상세 심기 설정" id="YmK-s7-WN8">
                         <barButtonItem key="leftBarButtonItem" title="취소" id="Utf-dX-ju4"/>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="저장" id="hjn-bF-KUB"/>
                     </navigationItem>

@@ -184,8 +184,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         
         Observable.combineLatest(viewModel.inputs.isOnArrive, viewModel.inputs.isOnLeave, viewModel.outputs.placeSubject)
             .subscribe(onNext: { [unowned self] arrive, leave, place in
-
-                
                 if !arrive, !leave {
                     self.alertErrorLabel.isHidden = false
                     self.saveButton.isEnabled = false
@@ -223,25 +221,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 self?.titleTextView.centerVertically()
             })
             .disposed(by: disposeBag)
-        
-//        viewModel.outputs.currentGot
-//            .compactMap { $0?.place }
-//            .subscribe(onNext: { [weak self] place in
-//                self?.setPlaceTextView(text: place)
-//            })
-//            .disposed(by: disposeBag)
-        
-//        viewModel.outputs.currentGot
-//            .compactMap { $0 }
-//            .subscribe(onNext: { [weak self] got in
-//                self?.mapBackgroundZeroHeightConstraint.isActive = false
-//                self?.mapBackgroundView.isHidden = false
-//                self?.setupMapView()
-//                guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
-//                self?.drawSeed(point: point)
-//                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
-//            })
-//            .disposed(by: disposeBag)
         
         viewModel.outputs.placeSubject
             .compactMap { $0 }

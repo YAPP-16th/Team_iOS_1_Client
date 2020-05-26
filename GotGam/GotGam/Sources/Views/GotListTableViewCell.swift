@@ -24,7 +24,9 @@ class GotListTableViewCell: UITableViewCell {
             titleLabel.text = got.title
             tagView.backgroundColor = tagColor
             placeLabel.text = got.place
-            dateLabel.text = got.insertedDate?.endTime
+            if let insertedTime = got.insertedDate?.endTime {
+                dateLabel.text = insertedTime
+            }
             restoreView.restoreAction = { [weak self] in
                 self?.isChecked = false
             }

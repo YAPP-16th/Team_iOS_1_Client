@@ -12,6 +12,7 @@ import RxSwift
 class TextFieldTableViewCell: UITableViewCell {
     
     @objc func didTapDatePickerDone() {
+        viewModel?.inputs.insertedDateRelay.accept(datePicker.date)
         textField.text = datePicker.date.endTime
         self.endEditing(true)
     }
