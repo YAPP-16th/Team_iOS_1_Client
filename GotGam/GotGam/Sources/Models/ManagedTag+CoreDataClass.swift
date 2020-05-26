@@ -12,12 +12,35 @@ import CoreData
 
 @objc(ManagedTag)
 public class ManagedTag: NSManagedObject {
-  func toTag() -> Tag{
-      .init(name: name!, hex: hex!)
+  func toTag() -> Tag {
+//    var gotList = [Got]()
+//    if let managedGotList = self.got?.allObjects as? [ManagedGot] {
+//        for got in managedGotList {
+//            print(got)
+//            gotList.append(got.toGot())
+//        }
+//    }
+    
+    return .init(name: name ?? "", hex: hex)
+//      .init(name: name!, hex: hex!, gotList: got)
+    
   }
   
   func fromTag(tag: Tag) {
-      self.name = tag.name
-      self.hex = tag.hex
+    
+//    var managedGotList = [ManagedGot]()
+//    if let context = self.managedObjectContext {
+//        let gotList = tag.gotList
+//        for got in gotList {
+//            let managedGot = ManagedGot(context: context)
+//            managedGot.fromGot(got: got)
+//            managedGotList.append(managedGot)
+//        }
+//    }
+    
+    
+    self.name = tag.name
+    self.hex = tag.hex
+    //self.got = NSSet.init(array: managedGotList)
   }
 }

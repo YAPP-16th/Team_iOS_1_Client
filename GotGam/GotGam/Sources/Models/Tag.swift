@@ -11,9 +11,17 @@ import Foundation
 struct Tag: Equatable {
     var name: String
     var hex: String // hex. ex) "#FFFFFF"
+    //var gotList: [Got]
     
     init(name: String, hex: String) {
         self.name = name
         self.hex = hex
+        //self.gotList = gotList
     }
+    
+    
+}
+
+func ==(lhs: Tag, rhs: Tag) -> Bool {
+    return lhs.hex == rhs.hex
 }

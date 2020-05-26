@@ -16,6 +16,7 @@ protocol ShareListViewModelInputs {
     func fetchTagList()
     func remove(tag: Tag, at indexPath: IndexPath)
     func updateTag(at indexPath: IndexPath)
+    func share(tag: Tag)
     var addTagSubject: PublishSubject<Void> { get set }
 }
 
@@ -56,6 +57,17 @@ class ShareListViewModel: CommonViewModel, ShareListViewModelType, ShareListView
     func updateTag(at indexPath: IndexPath) {
         let updatedTag = tagListRelay.value[indexPath.row]
         showCreateTag(tag: updatedTag)
+    }
+    
+    func share(tag: Tag) {
+        // TODO: Share 로직 추가
+        
+        let gotList = storage.fetchGotList(of: tag)
+        gotList
+            .subscribe(onNext: { gotList in
+                print("share \(gotList)")
+            })
+            .disposed(by: disposeBag)
     }
     
     var addTagSubject = PublishSubject<Void>()
