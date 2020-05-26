@@ -34,7 +34,7 @@ protocol AddPlantViewModelOutputs {
     var placeText: BehaviorRelay<String> { get }
     var tag: BehaviorRelay<Tag?> { get }
     var sectionsSubject: BehaviorRelay<[InputSectionModel]> { get }
-    var placeSubject: BehaviorSubject<CLLocationCoordinate2D?> { get }
+    var placeSubject: BehaviorRelay<CLLocationCoordinate2D?> { get }
 }
 
 protocol AddPlantViewModelType {
@@ -69,7 +69,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     // MARK: - Private
     
-    var placeSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
+    var placeSubject = BehaviorRelay<CLLocationCoordinate2D?>(value: nil)
 
     // MARK: - Methods
     
@@ -133,6 +133,9 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.place = placeText.value
             //currentGot.insertedDate = date
             currentGot.tag = tag.value == nil ? [] : [tag.value!]
+            currentGot.latitude = placeSubject.value?.latitude
+            currentGot.longitude = placeSubject.value?.longitude
+            
             storage.updateGot(gotToUpdate: currentGot)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true)
@@ -196,7 +199,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         
         currentGot.accept(got)
         if let lat = got.latitude, let long = got.longitude {
-            placeSubject.onNext(.init(latitude: lat, longitude: long))
+            placeSubject.accept(.init(latitude: lat, longitude: long))
         }
         
         nameText.accept(got.title ?? "")
