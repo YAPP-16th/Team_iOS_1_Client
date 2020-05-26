@@ -70,37 +70,52 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
         self.restoreView.isHidden = true
-        
-        
     }
     
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.quickAddView.addAction = { text in
-            
-            let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-            let got = Got(id: Int64(arc4random()), title: text, latitude: centerPoint.latitude, longitude: centerPoint.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
-            self.viewModel.createGot(got: got)
+
+//            let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
+//            let got = Got(id: Int64(arc4random()), title: text, latitude: centerPoint.latitude, longitude: centerPoint.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
+//            self.viewModel.createGot(got: got)
             //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
-            self.viewModel.seedState.onNext(.none)
+//            self.viewModel.seedState.onNext(.none)
             self.cardCollectionView.isHidden = false
             self.view.layoutIfNeeded()
         }
+        
         LocationManager.shared.startUpdatingLocation()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         self.viewModel.updateList()
         self.viewModel.updateTagList()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard
+            let beforeGot = viewModel.beforeGotSubject.value,
+            let gotList = try? viewModel.output.gotList.value(),
+            let beforeGotIndex = gotList.firstIndex(of: beforeGot)
+        else { return }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
     
     @objc func keyboardWillShow(noti: Notification){
@@ -130,6 +145,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.myLocationButton.layer.cornerRadius = self.seedButton.frame.height / 2
         self.myLocationButton.backgroundColor = .white
     }
+    deinit {
+        print("map deinit")
+    }
     
     
     // MARK: - Initializing
@@ -140,7 +158,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         mapView.delegate = self
         mapView.baseMapType = .standard
         self.view.addSubview(mapView)
-      self.view.sendSubviewToBack(mapView)
+        self.view.sendSubviewToBack(mapView)
+        
     }
     
     private func configureCardCollectionView(){
@@ -151,23 +170,43 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     }
     
     func bindViewModel() {
-        viewModel.seedState.subscribe(onNext:{ [weak self] state in
+        Observable.combineLatest(viewModel.aimToPlace, viewModel.seedState)
+            .subscribe(onNext:{ [weak self] aimToPlace, state in
             guard let self = self else { return }
-            self.state = state
+            
             switch state{
             case .none:
                 self.setNormalStateUI()
             case .seeding:
                 self.setSeedingStateUI()
             case .adding:
+                if aimToPlace {
+                    let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
+                    let location = CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude)
+                    self.viewModel.input.savePlace(location: location)
+                    return
+                }
                 self.setAddingStateUI()
             }
+            self.state = state
             }).disposed(by: disposeBag)
+//        viewModel.seedState.subscribe(onNext:{ [weak self] state in
+//            guard let self = self else { return }
+//            self.state = state
+//            switch state{
+//            case .none:
+//                self.setNormalStateUI()
+//            case .seeding:
+//                self.setSeedingStateUI()
+//            case .adding:
+//                self.setAddingStateUI()
+//            }
+//            }).disposed(by: disposeBag)
         
         self.seedButton.rx.tap.subscribe(onNext: { [weak self] in
             print("버튼 클릭됨")
             guard let self = self else { return }
-            switch self.state{
+            switch self.state {
             case .none:
                 self.viewModel.seedState.onNext(.seeding)
             case .seeding:
@@ -175,7 +214,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             case .adding:
                 self.viewModel.seedState.onNext(.none)
             }
-            
         }).disposed(by: disposeBag)
         self.myLocationButton.rx.tap.subscribe(onNext: { [weak self] in
             self?.setMyLocation()
@@ -208,14 +246,28 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.gotList = list
         }).disposed(by: self.disposeBag)
         
-        self.quickAddView.addAction = { [weak self] text in
-            guard let self = self else { return }
-            
-            let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-            let location = CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude)
-            
-            self.viewModel.input.quickAdd(text: text ?? "", location: location)
-        }
+        quickAddView.addButotn.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                if let centerPoint = self?.mapView.mapCenterPoint.mapPointGeo() {
+                    let location = CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude)
+                    self?.viewModel.input.quickAdd(location: location)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        quickAddView.addField.rx.text.orEmpty
+            .bind(to: viewModel.input.addText)
+            .disposed(by: disposeBag)
+        
+//        self.quickAddView.addAction = { [weak self] text in
+//            guard let self = self else { return }
+//
+//            let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
+//            let location = CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude)
+//
+//            self.viewModel.input.quickAdd(text: text ?? "", location: location)
+//        }
         
         self.viewModel.output.doneAction.bind { got in
             self.viewModel.input.updateList()
@@ -303,6 +355,13 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         circle.circleRadius = 100
       mapView.addCircle(circle)
     }
+    
+    func setCard(index: Int) {
+        guard let gotList = try? self.viewModel.output.gotList.value() else { return }
+        let got = gotList[index]
+        let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
+        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
+    }
 	
 	func updateAddress() {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
@@ -314,9 +373,10 @@ extension MapViewController: MTMapViewDelegate{
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
         }
+        print("map tapped")
     }
     func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
-        switch self.state{
+        switch self.state {
         case .adding, .seeding:
             setCircle(point: mapCenterPoint)
         case .none:
@@ -375,9 +435,10 @@ extension MapViewController: UICollectionViewDelegateFlowLayout{
 extension MapViewController: UIScrollViewDelegate{
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let currentIndex = self.centeredCollectionViewFlowLayout.currentCenteredPage else { return }
-        guard let gotList = try? self.viewModel.output.gotList.value() else { return }
-        let got = gotList[currentIndex]
-        let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
-        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
+        setCard(index: currentIndex)
+//        guard let gotList = try? self.viewModel.output.gotList.value() else { return }
+//        let got = gotList[currentIndex]
+//        let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
+//        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
     }
 }

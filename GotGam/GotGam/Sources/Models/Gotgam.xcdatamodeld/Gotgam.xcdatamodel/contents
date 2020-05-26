@@ -38,7 +38,7 @@
     <entity name="ManagedTag" representedClassName="ManagedTag" syncable="YES">
         <attribute name="hex" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="got" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ManagedGot" inverseName="tag" inverseEntity="ManagedGot"/>
+        <relationship name="got" toMany="YES" deletionRule="No Action" destinationEntity="ManagedGot" inverseName="tag" inverseEntity="ManagedGot"/>
     </entity>
     <elements>
         <element name="History" positionX="-144" positionY="171" width="128" height="58"/>

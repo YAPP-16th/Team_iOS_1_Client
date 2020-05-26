@@ -23,15 +23,22 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
 
     // MARK: - Methods
     
+    func setPlaceTextView(text: String) {
+        placeTextView.text = text
+        placeTextView.textColor = .black
+        placeTextView.isEditable = false
+        placeTextView.centerVertically()
+    }
+    
     func drawCircle(center: MTMapPoint, radius: Float) {
         let circle = MTMapCircle()
         circle.circleCenterPoint = center
         circle.circleLineColor = .orange
         circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
         circle.circleRadius = radius
-        mapView.addCircle(circle)
+        mapView?.addCircle(circle)
     
-        mapView.fitArea(toShow: circle)
+        mapView?.fitArea(toShow: circle)
     }
     
     func locationWithBearing(bearing:Double, distanceMeters:Double, origin:CLLocationCoordinate2D) -> CLLocationCoordinate2D {
@@ -51,12 +58,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         seed.mapPoint = point
         seed.markerType = .customImage
         seed.customImage = UIImage(named: "icSeed")!
-        mapView.add(seed)
+        mapView?.add(seed)
     }
     
-    func setupMapCenter() {
-        //let centerCoor = MTMapPoint(geoCoord: .init(latitude: currentCenter.latitude, longitude: currentCenter.longitude))
-        mapView.setMapCenter(currentCenter, animated: false)
+    func setupMapCenter(latitude: Double, longitude: Double) {
+        let centerPoint = MTMapPoint(geoCoord: .init(latitude: latitude, longitude: longitude))
+        print(centerPoint?.mapPointGeo(), mapView)
+        mapView?.setMapCenter(centerPoint, animated: false)
     }
     
     func showAlert(_ label: UILabel, message msg: String) {
@@ -81,16 +89,39 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         super.viewDidLoad()
         //navigationController?.presentationController?.delegate = self
         setupViews()
-        setupMapView()
+        //setupMapView()
         //setupMapCenter()
         //drawCircle(center: currentCenter, radius: 50)
         //drawSeed(point: currentCenter)
+        
+        
+//        mapBackgroundHeightConstraint.isActive = false
+//        mapBackgroundZeroHeightConstraint.isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        titleTextView.centerVertically()
-        placeTextView.centerVertically()
+        
+        
+        
+        DispatchQueue.main.async {
+            self.titleTextView.centerVertically()
+            self.placeTextView.centerVertically()
+        }
+        
+//        if let location = viewModel.outputs.placeSubject.value {
+//            self.setupMapCenter(latitude: location.latitude, longitude: location.longitude)
+//        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let location = viewModel.placeSubject.value {
+            print(location)
+            print("set center to \(location) in addPlant")
+            setupMapCenter(latitude: Double(location.latitude), longitude: Double(location.longitude))
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -135,6 +166,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             mapView.delegate = self
             mapView.baseMapType = .standard
             mapBackgroundView.insertSubview(mapView, at: 0)
+            //mapBackgroundView.addSubview(mapView)
             
             NSLayoutConstraint.activate([
                 mapView.topAnchor.constraint(equalTo: mapBackgroundView.topAnchor, constant: 0),
@@ -148,6 +180,11 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     func bindViewModel() {
         
         // Input
+        
+        editButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.editPlace)
+            .disposed(by: disposeBag)
         
         saveButton.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
@@ -168,14 +205,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .subscribe(onNext: { _ in self.viewModel.tapTag.onNext(()) })
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(viewModel.inputs.isOnArrive, viewModel.inputs.isOnLeave)
-            .subscribe(onNext: { [unowned self] arrive, leave in
-                
+        Observable.combineLatest(viewModel.inputs.isOnArrive, viewModel.inputs.isOnLeave, viewModel.outputs.placeSubject)
+            .subscribe(onNext: { [unowned self] arrive, leave, place in
                 if !arrive, !leave {
                     self.alertErrorLabel.isHidden = false
                     self.saveButton.isEnabled = false
                     return
-                } else {
+                } else if place != nil {
                     self.alertErrorLabel.isHidden = true
                     self.saveButton.isEnabled = true
                 }
@@ -208,29 +244,40 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 self?.titleTextView.centerVertically()
             })
             .disposed(by: disposeBag)
+//
+//        viewModel.outputs.currentGot
+//            .compactMap { $0 }
+//            .subscribe(onNext: { [weak self] got in
+//                if let lat = got.latitude, let long = got.longitude {
+//                    self?.setupMapCenter(latitude: lat, longitude: long)
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
-        viewModel.outputs.currentGot
-            .compactMap { $0?.place }
-            .subscribe(onNext: { [weak self] place in
-                self?.placeTextView.text = place
-                self?.placeTextView.textColor = .black
-                self?.placeTextView.isEditable = false
-                self?.placeTextView.centerVertically()
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.outputs.currentGot
+        viewModel.outputs.placeSubject
             .compactMap { $0 }
-            .subscribe(onNext: { [weak self] got in
-                self?.mapBackgroundHiddenConstraint.isActive = false
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] location in
+                //self?.saveButton.isEnabled = true
+                self?.mapBackgroundZeroHeightConstraint.isActive = false
                 self?.mapBackgroundView.isHidden = false
-                guard let point = MTMapPoint(geoCoord: .init(latitude: got.latitude!, longitude: got.longitude!)) else { return }
-                self?.drawSeed(point: point)
-                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
+                if self?.mapView == nil {
+                    self?.setupMapView()
+                }
+//                self?.setupMapCenter(latitude: location.latitude, longitude: location.longitude)
+                //self?.setupMapView()
+//                guard let point = MTMapPoint(geoCoord: .init(latitude: location.latitude, longitude: location.longitude)) else { return }
+//                self?.drawSeed(point: point)
+//                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
             })
             .disposed(by: disposeBag)
-//        placeLabel.text = viewModel.outputs.currentGot.value?.place
         
+        viewModel.outputs.placeText
+            .filter { $0 != "" }
+            .subscribe(onNext: { [weak self] place in
+                self?.setPlaceTextView(text: place)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Views
@@ -243,11 +290,12 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var mapBackgroundView: UIView!
     @IBOutlet var alertDefaultLabel: PaddingLabel!
     @IBOutlet var alertErrorLabel: PaddingLabel!
-    var mapView: MTMapView!
+    var mapView: MTMapView?
     @IBOutlet var addIconButton: UIButton!
     @IBOutlet var inputTableView: UITableView!
     @IBOutlet var editButton: UIButton!
-    @IBOutlet var mapBackgroundHiddenConstraint: NSLayoutConstraint!
+    @IBOutlet var mapBackgroundZeroHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var mapBackgroundHeightConstraint: NSLayoutConstraint!
 }
 
 // MARK: - config Data Sources
@@ -370,6 +418,11 @@ extension AddPlantViewController: UITextViewDelegate {
             }
         } else if textView == placeTextView {
             // TODO: 플레이스를 클릭하면 지도 설정으로 이동
+            
+            view.endEditing(true)
+            viewModel.inputs.editPlace.onNext(())
+            
+            
         }
         
         

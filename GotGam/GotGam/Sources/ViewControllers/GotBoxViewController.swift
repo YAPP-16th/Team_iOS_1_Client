@@ -18,7 +18,6 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Methods
     
     func showMoreActionSheet(at indexPath: IndexPath) {
-        
         guard let cell = gotBoxListTableView.cellForRow(at: indexPath) as? GotBoxTableViewCell else { return }
         
         let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
@@ -82,6 +81,12 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
         
         Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
             .bind { [weak self] indexPath, tag in
+                
+                if let collectionView = self?.tagCollectionView, indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
+                    self?.viewModel.inputs.tagListCellSelect.onNext(())
+                    return
+                }
+                
                 if var tags = self?.viewModel.inputs.filteredTagSubject.value {
                     tags.append(tag)
                     self?.viewModel.inputs.filteredTagSubject.accept(tags)
@@ -101,20 +106,20 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
         // Outputs
         
         viewModel.outputs.tagListRelay
-        .compactMap { [weak self] in self?.appendEmptyTag($0) }
-        .bind(to: tagCollectionView.rx.items) { (collectionView, cellItem, tag) -> UICollectionViewCell in
-            if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
-                cell.configure(tag)
-                cell.layer.cornerRadius = cell.bounds.height/2
-                return cell
-            } else {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagListCollectionViewCell", for: IndexPath(item: cellItem, section: 0)) as? TagListCollectionViewCell else { return UICollectionViewCell()}
-                cell.layer.cornerRadius = cell.bounds.height/2
-                return cell
+            .compactMap { [weak self] in self?.appendEmptyTag($0) }
+            .bind(to: tagCollectionView.rx.items) { (collectionView, cellItem, tag) -> UICollectionViewCell in
+                if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
+                    cell.configure(tag)
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagListCollectionViewCell", for: IndexPath(item: cellItem, section: 0)) as? TagListCollectionViewCell else { return UICollectionViewCell()}
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                }
             }
-        }
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
         
         let dataSource = GotBoxViewController.dataSource(viewModel: viewModel, vc: self)
         viewModel.outputs.boxSections
@@ -122,6 +127,8 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
         
     }
+    
+    // MARK: - Views
     
     @IBOutlet var gotBoxListTableView: UITableView!
     @IBOutlet var tagCollectionView: UICollectionView!

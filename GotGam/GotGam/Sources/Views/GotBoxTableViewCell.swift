@@ -30,7 +30,7 @@ class GotBoxTableViewCell: UITableViewCell {
         titleLabel.text = got.title
         placeLabel.text = got.place
         
-        messageLabel.text = got.arriveMsg == "" ? got.deparetureMsg :  got.arriveMsg
+        messageLabel.text = got.arriveMsg == "" ? got.deparetureMsg : got.arriveMsg
     }
 
     override func awakeFromNib() {

@@ -322,7 +322,7 @@
             </objects>
             <point key="canvasLocation" x="992.75362318840587" y="-882.58928571428567"/>
         </scene>
-        <!--Title-->
+        <!--상세 심기 설정-->
         <scene sceneID="xwa-ip-OSW">
             <objects>
                 <viewController storyboardIdentifier="AddVC" id="9o4-1I-vlQ" customClass="AddPlantViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
@@ -367,14 +367,14 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="309" height="50"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <color key="textColor" name="veryLightPink"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="장소를 입력해주세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tIh-9N-K2z">
                                                 <rect key="frame" x="0.0" y="50" width="309" height="50"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <color key="textColor" name="veryLightPink"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
@@ -420,12 +420,22 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icSeed" translatesAutoresizingMaskIntoConstraints="NO" id="bN2-nG-CyO">
+                                        <rect key="frame" x="182" y="-50" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="6aU-0I-OlI"/>
+                                            <constraint firstAttribute="height" constant="50" id="jS0-dI-XrN"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="53n-Ju-icp"/>
+                                    <constraint firstItem="bN2-nG-CyO" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="6Zn-PU-F28"/>
+                                    <constraint firstAttribute="height" id="Mri-sG-y98"/>
+                                    <constraint firstItem="bN2-nG-CyO" firstAttribute="centerY" secondItem="ONd-Cp-AX0" secondAttribute="centerY" constant="-25" id="NQE-97-5a2"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="NwI-WF-PxO"/>
-                                    <constraint firstAttribute="height" priority="750" id="PdC-3I-Zoh"/>
                                     <constraint firstAttribute="trailing" secondItem="YsO-E7-ZOT" secondAttribute="trailing" id="VXU-Yk-Bgx"/>
+                                    <constraint firstAttribute="height" priority="700" constant="220" id="es1-ko-4db"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="gJA-ET-guz"/>
                                     <constraint firstAttribute="bottom" secondItem="YsO-E7-ZOT" secondAttribute="bottom" id="hat-Mj-7jc"/>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="lJW-fJ-C3o"/>
@@ -443,14 +453,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="태그" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7m6-m5-0WZ">
-                                                    <rect key="frame" x="20" y="20.5" width="29.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="20" y="20.5" width="29.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YAO-8H-Z1a" userLabel="I">
-                                                    <rect key="frame" x="349.5" y="20.5" width="44.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="349.5" y="20.5" width="44.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -486,8 +496,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOX-4u-Tul">
-                                                    <rect key="frame" x="20" y="22.5" width="42" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="20" y="22.5" width="42" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -516,8 +526,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="메세지를 알려주세요" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PDx-3A-Mfw">
-                                                    <rect key="frame" x="20" y="24" width="374" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="20" y="22.5" width="374" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
@@ -549,13 +559,12 @@
                             <constraint firstItem="tvn-px-jfx" firstAttribute="top" secondItem="FBO-QS-FrG" secondAttribute="top" id="ZiL-yV-frf"/>
                             <constraint firstItem="FBO-QS-FrG" firstAttribute="trailing" secondItem="ONd-Cp-AX0" secondAttribute="trailing" id="byk-O6-RCh"/>
                             <constraint firstItem="6cX-Sb-v1L" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="bottom" id="pHh-m4-GMb"/>
-                            <constraint firstItem="ONd-Cp-AX0" firstAttribute="height" secondItem="RV1-gH-Au6" secondAttribute="height" multiplier="0.3" priority="500" id="wxc-eC-Fdd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FBO-QS-FrG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="YmK-s7-WN8">
+                    <navigationItem key="navigationItem" title="상세 심기 설정" id="YmK-s7-WN8">
                         <barButtonItem key="leftBarButtonItem" title="취소" id="Utf-dX-ju4"/>
-                        <barButtonItem key="rightBarButtonItem" title="저장" id="hjn-bF-KUB"/>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="저장" id="hjn-bF-KUB"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addIconButton" destination="8cl-rh-HKX" id="OAx-5w-xPz"/>
@@ -564,8 +573,9 @@
                         <outlet property="cancelButton" destination="Utf-dX-ju4" id="NgA-dZ-FKc"/>
                         <outlet property="editButton" destination="YsO-E7-ZOT" id="IFo-T5-KGp"/>
                         <outlet property="inputTableView" destination="6cX-Sb-v1L" id="uN2-cd-HbU"/>
-                        <outlet property="mapBackgroundHiddenConstraint" destination="PdC-3I-Zoh" id="oIN-Ot-wc1"/>
+                        <outlet property="mapBackgroundHeightConstraint" destination="es1-ko-4db" id="Bu8-ou-mRx"/>
                         <outlet property="mapBackgroundView" destination="ONd-Cp-AX0" id="SR6-Sj-Lrx"/>
+                        <outlet property="mapBackgroundZeroHeightConstraint" destination="Mri-sG-y98" id="pel-B7-CXh"/>
                         <outlet property="placeTextView" destination="tIh-9N-K2z" id="g95-ZN-Pdt"/>
                         <outlet property="saveButton" destination="hjn-bF-KUB" id="Rk3-oU-SzG"/>
                         <outlet property="titleTextView" destination="suR-zG-cLz" id="sl6-Ey-aFn"/>
@@ -595,20 +605,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선택된 태그" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ucx-AG-A27">
-                                                    <rect key="frame" x="20" y="16.5" width="78" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="20" y="17" width="78.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QlS-b0-jAa">
-                                                    <rect key="frame" x="352" y="17.5" width="42" height="19.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <rect key="frame" x="349.5" y="17" width="44.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eXj-Nd-qfz">
-                                                    <rect key="frame" x="328" y="20" width="14" height="14"/>
-                                                    <color key="backgroundColor" systemColor="systemGrayColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <rect key="frame" x="325.5" y="20" width="14" height="14"/>
+                                                    <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="1ux-xf-w9f"/>
                                                         <constraint firstAttribute="width" secondItem="eXj-Nd-qfz" secondAttribute="height" multiplier="1:1" id="RcY-Cf-gEm"/>
@@ -646,8 +656,8 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0K-5k-dj2">
-                                                    <rect key="frame" x="44" y="15.5" width="42" height="40"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <rect key="frame" x="44" y="15.5" width="44.5" height="40"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -736,7 +746,7 @@
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="태그 이름을 적어주세요" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pSe-Lu-WMQ">
                                                     <rect key="frame" x="20" y="11" width="374" height="37"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
@@ -797,9 +807,9 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이미 사용된 색상입니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1xR-6u-9U2" customClass="PaddingLabel" customModule="GotGam" customModuleProvider="target">
-                                <rect key="frame" x="152" y="388" width="110" height="14.5"/>
+                                <rect key="frame" x="149" y="388" width="116" height="18"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>

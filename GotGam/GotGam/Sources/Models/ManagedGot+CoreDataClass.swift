@@ -41,14 +41,17 @@ public class ManagedGot: NSManagedObject {
   }
   
   func fromGot(got: Got){
+    
     var managedTags = [ManagedTag]()
-    if let tags = got.tag, let context = self.managedObjectContext{
-      for tag in tags{
-        let managedTag = ManagedTag(context: context)
-        managedTag.fromTag(tag: tag)
-        managedTags.append(managedTag)
+    if let tags = got.tag {
+      for tag in tags {
+        if let managedTag = fetchTag(tag: tag) {
+            managedTags.append(managedTag)
+        }
       }
     }
+    
+     
     self.id = got.id!
     self.createdDate = got.createdDate
     self.tag = NSSet.init(array: managedTags)
@@ -65,4 +68,21 @@ public class ManagedGot: NSManagedObject {
     self.onDeparture = got.onDeparture
     self.onDate = got.onDate
   }
+    
+    func fetchTag(tag: Tag) -> ManagedTag? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedTag")
+        fetchRequest.predicate = NSPredicate(format: "hex = %@", tag.hex)
+        
+        let context = self.managedObjectContext
+        
+        do {
+            if let fetchedObjects = try context?.fetch(fetchRequest) as? [ManagedTag] {
+                return fetchedObjects.first
+            } else {
+                return nil
+            }
+        } catch {
+            return nil
+        }
+    }
 }

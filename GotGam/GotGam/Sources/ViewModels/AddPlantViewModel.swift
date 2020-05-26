@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -17,6 +18,7 @@ protocol AddPlantViewModelInputs {
     var dateText: BehaviorRelay<String> { get set }
     var arriveText: BehaviorRelay<String> { get set }
     var leaveText: BehaviorRelay<String> { get set }
+    var insertedDateRelay: BehaviorRelay<Date?> { get set }
     
     var isOnDate: BehaviorRelay<Bool> { get set }
     var isOnArrive: BehaviorRelay<Bool> { get set }
@@ -25,16 +27,15 @@ protocol AddPlantViewModelInputs {
     var save: PublishSubject<Void> { get set }
     var close: PublishSubject<Void> { get set }
     var tapTag: PublishSubject<Void> { get set }
+    var editPlace: PublishSubject<Void> { get set }
 }
 
 protocol AddPlantViewModelOutputs {
-    
-    // 테이블 뷰, 지도, 이미지, 이름, 주소 초기값
-
     var currentGot: BehaviorRelay<Got?> { get }
     var placeText: BehaviorRelay<String> { get }
     var tag: BehaviorRelay<Tag?> { get }
     var sectionsSubject: BehaviorRelay<[InputSectionModel]> { get }
+    var placeSubject: BehaviorRelay<CLLocationCoordinate2D?> { get }
 }
 
 protocol AddPlantViewModelType {
@@ -50,6 +51,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var dateText = BehaviorRelay<String>(value: "")
     var arriveText = BehaviorRelay<String>(value: "")
     var leaveText = BehaviorRelay<String>(value: "")
+    var insertedDateRelay = BehaviorRelay<Date?>(value: nil)
     
     var isOnDate = BehaviorRelay<Bool>(value: false)
     var isOnArrive = BehaviorRelay<Bool>(value: true)
@@ -58,6 +60,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var save = PublishSubject<Void>()
     var close = PublishSubject<Void>()
     var tapTag = PublishSubject<Void>()
+    var editPlace = PublishSubject<Void>()
     
     // MARK: - Output
     
@@ -65,6 +68,10 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var placeText = BehaviorRelay<String>(value: "")
     var tag = BehaviorRelay<Tag?>(value: nil)
     var sectionsSubject = BehaviorRelay<[InputSectionModel]>(value: [])
+    
+    // MARK: - Private
+    
+    var placeSubject = BehaviorRelay<CLLocationCoordinate2D?>(value: nil)
 
     // MARK: - Methods
     
@@ -123,11 +130,27 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     }
     
     private func saveGot() {
+        guard let location = placeSubject.value else {
+            print("🚨 위치정보가 없습니다.")
+            return
+        }
+        
         if var currentGot = currentGot.value {
             currentGot.title = nameText.value
             currentGot.place = placeText.value
-            //currentGot.insertedDate = date
+            currentGot.insertedDate = insertedDateRelay.value
             currentGot.tag = tag.value == nil ? [] : [tag.value!]
+            currentGot.latitude = location.latitude
+            currentGot.longitude = location.longitude
+            // TODO: Radius 추가
+            currentGot.arriveMsg = arriveText.value
+            currentGot.deparetureMsg = leaveText.value
+            currentGot.insertedDate = insertedDateRelay.value
+            currentGot.onArrive = isOnArrive.value
+            currentGot.onDeparture = isOnLeave.value
+            currentGot.onDate = isOnDate.value
+            currentGot.tag = tag.value == nil ? [] : [tag.value!]
+            
             storage.updateGot(gotToUpdate: currentGot)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true)
@@ -138,13 +161,13 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 id: Int64(arc4random()),
                 createdDate: Date(),
                 title: nameText.value,
-                latitude: .zero,
-                longitude: .zero,
+                latitude: location.latitude,
+                longitude: location.longitude,
                 radius: 100,
                 place: placeText.value,
                 arriveMsg: arriveText.value,
                 deparetureMsg: leaveText.value,
-                insertedDate: nil, // TODO: dateText.value -> Date
+                insertedDate: insertedDateRelay.value,
                 onArrive: isOnArrive.value,
                 onDeparture: isOnLeave.value,
                 onDate: isOnDate.value,
@@ -158,6 +181,27 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 .disposed(by: disposeBag)
         }
     }
+    
+    private func showMap() {
+        
+        let mapVM = MapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        mapVM.seedState.onNext(.seeding)
+        mapVM.aimToPlace.onNext(true)
+        
+        if let got = currentGot.value {
+            mapVM.beforeGotSubject.accept(got)
+            mapVM.beforeGotSubject
+                .bind(to: currentGot)
+                .disposed(by: disposeBag)
+        }
+        if let location = placeSubject.value {
+            mapVM.placeSubject.onNext(location)
+        }
+        mapVM.placeSubject
+            .bind(to: placeSubject)
+            .disposed(by: disposeBag)
+        sceneCoordinator.transition(to: .map(mapVM), using: .push, animated: true)
+    }
    
     
     // MARK: - Initializing
@@ -170,21 +214,58 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
         
-        
-        fetchGot(got: got)
+        //fetchGot(got: got)
+        currentGot.accept(got)
         sectionsSubject.accept(configureDataSource(got: got))
         configureBind(sceneCoordinator: sceneCoordinator)
-    }
-    
-    private func fetchGot(got: Got?) {
-        guard let got = got else { return }
         
-        currentGot.accept(got)
-        nameText.accept(got.title ?? "")
-        placeText.accept(got.place ?? "")
     }
+//
+//    private func fetchGot(got: Got?) {
+//        guard let got = got else { return }
+//
+//        currentGot.accept(got)
+//        if let lat = got.latitude, let long = got.longitude {
+//            placeSubject.accept(.init(latitude: lat, longitude: long))
+//        }
+//
+//        nameText.accept(got.title ?? "")
+//        placeText.accept(got.place ?? "")
+//    }
     
     private func configureBind(sceneCoordinator: SceneCoordinatorType) {
+        
+        currentGot
+            .compactMap { $0 }
+            .subscribe(onNext: { [weak self] got in
+                self?.sectionsSubject.accept(self?.configureDataSource(got: got) ?? [])
+                
+                if let lat = got.latitude, let long = got.longitude {
+                    self?.placeSubject.accept(.init(latitude: lat, longitude: long))
+                }
+                
+                self?.nameText.accept(got.title ?? "")
+                self?.placeText.accept(got.place ?? "")
+                self?.tag.accept(got.tag?.first)
+                self?.isOnDate.accept(got.onDate)
+                self?.isOnArrive.accept(got.onArrive)
+                self?.isOnLeave.accept(got.onDeparture)
+                
+                if let insertedDate = got.insertedDate {
+                    self?.insertedDateRelay.accept(insertedDate)
+                }
+                if let arriveMsg = got.arriveMsg, arriveMsg != "" {
+                    self?.arriveText.accept(arriveMsg)
+                }
+                if let departureMsg = got.deparetureMsg, departureMsg != "" {
+                    self?.leaveText.accept(departureMsg)
+                }
+                
+                
+                
+            })
+            .disposed(by: disposeBag)
+        
         close
             .subscribe(onNext: { _ in
                 sceneCoordinator.close(animated: true)
@@ -223,6 +304,25 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                   : self.removeItem(section: .leave)
             })
             .disposed(by: disposeBag)
+        
+        editPlace
+            .subscribe(onNext: { [weak self] in
+                self?.showMap()
+            })
+            .disposed(by: disposeBag)
+        
+        placeSubject
+            .subscribe(onNext: { [weak self] location in
+                guard let location = location else { return }
+                print(location)
+                
+                APIManager.shared.getPlace(longitude: Double(location.longitude), latitude: Double(location.latitude)) { (place) in
+                    self?.placeText.accept(place.first?.address?.addressName ?? "")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
     }
     
     private func configureDataSource(got: Got?) -> [InputSectionModel] {

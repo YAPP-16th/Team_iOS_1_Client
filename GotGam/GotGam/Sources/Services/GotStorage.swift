@@ -13,6 +13,27 @@ import CoreData
 class GotStorage: GotStorageType {
     private let context = DBManager.share.context
     
+    func fetchGotList(of tag: Tag) -> Observable<[Got]> {
+        do{
+            let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            fetchRequest.predicate = NSPredicate(format: "hex == %@", tag.hex)
+            let results = try self.context.fetch(fetchRequest)
+            
+            var gotList = [Got]()
+            if let tag = results.first, let setGot = tag.got {
+                for g in setGot {
+                    if let managedGot = g as? ManagedGot {
+                        let got = managedGot.toGot()
+                        gotList.append(got)
+                    }
+                }
+            }
+            return .just(gotList)
+        }catch{
+            return .error(GotStorageError.fetchError("GotList 조회 과정에서 문제발생"))
+        }
+    }
+    
     func fetchGotList() -> Observable<[Got]> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")

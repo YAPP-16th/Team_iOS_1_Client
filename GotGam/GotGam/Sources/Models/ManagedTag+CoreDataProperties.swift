@@ -17,7 +17,7 @@ extension ManagedTag {
         return NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
     }
 
-    @NSManaged public var hex: String?
+    @NSManaged public var hex: String
     @NSManaged public var name: String?
     @NSManaged public var got: NSSet?
 
@@ -33,9 +33,9 @@ extension ManagedTag {
     @NSManaged public func removeFromGot(_ value: ManagedGot)
 
     @objc(addGot:)
-    @NSManaged public func addToGot(_ values: NSSet)
+    @NSManaged public func addToGot(_ values: NSSet?)
 
     @objc(removeGot:)
-    @NSManaged public func removeFromGot(_ values: NSSet)
+    @NSManaged public func removeFromGot(_ values: NSSet?)
 
 }

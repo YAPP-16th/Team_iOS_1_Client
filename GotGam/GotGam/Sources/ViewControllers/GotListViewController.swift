@@ -31,9 +31,6 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         let gamAction = UIAlertAction(title: "감", style: .default) { (action) in
             cell.isChecked = true
         }
-        let editAction = UIAlertAction(title: "수정", style: .default) { [weak self] (action) in
-            self?.viewModel.inputs.editGot(got: cell.got)
-        }
         let deleteAction = UIAlertAction(title: "삭제", style: .default) { [weak self] (action) in
             if let vc = self { vc.gotListTableView.dataSource?.tableView?(vc.gotListTableView, commit: .delete, forRowAt: indexPath)
             }
@@ -42,7 +39,6 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
             
         }
         actionSheet.addAction(gamAction)
-        actionSheet.addAction(editAction)
         actionSheet.addAction(deleteAction)
         actionSheet.addAction(cancelAction)
         
@@ -110,11 +106,20 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
             }
             .disposed(by: disposeBag)
         
+        Observable.zip(gotListTableView.rx.itemSelected, gotListTableView.rx.modelSelected(ListItem.self))
+            .bind { [weak self] indexPath, gotItem in
+                if case let .gotItem(got) = gotItem {
+                    self?.viewModel.inputs.editGot(got: got)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
             .bind { [weak self] indexPath, tag in
                 
                 if let collectionView = self?.tagCollectionView, indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
                     self?.viewModel.inputs.tagListCellSelect.onNext(())
+                    return
                 }
                 
                 if var tags = self?.viewModel.inputs.filteredTagSubject.value {
@@ -215,17 +220,12 @@ extension GotListViewController: UITableViewDelegate {
             cell.isChecked = true
             success(true)
         }
-        let editAction = UIContextualAction(style: .normal, title: "수정") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-            guard let cell = tableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
-            self?.viewModel.inputs.editGot(got: cell.got)
-            success(true)
-        }
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             self?.gotListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
             success(true)
         }
         gamAction.backgroundColor = .saffron
-        return UISwipeActionsConfiguration(actions: [deleteAction, editAction, gamAction])
+        return UISwipeActionsConfiguration(actions: [deleteAction, gamAction])
     }
 }
 

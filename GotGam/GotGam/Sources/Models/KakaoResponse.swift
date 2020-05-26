@@ -13,13 +13,70 @@ struct KakaoResponse:Codable {
 }
 
 struct Place: Codable {
-	let addressName, placeName: String
-	let roadAddressName, x, y: String
+    let addressName: String?
+    let placeName: String?
+    let roadAddressName: String?
+    let x: String?
+    let y: String?
+    let address: Address?
+    let roadAddress: RoadAddress?
 	
 	enum CodingKeys:String, CodingKey {
 		case addressName = "address_name"
 		case roadAddressName = "road_address_name"
 		case placeName = "place_name"
         case x, y
+        case address
+        case roadAddress = "road_address"
 	}
 }
+
+struct Address: Codable {
+    let addressName: String
+    let city: String // 지역 1Depth명 - 시도
+    let country: String // 지역 2Depth명 - 구 단위
+    let town: String // 지역 3Depth명 - 동 단위
+    let mainAddressNo: String
+    let subAddressNo: String
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case addressName = "address_name"
+        case city = "region_1depth_name"
+        case country = "region_2depth_name"
+        case town = "region_3depth_name"
+        case mainAddressNo = "main_address_no"
+        case subAddressNo = "sub_address_no"
+    }
+}
+
+struct RoadAddress: Codable {
+    let addressName: String
+    let city: String // 지역 1Depth명 - 시도
+    let country: String // 지역 2Depth명 - 구 단위
+    let town: String // 지역 3Depth명 - 면 단위
+    let roadName: String // 도로명
+    let mainBuildingNo: String
+    let subBuildingNo: String
+    let buildingName: String
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case addressName = "address_name"
+        case roadName = "road_name"
+        case city = "region_1depth_name"
+        case country = "region_2depth_name"
+        case town = "region_3depth_name"
+        case mainBuildingNo = "main_building_no"
+        case subBuildingNo = "sub_building_no"
+        case buildingName = "building_name"
+    }
+}
+
+//address_name    String    전체 지번 주소
+//region_1depth_name    String    지역 1Depth명 - 시도 단위
+//region_2depth_name    String    지역 2Depth명 - 구 단위
+//region_3depth_name    String    지역 3Depth명 - 동 단위
+//mountain_yn    String    산 여부, "Y" 또는 "N"
+//main_address_no    String    지번 주 번지
+//sub_address_no    String

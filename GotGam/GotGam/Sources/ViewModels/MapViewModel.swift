@@ -13,21 +13,23 @@ import Action
 import CoreLocation
 
 protocol MapViewModelInputs {
-    func createGot(got: Got)
+    //func createGot(got: Got)
     func showAddVC()
     func updateGot(got: Got)
     func setGotDone(got: inout Got)
     func deleteGot(got: Got)
     func updateList()
     func updateTagList()
-    func quickAdd(text: String, location: CLLocationCoordinate2D)
+    //func quickAdd(text: String, location: CLLocationCoordinate2D)
+    func quickAdd(location: CLLocationCoordinate2D)
 	func showSearchVC()
+    func savePlace(location: CLLocationCoordinate2D)
+    var addText: BehaviorRelay<String> { get set }
 }
 
 protocol MapViewModelOutputs {
     var gotList: BehaviorSubject<[Got]> { get }
     var tagList: BehaviorSubject<[Tag]> { get }
-    
     var doneAction: PublishSubject<Got> { get }
 }
 
@@ -43,6 +45,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
 
     var input: MapViewModelInputs { return self }
     var storage: GotStorageType!
+    var addText = BehaviorRelay<String>(value: "")
     
     
     //MARK: - Model Output
@@ -58,12 +61,18 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     }
     
     
-    var seedState = PublishSubject<SeedState>()
+    //var seedState = PublishSubject<SeedState>()
+    var seedState = BehaviorSubject<SeedState>(value: .none)
     
     func showAddVC() {
         //let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
         let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: nil)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
+    }
+    
+    func savePlace(location: CLLocationCoordinate2D) {
+        placeSubject.onNext(location)
+        sceneCoordinator.pop(animated: true)
     }
     
     func quickAdd(text: String, location: CLLocationCoordinate2D) {
@@ -76,7 +85,15 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
 //        }).disposed(by: self.disposeBag)
     }
     
-    func createGot(got: Got){
+    func quickAdd(location: CLLocationCoordinate2D) {
+        createGot(location: location)
+        seedState.onNext(.none)
+    }
+    
+    func createGot(location: CLLocationCoordinate2D){
+        
+        let got = Got(id: Int64(arc4random()), title: addText.value, latitude: location.latitude, longitude: location.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
+        
         self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
             self.updateList()
             self.updateTagList()
@@ -136,6 +153,9 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .fullScreen, animated: false)
 	}
 	
+    var aimToPlace = BehaviorSubject<Bool>(value: false)
+    var placeSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
+    var beforeGotSubject = BehaviorRelay<Got?>(value: nil)
     
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
