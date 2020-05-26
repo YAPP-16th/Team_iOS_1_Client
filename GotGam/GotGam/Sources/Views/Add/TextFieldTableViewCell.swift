@@ -52,6 +52,10 @@ class TextFieldTableViewCell: UITableViewCell {
         let datePicker = UIDatePicker()
         datePicker.locale = .init(identifier: "ko-KR")
         datePicker.datePickerMode = .date
+        if let date = viewModel?.insertedDateRelay.value {
+            datePicker.date = date
+            textField.text = date.endTime
+        }
         return datePicker
     }()
     

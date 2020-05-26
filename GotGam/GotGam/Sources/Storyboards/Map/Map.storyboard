@@ -422,10 +422,19 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icSeed" translatesAutoresizingMaskIntoConstraints="NO" id="bN2-nG-CyO">
+                                        <rect key="frame" x="182" y="-50" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="6aU-0I-OlI"/>
+                                            <constraint firstAttribute="height" constant="50" id="jS0-dI-XrN"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="53n-Ju-icp"/>
+                                    <constraint firstItem="bN2-nG-CyO" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="6Zn-PU-F28"/>
                                     <constraint firstAttribute="height" id="Mri-sG-y98"/>
+                                    <constraint firstItem="bN2-nG-CyO" firstAttribute="centerY" secondItem="ONd-Cp-AX0" secondAttribute="centerY" constant="-25" id="NQE-97-5a2"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="NwI-WF-PxO"/>
                                     <constraint firstAttribute="trailing" secondItem="YsO-E7-ZOT" secondAttribute="trailing" id="VXU-Yk-Bgx"/>
                                     <constraint firstAttribute="height" priority="700" constant="220" id="es1-ko-4db"/>

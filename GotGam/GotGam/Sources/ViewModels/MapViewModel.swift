@@ -154,7 +154,8 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
 	}
 	
     var aimToPlace = BehaviorSubject<Bool>(value: false)
-    var placeSubject = PublishSubject<CLLocationCoordinate2D>()
+    var placeSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
+    var beforeGotSubject = BehaviorRelay<Got?>(value: nil)
     
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)

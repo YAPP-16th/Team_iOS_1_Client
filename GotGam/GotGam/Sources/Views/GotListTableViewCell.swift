@@ -27,6 +27,8 @@ class GotListTableViewCell: UITableViewCell {
             if let insertedTime = got.insertedDate?.endTime {
                 dateLabel.text = insertedTime
             }
+            messageLabel.text = got.arriveMsg == "" ? got.deparetureMsg : got.arriveMsg
+            
             restoreView.restoreAction = { [weak self] in
                 self?.isChecked = false
             }
@@ -45,7 +47,7 @@ class GotListTableViewCell: UITableViewCell {
                 tagView.backgroundColor = .veryLightPink
                 placeLabel.textColor = .veryLightPink
                 dateLabel.textColor = .veryLightPink
-                arriveMsgLabel.textColor = .veryLightPink
+                messageLabel.textColor = .veryLightPink
                 gotImageButton.isEnabled = false
                 moreButton.isEnabled = false
                 
@@ -59,7 +61,7 @@ class GotListTableViewCell: UITableViewCell {
                 tagView.backgroundColor = tagColor
                 placeLabel.textColor = .brownGrey
                 dateLabel.textColor = .brownishGrey
-                arriveMsgLabel.textColor = .brownishGrey
+                messageLabel.textColor = .brownishGrey
                 moreButton.setImage(UIImage(named: "icMore"), for: .normal)
                 gotImageButton.isEnabled = true
                 moreButton.isEnabled = true
@@ -104,7 +106,7 @@ class GotListTableViewCell: UITableViewCell {
     @IBOutlet var tagView: UIView!
     @IBOutlet var placeLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var arriveMsgLabel: UILabel!
+    @IBOutlet var messageLabel: UILabel!
     @IBOutlet var moreButton: UIButton!
     @IBOutlet var restoreView: MapRestoreView!
     

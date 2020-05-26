@@ -36,9 +36,9 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         circle.circleLineColor = .orange
         circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
         circle.circleRadius = radius
-        mapView.addCircle(circle)
+        mapView?.addCircle(circle)
     
-        mapView.fitArea(toShow: circle)
+        mapView?.fitArea(toShow: circle)
     }
     
     func locationWithBearing(bearing:Double, distanceMeters:Double, origin:CLLocationCoordinate2D) -> CLLocationCoordinate2D {
@@ -58,12 +58,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         seed.mapPoint = point
         seed.markerType = .customImage
         seed.customImage = UIImage(named: "icSeed")!
-        mapView.add(seed)
+        mapView?.add(seed)
     }
     
-    func setupMapCenter() {
-        //let centerCoor = MTMapPoint(geoCoord: .init(latitude: currentCenter.latitude, longitude: currentCenter.longitude))
-        mapView.setMapCenter(currentCenter, animated: false)
+    func setupMapCenter(latitude: Double, longitude: Double) {
+        let centerPoint = MTMapPoint(geoCoord: .init(latitude: latitude, longitude: longitude))
+        print(centerPoint?.mapPointGeo(), mapView)
+        mapView?.setMapCenter(centerPoint, animated: false)
     }
     
     func showAlert(_ label: UILabel, message msg: String) {
@@ -100,9 +101,26 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        
+        
         DispatchQueue.main.async {
             self.titleTextView.centerVertically()
             self.placeTextView.centerVertically()
+        }
+        
+//        if let location = viewModel.outputs.placeSubject.value {
+//            self.setupMapCenter(latitude: location.latitude, longitude: location.longitude)
+//        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let location = viewModel.placeSubject.value {
+            print(location)
+            print("set center to \(location) in addPlant")
+            setupMapCenter(latitude: Double(location.latitude), longitude: Double(location.longitude))
         }
     }
     
@@ -163,6 +181,11 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         
         // Input
         
+        editButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.editPlace)
+            .disposed(by: disposeBag)
+        
         saveButton.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: viewModel.inputs.save)
@@ -221,16 +244,30 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 self?.titleTextView.centerVertically()
             })
             .disposed(by: disposeBag)
+//
+//        viewModel.outputs.currentGot
+//            .compactMap { $0 }
+//            .subscribe(onNext: { [weak self] got in
+//                if let lat = got.latitude, let long = got.longitude {
+//                    self?.setupMapCenter(latitude: lat, longitude: long)
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
         viewModel.outputs.placeSubject
             .compactMap { $0 }
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] location in
                 //self?.saveButton.isEnabled = true
                 self?.mapBackgroundZeroHeightConstraint.isActive = false
                 self?.mapBackgroundView.isHidden = false
-                self?.setupMapView()
-                guard let point = MTMapPoint(geoCoord: .init(latitude: location.latitude, longitude: location.longitude)) else { return }
-                self?.drawSeed(point: point)
+                if self?.mapView == nil {
+                    self?.setupMapView()
+                }
+//                self?.setupMapCenter(latitude: location.latitude, longitude: location.longitude)
+                //self?.setupMapView()
+//                guard let point = MTMapPoint(geoCoord: .init(latitude: location.latitude, longitude: location.longitude)) else { return }
+//                self?.drawSeed(point: point)
 //                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
             })
             .disposed(by: disposeBag)
@@ -253,7 +290,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var mapBackgroundView: UIView!
     @IBOutlet var alertDefaultLabel: PaddingLabel!
     @IBOutlet var alertErrorLabel: PaddingLabel!
-    var mapView: MTMapView!
+    var mapView: MTMapView?
     @IBOutlet var addIconButton: UIButton!
     @IBOutlet var inputTableView: UITableView!
     @IBOutlet var editButton: UIButton!

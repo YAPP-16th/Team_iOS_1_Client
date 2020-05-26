@@ -76,7 +76,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(quickAddViewBottomConstraint.constant)
         
         self.quickAddView.addAction = { text in
 
@@ -97,6 +96,15 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.viewModel.updateList()
         self.viewModel.updateTagList()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard
+            let beforeGot = viewModel.beforeGotSubject.value,
+            let gotList = try? viewModel.output.gotList.value(),
+            let beforeGotIndex = gotList.firstIndex(of: beforeGot)
+        else { return }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -347,6 +355,13 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         circle.circleRadius = 100
       mapView.addCircle(circle)
     }
+    
+    func setCard(index: Int) {
+        guard let gotList = try? self.viewModel.output.gotList.value() else { return }
+        let got = gotList[index]
+        let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
+        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
+    }
 	
 	func updateAddress() {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
@@ -420,9 +435,10 @@ extension MapViewController: UICollectionViewDelegateFlowLayout{
 extension MapViewController: UIScrollViewDelegate{
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let currentIndex = self.centeredCollectionViewFlowLayout.currentCenteredPage else { return }
-        guard let gotList = try? self.viewModel.output.gotList.value() else { return }
-        let got = gotList[currentIndex]
-        let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
-        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
+        setCard(index: currentIndex)
+//        guard let gotList = try? self.viewModel.output.gotList.value() else { return }
+//        let got = gotList[currentIndex]
+//        let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
+//        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
     }
 }

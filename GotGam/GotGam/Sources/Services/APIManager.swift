@@ -66,7 +66,6 @@ class APIManager {
                 do{
                     let jsonDecoder = JSONDecoder()
                     let result = try jsonDecoder.decode(KakaoResponse.self, from: data)
-                    print(result.documents)
                     completion(result.documents)
                 }catch let error {
                     print(error.localizedDescription)
