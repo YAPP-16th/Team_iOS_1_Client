@@ -45,7 +45,7 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 	
 	func showMapVC(){
 		let movemapVM = FrequentsMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-		sceneCoordinator.transition(to: .frequentsMap(movemapVM), using: .modal, animated: true)
+		sceneCoordinator.transition(to: .frequentsMap(movemapVM), using: .push, animated: true)
 	}
 	
 	

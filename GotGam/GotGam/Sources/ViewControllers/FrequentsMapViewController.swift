@@ -14,6 +14,10 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 
 	var viewModel: FrequentsMapViewModel!
 	var mapView: MTMapView!
+	@IBOutlet var addressView: UIView!
+	@IBOutlet var placeLabel: UILabel!
+	@IBOutlet var addressLabel: UILabel!
+	@IBOutlet var okay: UIButton!
 	
 	//search value
 	var x: Double = 0.0
@@ -25,14 +29,18 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		super.viewDidLoad()
 		
 		configureMapView()
+		
+		addressView.layer.masksToBounds = true
+		addressView.layer.cornerRadius = 17
+		okay.layer.cornerRadius = 17
 	}
 	
 	func configureMapView() {
-		mapView = MTMapView.init(frame: self.mapBackgroundView.frame)
+		mapView = MTMapView.init(frame: self.view.frame)
 		mapView.delegate = self
 		mapView.baseMapType = .standard
-		self.mapBackgroundView.addSubview(mapView)
-		self.mapBackgroundView.sendSubviewToBack(mapView)
+		self.view.addSubview(mapView)
+		self.view.sendSubviewToBack(mapView)
 	}
 	
 	
@@ -40,6 +48,6 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		
 	}
 	
-	@IBOutlet var mapBackgroundView: UIView!
+	
 }
 
