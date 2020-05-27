@@ -18,8 +18,6 @@ struct Tag: Equatable {
         self.hex = hex
         //self.gotList = gotList
     }
-    
-    
 }
 
 func ==(lhs: Tag, rhs: Tag) -> Bool {

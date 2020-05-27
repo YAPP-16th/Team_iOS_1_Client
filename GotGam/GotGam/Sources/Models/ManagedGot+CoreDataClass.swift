@@ -37,7 +37,6 @@ public class ManagedGot: NSManagedObject {
         onDate: onDate,
         tag: tags,
         isDone: isDone)
-      
   }
   
   func fromGot(got: Got){

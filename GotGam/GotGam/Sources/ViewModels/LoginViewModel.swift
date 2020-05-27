@@ -64,6 +64,7 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
                 KOSessionTask.userMeTask { (error, user) in
                     guard let id = tokenInfo?.id else { return }
                     guard let email = user?.account?.email else { return }
+                    
                     let info = SocialLoginInfo(id: id.stringValue, email: email, token: accessToken)
                     
                     self.doLogin(.kakao(info))
@@ -72,7 +73,9 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
         }
     }
     func close(){
-        self.sceneCoordinator.close(animated: true, completion: nil)
+        self.sceneCoordinator.close(animated: true, completion: {
+            NetworkAPIManager.shared.SyncAccount()
+        })
     }
     
     //MARK: - Helper
@@ -90,6 +93,7 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
                 let loginResponse = try jsonDecoder.decode(LoginResponse.self
                     , from: response.data)
                 let token = loginResponse.user.token
+                UserDefaults.standard.set(loginResponse.user.nickname, forDefines: .nickname)
                 UserDefaults.standard.set(token, forDefines: .userToken)
                 UserDefaults.standard.set(true, forDefines: .isLogined)
                 UserDefaults.standard.set(loginResponse.user.userID, forDefines: .userID)

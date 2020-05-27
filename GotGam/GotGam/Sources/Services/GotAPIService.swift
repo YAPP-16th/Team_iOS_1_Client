@@ -11,6 +11,26 @@ import Alamofire
 import Moya
 import RxSwift
 
+struct TagAPIInfo{
+    var name: String
+    var color: String
+    var email: String
+    var nickname: String
+}
+
+struct GotAPIInfo{
+    var title: String
+    var coordinates: [Double]
+    var address: String
+    var tag: String
+    var memo: String
+    var iconUrl: String
+    var isFinished: Bool
+    var isCheckedArrive: Bool
+    var isCheckedLeave: Bool
+    var dueDate: String
+}
+
 enum GotAPIService{
     
     //User
@@ -18,12 +38,12 @@ enum GotAPIService{
     case getUser(String)
     
     //Task
-    case createTask
+    case createTask(GotAPIInfo)
     case getTasks
     case getTask(String)
     
     //TAg
-    case createTag
+    case createTag(TagAPIInfo)
     case getTags
     case getTag(String)
     
@@ -135,35 +155,37 @@ extension GotAPIService: TargetType{
         case .getUser:
             return .requestPlain
             //Task
-        case .createTask:
+        case .createTask(let info):
+            var parameters = [
+                "title":info.title,
+                "coordinates":info.coordinates,
+                "address":info.address,
+                "memo": info.memo,
+                "iconURL": info.iconUrl,
+                "isFinished": info.isFinished,
+                "isCheckedArrive": info.isCheckedArrive,
+                "isCheckedLeave": info.isCheckedLeave,
+                "dueDate": info.dueDate
+                ] as [String : Any]
+            if info.tag != ""{
+                parameters["tag"] = info.tag
+            }
             return .requestParameters(
-            parameters:
-            [
-                "title":"",
-                "coordinates":[0.0, 0.0],
-                "address":"",
-                "tag": "tagId or nil",
-                "memo": "memoString or nil",
-                "iconURL": "iconUrlString or nil",
-                "isFinished": false,
-                "isCheckedArrive": false,
-                "isCheckedLeave": false,
-                "dueDate": "dateStirng or nil"
-            ],
+            parameters:parameters,
             encoding: JSONEncoding.default)
         case .getTasks, .getTask:
             return .requestPlain
             //Tag
-        case .createTag:
+        case .createTag(let info):
             return .requestParameters(
             parameters:
             [
-                "name":"",
-                "color":"색상 코드",
+                "name": info.name,
+                "color": info.color,
                 "creator":
                 [
-                    "userId":"이메일",
-                    "nickname":"닉네임"
+                    "userId": info.email,
+                    "nickname":info.nickname
                 ]
             ],
             encoding: JSONEncoding.default)
@@ -205,99 +227,5 @@ fileprivate extension String {
         
         return data(using: .utf8)!
         
-    }
-}
-
-class NetworkAPIManager{
-    static let shared = NetworkAPIManager()
-    var provider: MoyaProvider<GotAPIService>!
-    private init(){
-        self.provider = MoyaProvider<GotAPIService>()
-    }
-  
-    func getUser(email: String, completion: @escaping (User?) -> Void){
-        provider.request(.getUser(email)) { (result) in
-            switch result{
-            case .success(let response):
-                do{
-                    let jsonDecoder = JSONDecoder()
-                    let user = try jsonDecoder.decode(LoginResponse.self, from: response.data)
-                    completion(user.user)
-                }catch let error{
-                    print(error.localizedDescription)
-                    completion(nil)
-                }
-            case .failure(let error):
-                print(error)
-                completion(nil)
-            }
-        }
-    }
-    
-    func getProfileImage(url urlString: String, completion: @escaping ((UIImage) -> Void)){
-        AF.download(urlString).responseData { result in
-            if let data = result.value, let image = UIImage(data: data){
-                completion(image)
-            }
-        }
-    }
-        
-    func createTask(got: Got){
-        
-    }
-    
-    func getTasks(completion: @escaping (User?) -> Void){
-        provider.request(.getTasks) { (result) in
-            switch result{
-            case .success(let response):
-                do{
-                    let jsonDecoder = JSONDecoder()
-                    let user = try jsonDecoder.decode(User.self, from: response.data)
-                    completion(user)
-                }catch let error{
-                    print(error.localizedDescription)
-                    completion(nil)
-                }
-            case .failure(let error):
-                print(error)
-                completion(nil)
-            }
-        }
-    }
-    func getTask(id: String){
-        provider.request(.getTask(id)) { (result) in
-            switch result{
-            case .success(let response):
-                print(String(data: response.data, encoding: .utf8))
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    func createTag(tag: Tag){
-        
-    }
-    
-    func getTags(){
-        provider.request(.getTags) { (result) in
-            switch result{
-            case .success(let response):
-                print(String(data: response.data, encoding: .utf8))
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    func getTag(id: String){
-        provider.request(.getTag(id)) { (result) in
-            switch result{
-            case .success(let response):
-                print(String(data: response.data, encoding: .utf8))
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 }

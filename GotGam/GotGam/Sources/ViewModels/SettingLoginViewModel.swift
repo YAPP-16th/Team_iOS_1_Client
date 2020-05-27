@@ -61,6 +61,7 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
     func logout() {
         UserDefaults.standard.set(false, forDefines: .isLogined)
         UserDefaults.standard.set(nil, forDefines: .userID)
+        UserDefaults.standard.set(nil, forDefines: .nickname)
         let loginManager = LoginManager()
         loginManager.logOut()
         KOSession.shared()?.logoutAndClose(completionHandler: { (state, error) in

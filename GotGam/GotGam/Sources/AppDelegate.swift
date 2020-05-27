@@ -113,6 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     do{
                         let loginResponse = try decoder.decode(LoginResponse.self, from: data)
                         let token = loginResponse.user.token
+                        UserDefaults.standard.set(loginResponse.user.nickname, forDefines: .nickname)
                         UserDefaults.standard.set(token, forDefines: .userToken)
                         UserDefaults.standard.set(true, forDefines: .isLogined)
                         UserDefaults.standard.set(email, forDefines: .userID)

@@ -14,6 +14,7 @@ enum GGUserDefaultKey: String{
     case userID = "GGUSERDEFAULT_KEY_USER_ID"
     case isLogined = "GGUSERDEFAULT_IS_LOGINED"
     case userToken = "GGUSERDEFAULT_USER_TOKEN"
+    case nickname = "GGUSERDEFAULT_NICKNAME"
 }
 
 // MARK: - GGUserDefaultProtocol

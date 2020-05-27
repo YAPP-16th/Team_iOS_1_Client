@@ -173,6 +173,8 @@
 		A1DF6369247A771600444175 /* KakaoCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF6368247A771600444175 /* KakaoCommon.framework */; };
 		A1DF636D247A782C00444175 /* KakaoMessageTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */; };
 		A1DF638B247E6D5700444175 /* KakaoLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */; };
+		A1DF638D247E7B1500444175 /* NetworkAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF638C247E7B1500444175 /* NetworkAPIManager.swift */; };
+		A1DF638F247E813D00444175 /* TagResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF638E247E813D00444175 /* TagResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -358,6 +360,8 @@
 		A1DF6368247A771600444175 /* KakaoCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoCommon.framework; sourceTree = "<group>"; };
 		A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoMessageTemplate.framework; sourceTree = "<group>"; };
 		A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KakaoLinkManager.swift; sourceTree = "<group>"; };
+		A1DF638C247E7B1500444175 /* NetworkAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIManager.swift; sourceTree = "<group>"; };
+		A1DF638E247E813D00444175 /* TagResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResponse.swift; sourceTree = "<group>"; };
 		C70114836B2FC2821FD2E0CE /* Pods-GotGam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.release.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -523,6 +527,7 @@
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
 				2972781A246FDADD00B75AC7 /* KakaoResponse.swift */,
 				29618D6A247C3C9C008E112E /* Frequents.swift */,
+				A1DF638E247E813D00444175 /* TagResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -640,6 +645,7 @@
 				4CA2351F24758DC3005323EF /* SearchStorageType.swift */,
 				29618D66247C3C56008E112E /* FrequentsStorage.swift */,
 				29618D68247C3C73008E112E /* FrequentsStorageType.swift */,
+				A1DF638C247E7B1500444175 /* NetworkAPIManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -984,6 +990,7 @@
 				4CD03D742479056F00210353 /* GotBoxTableViewCell.swift in Sources */,
 				A157E11D2455754A001E310D /* Extensions.swift in Sources */,
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
+				A1DF638F247E813D00444175 /* TagResponse.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
 				4CA2352124758DC3005323EF /* SearchStorageType.swift in Sources */,
@@ -1071,6 +1078,7 @@
 				29618D65247C3C37008E112E /* FrequentsViewController.swift in Sources */,
 				A157E118245572F4001E310D /* LocationManagerType.swift in Sources */,
 				4C620CF7246ACDBE00B25B86 /* GotListTableViewCell.swift in Sources */,
+				A1DF638D247E7B1500444175 /* NetworkAPIManager.swift in Sources */,
 				4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */,
 				29618D6B247C3C9C008E112E /* Frequents.swift in Sources */,
 				4CC5AC0B2477E59400FE9034 /* GotBoxViewModel.swift in Sources */,
