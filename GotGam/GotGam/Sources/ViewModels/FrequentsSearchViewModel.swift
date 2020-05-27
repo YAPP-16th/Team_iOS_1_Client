@@ -8,12 +8,13 @@
 
 import Foundation
 import RxSwift
-
+import RxCocoa
 
 protocol FrequentsSearchViewModelInputs {
 	func addKeyword(keyword: String)
 	func readKeyword()
 	func showMapVC()
+	var placeBehavior: BehaviorRelay<Place?> { get set }
 }
 
 protocol FrequentsSearchViewModelOutputs {
@@ -26,6 +27,8 @@ protocol FrequentsSearchViewModelType {
 }
 
 class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs, FrequentsSearchViewModelOutputs, FrequentsSearchViewModelType {
+	
+	
 	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
 	
 		
@@ -45,8 +48,14 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 	
 	func showMapVC(){
 		let movemapVM = FrequentsMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+//		if isCurrent {
+//
+//		}
+		movemapVM.placeBehavior.accept(placeBehavior.value)
 		sceneCoordinator.transition(to: .frequentsMap(movemapVM), using: .push, animated: true)
 	}
+	
+	var placeBehavior = BehaviorRelay<Place?>(value: nil)
 	
 	
 	var inputs: FrequentsSearchViewModelInputs { return self }

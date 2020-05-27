@@ -62,6 +62,8 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	
 	func showSearchVC(){
 		let movesearchVM = FrequentsSearchViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		
+		
         sceneCoordinator.transition(to: .frequentsSearch(movesearchVM), using: .push, animated: true)
 	}
 	

@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CoreLocation
 
 class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTMapViewDelegate {
 
@@ -27,12 +28,35 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
 		configureMapView()
 		
 		addressView.layer.masksToBounds = true
 		addressView.layer.cornerRadius = 17
 		okay.layer.cornerRadius = 17
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		guard let currentLocation = LocationManager.shared.currentLocation else { return }
+		if viewModel.placeBehavior.value == nil {
+			APIManager.shared.getPlace(longitude: currentLocation.longitude, latitude: currentLocation.latitude) { [weak self] (place) in
+				print(place)
+				self?.placeLabel.text = place?.roadAddress?.buildingName
+				self?.addressLabel.text = place?.roadAddress?.addressName
+			}
+		}
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		if let place = viewModel.placeBehavior.value, let pX = place.x, let pY = place.y {
+			x = Double(pX)!
+			y = Double(pY)!
+			updateAddress()
+		} else {
+			setMyLocation()
+		}
 	}
 	
 	func configureMapView() {
@@ -45,9 +69,32 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	
 	
 	func bindViewModel() {
-		
+		viewModel.placeBehavior
+			.compactMap { $0?.placeName }
+			.bind(to: placeLabel.rx.text)
+			.disposed(by: disposeBag)
 	}
 	
+	func setMyLocation(){
+        LocationManager.shared.requestAuthorization()
+        if LocationManager.shared.locationServicesEnabled {
+            let status = LocationManager.shared.authorizationStatus
+            switch status{
+            case .denied:
+              print("거부됨")
+            case .notDetermined, .restricted:
+                print("설정으로 이동시키기")
+            case .authorizedWhenInUse, .authorizedAlways:
+                self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: LocationManager.shared.currentLocation!.latitude, longitude: LocationManager.shared.currentLocation!.longitude)), animated: true)
+            }
+            
+        }else{
+        }
+    }
+	
+	func updateAddress() {
+		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
+	}
 	
 }
 

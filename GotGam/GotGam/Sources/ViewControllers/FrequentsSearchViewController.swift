@@ -92,19 +92,10 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		viewModel.inputs.showMapVC()
+		
 		let place = self.placeList[indexPath.row]
-		if let tabVC = self.presentingViewController as? TabBarController{
-			let mapVC = tabVC.viewControllers?.first as? FrequentsMapViewController
-			mapVC?.x = Double(place.x!)!
-			mapVC?.y = Double(place.y!)!
-			mapVC?.placeName = place.placeName!
-			mapVC?.addressName = place.addressName!
-			
-			
-//				mapVC?.updateAddress()
-			
-		}
+		viewModel.inputs.placeBehavior.accept(place)
+		viewModel.inputs.showMapVC()
 	}
 }
 
@@ -120,6 +111,15 @@ extension FrequentsSearchViewController: UICollectionViewDataSource{
 			cell.collectionicon.image = UIImage(named:"icFrequentsSearch")
 		}
 		return cell
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if indexPath.row == 0{
+			viewModel.inputs.showMapVC()
+		}else {
+			viewModel.inputs.showMapVC()
+		}
+		
 	}
 
 }

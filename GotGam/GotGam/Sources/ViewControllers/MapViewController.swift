@@ -374,6 +374,7 @@ extension MapViewController: MTMapViewDelegate{
             self.quickAddView.addField.resignFirstResponder()
         }
         print("map tapped")
+		print(mapPoint.mapPointGeo())
     }
     func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
         switch self.state {

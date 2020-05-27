@@ -46,7 +46,7 @@ class APIManager {
     
     // 지원 좌표계 coord: WGS84, WCONGNAMUL, CONGNAMUL, WTM, TM
     // 나중에 혹시 필요하면 enum
-    func getPlace(longitude x: Double, latitude y: Double, coord: String = "WGS84", completion: @escaping ([Place]) -> Void) {
+    func getPlace(longitude x: Double, latitude y: Double, coord: String = "WGS84", completion: @escaping (Place?) -> Void) {
         print(x, y)
         let urlString = "https://dapi.kakao.com/v2/local/geo/coord2address.json"
         
@@ -66,7 +66,9 @@ class APIManager {
                 do{
                     let jsonDecoder = JSONDecoder()
                     let result = try jsonDecoder.decode(KakaoResponse.self, from: data)
-                    completion(result.documents)
+					if let place = result.documents.first {
+						completion(place)
+					}
                 }catch let error {
                     print(error.localizedDescription)
                 }
@@ -74,7 +76,7 @@ class APIManager {
                 //수정
                 
             } else {
-                completion([])
+                completion(nil)
             }
             
         }
