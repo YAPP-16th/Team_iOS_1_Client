@@ -48,6 +48,8 @@ extension GotAPIService: TargetType{
                 return "users/google"
             case .kakao:
                 return "users/kakao"
+            case .facebook:
+                return "users/facebook"
             }
         case .getUser(let email):
             return "users/\(email)"
@@ -110,6 +112,16 @@ extension GotAPIService: TargetType{
                     ],
                     encoding: JSONEncoding.default)
             case .google(let info):
+                return .requestParameters(
+                    parameters:
+                    [
+                        "id":"\(info.id)",
+                        "email":info.email,
+                        "access_token":info.token,
+                        
+                    ],
+                    encoding: JSONEncoding.default)
+            case .facebook(let info):
                 return .requestParameters(
                     parameters:
                     [
@@ -203,8 +215,8 @@ class NetworkAPIManager{
         self.provider = MoyaProvider<GotAPIService>()
     }
   
-    func getUser(token: String, completion: @escaping (User?) -> Void){
-        provider.request(.getUser(token)) { (result) in
+    func getUser(email: String, completion: @escaping (User?) -> Void){
+        provider.request(.getUser(email)) { (result) in
             switch result{
             case .success(let response):
                 do{

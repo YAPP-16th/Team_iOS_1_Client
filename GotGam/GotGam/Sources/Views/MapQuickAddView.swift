@@ -20,7 +20,7 @@ class MapQuickAddView: UIView{
     var viewModel: MapQuickAddViewModel!
     
     var addAction: ((String?) -> Void)?
-    
+    var detailAction: (() -> Void)?
     @IBAction func quickAddAction(){
         if addField.isFirstResponder{
             addField.resignFirstResponder()
@@ -37,6 +37,10 @@ class MapQuickAddView: UIView{
             
             self.addSubview(cv)
         }
+        
+        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(showDetailSeeding))
+        gesture.direction = .up
+        self.addGestureRecognizer(gesture)
     }
     
     override func layoutSubviews() {
@@ -49,4 +53,11 @@ class MapQuickAddView: UIView{
         
     }
     
+    @objc func showDetailSeeding(){
+        if addField.isFirstResponder{
+            addField.resignFirstResponder()
+            self.isHidden = true
+        }
+        detailAction?()
+    }
 }

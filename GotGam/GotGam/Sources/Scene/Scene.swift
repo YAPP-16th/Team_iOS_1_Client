@@ -94,6 +94,7 @@ extension Scene {
             
         case .login(let viewModel):
             var loginVC = LoginViewController()
+            loginVC.modalPresentationStyle = .fullScreen
             loginVC.bind(viewModel: viewModel)
             return loginVC
         case .tabBar(let viewModel):

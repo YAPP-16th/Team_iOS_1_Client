@@ -72,8 +72,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.restoreView.isHidden = true
     }
     
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -89,6 +87,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.view.layoutIfNeeded()
         }
         
+        self.quickAddView.detailAction = {
+//            self.viewModel.input.showAddVC()
+//            self.viewModel.seedState.onNext(.none)
+            self.linkTest()
+        }
         LocationManager.shared.startUpdatingLocation()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -366,6 +369,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 	func updateAddress() {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
 	}
+    
+    func linkTest(){
+        KakaoLinkManager.shared.shareLink("곳감", "손병근님이 000태그를 보냈습니다\n\n곳감에서000님의 장소를 확인해보세요", thumbnail: "http://k.kakaocdn.net/dn/JoPV3/btqD3IuoYzJ/MeAWwvHSXDx4eZAMfkHfs1/img_640x640.jpg")
+    }
 }
 
 extension MapViewController: MTMapViewDelegate{
