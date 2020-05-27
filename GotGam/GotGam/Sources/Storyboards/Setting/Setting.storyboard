@@ -298,6 +298,9 @@
                                                         <constraint firstAttribute="width" constant="40" id="peP-DW-7bL"/>
                                                     </constraints>
                                                     <state key="normal" image="icListAddBtn"/>
+                                                    <connections>
+                                                        <action selector="placeAddButton:" destination="IHl-on-4ii" eventType="touchUpInside" id="kdk-RR-Jsk"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="자주 가는 장소 등록" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAD-Nc-sa9">
                                                     <rect key="frame" x="82" y="40" width="124.5" height="19"/>
@@ -351,20 +354,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="S7k-YW-INH">
-                                <rect key="frame" x="0.0" y="88" width="414" height="130"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="S7k-YW-INH">
+                                <rect key="frame" x="54" y="88" width="306" height="130"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJ1-O7-262">
-                                        <rect key="frame" x="0.0" y="0.0" width="141" height="130"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="76.5" height="130"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="집" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnr-f5-y3i">
-                                                <rect key="frame" x="65.5" y="94" width="10.5" height="14"/>
+                                                <rect key="frame" x="33" y="94" width="10.5" height="14"/>
                                                 <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                 <color key="textColor" name="brownishGrey"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiV-nH-ULN">
-                                                <rect key="frame" x="50.5" y="45" width="40" height="40"/>
+                                                <rect key="frame" x="18.5" y="45" width="40" height="40"/>
                                                 <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="9oh-nT-w5F"/>
@@ -385,16 +388,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAz-AJ-uCP">
-                                        <rect key="frame" x="91" y="0.0" width="141" height="130"/>
+                                        <rect key="frame" x="76.5" y="0.0" width="76.5" height="130"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사무실" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BY-U3-6yD">
-                                                <rect key="frame" x="55" y="94" width="31.5" height="14"/>
+                                                <rect key="frame" x="22.5" y="94" width="31.5" height="14"/>
                                                 <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                 <color key="textColor" name="brownishGrey"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHe-sk-wTf">
-                                                <rect key="frame" x="50.5" y="45" width="40" height="40"/>
+                                                <rect key="frame" x="18.5" y="45" width="40" height="40"/>
                                                 <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="EGJ-QA-sEd"/>
@@ -412,16 +415,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zCM-7S-8zI">
-                                        <rect key="frame" x="182" y="0.0" width="141" height="130"/>
+                                        <rect key="frame" x="153" y="0.0" width="76.5" height="130"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="학교" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hd4-sK-ZbN">
-                                                <rect key="frame" x="60" y="94" width="21" height="14"/>
+                                                <rect key="frame" x="28" y="94" width="21" height="14"/>
                                                 <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                 <color key="textColor" name="brownishGrey"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jji-Ys-AgP">
-                                                <rect key="frame" x="50.5" y="45" width="40" height="40"/>
+                                                <rect key="frame" x="18.5" y="45" width="40" height="40"/>
                                                 <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="LOl-Wr-A3x"/>
@@ -439,16 +442,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qzf-Ex-Htr">
-                                        <rect key="frame" x="273" y="0.0" width="141" height="130"/>
+                                        <rect key="frame" x="229.5" y="0.0" width="76.5" height="130"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일반" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhH-Oq-7kR">
-                                                <rect key="frame" x="60" y="94" width="21" height="14"/>
+                                                <rect key="frame" x="28" y="94" width="21" height="14"/>
                                                 <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                 <color key="textColor" name="brownishGrey"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Edf-XC-z7c">
-                                                <rect key="frame" x="50.5" y="45" width="40" height="40"/>
+                                                <rect key="frame" x="18.5" y="45" width="40" height="40"/>
                                                 <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="D1d-RF-ziy"/>
@@ -494,9 +497,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="MfK-Lu-get" firstAttribute="top" secondItem="S7k-YW-INH" secondAttribute="bottom" constant="59" id="35j-La-SR7"/>
-                            <constraint firstItem="S7k-YW-INH" firstAttribute="leading" secondItem="9VC-Co-Mzs" secondAttribute="leading" id="I8N-7m-hMA"/>
+                            <constraint firstItem="S7k-YW-INH" firstAttribute="leading" secondItem="9VC-Co-Mzs" secondAttribute="leading" constant="54" id="I8N-7m-hMA"/>
                             <constraint firstItem="Zlm-Gf-ylR" firstAttribute="top" secondItem="MfK-Lu-get" secondAttribute="bottom" constant="34" id="Irt-4s-sHB"/>
-                            <constraint firstItem="9VC-Co-Mzs" firstAttribute="trailing" secondItem="S7k-YW-INH" secondAttribute="trailing" id="ObN-Ck-QeD"/>
+                            <constraint firstItem="9VC-Co-Mzs" firstAttribute="trailing" secondItem="S7k-YW-INH" secondAttribute="trailing" constant="54" id="ObN-Ck-QeD"/>
                             <constraint firstItem="Zlm-Gf-ylR" firstAttribute="centerX" secondItem="DMb-WA-pEZ" secondAttribute="centerX" id="dFq-UC-RLv"/>
                             <constraint firstItem="MfK-Lu-get" firstAttribute="centerX" secondItem="DMb-WA-pEZ" secondAttribute="centerX" id="l6a-Z1-Y4p"/>
                             <constraint firstItem="S7k-YW-INH" firstAttribute="top" secondItem="9VC-Co-Mzs" secondAttribute="top" id="y5c-Sr-3sJ"/>

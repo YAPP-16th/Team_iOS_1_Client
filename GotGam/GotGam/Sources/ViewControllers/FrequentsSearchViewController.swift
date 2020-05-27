@@ -34,15 +34,6 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		navigationItem.hidesBackButton = true
 		
 		searchBar.becomeFirstResponder()
-		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
-			.subscribe(onNext: { text in
-				self.searchKeyword(keyword: text)
-			}).disposed(by: self.disposeBag)
-		
-		searchBar.rx.controlEvent(.primaryActionTriggered).subscribe(onNext: {
-			let text = self.searchBar.text ?? ""
-			self.searchKeyword(keyword: text)
-			}).disposed(by: disposeBag)
 		
 		setCollectionItems()
 		
@@ -60,6 +51,16 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		.subscribe(onNext: { [weak self] (indexPath) in
 			self?.viewModel.inputs.showMapVC()
 		}) .disposed(by: disposeBag)
+		
+		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
+			.subscribe(onNext: { text in
+				self.searchKeyword(keyword: text)
+			}).disposed(by: self.disposeBag)
+		
+		searchBar.rx.controlEvent(.primaryActionTriggered).subscribe(onNext: {
+			let text = self.searchBar.text ?? ""
+			self.searchKeyword(keyword: text)
+			}).disposed(by: disposeBag)
 	}
 	
 	func searchKeyword(keyword: String){

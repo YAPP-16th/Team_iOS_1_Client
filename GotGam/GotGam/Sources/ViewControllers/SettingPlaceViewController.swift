@@ -47,6 +47,7 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 			}
 		}) .disposed(by: disposeBag)
 		
+		
 		viewModel.outputs.frequentsList
 					.bind { (List) in
 						self.placeList = List
@@ -127,19 +128,33 @@ extension SettingPlaceViewController: UITableViewDataSource {
 			cell.placeAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
 			
 			cell.placeAddLabel.text = "자주 가는 장소 등록"
+			cell.viewModel = viewModel
 			return cell
 		}
 	}
 	
 }
 
+
+
 class PlaceAddCell: UITableViewCell {
 	
 	@IBOutlet var placeAddButton: UIButton!
 	@IBOutlet var placeAddLabel: UILabel!
+	var viewModel: SettingPlaceViewModel?
+	
+//	func configure(viewModel: SettingPlaceViewModel) {
+//		self.viewModel = viewModel
+//	}
+	@IBAction func placeAddButton(_ sender: Any) {
+		viewModel?.inputs.showFrequentsDetailVC()
+	}
+	
 }
 
 class PlaceCell: UITableViewCell{
+	
+	
 	
 	func configure(_ frequent: Frequent) {
         placeNameLabel.text = frequent.name
