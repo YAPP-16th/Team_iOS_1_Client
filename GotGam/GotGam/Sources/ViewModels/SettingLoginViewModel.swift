@@ -64,7 +64,7 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
         let loginManager = LoginManager()
         loginManager.logOut()
         KOSession.shared()?.logoutAndClose(completionHandler: { (state, error) in
-            self.sceneCoordinator.close(animated: true)
+          self.sceneCoordinator.close(animated: true, completion: nil)
         })
     }
     

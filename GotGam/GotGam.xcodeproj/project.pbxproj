@@ -171,8 +171,8 @@
 		A1BE455B2451A79900B7467B /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BE455A2451A79900B7467B /* Color.xcassets */; };
 		A1DF6367247A76E000444175 /* KakaoLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF6366247A76DF00444175 /* KakaoLink.framework */; };
 		A1DF6369247A771600444175 /* KakaoCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF6368247A771600444175 /* KakaoCommon.framework */; };
-		A1DF636B247A77A000444175 /* KakaoLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF636A247A77A000444175 /* KakaoLinkManager.swift */; };
 		A1DF636D247A782C00444175 /* KakaoMessageTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */; };
+		A1DF638B247E6D5700444175 /* KakaoLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -356,8 +356,8 @@
 		A1BE455A2451A79900B7467B /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		A1DF6366247A76DF00444175 /* KakaoLink.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoLink.framework; sourceTree = "<group>"; };
 		A1DF6368247A771600444175 /* KakaoCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoCommon.framework; sourceTree = "<group>"; };
-		A1DF636A247A77A000444175 /* KakaoLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLinkManager.swift; sourceTree = "<group>"; };
 		A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoMessageTemplate.framework; sourceTree = "<group>"; };
+		A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KakaoLinkManager.swift; sourceTree = "<group>"; };
 		C70114836B2FC2821FD2E0CE /* Pods-GotGam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.release.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -626,6 +626,7 @@
 		4CE037DB2438CA3E0093E39D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */,
 				A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */,
 				A159DBF32459C1B9004FCA66 /* DBManager.swift */,
 				4CE037DC2438CA590093E39D /* GotStorageType.swift */,
@@ -1021,6 +1022,7 @@
 				A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */,
 				2972781B246FDADD00B75AC7 /* KakaoResponse.swift in Sources */,
 				4CA2351C24758DBB005323EF /* AlarmStorage.swift in Sources */,
+				A1DF638B247E6D5700444175 /* KakaoLinkManager.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+.swift in Sources */,
 				4C620D12246C370300B25B86 /* PaddingLabel.swift in Sources */,

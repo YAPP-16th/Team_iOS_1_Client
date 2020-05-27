@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import CenteredCollectionView
 import CoreLocation
+import KakaoLink
 class MapViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Properties
