@@ -10,9 +10,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
+class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTMapViewDelegate {
 
 	var viewModel: FrequentsMapViewModel!
+	var mapView: MTMapView!
 	
 	//search value
 	var x: Double = 0.0
@@ -22,9 +23,23 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		configureMapView()
 	}
+	
+	func configureMapView() {
+		mapView = MTMapView.init(frame: self.mapBackgroundView.frame)
+		mapView.delegate = self
+		mapView.baseMapType = .standard
+		self.mapBackgroundView.addSubview(mapView)
+		self.mapBackgroundView.sendSubviewToBack(mapView)
+	}
+	
 	
 	func bindViewModel() {
 		
 	}
+	
+	@IBOutlet var mapBackgroundView: UIView!
 }
+
