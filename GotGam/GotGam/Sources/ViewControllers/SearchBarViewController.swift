@@ -16,7 +16,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	
 	@IBOutlet var SearchBar: UITextField!
 	@IBAction func moveMap(_ sender: Any) {
-		viewModel.sceneCoordinator.close(animated: true)
+		viewModel.sceneCoordinator.close(animated: true, completion: nil)
 	}
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -142,9 +142,11 @@ extension SearchBarViewController: UITableViewDelegate {
 				mapVC?.placeName = place.placeName!
 				mapVC?.addressName = place.addressName!
 				
-				self.dismiss(animated: true) {
+				viewModel.sceneCoordinator.close(animated: true) {
 					mapVC?.updateAddress()
 				}
+				
+				
 			}
 		}
 	}

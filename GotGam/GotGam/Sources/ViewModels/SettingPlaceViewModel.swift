@@ -13,7 +13,6 @@ import RxSwift
 protocol SettingPlaceViewModelInputs {
 	func showFrequentsDetailVC()
 	func readFrequents()
-	var frequentsSubject: BehaviorSubject<[Frequent]> { get set }
 }
 
 protocol SettingPlaceViewModelOutputs {
@@ -28,7 +27,6 @@ protocol SettingPlaceViewModelType {
 
 class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, SettingPlaceViewModelInputs, SettingPlaceViewModelOutputs {
 	
-	var frequentsSubject: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	
 	func showFrequentsDetailVC() {
@@ -40,9 +38,7 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 		let storage = FrequentsStorage()
 		storage.fetchFrequents()
 			.bind { (frequentsList) in
-//				self.frequentsSubject.onNext(frequentsList)
 				self.frequentsList.onNext(frequentsList)
-				print("frequentsList : ", frequentsList)
 		}
 		.disposed(by: disposeBag)
 	}

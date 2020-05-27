@@ -26,6 +26,7 @@ extension Scene {
         case .settingLogin: return instantiate(from: "Setting")
         case .searchBar:    return instantiate(from: "SearchBar")
 		case .frequents:    return instantiate(from: "Setting")
+		case .frequentsSearch:    return instantiate(from: "Setting")
         }
     }
 }

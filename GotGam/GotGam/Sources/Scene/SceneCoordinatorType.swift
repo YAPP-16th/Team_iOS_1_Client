@@ -15,7 +15,7 @@ protocol SceneCoordinatorType {
     func transition(to scene: Scene, using style: Transition, animated: Bool) -> Completable
     
     @discardableResult
-    func close(animated: Bool) -> Completable
+    func close(animated: Bool, completion: (() -> Void)?) -> Completable
     
     @discardableResult
     func pop(animated: Bool) -> Completable

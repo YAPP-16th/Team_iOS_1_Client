@@ -19,6 +19,7 @@ protocol FrequentsViewModelInputs {
 
 	func addFrequents()
 	func readFrequents()
+	func showSearchVC()
 }
 
 protocol FrequentsViewModelOutputs {
@@ -50,7 +51,6 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 		
 	}
 	
-	
 	func readFrequents() {
 		let storage = FrequentsStorage()
 		storage.fetchFrequents()
@@ -58,10 +58,12 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 				self.frequentsList.onNext(frequentsList)
 			}
 			.disposed(by: disposeBag)
-		
-		
 	}
 	
+	func showSearchVC(){
+		let movesearchVM = FrequentsSearchViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .frequentsSearch(movesearchVM), using: .push, animated: true)
+	}
 	
 	
 	var inputs: FrequentsViewModelInputs { return self }
