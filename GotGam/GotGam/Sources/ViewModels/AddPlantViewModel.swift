@@ -158,7 +158,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 .disposed(by: disposeBag)
         } else {
             let got = Got(
-                id: Int64(arc4random()),
+                id: "",
                 createdDate: Date(),
                 title: nameText.value,
                 latitude: location.latitude,

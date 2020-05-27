@@ -10,7 +10,7 @@ import Foundation
 
 struct Got: Equatable {
    
-    var id: Int64?
+    var id: String?
     var createdDate: Date?
     var title: String?
     var latitude: Double?
@@ -27,7 +27,7 @@ struct Got: Equatable {
     var isDone: Bool
      
     init(
-        id: Int64?,
+        id: String?,
         createdDate: Date? = Date(),
         title: String?,
         latitude: Double,

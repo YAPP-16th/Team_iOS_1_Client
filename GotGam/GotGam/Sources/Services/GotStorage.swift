@@ -63,7 +63,7 @@ class GotStorage: GotStorageType {
         }
     }
     
-    func fetchGot(id: Int64) -> Observable<Got> {
+    func fetchGot(id: String) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
             let p1 =
@@ -103,7 +103,6 @@ class GotStorage: GotStorageType {
     func createGot(gotToCreate: Got) -> Observable<Got>{
         do{
             var got = gotToCreate
-            self.createId(got: &got)
           let managedGot = ManagedGot(context: self.context)
             managedGot.fromGot(got: got)
             try self.context.save()
@@ -191,7 +190,7 @@ class GotStorage: GotStorageType {
         }
     }
     
-    func deleteGot(id: Int64) -> Observable<Got> {
+    func deleteGot(id: String) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
             fetchRequest.predicate = NSPredicate(format: "id == %lld", id)
@@ -244,9 +243,4 @@ class GotStorage: GotStorageType {
         deleteTag(hex: tag.hex)
     }
     
-    //MARK: - Helper
-    func createId(got: inout Got){
-        guard got.id == nil else { return }
-        got.id = Int64(arc4random())
-    }
 }

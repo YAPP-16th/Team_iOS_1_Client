@@ -34,7 +34,7 @@ protocol GotStorageType {
     func fetchTagList() -> Observable<[Tag]>
 
     @discardableResult
-    func fetchGot(id: Int64) -> Observable<Got>
+    func fetchGot(id: String) -> Observable<Got>
     
     @discardableResult
     func fetchTag(hex: String) -> Observable<Tag>
@@ -49,7 +49,7 @@ protocol GotStorageType {
     func update(tag origin: Tag, to updated: Tag) -> Observable<Tag>
     
     @discardableResult
-    func deleteGot(id: Int64) -> Observable<Got>
+    func deleteGot(id: String) -> Observable<Got>
     
     @discardableResult
     func deleteGot(got: Got) -> Observable<Got>

@@ -17,7 +17,7 @@ extension ManagedGot {
         return NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
     }
 
-    @NSManaged public var id: Int64
+    @NSManaged public var id: String?
     @NSManaged public var insertedDate: Date?
     @NSManaged public var isDone: Bool
     @NSManaged public var latitude: Double

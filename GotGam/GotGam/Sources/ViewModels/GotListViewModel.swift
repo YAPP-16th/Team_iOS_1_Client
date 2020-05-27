@@ -158,7 +158,7 @@ enum ListItem {
 }
 
 extension ListItem: IdentifiableType, Equatable {
-   typealias Identity = Int64
+   typealias Identity = String
 
    var identity: Identity {
        switch self {
