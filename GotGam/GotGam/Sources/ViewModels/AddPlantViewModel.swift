@@ -130,7 +130,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.tag = tag.value == nil ? [] : [tag.value!]
             storage.updateGot(gotToUpdate: currentGot)
                 .subscribe(onNext: { [weak self] _ in
-                    self?.sceneCoordinator.close(animated: true)
+                    self?.sceneCoordinator.close(animated: true, completion: nil)
                 })
                 .disposed(by: disposeBag)
         } else {
@@ -153,7 +153,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
 
             storage.createGot(gotToCreate: got)
                 .subscribe(onNext: { [weak self] _ in
-                    self?.sceneCoordinator.close(animated: true)
+                    self?.sceneCoordinator.close(animated: true, completion: nil)
                 })
                 .disposed(by: disposeBag)
         }
@@ -187,7 +187,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     private func configureBind(sceneCoordinator: SceneCoordinatorType) {
         close
             .subscribe(onNext: { _ in
-                sceneCoordinator.close(animated: true)
+                sceneCoordinator.close(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
         

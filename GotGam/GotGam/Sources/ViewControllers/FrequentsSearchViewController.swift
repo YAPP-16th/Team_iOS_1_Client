@@ -14,7 +14,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 	var viewModel: FrequentsSearchViewModel!
 	
 	@IBAction func moveBack(_ sender: Any) {
-		viewModel.sceneCoordinator.close(animated: true)
+		viewModel.sceneCoordinator.close(animated: true, completion: nil)
 	}
 	
 	@IBOutlet var searchBar: UITextField!
@@ -34,7 +34,6 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		navigationItem.hidesBackButton = true
 		
 		searchBar.becomeFirstResponder()
-		
 		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
 			.subscribe(onNext: { text in
 				self.searchKeyword(keyword: text)

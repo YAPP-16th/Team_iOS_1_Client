@@ -88,6 +88,6 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
         }
     }
     func close(){
-        self.sceneCoordinator.close(animated: true)
+        self.sceneCoordinator.close(animated: true, completion: nil)
     }
 }
