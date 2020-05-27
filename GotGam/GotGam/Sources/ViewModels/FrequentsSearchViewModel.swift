@@ -13,6 +13,7 @@ import RxSwift
 protocol FrequentsSearchViewModelInputs {
 	func addKeyword(keyword: String)
 	func readKeyword()
+	func showMapVC()
 }
 
 protocol FrequentsSearchViewModelOutputs {
@@ -42,6 +43,10 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 			} .disposed(by: disposeBag)
 	}
 	
+	func showMapVC(){
+		let movemapVM = FrequentsMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		sceneCoordinator.transition(to: .frequentsMap(movemapVM), using: .modal, animated: true)
+	}
 	
 	
 	var inputs: FrequentsSearchViewModelInputs { return self }

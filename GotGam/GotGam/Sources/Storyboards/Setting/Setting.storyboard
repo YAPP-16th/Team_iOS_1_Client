@@ -950,7 +950,7 @@
         <!--Navigation Controller-->
         <scene sceneID="1bu-8P-hN8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FK3-gh-evL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FrequentsMapViewController" automaticallyAdjustsScrollViewInsets="NO" id="FK3-gh-evL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Z3v-Ol-bXc">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

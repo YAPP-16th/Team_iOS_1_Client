@@ -55,6 +55,11 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 				let keyword = self.searchBar.text ?? ""
 				self.viewModel.inputs.addKeyword(keyword: keyword)
 			}) .disposed(by: disposeBag)
+		
+		tableView.rx.itemSelected
+		.subscribe(onNext: { [weak self] (indexPath) in
+			self?.viewModel.inputs.showMapVC()
+		}) .disposed(by: disposeBag)
 	}
 	
 	func searchKeyword(keyword: String){
@@ -88,6 +93,22 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 48
 	}
+	
+//	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//		tableView.deselectRow(at: indexPath, animated: true)
+//		let place = self.placeList[indexPath.row]
+//		if let tabVC = self.presentingViewController as? TabBarController{
+//			let mapVC = tabVC.viewControllers?.first as? FrequentsMapViewController
+//			mapVC?.x = Double(place.x)!
+//			mapVC?.y = Double(place.y)!
+//			mapVC?.placeName = place.placeName
+//			mapVC?.addressName = place.addressName
+//			
+//			viewModel.sceneCoordinator.close(animated: true) {
+////				mapVC?.updateAddress()
+//			}
+//		}
+//	}
 }
 
 extension FrequentsSearchViewController: UICollectionViewDataSource{
