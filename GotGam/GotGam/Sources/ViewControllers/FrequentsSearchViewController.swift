@@ -56,6 +56,8 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 			let text = self.searchBar.text ?? ""
 			self.searchKeyword(keyword: text)
 			}).disposed(by: disposeBag)
+		
+		
 	}
 	
 	func searchKeyword(keyword: String){

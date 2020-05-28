@@ -19,7 +19,7 @@ protocol FrequentsViewModelInputs {
 
 	func addFrequents()
 	func readFrequents()
-	func showSearchVC()
+	func moveSearchVC()
 }
 
 protocol FrequentsViewModelOutputs {
@@ -38,7 +38,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	var longitudePlace = BehaviorRelay<Double>(value: 0)
 	
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
-	
+	var placeText = BehaviorRelay<String>(value: "")
 		
 	func addFrequents() {
 		let storage = FrequentsStorage()
@@ -60,9 +60,9 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 			.disposed(by: disposeBag)
 	}
 	
-	func showSearchVC(){
+	func moveSearchVC(){
 		let movesearchVM = FrequentsSearchViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-		
+		movesearchVM.placeSearchText.bind(to: placeText).disposed(by: disposeBag)
 		
         sceneCoordinator.transition(to: .frequentsSearch(movesearchVM), using: .push, animated: true)
 	}

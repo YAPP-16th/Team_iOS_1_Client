@@ -12,7 +12,7 @@ import RxCocoa
 
 
 protocol FrequentsMapViewModelInputs {
-
+	func showFrequentsVC()
 }
 
 protocol FrequentsMapViewModelOutputs {
@@ -29,9 +29,15 @@ class FrequentsMapViewModel: CommonViewModel, FrequentsMapViewModelInputs, Frequ
 	var inputs: FrequentsMapViewModelInputs { return self }
     var outputs: FrequentsMapViewModelOutputs { return self }
     var storage: GotStorageType!
+	var placeMapText = BehaviorRelay<String>(value: "")
 	
 	var placeBehavior = BehaviorRelay<Place?>(value: nil)
 	//var isCurrentBehavior = BehaviorRelay<Bool>(value: false)
+	
+	func showFrequentsVC(){
+		let movefrequentsVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		sceneCoordinator.transition(to: .frequents(movefrequentsVM), using: .root, animated: true)
+	}
     
 	init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)

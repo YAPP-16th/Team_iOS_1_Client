@@ -12,6 +12,8 @@ import RxCocoa
 
 class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 	
+	// MARK: - Properties
+	
     var viewModel: SettingPlaceViewModel!
 	
 	@IBOutlet var settingPlaceTableView: UITableView!
@@ -24,6 +26,8 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 		}
 		
 	}
+	
+	// MARK: - View Life Cycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -41,23 +45,27 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 			.disposed(by: disposeBag)
 		
 		settingPlaceTableView.rx.itemSelected
-		.subscribe(onNext: { [weak self] (indexPath) in
-		if indexPath.section == 1 {
-			self?.viewModel.inputs.showFrequentsDetailVC()
-			}
-		}) .disposed(by: disposeBag)
+			.subscribe(onNext: { [weak self] (indexPath) in
+				if indexPath.section == 0 {
+					self?.viewModel.inputs.detailVC()
+				}
+				else {
+					self?.viewModel.inputs.showFrequentsDetailVC()
+				}
+			}) .disposed(by: disposeBag)
 		
 		
 		viewModel.outputs.frequentsList
 					.bind { (List) in
 						self.placeList = List
 				} .disposed(by: disposeBag)
-				
-//		viewModel.outputs.frequentsList
-//		.bind(to: settingPlaceTableView.rx.items(cellIdentifier: "placeCell", cellType: PlaceCell.self)) { (index, place, cell) in
-//			cell.configure(place)
-//		}
-//		.disposed(by: disposeBag)
+
+//		Observable.zip(settingPlaceTableView.rx.itemDeleted, settingPlaceTableView.rx.modelDeleted(ListFrequentsItem.self))
+//			.bind{ [weak self] indexPath, frequentsItem in
+//				if case let .frequentsItem(frequent) = frequentsItem {
+//					self?.viewModel.inputs.removeFrequents(indexPath: indexPath, frequent: frequent)
+//				}
+//		}.disposed(by: disposeBag)
 	}
 		
 }
@@ -93,7 +101,12 @@ extension SettingPlaceViewController: UITableViewDelegate {
             success(true)
         }
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-            self?.settingPlaceTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+//            self?.settingPlaceTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+			//self?.placeList.remove(at: indexPath.row)
+			guard let self = self else {return}
+			let frequent = self.placeList[indexPath.row]
+			self.viewModel.inputs.removeFrequents(indexPath: indexPath, frequent: frequent)
+			
             success(true)
         }
 		return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
@@ -165,5 +178,3 @@ class PlaceCell: UITableViewCell{
 	@IBOutlet var placeAddressLabel: UILabel!
 	
 }
-
-

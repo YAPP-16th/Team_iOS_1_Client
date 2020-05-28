@@ -8,15 +8,19 @@
 
 import Foundation
 import RxSwift
-
+import RxCocoa
+import RxDataSources
 
 protocol SettingPlaceViewModelInputs {
 	func showFrequentsDetailVC()
 	func readFrequents()
+	func detailVC()
+	func removeFrequents(indexPath: IndexPath, frequent: Frequent)
 }
 
 protocol SettingPlaceViewModelOutputs {
 	var frequentsList: BehaviorSubject<[Frequent]> { get set }
+	var placeText: BehaviorRelay<String> { get }
 }
 
 protocol SettingPlaceViewModelType {
@@ -26,12 +30,17 @@ protocol SettingPlaceViewModelType {
 
 
 class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, SettingPlaceViewModelInputs, SettingPlaceViewModelOutputs {
-	
+	var placeText = BehaviorRelay<String>(value: "")
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	
 	func showFrequentsDetailVC() {
 		let moveFrequentsDetailVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
 		sceneCoordinator.transition(to: .frequents(moveFrequentsDetailVM), using: .push, animated: true)
+	}
+	
+	func detailVC() {
+		let detailVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		sceneCoordinator.transition(to: .frequents(detailVM), using: .push, animated: true)
 	}
 	
 	func readFrequents() {
@@ -43,19 +52,46 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 		.disposed(by: disposeBag)
 	}
 	
+	func removeFrequents(indexPath: IndexPath, frequent: Frequent) {
+		let storagePlace = FrequentsStorage()
+		storagePlace.deleteFrequents(frequent: frequent)
+			.subscribe(onNext: { [weak self] frequent in
+				if var list = try? self?.frequentsList.value() {
+					list.remove(at: indexPath.row)
+					self?.frequentsList.onNext(list)
+				}
+			})
+			.disposed(by: disposeBag)
+    }
+	
     var inputs: SettingPlaceViewModelInputs { return self }
     var outputs: SettingPlaceViewModelOutputs { return self }
    	var storage: GotStorageType!
-	var storagePlace: FrequentsStorageType!
+	//var storagePlace: FrequentsStorageType!
     
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
+		
     }
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: FrequentsStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storagePlace = storage
-    }
+//    init(sceneCoordinator: SceneCoordinatorType, storage: FrequentsStorageType) {
+//        super.init(sceneCoordinator: sceneCoordinator)
+//        self.storagePlace = storage
+//    }
   
+}
+
+enum ListFrequentsItem {
+    case frequentsItem(frequent: Frequent)
+}
+
+extension ListFrequentsItem: IdentifiableType, Equatable {
+   typealias Identity = String
+
+   var identity: Identity {
+       switch self {
+       case let .frequentsItem(frequent): return frequent.name
+       }
+   }
 }

@@ -19,6 +19,16 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	@IBOutlet var placeLabel: UILabel!
 	@IBOutlet var addressLabel: UILabel!
 	@IBOutlet var okay: UIButton!
+	@IBAction func okay(_ sender: Any) {
+		viewModel.placeMapText.accept(addressLabel.text ?? "")
+//		viewModel.inputs.showFrequentsVC()
+		for controller in self.navigationController!.viewControllers as Array {
+			if controller.isKind(of: FrequentsViewController.self) {
+				_ =  self.navigationController!.popToViewController(controller, animated: true)
+				break
+			}
+		}
+	}
 	
 	//search value
 	var x: Double = 0.0
@@ -41,9 +51,9 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		guard let currentLocation = LocationManager.shared.currentLocation else { return }
 		if viewModel.placeBehavior.value == nil {
 			APIManager.shared.getPlace(longitude: currentLocation.longitude, latitude: currentLocation.latitude) { [weak self] (place) in
-				print(place)
 				self?.placeLabel.text = place?.roadAddress?.buildingName
 				self?.addressLabel.text = place?.roadAddress?.addressName
+				
 			}
 		}
 	}

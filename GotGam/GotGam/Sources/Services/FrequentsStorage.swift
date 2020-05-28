@@ -32,12 +32,6 @@ class FrequentsStorage: FrequentsStorageType{
 		do{
 			let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
 			let results = try self.context.fetch(fetchRequest)
-//			var frequentsList: [Frequent] = []
-//			for f in results{
-//				frequentsList.append(f.toFrequents())
-//
-//			}
-//			return .just(frequentsList)
 			let frequentsList = results.map { $0.toFrequents()}
 			return .just(frequentsList)
 		}catch let error as NSError{
@@ -68,6 +62,29 @@ class FrequentsStorage: FrequentsStorageType{
 //		}
 //	}
 	
+	func deleteFrequents(name: String) -> Observable<Frequent> {
+        do{
+            let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
+            fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+            let results = try self.context.fetch(fetchRequest)
+            if let managedFrequents = results.first {
+                let frequents = managedFrequents.toFrequents()
+                self.context.delete(managedFrequents)
+                do{
+                    try self.context.save()
+                    return .just(frequents)
+                }catch{
+                    return .error(FrequentsStorageError.deleteError("name이 \(name)인 Frequents을 제거하는데 오류 발생"))
+                }
+            }else{
+                return .error(FrequentsStorageError.fetchError("해당 데이터에 대한 Frequents을 찾을 수 없음"))
+            }
+        }catch let error{
+            return .error(FrequentsStorageError.deleteError(error.localizedDescription))
+        }
+    }
 	
-	
+	func deleteFrequents(frequent: Frequent) -> Observable<Frequent> {
+		deleteFrequents(name: frequent.name)
+	}
 }

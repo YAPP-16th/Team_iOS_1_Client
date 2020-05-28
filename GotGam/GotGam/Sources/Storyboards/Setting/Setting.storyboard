@@ -711,6 +711,9 @@
                                         <state key="normal" title="확인">
                                             <color key="titleColor" name="white"/>
                                         </state>
+                                        <connections>
+                                            <action selector="okay:" destination="ba4-04-y9j" eventType="touchUpInside" id="LsQ-Ve-Sbw"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
