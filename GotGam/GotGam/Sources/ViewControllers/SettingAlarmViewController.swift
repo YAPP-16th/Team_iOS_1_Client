@@ -16,9 +16,11 @@ class SettingAlarmViewController: BaseViewController, ViewModelBindableType {
 	
 	@IBOutlet var settingAlarmTableView: UITableView!
 	
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		navigationItem.largeTitleDisplayMode = .never
+
 	}
 	
 	func bindViewModel() {
