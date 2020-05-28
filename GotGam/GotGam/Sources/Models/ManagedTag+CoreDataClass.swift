@@ -20,8 +20,9 @@ public class ManagedTag: NSManagedObject {
 //            gotList.append(got.toGot())
 //        }
 //    }
-    
-    return .init(id: id ?? "", name: name ?? "", hex: hex)
+    var tag = Tag(id: id ?? "", name: name ?? "", hex: hex)
+    tag.objectId = objectID
+    return tag
 //      .init(name: name!, hex: hex!, gotList: got)
     
   }

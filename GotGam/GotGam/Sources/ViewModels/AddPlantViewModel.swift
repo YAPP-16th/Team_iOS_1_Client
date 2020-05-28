@@ -162,7 +162,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                         .disposed(by: self.disposeBag)
                 }
             }else{
-                storage.updateGot(gotToUpdate: currentGot)
+                storage.updateGot(currentGot)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true, completion: nil)
                 })

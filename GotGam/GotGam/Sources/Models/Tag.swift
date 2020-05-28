@@ -7,12 +7,15 @@
 //
 
 import Foundation
+import CoreData
 
 struct Tag: Equatable {
     var id: String
     var name: String
     var hex: String // hex. ex) "#FFFFFF"
     //var gotList: [Got]
+    // Managed object id
+    var objectId: NSManagedObjectID?
     
     init(id: String = "", name: String, hex: String) {
         self.id = id
@@ -26,5 +29,4 @@ func ==(lhs: Tag, rhs: Tag) -> Bool {
     return lhs.id == rhs.id
         && lhs.hex == rhs.hex
         && lhs.name == rhs.name
-    
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import CoreData
 
 enum GotStorageError: Error{
     case fetchError(String)
@@ -37,13 +38,25 @@ protocol GotStorageType {
     func fetchGot(id: String) -> Observable<Got>
     
     @discardableResult
+    func fetchGot(objectId: NSManagedObjectID) -> Observable<Got?>
+    
+    @discardableResult
     func fetchTag(hex: String) -> Observable<Tag>
+    
+    @discardableResult
+    func fetchTag(objectId: NSManagedObjectID) -> Observable<Tag?>
     
     @discardableResult
     func updateGot(gotToUpdate: Got) -> Observable<Got>
     
     @discardableResult
+    func updateGot(_ gotToUpdate: Got) -> Observable<Got?>
+    
+    @discardableResult
     func updateTag(_ tag: Tag) -> Observable<Tag>
+    
+    @discardableResult
+    func updateTag(_ tagToUpdate: Tag) -> Observable<Tag?>
     
     @discardableResult
     func update(tag origin: Tag, to updated: Tag) -> Observable<Tag>
@@ -55,10 +68,16 @@ protocol GotStorageType {
     func deleteGot(got: Got) -> Observable<Got>
     
     @discardableResult
+    func deleteGot(_ objectId: NSManagedObjectID) -> Observable<Bool>
+    
+    @discardableResult
     func deleteTag(hex: String) -> Observable<Tag>
     
     @discardableResult
     func deleteTag(tag: Tag) -> Observable<Tag>
+    
+    @discardableResult
+    func deleteTag(_ objectId: NSManagedObjectID) -> Observable<Bool>
     
     @discardableResult
     func deleteUnsyncedGot() -> Observable<Bool>

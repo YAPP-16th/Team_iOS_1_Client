@@ -248,8 +248,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         }.disposed(by: self.disposeBag)
         
         
-        self.viewModel.output.gotList.subscribe(onNext: { list in
-            self.gotList = list
+        self.viewModel.output.gotList
+            .subscribe(onNext: { list in
+                self.gotList = list.filter { !$0.isDone }
         }).disposed(by: self.disposeBag)
         
         quickAddView.addButotn.rx.tap

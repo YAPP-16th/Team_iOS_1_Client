@@ -21,7 +21,7 @@ public class ManagedGot: NSManagedObject {
       }
     }
     
-    return Got.init(
+    var got =  Got.init(
         id: id,
         createdDate: createdDate,
         title: title,
@@ -37,6 +37,8 @@ public class ManagedGot: NSManagedObject {
         onDate: onDate,
         tag: tags,
         isDone: isDone)
+    got.objectId = objectID
+    return got
   }
   
   func fromGot(got: Got){
@@ -49,7 +51,6 @@ public class ManagedGot: NSManagedObject {
         }
       }
     }
-    
      
     self.id = got.id!
     self.createdDate = got.createdDate
