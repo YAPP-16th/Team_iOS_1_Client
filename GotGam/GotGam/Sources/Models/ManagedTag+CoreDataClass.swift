@@ -21,7 +21,7 @@ public class ManagedTag: NSManagedObject {
 //        }
 //    }
     
-    return .init(name: name ?? "", hex: hex)
+    return .init(id: id ?? "", name: name ?? "", hex: hex)
 //      .init(name: name!, hex: hex!, gotList: got)
     
   }
@@ -38,7 +38,7 @@ public class ManagedTag: NSManagedObject {
 //        }
 //    }
     
-    
+    self.id = tag.id
     self.name = tag.name
     self.hex = tag.hex
     //self.got = NSSet.init(array: managedGotList)

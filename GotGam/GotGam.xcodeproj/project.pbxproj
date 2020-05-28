@@ -161,7 +161,6 @@
 		A1A5DE042471132C00AFA9D5 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */; };
 		A1A5DEA024753CC100AFA9D5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1A5DE9F24753CC100AFA9D5 /* credentials.plist */; };
 		A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */; };
-		A1A5DF5A2477D4FB00AFA9D5 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF592477D4FB00AFA9D5 /* LoginResponse.swift */; };
 		A1A5DF5C2477D52700AFA9D5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF5B2477D52700AFA9D5 /* LoginViewModel.swift */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
@@ -174,7 +173,7 @@
 		A1DF636D247A782C00444175 /* KakaoMessageTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */; };
 		A1DF638B247E6D5700444175 /* KakaoLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */; };
 		A1DF638D247E7B1500444175 /* NetworkAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF638C247E7B1500444175 /* NetworkAPIManager.swift */; };
-		A1DF638F247E813D00444175 /* TagResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF638E247E813D00444175 /* TagResponse.swift */; };
+		A1DF638F247E813D00444175 /* GotAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF638E247E813D00444175 /* GotAPIResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -348,7 +347,6 @@
 		A1A5DEAB24755B7B00AFA9D5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GotAPIService.swift; sourceTree = "<group>"; };
 		A1A5DF552476E71E00AFA9D5 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		A1A5DF592477D4FB00AFA9D5 /* LoginResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		A1A5DF5B2477D52700AFA9D5 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
@@ -361,7 +359,7 @@
 		A1DF636C247A782C00444175 /* KakaoMessageTemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoMessageTemplate.framework; sourceTree = "<group>"; };
 		A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KakaoLinkManager.swift; sourceTree = "<group>"; };
 		A1DF638C247E7B1500444175 /* NetworkAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIManager.swift; sourceTree = "<group>"; };
-		A1DF638E247E813D00444175 /* TagResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResponse.swift; sourceTree = "<group>"; };
+		A1DF638E247E813D00444175 /* GotAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotAPIResponse.swift; sourceTree = "<group>"; };
 		C70114836B2FC2821FD2E0CE /* Pods-GotGam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotGam.release.xcconfig"; path = "Target Support Files/Pods-GotGam/Pods-GotGam.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -510,9 +508,9 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A1DF6390247EC0A100444175 /* Network */,
 				29618DAE247C4C6F008E112E /* ManagedFrequents+CoreDataClass.swift */,
 				29618DAF247C4C70008E112E /* ManagedFrequents+CoreDataProperties.swift */,
-				A1A5DF592477D4FB00AFA9D5 /* LoginResponse.swift */,
 				4CE037EF2438D6990093E39D /* Got.swift */,
 				A127E710246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift */,
 				A127E711246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift */,
@@ -525,9 +523,7 @@
 				4CA2352724758F8D005323EF /* History+CoreDataClass.swift */,
 				4CA2352624758F8D005323EF /* History+CoreDataProperties.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
-				2972781A246FDADD00B75AC7 /* KakaoResponse.swift */,
 				29618D6A247C3C9C008E112E /* Frequents.swift */,
-				A1DF638E247E813D00444175 /* TagResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -795,6 +791,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		A1DF6390247EC0A100444175 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				2972781A246FDADD00B75AC7 /* KakaoResponse.swift */,
+				A1DF638E247E813D00444175 /* GotAPIResponse.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		DDDC8648BFA1D409CD897B12 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -984,13 +989,12 @@
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				2972784B2473C9CB00B75AC7 /* SettingOtherViewModel.swift in Sources */,
 				4CA2352024758DC3005323EF /* SearchStorage.swift in Sources */,
-				A1A5DF5A2477D4FB00AFA9D5 /* LoginResponse.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
 				4C5F0F6624654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift in Sources */,
 				4CD03D742479056F00210353 /* GotBoxTableViewCell.swift in Sources */,
 				A157E11D2455754A001E310D /* Extensions.swift in Sources */,
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
-				A1DF638F247E813D00444175 /* TagResponse.swift in Sources */,
+				A1DF638F247E813D00444175 /* GotAPIResponse.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
 				4CA2352124758DC3005323EF /* SearchStorageType.swift in Sources */,
@@ -1237,7 +1241,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = N23K7ZS482;
+				DEVELOPMENT_TEAM = 97C96KP84G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",

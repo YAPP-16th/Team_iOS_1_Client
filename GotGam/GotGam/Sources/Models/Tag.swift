@@ -9,11 +9,13 @@
 import Foundation
 
 struct Tag: Equatable {
+    var id: String
     var name: String
     var hex: String // hex. ex) "#FFFFFF"
     //var gotList: [Got]
     
-    init(name: String, hex: String) {
+    init(id: String = "", name: String, hex: String) {
+        self.id = id
         self.name = name
         self.hex = hex
         //self.gotList = gotList
@@ -21,5 +23,8 @@ struct Tag: Equatable {
 }
 
 func ==(lhs: Tag, rhs: Tag) -> Bool {
-    return lhs.hex == rhs.hex
+    return lhs.id == rhs.id
+        && lhs.hex == rhs.hex
+        && lhs.name == rhs.name
+    
 }

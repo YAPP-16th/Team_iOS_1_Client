@@ -51,6 +51,9 @@ enum GotAPIService{
     case createFrequents
     case getFrequents
     case getFrequent(String)
+    
+    //Sync
+    case synchronize([String: Any])
 }
 
 extension GotAPIService: TargetType{
@@ -88,6 +91,8 @@ extension GotAPIService: TargetType{
             return "frequents"
         case .getFrequent(let id):
             return "frequents/\(id)"
+        case .synchronize:
+            return "synchronizes"
         }
     }
     
@@ -113,6 +118,8 @@ extension GotAPIService: TargetType{
             return .post
         case .getFrequents, .getFrequent:
             return .get
+        case .synchronize:
+            return .post
         }
     }
     
@@ -203,11 +210,13 @@ extension GotAPIService: TargetType{
             encoding: JSONEncoding.default)
         case .getFrequents, .getFrequent:
             return .requestPlain
+        case .synchronize(let info):
+            return .requestParameters(parameters: info, encoding: JSONEncoding.default)
       }
     }
     var headers: [String : String]? {
         switch self{
-        case .getUser, .createTask, .getTasks, .getTask, .createTag, .getTags, .getTag, .createFrequents, .getFrequents, .getFrequent:
+        case .getUser, .createTask, .getTasks, .getTask, .createTag, .getTags, .getTag, .createFrequents, .getFrequents, .getFrequent, .synchronize:
              guard let token = UserDefaults.standard.string(forDefines: .userToken) else {
                 return [:]
             }

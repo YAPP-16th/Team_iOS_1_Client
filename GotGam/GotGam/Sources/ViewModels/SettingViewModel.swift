@@ -21,7 +21,7 @@ protocol SettingViewModelInputs {
 
 protocol SettingViewModelOutputs {
 	var settingMenu: Observable<[String]> { get }
-    var userInfo: PublishSubject<User?> { get set }
+    var userInfo: PublishSubject<UserResponseData?> { get set }
     var profileImage: PublishSubject<UIImage> { get set }
 }
 
@@ -32,7 +32,7 @@ protocol SettingViewModelType {
 
 
 class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelInputs, SettingViewModelOutputs {
-	var userInfo = PublishSubject<User?>()
+	var userInfo = PublishSubject<UserResponseData?>()
     var profileImage = PublishSubject<UIImage>()
     
     func updateUserInfo() {

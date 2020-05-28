@@ -19,7 +19,7 @@ class NetworkAPIManager{
         self.provider = MoyaProvider<GotAPIService>()
     }
   
-    func getUser(email: String, completion: @escaping (User?) -> Void){
+    func getUser(email: String, completion: @escaping (UserResponseData?) -> Void){
         provider.request(.getUser(email)) { (result) in
             switch result{
             case .success(let response):
@@ -46,60 +46,16 @@ class NetworkAPIManager{
         }
     }
         
-    func createTask(got: Got){
-        
-        let title = got.title ?? ""
-        let lat = got.latitude ?? 0.0
-        let lng = got.longitude ?? 0.0
-        let coordinates = [lat, lng]
-        let address = got.place ?? ""
-        let tags = ""
-        let memo = got.deparetureMsg ?? ""
-        let iconUrl = ""
-        let isFinished = got.isDone
-        let isCheckedArrive = got.onArrive
-        let isCheckedLeave = got.onDeparture
-        let date = ""
-        
-        let info = GotAPIInfo(
-            title: title,
-            coordinates: coordinates,
-            address: address,
-            tag: tags,
-            memo: memo,
-            iconUrl: iconUrl,
-            isFinished: isFinished,
-            isCheckedArrive: isCheckedArrive,
-            isCheckedLeave: isCheckedLeave,
-            dueDate: "2020-10-10 10:12:34")
-        
-        provider.request(.createTask(info)) { (result) in
-            switch result{
-            case .success(let response):
-                print(String(data: response.data, encoding: .utf8))
-                do{
-                    let jsonDecoder = JSONDecoder()
-                    let user = try jsonDecoder.decode(User.self, from: response.data)
-                    
-                }catch let error{
-                    print(error.localizedDescription)
-                    
-                }
-            case .failure(let error):
-                print(error)
-                
-            }
-        }
-    }
 
     
-    func getTasks(completion: @escaping (User?) -> Void){
+    
+    func getTasks(completion: @escaping (UserResponse?) -> Void){
         provider.request(.getTasks) { (result) in
             switch result{
             case .success(let response):
                 do{
                     let jsonDecoder = JSONDecoder()
-                    let user = try jsonDecoder.decode(User.self, from: response.data)
+                    let user = try jsonDecoder.decode(UserResponse.self, from: response.data)
                     completion(user)
                 }catch let error{
                     print(error.localizedDescription)
@@ -131,7 +87,7 @@ class NetworkAPIManager{
         provider.request(.getTags) { (result) in
             switch result{
             case .success(let response):
-                print(String(data: response.data, encoding: .utf8))
+                break
             case .failure(let error):
                 print(error)
             }
@@ -142,53 +98,90 @@ class NetworkAPIManager{
         provider.request(.getTag(id)) { (result) in
             switch result{
             case .success(let response):
-                print(String(data: response.data, encoding: .utf8))
+                break
             case .failure(let error):
                 print(error)
             }
         }
     }
+    
     func SyncAccount(){
-        syncGot()
-        syncTags()
-    }
-    
-    func syncGot(){
-        let storage = GotStorage()
-        storage.fetchGotList().bind { (gots) in
-            for got in gots{
-                self.createTask(got: got)
-            }
-        }.disposed(by: disposeBag)
-    }
-    
-
-    func syncTags(){
         guard let email = UserDefaults.standard.string(forDefines: .userID) else { return }
         guard let nickname = UserDefaults.standard.string(forDefines: .nickname) else { return }
-        let storage = GotStorage()
-        storage.fetchTagList().bind { tags in
-            for tag in tags{
-                let name = tag.name
-                let color = tag.hex
-                let tagInfo = TagAPIInfo(name: name, color: color, email: email, nickname: nickname)
-                self.provider.request(.createTag(tagInfo)) { (result) in
-                    switch result{
-                    case .success(let response):
-                        let jsonDecoder = JSONDecoder()
-                        do{
-                            let tagResponse = try jsonDecoder.decode(TagResponse.self, from: response.data)
-                            print(tagResponse.tag.id)
-                        }catch let error{
-                            print(error.localizedDescription)
-                        }
-                    case .failure(let error):
+        let frequentsStorage = FrequentsStorage()
+        let gotStorage = GotStorage()
+        Observable.zip(
+            frequentsStorage.fetchFrequents(),
+            gotStorage.fetchGotList(),
+            gotStorage.fetchTagList()
+        ).subscribe(onNext: { fList, gList, tList in
+            let fData: [[String: Any]] = fList.map {
+                [
+                    "name": $0.name,
+                    "address": $0.address,
+                    "coordinates": [$0.latitude, $0.longitude]
+                ]
+            }
+            
+            let tData: [[String: Any]] = tList.map {
+                [
+                    "name": $0.name,
+                    "color": $0.hex,
+                    "creator": ["userId": email, "nickname": nickname]
+                ]
+            }
+            
+            let gData: [[String: Any]] = gList.map {
+                [
+                    "title": $0.title ?? "",
+                    "coordinates": [$0.latitude ?? 0.0, $0.longitude ?? 0.0],
+                    "address": $0.place ?? "",
+                    "tagName": "",
+                    "memo": $0.arriveMsg ?? $0.deparetureMsg ?? "",
+                    "iconURL": "",
+                    "isFinished": $0.isDone,
+                    "isCheckedArrive": $0.onArrive,
+                    "isCheckedLeave": $0.onDeparture
+                ]
+            }
+            let info = ["frequents": fData,
+                   "tags": tData,
+                   "tasks": gData
+            ]
+            self.provider.request(.synchronize(info)) { (result) in
+                switch result{
+                case .success(let syncResponse):
+                    let decoder = JSONDecoder()
+                    do{
+                        let jsonData = try decoder.decode(SyncResponse.self, from: syncResponse.data)
+                        self.syncLocalData(data: jsonData)
+                    }catch let error{
                         print(error.localizedDescription)
                     }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
             }
-        }.disposed(by: self.disposeBag)
+            }).disposed(by: disposeBag)
     }
+    
+    func syncLocalData(data: SyncResponse){
+        let storage = GotStorage()
+        Observable.zip(storage.deleteUnsyncedTag(), storage.deleteUnsyncedGot()).subscribe(onNext: { tResult, gResult in
+            if tResult && gResult{
+                for tag in data.tags{
+                    let newTag = Tag(id: tag.id, name: tag.name, hex: tag.color)
+                    _ = storage.create(tag: newTag).asObservable().map { _ in }
+                }
+                
+                for task in data.tasks{
+                    let newGot = Got(id: task.id, title: task.title, latitude: task.coordinates[0], longitude: task.coordinates[1], place: task.address, insertedDate: Date(), tag: [])
+                    _ = storage.createGot(gotToCreate: newGot).asObservable().map { _ in }
+                }
+            }
+        }).disposed(by: self.disposeBag)
+    }
+    
   
     
 }

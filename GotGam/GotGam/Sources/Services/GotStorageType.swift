@@ -60,4 +60,10 @@ protocol GotStorageType {
     @discardableResult
     func deleteTag(tag: Tag) -> Observable<Tag>
     
+    @discardableResult
+    func deleteUnsyncedGot() -> Observable<Bool>
+    
+    @discardableResult
+    func deleteUnsyncedTag() -> Observable<Bool>
+    
 }

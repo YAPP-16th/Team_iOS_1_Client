@@ -243,4 +243,40 @@ class GotStorage: GotStorageType {
         deleteTag(hex: tag.hex)
     }
     
+    func deleteUnsyncedTag() -> Observable<Bool>{
+        do{
+            let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+            let results = try self.context.fetch(fetchRequest)
+            let unsyncedList = results.filter { $0.id == "" }
+            for u in unsyncedList{
+                self.context.delete(u)
+            }
+            do{
+                try self.context.save()
+                return .just(true)
+            }catch{
+                return .just(false)
+            }
+        }catch{
+            return .just(false)
+        }
+    }
+    func deleteUnsyncedGot() -> Observable<Bool>{
+        do{
+            let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
+            let results = try self.context.fetch(fetchRequest)
+            let unsyncedList = results.filter { $0.id == "" }
+            for u in unsyncedList{
+                self.context.delete(u)
+            }
+            do{
+                try self.context.save()
+                return .just(true)
+            }catch{
+                return .just(false)
+            }
+        }catch{
+            return .just(false)
+        }
+    }
 }

@@ -18,7 +18,7 @@ protocol SettingLoginViewModelInputs {
 
 protocol SettingLoginViewModelOutputs {
     var settingLoginMenu: Observable<[String]> { get }
-    var userInfo: PublishSubject<User> { get set }
+    var userInfo: PublishSubject<UserResponseData> { get set }
     var profileImage: PublishSubject<UIImage> { get set }
 }
 
@@ -31,7 +31,7 @@ protocol SettingLoginViewModelType {
 class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, SettingLoginViewModelInputs, SettingLoginViewModelOutputs {
     
     var settingLoginMenu = Observable<[String]>.just(["로그아웃", "계정 탈퇴"])
-    var userInfo = PublishSubject<User>()
+    var userInfo = PublishSubject<UserResponseData>()
     var profileImage = PublishSubject<UIImage>()
     
     var inputs: SettingLoginViewModelInputs { return self }
