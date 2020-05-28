@@ -17,6 +17,7 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
     var viewModel: SettingPlaceViewModel!
 	
 	@IBOutlet var settingPlaceTableView: UITableView!
+	@IBOutlet var massageLabel: UILabel!
 	
 	var placeList: [Frequent] = [] {
 		didSet{
@@ -49,8 +50,13 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 				if indexPath.section == 0 {
 					self?.viewModel.inputs.detailVC()
 				}
-				else {
-					self?.viewModel.inputs.showFrequentsDetailVC()
+				else if indexPath.section == 1{
+					if self?.placeList.count ?? 0 > 4 {
+						self?.showMessage(message: "자주 가는 장소는 5개까지 설정할 수 있습니다.")
+					}
+					else {
+						self?.viewModel.inputs.showFrequentsDetailVC()
+					}
 				}
 			}) .disposed(by: disposeBag)
 		
@@ -60,12 +66,11 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 						self.placeList = List
 				} .disposed(by: disposeBag)
 
-//		Observable.zip(settingPlaceTableView.rx.itemDeleted, settingPlaceTableView.rx.modelDeleted(ListFrequentsItem.self))
-//			.bind{ [weak self] indexPath, frequentsItem in
-//				if case let .frequentsItem(frequent) = frequentsItem {
-//					self?.viewModel.inputs.removeFrequents(indexPath: indexPath, frequent: frequent)
-//				}
-//		}.disposed(by: disposeBag)
+	}
+	
+	func showMessage(message: String) {
+		massageLabel.text = message
+		massageLabel.backgroundColor = UIColor.saffron
 	}
 		
 }
