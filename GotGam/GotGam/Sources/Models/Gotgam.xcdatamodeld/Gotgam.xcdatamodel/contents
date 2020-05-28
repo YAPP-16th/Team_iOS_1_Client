@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19F96" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="History" representedClassName="History" syncable="YES">
         <attribute name="keyword" optional="YES" attributeType="String"/>
     </entity>
@@ -37,6 +37,7 @@
     </entity>
     <entity name="ManagedTag" representedClassName="ManagedTag" syncable="YES">
         <attribute name="hex" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="got" toMany="YES" deletionRule="No Action" destinationEntity="ManagedGot" inverseName="tag" inverseEntity="ManagedGot"/>
     </entity>
@@ -45,6 +46,6 @@
         <element name="ManagedAlarm" positionX="-135" positionY="180" width="128" height="133"/>
         <element name="ManagedFrequents" positionX="-144" positionY="216" width="128" height="103"/>
         <element name="ManagedGot" positionX="-54" positionY="90" width="128" height="283"/>
-        <element name="ManagedTag" positionX="-232.640625" positionY="80.38671875" width="128" height="88"/>
+        <element name="ManagedTag" positionX="-232.640625" positionY="80.38671875" width="128" height="103"/>
     </elements>
 </model>
