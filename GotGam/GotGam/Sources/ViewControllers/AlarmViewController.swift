@@ -10,8 +10,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import CoreLocation
 
 class AlarmViewController: BaseViewController, ViewModelBindableType {
+    
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocationCoordinate2D?
     
     var viewModel: AlarmViewModel!
     
@@ -26,10 +30,44 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
             UIView.animate(withDuration: 0.5) {
                 self.activeIndeicatorView.transform = CGAffineTransform(translationX: self.activeButton.frame.width, y: 0)
             }
+        }
+    }
+    
+    @IBAction func didTapTestAlarm(_ sender: UIButton) {
+        showTestAlart()
+    }
+    
+    func showTestAlart() {
+        let alert = UIAlertController(title: "test", message: nil, preferredStyle: .alert)
+        
+        
+        
+        let okAction = UIAlertAction(title: "확인", style: .default) { (action) in
             
+            if
+                let latText = alert.textFields?[0].text,
+                let lat = Double(latText),
+                let longText = alert.textFields?[1].text,
+                let long = Double(longText) {
+                let location = CLLocation(latitude: lat, longitude: long)
+                    AlarmManager.shared.createAlarm(from: location)
+            } else {
+                print("위치가 이상해요")
+            }
         }
         
+        let cancelAction = UIAlertAction(title: "취소", style: .destructive) { (action) in
+        }
+
+        alert.addTextField()
+        alert.addTextField()
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
+    
+    
+    
     
     // MARK: - Initializing
 
@@ -38,6 +76,14 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
 
         navigationController?.isNavigationBarHidden = true
         alarmTableView.layer.borderWidth = 0.2
+        
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,6 +185,8 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
     }
     
+    // MARK: - Views
+    
     @IBOutlet var alarmTableView: UITableView!
     @IBOutlet var activeButton: BadgeButton!
     @IBOutlet var shareButton: BadgeButton!
@@ -154,7 +202,8 @@ extension AlarmViewController {
                 reloadAnimation: .fade,
                 deleteAnimation: .none),
             
-            configureCell: { dataSource, table, indexPath, _ in
+            configureCell: { dataSource, table, indexPath, sectionModel in
+                
                 switch dataSource[indexPath] {
                 case let .ArriveItem(alarm):
                     guard let cell = table.dequeueReusableCell(withIdentifier: "arriveCell", for: indexPath) as? AlarmArriveTableViewCell else { return UITableViewCell()}
@@ -167,7 +216,7 @@ extension AlarmViewController {
                     return cell
                 case .ShareItem(let alarm):
                     // TODO: - share item cell 변경
-                    guard let cell = table.dequeueReusableCell(withIdentifier: "departureCell", for: indexPath) as? AlarmShareTableViewCell else { return UITableViewCell()}
+                    guard let cell = table.dequeueReusableCell(withIdentifier: "alarmShareCell", for: indexPath) as? AlarmShareTableViewCell else { return UITableViewCell()}
                     cell.configure(viewModel: viewModel, alarm: alarm)
                     return cell
                 }
@@ -210,5 +259,12 @@ extension AlarmViewController: UITableViewDelegate {
         
         deleteAction.backgroundColor = .saffron
         return .init(actions: [deleteAction])
+    }
+}
+
+extension AlarmViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        self.currentLocation = locValue
     }
 }
