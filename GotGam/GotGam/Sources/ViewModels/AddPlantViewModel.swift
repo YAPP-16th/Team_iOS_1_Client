@@ -112,6 +112,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         var sections = sectionsSubject.value
         guard sections.count > section.rawValue else { return }
         var items = sections[section.rawValue].items
+        if items.count >= 2 { return }
         
         var item: InputItem = .TextFieldItem(text: "", placeholder: "", enabled: false, isDate: false)
         
@@ -143,6 +144,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.latitude = location.latitude
             currentGot.longitude = location.longitude
             // TODO: Radius 추가
+            currentGot.radius = 100
             currentGot.arriveMsg = arriveText.value
             currentGot.deparetureMsg = leaveText.value
             currentGot.insertedDate = insertedDateRelay.value

@@ -40,6 +40,7 @@
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
 		4C00F8DF24796045006AD726 /* Scene+target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C00F8DE24796045006AD726 /* Scene+target.swift */; };
+		4C487319247D4237008503BC /* AlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C487318247D4237008503BC /* AlarmManager.swift */; };
 		4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */; };
 		4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */; };
 		4C5185ED2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */; };
@@ -213,6 +214,7 @@
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		4C00F8DE24796045006AD726 /* Scene+target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+target.swift"; sourceTree = "<group>"; };
+		4C487318247D4237008503BC /* AlarmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmManager.swift; sourceTree = "<group>"; };
 		4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+centerVertically.swift"; sourceTree = "<group>"; };
 		4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */,
 				A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */,
 				A159DBF32459C1B9004FCA66 /* DBManager.swift */,
+				4C487318247D4237008503BC /* AlarmManager.swift */,
 				4CE037DC2438CA590093E39D /* GotStorageType.swift */,
 				4CE037DE2438CA780093E39D /* GotStorage.swift */,
 				A157E115245572F4001E310D /* LocationManager.swift */,
@@ -993,6 +996,7 @@
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
 				4CA2352124758DC3005323EF /* SearchStorageType.swift in Sources */,
+				4C487319247D4237008503BC /* AlarmManager.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
 				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
 				29618D69247C3C73008E112E /* FrequentsStorageType.swift in Sources */,

@@ -40,4 +40,29 @@ class DBManager {
 			}
 		}
 	}
+    
+    func fetch<T: NSManagedObject>(_ objectType: T.Type) -> [T] {
+        let entityName = String(describing: objectType)
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        do {
+            let fetchObjects = try context.fetch(fetchRequest) as? [T]
+            return fetchObjects ?? [T]()
+        } catch let error {
+            print("🚨 Could not fetch objects. \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    func fetchGot(id: Int64) -> ManagedGot? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
+        fetchRequest.predicate = NSPredicate(format: "id = %lld", id)
+        do {
+            let fetchObjects = try context.fetch(fetchRequest) as? [ManagedGot]
+            return fetchObjects?.first
+        } catch let error {
+            print("🚨 Could not fetch Got. \(error.localizedDescription)")
+            return nil
+        }
+    }
 }
