@@ -232,7 +232,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             cell.doneButton.rx.tap
             .subscribe(onNext: {
                 guard var got = cell.got else { return }
-                self.viewModel.setGotDone(got: &got)
+                self.viewModel.setGotDone(got: got)
             }).disposed(by: cell.disposeBag)
             
             cell.cancelButton.rx.tap.subscribe(onNext: {

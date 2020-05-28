@@ -16,7 +16,7 @@ protocol MapViewModelInputs {
     //func createGot(got: Got)
     func showAddVC()
     func updateGot(got: Got)
-    func setGotDone(got: inout Got)
+    func setGotDone(got: Got)
     func deleteGot(got: Got)
     func updateList()
     func updateTagList()
@@ -93,32 +93,76 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     func createGot(location: CLLocationCoordinate2D){
         
         let got = Got(id: "", title: addText.value, latitude: location.latitude, longitude: location.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
-        
-        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
-            self.updateList()
-            self.updateTagList()
-        }).disposed(by: self.disposeBag)
+        if UserDefaults.standard.bool(forDefines: .isLogined){
+            NetworkAPIManager.shared.createTask(got: got) { (got) in
+                if let got = got{
+                    self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+                        self.updateList()
+                        self.updateTagList()
+                    }).disposed(by: self.disposeBag)
+                }
+            }
+        }else{
+            self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+                self.updateList()
+                self.updateTagList()
+            }).disposed(by: self.disposeBag)
+        }
     }
     
-    func setGotDone(got: inout Got){
-        got.isDone = true
-        self.storage.updateGot(gotToUpdate: got).bind{ got in
-            self.doneAction.onNext(got)
-        }.disposed(by: self.disposeBag)
+    func setGotDone(got: Got){
+        var gotToUpdate = got
+        gotToUpdate.isDone = true
+        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
+        if isLogin{
+            NetworkAPIManager.shared.updateGot(got: gotToUpdate) {
+                self.storage.updateGot(gotToUpdate: got).bind{ got in
+                    self.doneAction.onNext(gotToUpdate)
+                }.disposed(by: self.disposeBag)
+            }
+        }else{
+            self.storage.updateGot(gotToUpdate: gotToUpdate).bind{ got in
+                self.doneAction.onNext(gotToUpdate)
+            }.disposed(by: self.disposeBag)
+        }
+        
+        
     }
     
     func updateGot(got: Got){
-        self.storage.updateGot(gotToUpdate: got).bind { _ in
-            self.updateList()
-            self.updateTagList()
-        }.disposed(by: self.disposeBag)
+        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
+        if isLogin{
+            NetworkAPIManager.shared.updateGot(got: got) {
+                self.storage.updateGot(gotToUpdate: got).bind { _ in
+                    self.updateList()
+                    self.updateTagList()
+                }.disposed(by: self.disposeBag)
+            }
+        }else{
+            self.storage.updateGot(gotToUpdate: got).bind { _ in
+                self.updateList()
+                self.updateTagList()
+            }.disposed(by: self.disposeBag)
+        }
+        
     }
     
     func deleteGot(got: Got){
-        self.storage.deleteGot(id: got.id!).bind { _ in
-            self.updateList()
-            self.updateTagList()
-        }.disposed(by: self.disposeBag)
+        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
+        if isLogin{
+            NetworkAPIManager.shared.deleteTask(got: got) {
+                self.storage.deleteGot(id: got.id!).bind { _ in
+                    self.updateList()
+                    self.updateTagList()
+                }.disposed(by: self.disposeBag)
+            }
+        }else{
+            self.storage.deleteGot(id: got.id!).bind { _ in
+                self.updateList()
+                self.updateTagList()
+            }.disposed(by: self.disposeBag)
+        }
+        
     }
     
     func handleError(error: Error){

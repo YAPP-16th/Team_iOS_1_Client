@@ -134,7 +134,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             print("🚨 위치정보가 없습니다.")
             return
         }
-        
+        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
         if var currentGot = currentGot.value {
             currentGot.title = nameText.value
             currentGot.place = placeText.value
@@ -151,12 +151,25 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.onDate = isOnDate.value
             currentGot.tag = tag.value == nil ? [] : [tag.value!]
             
-            storage.updateGot(gotToUpdate: currentGot)
+            if isLogin{
+                NetworkAPIManager.shared.updateGot(got: currentGot) {
+                    self.storage.updateGot(gotToUpdate: currentGot)
+                    .subscribe(onNext: { [weak self] _ in
+                        self?.sceneCoordinator.close(animated: true, completion: nil)
+                    })
+                        .disposed(by: self.disposeBag)
+                }
+            }else{
+                storage.updateGot(gotToUpdate: currentGot)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true, completion: nil)
                 })
                 .disposed(by: disposeBag)
+            }
+            
+            
         } else {
+            
             let got = Got(
                 id: "",
                 createdDate: Date(),
@@ -173,12 +186,25 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 onDate: isOnDate.value,
                 tag: tag.value == nil ? [] : [tag.value!],
                 isDone: false)
-
-            storage.createGot(gotToCreate: got)
+            if isLogin{
+                NetworkAPIManager.shared.createTask(got: got) { (got) in
+                    if let got = got{
+                        self.storage.createGot(gotToCreate: got)
+                        .subscribe(onNext: { [weak self] _ in
+                            self?.sceneCoordinator.close(animated: true, completion: nil)
+                        })
+                            .disposed(by: self.disposeBag)
+                    }else{
+                        
+                    }
+                }
+            }else{
+                storage.createGot(gotToCreate: got)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true, completion: nil)
                 })
                 .disposed(by: disposeBag)
+            }
         }
     }
     

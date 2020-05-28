@@ -41,8 +41,21 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     var createTag = PublishSubject<Void>()
     
     func removeTag(indexPath: IndexPath, tag: Tag) {
-        
-        storage.deleteTag(tag: tag)
+        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
+        if isLogin{
+            NetworkAPIManager.shared.deleteTag(tag: tag) {
+                self.storage.deleteTag(tag: tag)
+                .subscribe(onNext: { [unowned self] _ in
+                    var updateSections = self.sections.value
+                    var items = updateSections[indexPath.section].items
+                    items.remove(at: indexPath.row)
+                    updateSections[indexPath.section] = AddTagSectionModel(original: updateSections[indexPath.section], items: items)
+                    self.sections.accept(updateSections)
+                })
+                    .disposed(by: self.disposeBag)
+            }
+        }else{
+            storage.deleteTag(tag: tag)
             .subscribe(onNext: { [unowned self] _ in
                 var updateSections = self.sections.value
                 var items = updateSections[indexPath.section].items
@@ -51,6 +64,8 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
                 self.sections.accept(updateSections)
             })
             .disposed(by: disposeBag)
+        }
+        
     }
     
     func updateTag(indexPath: IndexPath) {

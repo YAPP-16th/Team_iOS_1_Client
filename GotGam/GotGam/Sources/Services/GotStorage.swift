@@ -67,7 +67,7 @@ class GotStorage: GotStorageType {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
             let p1 =
-                NSPredicate(format: "id == %lld", id)
+                NSPredicate(format: "id == %@", id)
             let p2 = NSPredicate(format: "isFinished == NO")
             fetchRequest.predicate = NSCompoundPredicate.init(andPredicateWithSubpredicates: [p1,p2])
             let results = try self.context.fetch(fetchRequest)
@@ -126,7 +126,7 @@ class GotStorage: GotStorageType {
     func updateGot(gotToUpdate: Got) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
-            fetchRequest.predicate = NSPredicate(format: "id == %lld", gotToUpdate.id!)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", gotToUpdate.id!)
             let results = try self.context.fetch(fetchRequest)
             if let managedGot = results.first{
                 managedGot.fromGot(got: gotToUpdate)
@@ -193,7 +193,7 @@ class GotStorage: GotStorageType {
     func deleteGot(id: String) -> Observable<Got> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
-            fetchRequest.predicate = NSPredicate(format: "id == %lld", id)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
             let results = try self.context.fetch(fetchRequest)
             if let managedGot = results.first{
                 let got = managedGot.toGot()

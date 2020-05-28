@@ -105,12 +105,27 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     
     func createTag() {
         guard let hex = newTagHex.value else { return }
+        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
         let newTag = Tag(name: tagName.value, hex: hex)
         
         if let tag = editableTag.value {
-            storage.update(tag: tag, to: newTag)
+            if isLogin{
+                NetworkAPIManager.shared.updateTag(tag: tag) {
+                    self.storage.update(tag: tag, to: newTag)
+                }
+            }else{
+                storage.update(tag: tag, to: newTag)
+            }
         } else {
-            storage.create(tag: newTag)
+            if UserDefaults.standard.bool(forDefines: .isLogined){
+                NetworkAPIManager.shared.createTag(tag: newTag) { tag in
+                    if let tag = tag{
+                        self.storage.create(tag: tag)
+                    }
+                }
+            }else{
+              storage.create(tag: newTag)
+            }
         }
         
         sceneCoordinator.pop(animated: true)

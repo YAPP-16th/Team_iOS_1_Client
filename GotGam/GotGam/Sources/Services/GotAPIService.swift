@@ -11,26 +11,6 @@ import Alamofire
 import Moya
 import RxSwift
 
-struct TagAPIInfo{
-    var name: String
-    var color: String
-    var email: String
-    var nickname: String
-}
-
-struct GotAPIInfo{
-    var title: String
-    var coordinates: [Double]
-    var address: String
-    var tag: String
-    var memo: String
-    var iconUrl: String
-    var isFinished: Bool
-    var isCheckedArrive: Bool
-    var isCheckedLeave: Bool
-    var dueDate: String
-}
-
 enum GotAPIService{
     
     //User
@@ -38,15 +18,17 @@ enum GotAPIService{
     case getUser(String)
     
     //Task
-    case createTask(GotAPIInfo)
+    case createTask([String: Any])
     case getTasks
     case getTask(String)
-    
+    case updateTask(String, [String: Any])
+    case deleteTask(String)
     //TAg
-    case createTag(TagAPIInfo)
+    case createTag([String: Any])
     case getTags
     case getTag(String)
-    
+    case updateTag(String, [String:Any])
+    case deleteTag(String)
     //Frequents
     case createFrequents
     case getFrequents
@@ -81,11 +63,19 @@ extension GotAPIService: TargetType{
             return "tasks"
         case .getTask(let id):
             return "tasks/\(id)"
+        case .updateTask(let id, _):
+            return "tasks/\(id)"
+        case .deleteTask(let id):
+            return "tasks/\(id)"
             //Tag
         case .createTag, .getTags:
             return "tags"
         case .getTag(let id):
-            return "tags\(id)"
+            return "tags/\(id)"
+        case .updateTag(let id, _):
+            return "tags/\(id)"
+        case .deleteTag(let id):
+            return "tags/\(id)"
             //Frequents
         case .createFrequents, .getFrequents:
             return "frequents"
@@ -108,11 +98,19 @@ extension GotAPIService: TargetType{
             return .post
         case .getTasks, .getTask:
             return .get
+        case .updateTask:
+            return .patch
+        case .deleteTask:
+            return .delete
             //Tag
         case .createTag:
             return .post
         case .getTags, .getTag:
             return .get
+        case .updateTag:
+            return .patch
+        case .deleteTag:
+            return .delete
             //Frequents
         case .createFrequents:
             return .post
@@ -163,40 +161,29 @@ extension GotAPIService: TargetType{
             return .requestPlain
             //Task
         case .createTask(let info):
-            var parameters = [
-                "title":info.title,
-                "coordinates":info.coordinates,
-                "address":info.address,
-                "memo": info.memo,
-                "iconURL": info.iconUrl,
-                "isFinished": info.isFinished,
-                "isCheckedArrive": info.isCheckedArrive,
-                "isCheckedLeave": info.isCheckedLeave,
-                "dueDate": info.dueDate
-                ] as [String : Any]
-            if info.tag != ""{
-                parameters["tag"] = info.tag
-            }
             return .requestParameters(
-            parameters:parameters,
+            parameters:info,
             encoding: JSONEncoding.default)
         case .getTasks, .getTask:
+            return .requestPlain
+        case .updateTask(_, let info):
+            return .requestParameters(
+            parameters: info,
+            encoding: JSONEncoding.default)
+        case .deleteTask:
             return .requestPlain
             //Tag
         case .createTag(let info):
             return .requestParameters(
-            parameters:
-            [
-                "name": info.name,
-                "color": info.color,
-                "creator":
-                [
-                    "userId": info.email,
-                    "nickname":info.nickname
-                ]
-            ],
+            parameters: info,
             encoding: JSONEncoding.default)
         case .getTags, .getTag:
+            return .requestPlain
+        case .updateTag(_, let info):
+            return .requestParameters(
+                parameters: info,
+                encoding: JSONEncoding.default)
+        case .deleteTag:
             return .requestPlain
             //Frequents
         case .createFrequents:
@@ -216,7 +203,7 @@ extension GotAPIService: TargetType{
     }
     var headers: [String : String]? {
         switch self{
-        case .getUser, .createTask, .getTasks, .getTask, .createTag, .getTags, .getTag, .createFrequents, .getFrequents, .getFrequent, .synchronize:
+        case .getUser, .createTask, .getTasks, .getTask, .createTag, .getTags, .getTag, .createFrequents, .getFrequents, .getFrequent, .synchronize, .updateTag, .updateTask, .deleteTask, .deleteTag:
              guard let token = UserDefaults.standard.string(forDefines: .userToken) else {
                 return [:]
             }

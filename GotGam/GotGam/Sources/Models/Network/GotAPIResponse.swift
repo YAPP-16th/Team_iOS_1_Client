@@ -19,7 +19,20 @@ class BaseResponse: Decodable{
         baseResponseDescription = try container.decode(String.self, forKey: .baseResponseDescription)
     }
 }
+class GotResponse: BaseResponse{
+    var got: GotResponseData
 
+    private enum CodingKeys: String, CodingKey {
+        case got = "task"
+    }
+    required init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        got = try container.decode(GotResponseData.self, forKey: .got)
+        try super.init(from: decoder)
+        
+    }
+}
 // MARK: - Tag
 class TagResponse: BaseResponse {
     var tag: TagData

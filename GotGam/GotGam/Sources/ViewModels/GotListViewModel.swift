@@ -59,7 +59,20 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     }
     
     func removeGot(indexPath: IndexPath, got: Got) {
-        storage.deleteGot(got: got)
+        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
+        if isLogin{
+            NetworkAPIManager.shared.deleteTask(got: got) {
+                self.storage.deleteGot(got: got)
+                .subscribe(onNext: { [weak self] got in
+                    if var list = self?.gotList.value {
+                        list.remove(at: indexPath.row)
+                        self?.gotList.accept(list)
+                    }
+                })
+                    .disposed(by: self.disposeBag)
+            }
+        }else{
+            storage.deleteGot(got: got)
             .subscribe(onNext: { [weak self] got in
                 if var list = self?.gotList.value {
                     list.remove(at: indexPath.row)
@@ -67,6 +80,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
                 }
             })
             .disposed(by: disposeBag)
+        }
     }
     
     func editGot(got: Got? = nil) {
