@@ -144,6 +144,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.latitude = location.latitude
             currentGot.longitude = location.longitude
             // TODO: Radius 추가
+            currentGot.radius = 100
             currentGot.arriveMsg = arriveText.value
             currentGot.deparetureMsg = leaveText.value
             currentGot.insertedDate = insertedDateRelay.value

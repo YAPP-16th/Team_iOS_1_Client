@@ -100,11 +100,13 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        guard
-            let beforeGot = viewModel.beforeGotSubject.value,
+        if let beforeGot = viewModel.beforeGotSubject.value,
             let gotList = try? viewModel.output.gotList.value(),
-            let beforeGotIndex = gotList.firstIndex(of: beforeGot)
-        else { return }
+            let beforeGotIndex = gotList.firstIndex(of: beforeGot) {
+            
+            setCard(index: beforeGotIndex)
+            centeredCollectionViewFlowLayout.scrollToPage(index: beforeGotIndex, animated: true)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -373,7 +375,7 @@ extension MapViewController: MTMapViewDelegate{
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
         }
-        print("map tapped")
+        print("map tapped, \(mapPoint.mapPointGeo())")
     }
     func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
         switch self.state {

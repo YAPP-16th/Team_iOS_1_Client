@@ -24,13 +24,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
 
     // MARK: - Methods
     
-    func setPlaceTextView(text: String) {
-        placeTextView.text = text
-        placeTextView.textColor = .black
-        placeTextView.isEditable = false
-        placeTextView.centerVertically()
-    }
-    
     func drawCircle(center: MTMapPoint, radius: Float) {
         let circle = MTMapCircle()
         circle.circleCenterPoint = center
@@ -105,8 +98,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 inputTableView.scrollToRow(at: IndexPath(row: 1, section: responseKeyboardTag), at: .top, animated: true)
             }
         }
-        
-        
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
@@ -119,13 +110,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             responseKeyboardTag = -1
             inputTableView.contentInset = .zero
         }
-        
-//        if !titleTextView.isFirstResponder {
-//            view.frame.origin.y = 0
-//        }
-//        if commentTextField.isFirstResponder {
-//            moveDownView(keyboardFrame)
-//        }
+    }
+    
+    @IBAction func didTapPlaceLabel(_ sender: Any) {
+        print("\(sender)")
+        if placeLabel.textColor != .black {
+            viewModel.inputs.editPlace.onNext(())
+        }
     }
     
     // MARK: - View Life Cycle
@@ -135,23 +126,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         //navigationController?.presentationController?.delegate = self
         setupViews()
         setupKeyboard()
-        placeTextView.inputView = UIView()
-        //setupMapView()
-        //setupMapCenter()
-        //drawCircle(center: currentCenter, radius: 50)
-        //drawSeed(point: currentCenter)
-        
-        
-//        mapBackgroundHeightConstraint.isActive = false
-//        mapBackgroundZeroHeightConstraint.isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        DispatchQueue.main.async {
-            self.titleTextView.centerVertically()
-            self.placeTextView.centerVertically()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -178,25 +156,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Initializing
     
     func setupViews() {
-        
-        titleTextView.delegate = self
-        placeTextView.delegate = self
-        
-        titleTextView.tintColor = .orange
-        titleTextView.textColor = .veryLightPink
-        placeTextView.tintColor = .orange
-        placeTextView.textColor = .veryLightPink
-        titleTextView.addBottomBorderWithColor(color: .lightGray, width: 0.5)
-        
-        titleTextView.centerVertically()
-        placeTextView.centerVertically()
-        
-        
-        //editButton.layer.cornerRadius = editButton.bounds.height/2
-        
+        titleTextField.tintColor = .saffron
+        titleTextField.addBottomBorderWithColor(color: .gray, width: 0.2)
         alertDefaultLabel.layer.cornerRadius = 6
         alertDefaultLabel.alpha = 0
-        
         alertErrorLabel.layer.cornerRadius = 6
     }
     
@@ -243,9 +206,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .bind(to: viewModel.inputs.close)
             .disposed(by: disposeBag)
         
-        titleTextView.rx.text.orEmpty
+        titleTextField.rx.text.orEmpty
             .bind(to: viewModel.nameText)
             .disposed(by: disposeBag)
+        
         
         inputTableView.rx.itemSelected
             .filter { $0.section == 0 }
@@ -286,34 +250,9 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.currentGot
             .compactMap { $0?.title }
             .subscribe(onNext: { [weak self] title in
-                self?.titleTextView.text = title
-                self?.titleTextView.textColor = .black
-                self?.titleTextView.centerVertically()
+                self?.titleTextField.text = title
             })
             .disposed(by: disposeBag)
-        
-//        viewModel.outputs.currentGot
-//            .compactMap { $0 }
-//            .subscribe(onNext: { [weak self] got in
-//                guard let self = self else { return }
-//                guard
-//                    let lat = got.latitude,
-//                    let long = got.longitude,
-//                    let point = MTMapPoint(geoCoord: .init(latitude: lat, longitude: long))
-//                    else { return }
-//
-//                self.drawCircle(center: point, radius: Float(got.radius ?? 100))
-//            })
-//            .disposed(by: disposeBag)
-//
-//        viewModel.outputs.currentGot
-//            .compactMap { $0 }
-//            .subscribe(onNext: { [weak self] got in
-//                if let lat = got.latitude, let long = got.longitude {
-//                    self?.setupMapCenter(latitude: lat, longitude: long)
-//                }
-//            })
-//            .disposed(by: disposeBag)
         
         viewModel.outputs.placeSubject
             .compactMap { $0 }
@@ -331,7 +270,9 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.placeText
             .filter { $0 != "" }
             .subscribe(onNext: { [weak self] place in
-                self?.setPlaceTextView(text: place)
+                self?.placeLabel.text = place
+                self?.placeLabel.textColor = .black
+                //self?.setPlaceTextView(text: place)
             })
             .disposed(by: disposeBag)
     }
@@ -341,8 +282,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var saveButton: UIBarButtonItem!
     
-    @IBOutlet var titleTextView: UITextView!
-    @IBOutlet var placeTextView: UITextView!
+    //@IBOutlet var titleTextView: UITextView!
+//    @IBOutlet var placeTextView: UITextView!
+    @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var placeLabel: UILabel!
     @IBOutlet var mapBackgroundView: UIView!
     @IBOutlet var alertDefaultLabel: PaddingLabel!
     @IBOutlet var alertErrorLabel: PaddingLabel!
@@ -472,7 +415,6 @@ extension AddPlantViewController: UITableViewDelegate {
 // MARK: - TextField Delegate
 extension AddPlantViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print(textField.tag)
         responseKeyboardTag = textField.tag
     }
     
@@ -482,72 +424,6 @@ extension AddPlantViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        return false
-    }
-}
-
-// MARK: - TextView Delegate
-extension AddPlantViewController: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        
-        if textView == titleTextView, titleTextView.textColor != .black {
-            DispatchQueue.main.async {
-                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            }
-        } else if textView == placeTextView {
-            // TODO: 플레이스를 클릭하면 지도 설정으로 이동
-            
-            view.endEditing(true)
-            viewModel.inputs.editPlace.onNext(())
-            
-            
-        }
-        
-        
-    }
-    
-    
-
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-
-        // Combine the textView text and the replacement text to
-        // create the updated text string
-        let currentText:String = textView.text
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-
-        // If updated text view will be empty, add the placeholder
-        // and set the cursor to the beginning of the text view
-        if updatedText.isEmpty {
-
-            if textView == titleTextView {
-                textView.text = "제목을 입력해주세요"
-            } else if textView == placeTextView {
-                textView.text = "장소를 입력해주세요"
-            }
-            textView.textColor = UIColor.veryLightPink
-
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-        }
-
-        // Else if the text view's placeholder is showing and the
-        // length of the replacement string is greater than 0, set
-        // the text color to black then set its text to the
-        // replacement string
-         else if textView.textColor == UIColor.veryLightPink && !text.isEmpty {
-            textView.textColor = UIColor.black
-            textView.text = text
-        }
-
-        // For every other case, the text should change with the usual
-        // behavior...
-        else {
-            return true
-        }
-
-        textView.centerVertically()
-        // ...otherwise return false since the updates have already
-        // been made
         return false
     }
 }

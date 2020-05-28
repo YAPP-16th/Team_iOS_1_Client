@@ -233,8 +233,6 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     }
     
     func configureDataSource(_ alarmList: [Alarm]) -> [AlarmSectionModel] {
-        alarmList.forEach { print($0)}
-        
         var alarmSection = [AlarmSectionModel]()
         var todayItems = [AlarmItem]()
         var yesterdayItems = [AlarmItem]()
