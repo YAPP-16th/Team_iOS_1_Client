@@ -250,6 +250,12 @@ extension GotListViewController: UICollectionViewDelegate {
             cell.contentView.alpha = 0.3
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 1
+        }
+    }
 }
 
 // MARK: - UICollectionView Delegate FlowLayout
