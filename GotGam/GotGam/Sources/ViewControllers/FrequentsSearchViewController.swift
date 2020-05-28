@@ -34,6 +34,19 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		navigationItem.hidesBackButton = true
 		
 		searchBar.becomeFirstResponder()
+		
+		setCollectionItems()
+		
+		searchBar.borderStyle = .none
+	}
+	
+	func bindViewModel() {
+		searchBar.rx.controlEvent(.primaryActionTriggered)
+			.subscribe(onNext: {
+				let keyword = self.searchBar.text ?? ""
+				self.viewModel.inputs.addKeyword(keyword: keyword)
+			}) .disposed(by: disposeBag)
+		
 		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
 			.subscribe(onNext: { text in
 				self.searchKeyword(keyword: text)
@@ -44,17 +57,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 			self.searchKeyword(keyword: text)
 			}).disposed(by: disposeBag)
 		
-		setCollectionItems()
 		
-		searchBar.borderStyle = .none
-	}
-	
-	func bindViewModel() {
-		self.searchBar.rx.controlEvent(.primaryActionTriggered)
-			.subscribe(onNext: {
-				let keyword = self.searchBar.text ?? ""
-				self.viewModel.inputs.addKeyword(keyword: keyword)
-			}) .disposed(by: disposeBag)
 	}
 	
 	func searchKeyword(keyword: String){
@@ -88,6 +91,14 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 48
 	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		
+		let place = self.placeList[indexPath.row]
+		viewModel.inputs.placeBehavior.accept(place)
+		viewModel.inputs.showMapVC()
+	}
 }
 
 extension FrequentsSearchViewController: UICollectionViewDataSource{
@@ -102,6 +113,15 @@ extension FrequentsSearchViewController: UICollectionViewDataSource{
 			cell.collectionicon.image = UIImage(named:"icFrequentsSearch")
 		}
 		return cell
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if indexPath.row == 0{
+			viewModel.inputs.showMapVC()
+		}else {
+			viewModel.inputs.showMapVC()
+		}
+		
 	}
 
 }

@@ -10,6 +10,19 @@
 import Foundation
 import CoreData
 
+//enum HistoryType: Int {
+//	case search = 0
+//	case got
+//	
+//	var image: UIImage {
+//		switch self {
+//			case .search:
+//			UIImage(named: "icSearch222")
+//			default:
+//			<#code#>
+//		}
+//	}
+//}
 
 extension History {
 
@@ -18,5 +31,5 @@ extension History {
     }
 
     @NSManaged public var keyword: String?
-
+	
 }
