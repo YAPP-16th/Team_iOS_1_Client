@@ -343,7 +343,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 print(location)
                 
                 APIManager.shared.getPlace(longitude: Double(location.longitude), latitude: Double(location.latitude)) { (place) in
-                    self?.placeText.accept(place.first?.address?.addressName ?? "")
+                    self?.placeText.accept(place?.address?.addressName ?? "")
                 }
             })
             .disposed(by: disposeBag)

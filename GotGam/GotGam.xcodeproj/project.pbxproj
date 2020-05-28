@@ -21,6 +21,8 @@
 		29618DB3247CEEF5008E112E /* FrequentsSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DB2247CEEF5008E112E /* FrequentsSearchViewModel.swift */; };
 		29618DB5247CEF3F008E112E /* FrequentsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DB4247CEF3F008E112E /* FrequentsSearchViewController.swift */; };
 		29618DB7247E4894008E112E /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DB6247E4894008E112E /* BadgeButton.swift */; };
+		29618DBD247E5A99008E112E /* FrequentsMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DBC247E5A99008E112E /* FrequentsMapViewModel.swift */; };
+		29618DBF247E5AA4008E112E /* FrequentsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DBE247E5AA4008E112E /* FrequentsMapViewController.swift */; };
 		29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727818246FDAAE00B75AC7 /* APIManager.swift */; };
 		2972781B246FDADD00B75AC7 /* KakaoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972781A246FDADD00B75AC7 /* KakaoResponse.swift */; };
 		297278472473C96800B75AC7 /* SettingOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278462473C96800B75AC7 /* SettingOtherViewController.swift */; };
@@ -191,6 +193,8 @@
 		29618DB2247CEEF5008E112E /* FrequentsSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentsSearchViewModel.swift; sourceTree = "<group>"; };
 		29618DB4247CEF3F008E112E /* FrequentsSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentsSearchViewController.swift; sourceTree = "<group>"; };
 		29618DB6247E4894008E112E /* BadgeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
+		29618DBC247E5A99008E112E /* FrequentsMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequentsMapViewModel.swift; sourceTree = "<group>"; };
+		29618DBE247E5AA4008E112E /* FrequentsMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequentsMapViewController.swift; sourceTree = "<group>"; };
 		29727818246FDAAE00B75AC7 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		2972781A246FDADD00B75AC7 /* KakaoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoResponse.swift; sourceTree = "<group>"; };
 		297278462473C96800B75AC7 /* SettingOtherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherViewController.swift; sourceTree = "<group>"; };
@@ -501,6 +505,7 @@
 				4C96D371247A7FFE0014101F /* ShareListTableViewCell.swift */,
 				29618D64247C3C37008E112E /* FrequentsViewController.swift */,
 				29618DB4247CEF3F008E112E /* FrequentsSearchViewController.swift */,
+				29618DBE247E5AA4008E112E /* FrequentsMapViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -606,6 +611,7 @@
 				4C96D36D247A71390014101F /* ShareListViewModel.swift */,
 				29618D62247C3C17008E112E /* FrequentsViewModel.swift */,
 				29618DB2247CEEF5008E112E /* FrequentsSearchViewModel.swift */,
+				29618DBC247E5A99008E112E /* FrequentsMapViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1016,6 +1022,7 @@
 				4CE037E52438CB0B0093E39D /* SceneCoordinatorType.swift in Sources */,
 				A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */,
 				4C5F0F6A2465540700C7A6E9 /* Date+String.swift in Sources */,
+				29618DBF247E5AA4008E112E /* FrequentsMapViewController.swift in Sources */,
 				2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */,
 				4CD03D6F2478D35C00210353 /* TagCollectionViewCell.swift in Sources */,
 				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,
@@ -1025,6 +1032,7 @@
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				295C03C32464652700789967 /* SearchBarViewController.swift in Sources */,
 				2972784D2473C9E300B75AC7 /* SettingPlaceViewModel.swift in Sources */,
+				29618DBD247E5A99008E112E /* FrequentsMapViewModel.swift in Sources */,
 				4C96D370247A71470014101F /* ShareListViewController.swift in Sources */,
 				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
 				A127E714246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift in Sources */,
@@ -1324,7 +1332,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = N23K7ZS482;
+				DEVELOPMENT_TEAM = 97C96KP84G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",

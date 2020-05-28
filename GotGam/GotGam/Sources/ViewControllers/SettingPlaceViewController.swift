@@ -12,9 +12,12 @@ import RxCocoa
 
 class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 	
+	// MARK: - Properties
+	
     var viewModel: SettingPlaceViewModel!
 	
 	@IBOutlet var settingPlaceTableView: UITableView!
+	@IBOutlet var massageLabel: UILabel!
 	
 	var placeList: [Frequent] = [] {
 		didSet{
@@ -24,6 +27,8 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 		}
 		
 	}
+	
+	// MARK: - View Life Cycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -41,22 +46,31 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 			.disposed(by: disposeBag)
 		
 		settingPlaceTableView.rx.itemSelected
-		.subscribe(onNext: { [weak self] (indexPath) in
-		if indexPath.section == 1 {
-			self?.viewModel.inputs.showFrequentsDetailVC()
-			}
-		}) .disposed(by: disposeBag)
+			.subscribe(onNext: { [weak self] (indexPath) in
+				if indexPath.section == 0 {
+					self?.viewModel.inputs.detailVC()
+				}
+				else if indexPath.section == 1{
+					if self?.placeList.count ?? 0 > 4 {
+						self?.showMessage(message: "자주 가는 장소는 5개까지 설정할 수 있습니다.")
+					}
+					else {
+						self?.viewModel.inputs.showFrequentsDetailVC()
+					}
+				}
+			}) .disposed(by: disposeBag)
+		
 		
 		viewModel.outputs.frequentsList
 					.bind { (List) in
 						self.placeList = List
 				} .disposed(by: disposeBag)
-				
-//		viewModel.outputs.frequentsList
-//		.bind(to: settingPlaceTableView.rx.items(cellIdentifier: "placeCell", cellType: PlaceCell.self)) { (index, place, cell) in
-//			cell.configure(place)
-//		}
-//		.disposed(by: disposeBag)
+
+	}
+	
+	func showMessage(message: String) {
+		massageLabel.text = message
+		massageLabel.backgroundColor = UIColor.saffron
 	}
 		
 }
@@ -92,7 +106,12 @@ extension SettingPlaceViewController: UITableViewDelegate {
             success(true)
         }
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-            self?.settingPlaceTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+//            self?.settingPlaceTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+			//self?.placeList.remove(at: indexPath.row)
+			guard let self = self else {return}
+			let frequent = self.placeList[indexPath.row]
+			self.viewModel.inputs.removeFrequents(indexPath: indexPath, frequent: frequent)
+			
             success(true)
         }
 		return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
@@ -127,19 +146,33 @@ extension SettingPlaceViewController: UITableViewDataSource {
 			cell.placeAddButton.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
 			
 			cell.placeAddLabel.text = "자주 가는 장소 등록"
+			cell.viewModel = viewModel
 			return cell
 		}
 	}
 	
 }
 
+
+
 class PlaceAddCell: UITableViewCell {
 	
 	@IBOutlet var placeAddButton: UIButton!
 	@IBOutlet var placeAddLabel: UILabel!
+	var viewModel: SettingPlaceViewModel?
+	
+//	func configure(viewModel: SettingPlaceViewModel) {
+//		self.viewModel = viewModel
+//	}
+	@IBAction func placeAddButton(_ sender: Any) {
+		viewModel?.inputs.showFrequentsDetailVC()
+	}
+	
 }
 
 class PlaceCell: UITableViewCell{
+	
+	
 	
 	func configure(_ frequent: Frequent) {
         placeNameLabel.text = frequent.name
@@ -150,5 +183,3 @@ class PlaceCell: UITableViewCell{
 	@IBOutlet var placeAddressLabel: UILabel!
 	
 }
-
-

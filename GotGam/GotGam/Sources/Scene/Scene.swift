@@ -25,6 +25,7 @@ enum Scene {
 	case searchBar(SearchBarViewModel)
 	case frequents(FrequentsViewModel)
 	case frequentsSearch(FrequentsSearchViewModel)
+	case frequentsMap(FrequentsMapViewModel)
 }
 
 extension Scene {
@@ -168,6 +169,14 @@ extension Scene {
 			
 			frequentsSearchVC.bind(viewModel: viewModel)
 			return frequentsSearchVC
+			
+		case .frequentsMap(let viewModel):
+			guard var frequentsMapVC = storyboard.instantiateViewController(withIdentifier: "FrequentsMapViewController") as? FrequentsMapViewController else {
+				fatalError()
+			}
+			
+			frequentsMapVC.bind(viewModel: viewModel)
+			return frequentsMapVC
         }
     }
 }

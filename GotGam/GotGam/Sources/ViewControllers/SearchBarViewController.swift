@@ -86,6 +86,7 @@ extension SearchBarViewController: UITableViewDataSource{
 			if self.historyList.count > 3 {
 				return 3
 			} else { return self.historyList.count }
+//			return historyList.count + placeList.count
 		}else{
 			return self.placeList.count
 		}
@@ -94,7 +95,23 @@ extension SearchBarViewController: UITableViewDataSource{
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		
+//		let history = historyList[indexPath]
+//		let type: HistoryType = HistoryType(rawValue: history.type)
+//
+//		switch type {
+//			case .search:
+//				let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchKakaoCell
+//				cell.imageView.image = type.image
+//
+//			case .got:
+//
+//		}
+//		if historyList[indexPath].type == .search {
+//			let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchKakaoCell
+//		} else if == .got {
+//
+//		}
+
 		if indexPath.section == 0{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! SearchHistoryCell
 			cell.historyLabel.text = historyList[indexPath.row]

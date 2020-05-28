@@ -45,13 +45,9 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 			.bind(to: viewModel.inputs.namePlace)
 			.disposed(by: disposeBag)
 
-//		placeAddress.rx.text.orEmpty
-//			.bind(to: viewModel.inputs.addressPlace)
-//			.disposed(by: disposeBag)
-
 		placeAddress.rx.controlEvent(.touchDown)
 			.asObservable().subscribe(onNext:{ _ in
-				self.viewModel.inputs.showSearchVC()
+				self.viewModel.inputs.moveSearchVC()
 			})
 			.disposed(by: disposeBag)
 		
@@ -61,8 +57,13 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 				self?.viewModel.sceneCoordinator.close(animated: true, completion: nil)
 			}).disposed(by: disposeBag)
 
-	
+		viewModel.placeText
+			.bind(to: placeAddress.rx.text)
+			.disposed(by: disposeBag)
 		
+		viewModel.placeText
+			.bind(to: viewModel.inputs.addressPlace)
+			.disposed(by: disposeBag)
 	}
 	
 
