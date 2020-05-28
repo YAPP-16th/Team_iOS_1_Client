@@ -49,10 +49,8 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     func fetchAlarmList() {
         alarmStorage.fetchAlarmList()
             .subscribe(onNext: { [weak self] alarmList in
-                //self?.alarmList.onNext(alarms)
                 let activeAlarmList = alarmList.filter { $0.type != .share }
                 self?.activeAlarmList.accept(activeAlarmList)
-                //self?.activeAlarmList.onNext()
                 
                 let sharedAlarmList = alarmList.filter { $0.type == .share }
                 self?.sharedAlarmList.accept(sharedAlarmList)
@@ -235,7 +233,6 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     }
     
     func configureDataSource(_ alarmList: [Alarm]) -> [AlarmSectionModel] {
-        
         var alarmSection = [AlarmSectionModel]()
         var todayItems = [AlarmItem]()
         var yesterdayItems = [AlarmItem]()
@@ -262,16 +259,20 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
         if !todayItems.isEmpty {
             let section: AlarmSectionModel = .TodaySection(title: "오늘", items: todayItems)
             alarmSection.append(section)
-        } else if !yesterdayItems.isEmpty {
+        }
+        if !yesterdayItems.isEmpty {
             let section: AlarmSectionModel = .YesterdaySection(title: "어제", items: yesterdayItems)
             alarmSection.append(section)
-        } else if !weekItems.isEmpty {
+        }
+        if !weekItems.isEmpty {
             let section: AlarmSectionModel = .WeekSection(title: "이번주", items: weekItems)
             alarmSection.append(section)
-        } else if !monthItems.isEmpty {
-            let section: AlarmSectionModel = .WeekSection(title: "이번달", items: monthItems)
+        }
+        if !monthItems.isEmpty {
+            let section: AlarmSectionModel = .MonthSection(title: "이번달", items: monthItems)
             alarmSection.append(section)
-        } else if !beforeItems.isEmpty {
+        }
+        if !beforeItems.isEmpty {
             let section: AlarmSectionModel = .BeforeSection(title: "이전활동", items: beforeItems)
             alarmSection.append(section)
         }
@@ -309,6 +310,7 @@ enum AlarmItem: IdentifiableType, Equatable {
         case .arrive: self = .ArriveItem(alarm: alarm)
         case .departure: self = .DepartureItem(alarm: alarm)
         case .share: self = .ShareItem(alarm: alarm)
+        case .date: self = .ArriveItem(alarm: alarm)
         }
     }
 }
@@ -347,13 +349,13 @@ extension AlarmSectionModel: AnimatableSectionModelType {
         switch original {
         case let .TodaySection(title: title, items: _):
             self = .TodaySection(title: title, items: items)
-        case .YesterdaySection(let title, let items):
+        case let .YesterdaySection(title, items: _):
             self = .YesterdaySection(title: title, items: items)
-        case .WeekSection(let title, let items):
+        case let .WeekSection(title, items: _):
             self = .WeekSection(title: title, items: items)
-        case .MonthSection(let title, let items):
+        case let .MonthSection(title, items: _):
             self = .MonthSection(title: title, items: items)
-        case .BeforeSection(let title, let items):
+        case let .BeforeSection(title, items: _):
             self = .BeforeSection(title: title, items: items)
         }
     }

@@ -20,18 +20,23 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     var currentCenter: MTMapPoint = MTMapPoint(geoCoord: .init(latitude: 37.42462158203125, longitude: 126.74259919223122))
     var currentCenterLocation = CLLocationCoordinate2D(latitude: 37.42462158203125, longitude: 126.74259919223122)
     let locationManager = CLLocationManager()
+    var responseKeyboardTag = -1
 
     // MARK: - Methods
     
-    func setPlaceTextView(text: String) {
-        placeTextView.text = text
-        placeTextView.textColor = .black
-        placeTextView.isEditable = false
-        placeTextView.centerVertically()
-    }
-    
     func drawCircle(center: MTMapPoint, radius: Float) {
         let circle = MTMapCircle()
+        circle.circleCenterPoint = center
+        circle.circleLineColor = .orange
+        circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
+        circle.circleRadius = radius
+        mapView?.addCircle(circle)
+    
+        mapView?.fitArea(toShow: circle)
+    }
+    func drawCircle(latitude: CLLocationDegrees, longitude: CLLocationDegrees, radius: Float) {
+        let circle = MTMapCircle()
+        let center = MTMapPoint(geoCoord: .init(latitude: latitude, longitude: longitude))
         circle.circleCenterPoint = center
         circle.circleLineColor = .orange
         circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
@@ -63,7 +68,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     func setupMapCenter(latitude: Double, longitude: Double) {
         let centerPoint = MTMapPoint(geoCoord: .init(latitude: latitude, longitude: longitude))
-        print(centerPoint?.mapPointGeo(), mapView)
         mapView?.setMapCenter(centerPoint, animated: false)
     }
     
@@ -83,44 +87,60 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     }
     
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        let keyboardHeight = keyboardFrame.cgRectValue.height
+        if inputTableView.frame.height - 50 < keyboardHeight {
+            view.frame.origin.y -= keyboardHeight
+        } else {
+            if responseKeyboardTag >= 0 {
+                inputTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.cgRectValue.height, right: 0)
+                inputTableView.scrollToRow(at: IndexPath(row: 1, section: responseKeyboardTag), at: .top, animated: true)
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue else {return}
+        
+        if inputTableView.frame.height - 50 < keyboardFrame.cgRectValue.height {
+            view.frame.origin.y = 0
+        } else {
+            responseKeyboardTag = -1
+            inputTableView.contentInset = .zero
+        }
+    }
+    
+    @IBAction func didTapPlaceLabel(_ sender: Any) {
+        print("\(sender)")
+        if placeLabel.textColor != .black {
+            viewModel.inputs.editPlace.onNext(())
+        }
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //navigationController?.presentationController?.delegate = self
         setupViews()
-        //setupMapView()
-        //setupMapCenter()
-        //drawCircle(center: currentCenter, radius: 50)
-        //drawSeed(point: currentCenter)
-        
-        
-//        mapBackgroundHeightConstraint.isActive = false
-//        mapBackgroundZeroHeightConstraint.isActive = true
+        setupKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
-        
-        DispatchQueue.main.async {
-            self.titleTextView.centerVertically()
-            self.placeTextView.centerVertically()
-        }
-        
-//        if let location = viewModel.outputs.placeSubject.value {
-//            self.setupMapCenter(latitude: location.latitude, longitude: location.longitude)
-//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let location = viewModel.placeSubject.value {
+        if let location = viewModel.placeSubject.value, let radius = viewModel.outputs.currentGot.value?.radius {
             print(location)
             print("set center to \(location) in addPlant")
             setupMapCenter(latitude: Double(location.latitude), longitude: Double(location.longitude))
+            
+            drawCircle(latitude: location.latitude, longitude: location.longitude, radius: Float(radius))
         }
     }
     
@@ -136,25 +156,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Initializing
     
     func setupViews() {
-        
-        titleTextView.delegate = self
-        placeTextView.delegate = self
-        
-        titleTextView.tintColor = .orange
-        titleTextView.textColor = .veryLightPink
-        placeTextView.tintColor = .orange
-        placeTextView.textColor = .veryLightPink
-        titleTextView.addBottomBorderWithColor(color: .lightGray, width: 0.5)
-        
-        titleTextView.centerVertically()
-        placeTextView.centerVertically()
-        
-        
-        //editButton.layer.cornerRadius = editButton.bounds.height/2
-        
+        titleTextField.tintColor = .saffron
+        titleTextField.addBottomBorderWithColor(color: .gray, width: 0.2)
         alertDefaultLabel.layer.cornerRadius = 6
         alertDefaultLabel.alpha = 0
-        
         alertErrorLabel.layer.cornerRadius = 6
     }
     
@@ -177,6 +182,11 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         }
     }
     
+    private func setupKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     func bindViewModel() {
         
         // Input
@@ -196,9 +206,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .bind(to: viewModel.inputs.close)
             .disposed(by: disposeBag)
         
-        titleTextView.rx.text.orEmpty
+        titleTextField.rx.text.orEmpty
             .bind(to: viewModel.nameText)
             .disposed(by: disposeBag)
+        
         
         inputTableView.rx.itemSelected
             .filter { $0.section == 0 }
@@ -231,7 +242,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         
         // Output
         
-        let dataSource = AddPlantViewController.dataSource(viewModel: viewModel)
+        let dataSource = AddPlantViewController.dataSource(viewModel: viewModel, vc: self)
         viewModel.outputs.sectionsSubject
             .bind(to: inputTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -239,20 +250,9 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         viewModel.outputs.currentGot
             .compactMap { $0?.title }
             .subscribe(onNext: { [weak self] title in
-                self?.titleTextView.text = title
-                self?.titleTextView.textColor = .black
-                self?.titleTextView.centerVertically()
+                self?.titleTextField.text = title
             })
             .disposed(by: disposeBag)
-//
-//        viewModel.outputs.currentGot
-//            .compactMap { $0 }
-//            .subscribe(onNext: { [weak self] got in
-//                if let lat = got.latitude, let long = got.longitude {
-//                    self?.setupMapCenter(latitude: lat, longitude: long)
-//                }
-//            })
-//            .disposed(by: disposeBag)
         
         viewModel.outputs.placeSubject
             .compactMap { $0 }
@@ -264,18 +264,15 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 if self?.mapView == nil {
                     self?.setupMapView()
                 }
-//                self?.setupMapCenter(latitude: location.latitude, longitude: location.longitude)
-                //self?.setupMapView()
-//                guard let point = MTMapPoint(geoCoord: .init(latitude: location.latitude, longitude: location.longitude)) else { return }
-//                self?.drawSeed(point: point)
-//                self?.drawCircle(center: point, radius: Float(got.radius ?? 100))
             })
             .disposed(by: disposeBag)
         
         viewModel.outputs.placeText
             .filter { $0 != "" }
             .subscribe(onNext: { [weak self] place in
-                self?.setPlaceTextView(text: place)
+                self?.placeLabel.text = place
+                self?.placeLabel.textColor = .black
+                //self?.setPlaceTextView(text: place)
             })
             .disposed(by: disposeBag)
     }
@@ -285,8 +282,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var saveButton: UIBarButtonItem!
     
-    @IBOutlet var titleTextView: UITextView!
-    @IBOutlet var placeTextView: UITextView!
+    //@IBOutlet var titleTextView: UITextView!
+//    @IBOutlet var placeTextView: UITextView!
+    @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var placeLabel: UILabel!
     @IBOutlet var mapBackgroundView: UIView!
     @IBOutlet var alertDefaultLabel: PaddingLabel!
     @IBOutlet var alertErrorLabel: PaddingLabel!
@@ -301,7 +300,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
 // MARK: - config Data Sources
 extension AddPlantViewController {
     
-    static func dataSource(viewModel: AddPlantViewModel) -> RxTableViewSectionedAnimatedDataSource<InputSectionModel> {
+    static func dataSource(viewModel: AddPlantViewModel, vc: AddPlantViewController) -> RxTableViewSectionedAnimatedDataSource<InputSectionModel> {
         //RxTableViewSectionedReloadDataSource
         return RxTableViewSectionedAnimatedDataSource<InputSectionModel>(
             configureCell: { dataSource, table, indexPath, _ in
@@ -348,14 +347,20 @@ extension AddPlantViewController {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.dateText)
                             .disposed(by: cell.disposedBag)
+                        cell.textField.tag = indexPath.section
+                        cell.textField.delegate = vc
                     } else if indexPath.section == 2 {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.arriveText)
                             .disposed(by: cell.disposedBag)
+                        cell.textField.tag = indexPath.section
+                        cell.textField.delegate = vc
                     } else if indexPath.section == 3 {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.leaveText)
                             .disposed(by: cell.disposedBag)
+                        cell.textField.tag = indexPath.section
+                        cell.textField.delegate = vc
                     }
                     return cell
                 }
@@ -407,68 +412,18 @@ extension AddPlantViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - TextView Delegate
-extension AddPlantViewController: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        
-        if textView == titleTextView, titleTextView.textColor != .black {
-            DispatchQueue.main.async {
-                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            }
-        } else if textView == placeTextView {
-            // TODO: 플레이스를 클릭하면 지도 설정으로 이동
-            
-            view.endEditing(true)
-            viewModel.inputs.editPlace.onNext(())
-            
-            
-        }
-        
-        
+// MARK: - TextField Delegate
+extension AddPlantViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        responseKeyboardTag = textField.tag
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        responseKeyboardTag = -1
+    }
     
-
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-
-        // Combine the textView text and the replacement text to
-        // create the updated text string
-        let currentText:String = textView.text
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-
-        // If updated text view will be empty, add the placeholder
-        // and set the cursor to the beginning of the text view
-        if updatedText.isEmpty {
-
-            if textView == titleTextView {
-                textView.text = "제목을 입력해주세요"
-            } else if textView == placeTextView {
-                textView.text = "장소를 입력해주세요"
-            }
-            textView.textColor = UIColor.veryLightPink
-
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-        }
-
-        // Else if the text view's placeholder is showing and the
-        // length of the replacement string is greater than 0, set
-        // the text color to black then set its text to the
-        // replacement string
-         else if textView.textColor == UIColor.veryLightPink && !text.isEmpty {
-            textView.textColor = UIColor.black
-            textView.text = text
-        }
-
-        // For every other case, the text should change with the usual
-        // behavior...
-        else {
-            return true
-        }
-
-        textView.centerVertically()
-        // ...otherwise return false since the updates have already
-        // been made
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return false
     }
 }

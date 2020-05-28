@@ -29,8 +29,9 @@ class AlarmStorage: AlarmStorageType {
     func fetchAlarmList() -> Observable<[Alarm]> {
         do{
             let fetchRequest = NSFetchRequest<ManagedAlarm>(entityName: "ManagedAlarm")
-            let results = try self.context.fetch(fetchRequest)
+            let results = try self.context.fetch(fetchRequest).reversed()
             let alarmList = results.map { $0.toAlarm() }
+            
             return .just(alarmList)
         }catch{
             return .error(GotStorageError.fetchError("TagList 조회 과정에서 문제발생"))
@@ -41,7 +42,7 @@ class AlarmStorage: AlarmStorageType {
         do {
             let fetchReqeust = NSFetchRequest<ManagedAlarm>(entityName: "ManagedTag")
             let p1 = NSPredicate(format: "id == %lld", id)
-            fetchReqeust.predicate = p1
+            
             
             let results = try self.context.fetch(fetchReqeust)
             
