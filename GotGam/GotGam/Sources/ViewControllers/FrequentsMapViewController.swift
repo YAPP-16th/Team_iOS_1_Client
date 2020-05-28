@@ -83,6 +83,11 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 			.compactMap { $0?.placeName }
 			.bind(to: placeLabel.rx.text)
 			.disposed(by: disposeBag)
+		
+		viewModel.placeBehavior
+			.compactMap { $0?.addressName }
+		.bind(to: addressLabel.rx.text)
+		.disposed(by: disposeBag)
 	}
 	
 	func setMyLocation(){

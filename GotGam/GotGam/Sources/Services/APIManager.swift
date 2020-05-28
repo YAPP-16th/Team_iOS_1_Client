@@ -17,7 +17,7 @@ class APIManager {
         let parameters = [
             "y": "37.514322572335935",
             "x": "127.06283102249932",
-            "radius": "20000",
+//            "radius": "20000",
             "query": keyword
         ]
 		
