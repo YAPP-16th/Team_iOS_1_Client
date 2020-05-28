@@ -112,6 +112,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         var sections = sectionsSubject.value
         guard sections.count > section.rawValue else { return }
         var items = sections[section.rawValue].items
+        if items.count >= 2 { return }
         
         var item: InputItem = .TextFieldItem(text: "", placeholder: "", enabled: false, isDate: false)
         
