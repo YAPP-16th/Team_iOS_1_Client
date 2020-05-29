@@ -131,7 +131,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
                 }.disposed(by: self.disposeBag)
             }
         }else{
-            self.storage.updateGot(gotToUpdate: gotToUpdate).bind{ got in
+            self.storage.updateGot(gotToUpdate).bind{ got in
                 self.doneAction.onNext(gotToUpdate)
             }.disposed(by: self.disposeBag)
         }
@@ -147,7 +147,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
                 }.disposed(by: self.disposeBag)
             }
         }else{
-            self.storage.updateGot(gotToUpdate: got).bind { _ in
+            self.storage.updateGot(got).bind { _ in
                 self.updateList()
                 self.updateTagList()
             }.disposed(by: self.disposeBag)
@@ -165,9 +165,13 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
                 }.disposed(by: self.disposeBag)
             }
         }else{
-            self.storage.deleteGot(id: got.id!).bind { _ in
-                self.updateList()
-                self.updateTagList()
+            self.storage.deleteGot(got.objectId!).bind { succeed in
+                if succeed{
+                    self.updateList()
+                    self.updateTagList()
+                }else{
+                    print("error")
+                }
             }.disposed(by: self.disposeBag)
         }
         

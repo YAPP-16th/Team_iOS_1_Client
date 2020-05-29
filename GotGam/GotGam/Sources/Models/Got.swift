@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct Got: Equatable {
    
@@ -25,7 +26,9 @@ struct Got: Equatable {
     var onDate: Bool
     var tag : [Tag]?
     var isDone: Bool
-     
+    // ManagedGot을 가져오기 위한
+    var objectId: NSManagedObjectID?
+    
     init(
         id: String?,
         createdDate: Date? = Date(),

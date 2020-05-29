@@ -55,7 +55,7 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
                     .disposed(by: self.disposeBag)
             }
         }else{
-            storage.deleteTag(tag: tag)
+            storage.deleteTag(tag.objectId!)
             .subscribe(onNext: { [unowned self] _ in
                 var updateSections = self.sections.value
                 var items = updateSections[indexPath.section].items

@@ -16,7 +16,6 @@ class GotStorage: GotStorageType {
     func fetchGotList(of tag: Tag) -> Observable<[Got]> {
         do{
             let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
-            fetchRequest.predicate = NSPredicate(format: "hex == %@", tag.hex)
             let results = try self.context.fetch(fetchRequest)
             
             var gotList = [Got]()
@@ -37,7 +36,6 @@ class GotStorage: GotStorageType {
     func fetchGotList() -> Observable<[Got]> {
         do{
             let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
-            //etchRequest.predicate = NSPredicate(format: "isDone == %@", NSNumber(booleanLiteral: false))
             let results = try self.context.fetch(fetchRequest)
             let gotList = results.map { $0.toGot() }
             return .just(gotList)
@@ -81,6 +79,14 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func fetchGot(objectId: NSManagedObjectID) -> Observable<Got?>{
+        if let managedGot = self.context.object(with: objectId) as? ManagedGot{
+            return .just(managedGot.toGot())
+        }else{
+            return .just(nil)
+        }
+    }
+    
     func fetchTag(hex: String) -> Observable<Tag> {
         do {
             let fetchReqeust = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
@@ -97,6 +103,14 @@ class GotStorage: GotStorageType {
             
         } catch let error {
             return .error(GotStorageError.fetchError(error.localizedDescription))
+        }
+    }
+    
+    func fetchTag(objectId: NSManagedObjectID) -> Observable<Tag?> {
+        if let managedTag = self.context.object(with: objectId) as? ManagedTag{
+            return .just(managedTag.toTag())
+        }else{
+            return .just(nil)
         }
     }
     
@@ -144,6 +158,20 @@ class GotStorage: GotStorageType {
         }
     }
     
+    func updateGot(_ gotToUpdate: Got) -> Observable<Got?>{
+        guard let objectId = gotToUpdate.objectId, let managedGot = self.context.object(with: objectId) as? ManagedGot else {
+            return .just(nil)
+        }
+        managedGot.fromGot(got: gotToUpdate)
+        do{
+            try self.context.save()
+            return .just(managedGot.toGot())
+        }catch{
+            return .error(GotStorageError.updateError("해당 데이터를 업데이트 할 수 없음"))
+        }
+    }
+    
+    
     func updateTag(_ updatedTag: Tag) -> Observable<Tag> {
         do {
             let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
@@ -164,6 +192,19 @@ class GotStorage: GotStorageType {
             }
         } catch let error {
             return .error(GotStorageError.updateError(error.localizedDescription))
+        }
+    }
+    
+    func updateTag(_ tagToUpdate: Tag) -> Observable<Tag?>{
+        guard let objectId = tagToUpdate.objectId, let managedTag = self.context.object(with: objectId) as? ManagedTag else {
+            return .just(nil)
+        }
+        managedTag.fromTag(tag: tagToUpdate)
+        do{
+            try self.context.save()
+            return .just(managedTag.toTag())
+        }catch{
+            return .error(GotStorageError.updateError("해당 태그를 데이트 할 수 없음"))
         }
     }
     
@@ -216,6 +257,19 @@ class GotStorage: GotStorageType {
         deleteGot(id: got.id!)
     }
     
+    func deleteGot(_ objectId: NSManagedObjectID) -> Observable<Bool> {
+        guard let managedGot = self.context.object(with: objectId) as? ManagedGot else {
+            return .just(false)
+        }
+        self.context.delete(managedGot)
+        do{
+            try self.context.save()
+            return .just(true)
+        }catch{
+            return .error(GotStorageError.deleteError("Got 삭제중 에러 발생"))
+        }
+    }
+    
     func deleteTag(hex: String) -> Observable<Tag> {
         do{
             let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
@@ -241,6 +295,19 @@ class GotStorage: GotStorageType {
     
     func deleteTag(tag: Tag) -> Observable<Tag> {
         deleteTag(hex: tag.hex)
+    }
+    
+    func deleteTag(_ objectId: NSManagedObjectID) -> Observable<Bool> {
+        guard let managedTag = self.context.object(with: objectId) as? ManagedTag else {
+            return .just(false)
+        }
+        self.context.delete(managedTag)
+        do{
+            try self.context.save()
+            return .just(true)
+        }catch{
+            return .error(GotStorageError.deleteError("Tag 삭제중 에러 발생"))
+        }
     }
     
     func deleteUnsyncedTag() -> Observable<Bool>{

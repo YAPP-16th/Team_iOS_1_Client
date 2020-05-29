@@ -89,7 +89,13 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     }
     
     func updateFinish(of got: Got) {
-        storage.updateGot(gotToUpdate: got)
+        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
+        if isLogin{
+          storage.updateGot(gotToUpdate: got)
+        }else{
+            storage.updateGot(got)
+        }
+        
     }
     
     var filteredGotSubject = BehaviorRelay<String>(value: "")

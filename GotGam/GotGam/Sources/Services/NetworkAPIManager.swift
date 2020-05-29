@@ -193,13 +193,18 @@ class NetworkAPIManager{
         let storage = GotStorage()
         Observable.zip(storage.deleteUnsyncedTag(), storage.deleteUnsyncedGot()).subscribe(onNext: { tResult, gResult in
             if tResult && gResult{
+                var tagList: [Tag] = []
                 for tag in data.tags{
                     let newTag = Tag(id: tag.id, name: tag.name, hex: tag.color)
+                    tagList.append(newTag)
                     _ = storage.create(tag: newTag).asObservable().map { _ in }
                 }
                 
                 for task in data.tasks{
-                    let newGot = Got(id: task.id, title: task.title, latitude: task.coordinates[0], longitude: task.coordinates[1], place: task.address, insertedDate: Date(), tag: [])
+                  var newGot = Got(id: task.id, title: task.title, latitude: task.coordinates[0], longitude: task.coordinates[1], place: task.address, insertedDate: Date(), tag: [])
+                    if let tag = tagList.first(where: { $0.id == task.tag }) {
+                        newGot.tag?.append(tag)
+                    }
                     _ = storage.createGot(gotToCreate: newGot).asObservable().map { _ in }
                 }
             }

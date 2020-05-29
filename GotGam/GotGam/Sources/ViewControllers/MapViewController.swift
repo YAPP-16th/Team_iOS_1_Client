@@ -140,9 +140,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         }
         
         self.quickAddView.detailAction = {
-//            self.viewModel.input.showAddVC()
-//            self.viewModel.seedState.onNext(.none)
-            self.linkTest()
+            self.viewModel.input.showAddVC()
+            self.viewModel.seedState.onNext(.none)
         }
         LocationManager.shared.startUpdatingLocation()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
