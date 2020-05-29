@@ -61,6 +61,7 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		
 		addFrequents.rx.tap
 			.subscribe(onNext: { [weak self] in
+				
 				self?.viewModel.inputs.addFrequents()
 				self?.viewModel.sceneCoordinator.close(animated: true, completion: nil)
 			}).disposed(by: disposeBag)

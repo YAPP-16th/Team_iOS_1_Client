@@ -207,3 +207,20 @@ extension SearchBarViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
 }
+
+extension SearchBarViewController: UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let frequents = self.collectionList[indexPath.row]
+		if let tabVC = self.presentingViewController as? TabBarController{
+			let mapVC = tabVC.viewControllers?.first as? MapViewController
+			mapVC?.x = frequents.latitude
+			mapVC?.y = frequents.longitude
+			mapVC?.placeName = frequents.name
+			mapVC?.addressName = frequents.address
+			print("서치바 자주가는장소 주소!!!!", frequents )
+			viewModel.sceneCoordinator.close(animated: true) {
+				mapVC?.updateAddress()
+			}
+		}
+	}
+}
