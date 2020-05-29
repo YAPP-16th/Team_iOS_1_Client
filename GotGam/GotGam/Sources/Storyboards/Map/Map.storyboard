@@ -247,10 +247,10 @@
                                     <outlet property="restoreButton" destination="GKi-uU-MMK" id="lwc-Vd-iqf"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbR-6j-U5g">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbR-6j-U5g">
                                 <rect key="frame" x="352" y="337" width="44" height="220"/>
                                 <subviews>
-                                    <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="z4s-69-aWi">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="z4s-69-aWi">
                                         <rect key="frame" x="-80" y="75" width="204" height="31"/>
                                         <color key="tintColor" red="1" green="0.65417033430000004" blue="0.065232805909999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -322,6 +322,7 @@
                         <outlet property="restoreView" destination="hYk-0N-bqg" id="R7E-ot-YG7"/>
                         <outlet property="seedButton" destination="lLe-wS-YdH" id="xnc-Ow-3Gm"/>
                         <outlet property="seedImageView" destination="TiL-oy-OC7" id="5Xi-iA-2ky"/>
+                        <outlet property="sliderBackgroundView" destination="dbR-6j-U5g" id="4Fq-oD-izG"/>
                         <outlet property="tagCollectionView" destination="BsL-sj-hgP" id="Rnh-P6-5DU"/>
                     </connections>
                 </viewController>

@@ -34,6 +34,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         }
     }
     @IBOutlet var circleRadiusLabel: UILabel!
+    @IBOutlet var sliderBackgroundView: UIView!
     
     // MARK: - Constraints
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
@@ -64,12 +65,12 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         didSet {
             if let circle = currentCircle {
                 let got = gotList[circle.tag]
-                print(got.radius)
                 radiusSlider.value = Float((got.radius ?? 0)/1000.0)
                 circleRadiusLabel.text = "\(Int(radiusSlider.value * 1000))m"
-                radiusSlider.isHidden = false
+                sliderBackgroundView.isHidden = false
             } else {
-                radiusSlider.isHidden = true
+                mapView.removeAllCircles()
+                sliderBackgroundView.isHidden = true
             }
         }
     }
@@ -90,9 +91,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
         circle.circleRadius = radius
         circle.tag = tag
+        mapView?.addCircle(circle)
         currentCircle = circle
-        mapView?.addCircle(currentCircle)
-    
+        
         mapView?.fitArea(toShow: circle)
     }
     @IBAction func didChangeRadius(_ sender: UISlider) {
@@ -149,7 +150,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
         self.viewModel.updateList()
         self.viewModel.updateTagList()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -157,7 +157,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         if let beforeGot = viewModel.beforeGotSubject.value,
             let gotList = try? viewModel.output.gotList.value(),
             let beforeGotIndex = gotList.firstIndex(of: beforeGot) {
-            
+
             setCard(index: beforeGotIndex)
             centeredCollectionViewFlowLayout.scrollToPage(index: beforeGotIndex, animated: true)
         } else if !gotList.isEmpty {
@@ -485,6 +485,12 @@ extension MapViewController: MTMapViewDelegate{
             break
         }
     }
+    func mapView(_ mapView: MTMapView!, dragEndedOn mapPoint: MTMapPoint!) {
+        if state == .none {
+            currentCircle = nil
+        }
+        
+    }
     func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
         switch self.state{
         case .adding, .seeding:
@@ -498,8 +504,12 @@ extension MapViewController: MTMapViewDelegate{
     func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
         let got = gotList[poiItem.tag]
         if let lat = got.latitude, let long = got.longitude, let radius = got.radius {
+            if state != .none {
+                viewModel.seedState.onNext(.none)
+            }
             mapView?.removeAllCircles()
             drawCircle(latitude: lat, longitude: long, radius: Float(radius), tag: poiItem.tag)
+            
         }
         
         return true
