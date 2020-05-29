@@ -36,6 +36,14 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		}
 	}
 	
+	var gotList: [Got] = [] {
+		didSet{
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+	}
+	
 	var collectionList = [Frequent]()
 	
 	override func viewDidLoad() {
@@ -58,6 +66,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		viewModel.inputs.readFrequents()
+		viewModel.inputs.readGot()
 	}
 	
 	func bindViewModel() {
@@ -87,7 +96,14 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 					self?.searchKeyword(keyword: keyword)
 				}
 			})
-			.disposed(by: disposeBag)	}
+			.disposed(by: disposeBag)
+		
+		viewModel.gotList
+			.subscribe(onNext: { [weak self] gotLists in
+				self?.gotList = gotLists
+			})
+			.disposed(by: disposeBag)
+	}
 	
 	
 	func searchKeyword(keyword: String){
@@ -101,7 +117,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 
 extension SearchBarViewController: UITableViewDataSource{
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 2
+		return 3
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,8 +126,10 @@ extension SearchBarViewController: UITableViewDataSource{
 				return 3
 			} else { return self.historyList.count }
 //			return historyList.count + placeList.count
-		}else{
+		}else if section == 1 {
 			return self.placeList.count
+		}else {
+			return self.gotList.count
 		}
 		
 		
@@ -139,11 +157,18 @@ extension SearchBarViewController: UITableViewDataSource{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! SearchHistoryCell
 			cell.historyLabel.text = historyList[indexPath.row]
 			return cell
-		}else{
+		}else if indexPath.section == 1 {
 			let place = placeList[indexPath.row]
 			let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchKakaoCell
 			cell.kewordLabel.text = place.placeName
 			cell.resultLabel.text = place.addressName
+			return cell
+		} else {
+			let got = gotList[indexPath.row]
+			let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
+			cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
+			cell.gotLabel.text = got.title
+			cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
 			return cell
 		}
 	}
@@ -163,6 +188,10 @@ class FrequentsCollectionCell: UICollectionViewCell {
 	@IBOutlet var frequentsLabel: UILabel!
 }
 
+class GotCell: UITableViewCell {
+	@IBOutlet var gotColor: UIImageView!
+	@IBOutlet var gotLabel: UILabel!
+}
 
 extension SearchBarViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -184,6 +213,19 @@ extension SearchBarViewController: UITableViewDelegate {
 				
 				viewModel.sceneCoordinator.close(animated: true) {
 					mapVC?.updateAddress()
+				}
+			}
+		} else if indexPath.section == 2 {
+			let got = self.gotList[indexPath.row]
+			if let tabVC = self.presentingViewController as? TabBarController{
+				let mapVC = tabVC.viewControllers?.first as? MapViewController
+				mapVC?.x = got.longitude!
+				mapVC?.y = got.latitude!
+				
+				viewModel.sceneCoordinator.close(animated: true) {
+					mapVC?.updateAddress()
+					let index = self.gotList.firstIndex(of: got)
+//					mapVC?.setCard(index: index)
 				}
 			}
 		}
@@ -226,7 +268,6 @@ extension SearchBarViewController: UICollectionViewDelegate {
 			mapVC?.y = frequents.longitude
 			mapVC?.placeName = frequents.name
 			mapVC?.addressName = frequents.address
-			print("서치바 자주가는장소 주소!!!!", frequents )
 			viewModel.sceneCoordinator.close(animated: true) {
 				mapVC?.updateAddress()
 			}

@@ -14,6 +14,7 @@ protocol SearchBarViewModelInputs {
 	func addKeyword(keyword: String)
 	func readKeyword()
 	func readFrequents()
+	func readGot()
 }
 
 protocol SearchBarViewModelOutputs {
@@ -29,7 +30,7 @@ protocol SearchBarViewModelType {
 class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarViewModelOutputs, SearchBarViewModelType {
 	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
 	var collectionItems = BehaviorSubject<[Frequent]>(value: [])
-	
+	var gotList = BehaviorSubject<[Got]>(value: [])
 		
 	func addKeyword(keyword: String) {
 		let storage = SearchStorage()
@@ -50,6 +51,14 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 		storage.fetchFrequents()
 			.bind { (frequentsList) in
 				self.collectionItems.onNext(frequentsList)
+		}.disposed(by: disposeBag)
+	}
+	
+	func readGot() {
+		let storage = GotStorage()
+		storage.fetchGotList()
+			.bind { (gotList) in
+				self.gotList.onNext(gotList)
 		}.disposed(by: disposeBag)
 	}
 	
