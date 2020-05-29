@@ -470,8 +470,8 @@ extension MapViewController: MTMapViewDelegate{
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
+            self.quickAddView.isHidden = true
         }
-		print(mapPoint.mapPointGeo())
     }
     func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
         switch self.state {
