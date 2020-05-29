@@ -248,18 +248,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         configureBind(sceneCoordinator: sceneCoordinator)
         
     }
-//
-//    private func fetchGot(got: Got?) {
-//        guard let got = got else { return }
-//
-//        currentGot.accept(got)
-//        if let lat = got.latitude, let long = got.longitude {
-//            placeSubject.accept(.init(latitude: lat, longitude: long))
-//        }
-//
-//        nameText.accept(got.title ?? "")
-//        placeText.accept(got.place ?? "")
-//    }
     
     private func configureBind(sceneCoordinator: SceneCoordinatorType) {
         
