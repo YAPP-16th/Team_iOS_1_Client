@@ -14,8 +14,8 @@ import RxCocoa
 protocol FrequentsViewModelInputs {
 	var namePlace: BehaviorRelay<String> { get set }
 	var addressPlace: BehaviorRelay<String> { get set }
-	var latitudePlace: BehaviorRelay<Double> { get set }
-	var longitudePlace: BehaviorRelay<Double> { get set }
+	var latitudePlace: BehaviorRelay<String> { get set }
+	var longitudePlace: BehaviorRelay<String> { get set }
 	var typePlace: BehaviorRelay<IconType> { get set }
 
 	func addFrequents()
@@ -25,6 +25,7 @@ protocol FrequentsViewModelInputs {
 
 protocol FrequentsViewModelOutputs {
 	var frequentsList: BehaviorSubject<[Frequent]> { get set }
+	var frequentsPlace: BehaviorRelay<Place?> { get set }
 }
 
 protocol FrequentsViewModelType {
@@ -33,20 +34,22 @@ protocol FrequentsViewModelType {
 }
 
 class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsViewModelOutputs, FrequentsViewModelType {
-	
+
 	var namePlace = BehaviorRelay<String>(value: "")
 	var addressPlace = BehaviorRelay<String>(value: "")
-	var latitudePlace = BehaviorRelay<Double>(value: 0)
-	var longitudePlace = BehaviorRelay<Double>(value: 0)
+	var latitudePlace = BehaviorRelay<String>(value: "")
+	var longitudePlace = BehaviorRelay<String>(value: "")
 	var typePlace = BehaviorRelay<IconType>(value: .other)
 	
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
-	var placeText = BehaviorRelay<String>(value: "")
+	var frequentsPlace = BehaviorRelay<Place?>(value: nil)
 		
 	func addFrequents() {
 		let storage = FrequentsStorage()
 		
-		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: latitudePlace.value, longitude: longitudePlace.value, type: typePlace.value)
+		guard let la = Double(latitudePlace.value) else { return  }
+		guard let lo = Double(longitudePlace.value) else { return  }
+		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value)
 
 		storage.createFrequents(frequent: frequent).bind { _ in
 			self.readFrequents()
@@ -65,7 +68,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	
 	func moveSearchVC(){
 		let movesearchVM = FrequentsSearchViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-		movesearchVM.placeSearchText.bind(to: placeText).disposed(by: disposeBag)
+		movesearchVM.frequentsPlaceSearch.bind(to: frequentsPlace).disposed(by: disposeBag)
 		
         sceneCoordinator.transition(to: .frequentsSearch(movesearchVM), using: .push, animated: true)
 	}

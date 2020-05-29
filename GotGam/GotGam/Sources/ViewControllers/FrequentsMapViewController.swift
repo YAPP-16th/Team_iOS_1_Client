@@ -20,9 +20,12 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	@IBOutlet var addressLabel: UILabel!
 	@IBOutlet var okay: UIButton!
 	@IBAction func okay(_ sender: UIButton) {
-		viewModel.placeMapText.accept(addressLabel.text ?? "")
+		
+		viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
+		
 		for controller in self.navigationController!.viewControllers as Array {
 			if controller.isKind(of: FrequentsViewController.self) {
+//				viewModel.frequentsPlaceMap.bind(to: FrequentsViewModel.)
 				_ =  self.navigationController!.popToViewController(controller, animated: true)
 				break
 			}
@@ -87,6 +90,12 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 			.compactMap { $0?.addressName }
 		.bind(to: addressLabel.rx.text)
 		.disposed(by: disposeBag)
+		
+		viewModel.placeBehavior
+			.bind(to: viewModel.frequentsPlaceMap)
+		.disposed(by: disposeBag)
+		
+		
 	}
 	
 	func setMyLocation(){

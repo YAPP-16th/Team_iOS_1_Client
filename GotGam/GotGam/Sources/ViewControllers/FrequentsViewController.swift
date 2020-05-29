@@ -45,7 +45,6 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		placeAddress.layer.borderWidth = 1.0
 		placeAddress.layer.cornerRadius = 17
 	}
-
 	
 	func bindViewModel() {
 		
@@ -66,12 +65,24 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 				self?.viewModel.sceneCoordinator.close(animated: true, completion: nil)
 			}).disposed(by: disposeBag)
 
-		viewModel.placeText
+		viewModel.frequentsPlace
+			.compactMap { $0?.addressName }
 			.bind(to: placeAddress.rx.text)
 			.disposed(by: disposeBag)
 		
-		viewModel.placeText
-			.bind(to: viewModel.inputs.addressPlace)
+		viewModel.frequentsPlace
+			.compactMap { $0?.addressName }
+			.bind(to: viewModel.addressPlace)
+			.disposed(by: disposeBag)
+		
+		viewModel.frequentsPlace
+			.compactMap { $0?.x }
+			.bind(to: viewModel.latitudePlace)
+			.disposed(by: disposeBag)
+			
+		viewModel.frequentsPlace
+			.compactMap { $0?.y }
+			.bind(to: viewModel.longitudePlace)
 			.disposed(by: disposeBag)
 		
 		icHomeBtn.rx.tap
