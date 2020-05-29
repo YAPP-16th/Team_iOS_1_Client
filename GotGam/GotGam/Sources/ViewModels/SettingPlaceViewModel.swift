@@ -16,6 +16,9 @@ protocol SettingPlaceViewModelInputs {
 	func readFrequents()
 	func detailVC()
 	func removeFrequents(indexPath: IndexPath, frequent: Frequent)
+	
+	var placeName: BehaviorRelay<String> { get set }
+	var placeAddress: BehaviorRelay<String> { get set }
 }
 
 protocol SettingPlaceViewModelOutputs {
@@ -30,6 +33,8 @@ protocol SettingPlaceViewModelType {
 
 
 class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, SettingPlaceViewModelInputs, SettingPlaceViewModelOutputs {
+	var placeName = BehaviorRelay<String>(value: "")
+	var placeAddress = BehaviorRelay<String>(value: "")
 	var placeText = BehaviorRelay<String>(value: "")
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	
@@ -40,6 +45,7 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 	
 	func detailVC() {
 		let detailVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		
 		sceneCoordinator.transition(to: .frequents(detailVM), using: .push, animated: true)
 	}
 	

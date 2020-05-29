@@ -23,20 +23,6 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 	@IBOutlet var icSchoolBtn: UIButton!
 	@IBOutlet var icOtherBtn: UIButton!
 	
-	@IBAction func icHome(_ sender: Any) {
-		
-		icHomeBtn.backgroundColor = UIColor.saffron
-	}
-	@IBAction func icOffice(_ sender: Any) {
-		icOfficeBtn.backgroundColor = UIColor.saffron
-	}
-	@IBAction func icSchool(_ sender: Any) {
-		icSchoolBtn.backgroundColor = UIColor.saffron
-	}
-	@IBAction func icOther(_ sender: Any) {
-		icOtherBtn.backgroundColor = UIColor.saffron
-	}
-	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -90,7 +76,38 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		icHomeBtn.rx.tap
 			.subscribe({ [weak self] _ in
 				self?.viewModel.inputs.typePlace.accept(.home)
+				self?.icHomeBtn.backgroundColor = UIColor.saffron
+				self?.icOfficeBtn.backgroundColor = UIColor.brownGrey
+				self?.icSchoolBtn.backgroundColor = UIColor.brownGrey
+				self?.icOtherBtn.backgroundColor = UIColor.brownGrey
 			}).disposed(by: disposeBag)
+		
+		icOfficeBtn.rx.tap
+		.subscribe({ [weak self] _ in
+			self?.viewModel.inputs.typePlace.accept(.office)
+			self?.icHomeBtn.backgroundColor = UIColor.brownGrey
+			self?.icOfficeBtn.backgroundColor = UIColor.saffron
+			self?.icSchoolBtn.backgroundColor = UIColor.brownGrey
+			self?.icOtherBtn.backgroundColor = UIColor.brownGrey
+		}).disposed(by: disposeBag)
+		
+		icSchoolBtn.rx.tap
+		.subscribe({ [weak self] _ in
+			self?.viewModel.inputs.typePlace.accept(.school)
+			self?.icHomeBtn.backgroundColor = UIColor.brownGrey
+			self?.icOfficeBtn.backgroundColor = UIColor.brownGrey
+			self?.icSchoolBtn.backgroundColor = UIColor.saffron
+			self?.icOtherBtn.backgroundColor = UIColor.brownGrey
+		}).disposed(by: disposeBag)
+		
+		icOtherBtn.rx.tap
+		.subscribe({ [weak self] _ in
+			self?.viewModel.inputs.typePlace.accept(.other)
+			self?.icHomeBtn.backgroundColor = UIColor.brownGrey
+			self?.icOfficeBtn.backgroundColor = UIColor.brownGrey
+			self?.icSchoolBtn.backgroundColor = UIColor.brownGrey
+			self?.icOtherBtn.backgroundColor = UIColor.saffron
+		}).disposed(by: disposeBag)
 	}
 	
 

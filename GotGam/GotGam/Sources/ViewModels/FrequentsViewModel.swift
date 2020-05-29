@@ -52,8 +52,6 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 			self.readFrequents()
 			} .disposed(by: disposeBag)
 		
-		print("frequent", frequent)
-		
 	}
 	
 	func readFrequents() {

@@ -136,7 +136,7 @@ extension SettingPlaceViewController: UITableViewDataSource {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath ) as! PlaceCell
 			cell.placeNameLabel.text = place.name
 			cell.placeAddressLabel.text = place.address
-			cell.placeIconImageView.image = place.type.image
+			cell.placeIconImageView.image = type.image
 			
 			cell.placeIconImageView.layer.cornerRadius = cell.placeIconImageView.frame.height / 2
 			cell.placeIconImageView.layer.masksToBounds = true

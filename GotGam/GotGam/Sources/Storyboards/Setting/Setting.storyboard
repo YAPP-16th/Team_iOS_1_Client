@@ -259,7 +259,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icFrequentsHome" translatesAutoresizingMaskIntoConstraints="NO" id="aRT-0t-ucU">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aRT-0t-ucU">
                                                     <rect key="frame" x="24" y="29.5" width="40" height="40"/>
                                                     <color key="backgroundColor" name="saffron"/>
                                                     <constraints>
@@ -390,9 +390,6 @@
                                                     <constraint firstAttribute="width" constant="40" id="pGh-EX-7ha"/>
                                                 </constraints>
                                                 <state key="normal" image="icFrequentsHome"/>
-                                                <connections>
-                                                    <action selector="icHome:" destination="uxc-ar-Peh" eventType="touchUpInside" id="QbX-iV-vSU"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -420,9 +417,6 @@
                                                     <constraint firstAttribute="width" constant="40" id="vK4-9G-Eef"/>
                                                 </constraints>
                                                 <state key="normal" image="icFrequentsOffice"/>
-                                                <connections>
-                                                    <action selector="icOffice:" destination="uxc-ar-Peh" eventType="touchUpInside" id="YJc-yX-rqG"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -450,9 +444,6 @@
                                                     <constraint firstAttribute="width" constant="40" id="rA5-el-zue"/>
                                                 </constraints>
                                                 <state key="normal" image="icFrequentsSchool"/>
-                                                <connections>
-                                                    <action selector="icSchool:" destination="uxc-ar-Peh" eventType="touchUpInside" id="eQi-jO-tq7"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -480,9 +471,6 @@
                                                     <constraint firstAttribute="width" constant="40" id="iox-4N-Rir"/>
                                                 </constraints>
                                                 <state key="normal" image="icFrequentsOther"/>
-                                                <connections>
-                                                    <action selector="icOther:" destination="uxc-ar-Peh" eventType="touchUpInside" id="Tw6-JP-sY8"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
