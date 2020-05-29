@@ -376,6 +376,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     func setNormalStateUI(){
         self.mapView.removeAllCircles()
         self.seedButton.backgroundColor = .white
+        self.seedButton.setImage(UIImage(named: "icMapBtnAdd"), for: .normal)
         self.seedButton.isEnabled = true
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
@@ -471,6 +472,9 @@ extension MapViewController: MTMapViewDelegate{
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
             self.quickAddView.isHidden = true
+            viewModel.seedState.onNext(.seeding)
+        } else {
+            viewModel.seedState.onNext(.none)
         }
     }
     func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
