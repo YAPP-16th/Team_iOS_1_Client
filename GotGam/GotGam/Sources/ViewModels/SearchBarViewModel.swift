@@ -13,10 +13,12 @@ import RxSwift
 protocol SearchBarViewModelInputs {
 	func addKeyword(keyword: String)
 	func readKeyword()
+	func readFrequents()
 }
 
 protocol SearchBarViewModelOutputs {
 	var keywords: BehaviorSubject<[String]> { get set }
+	var collectionItems: BehaviorSubject<[Frequent]> { get set }
 }
 
 protocol SearchBarViewModelType {
@@ -26,6 +28,7 @@ protocol SearchBarViewModelType {
 
 class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarViewModelOutputs, SearchBarViewModelType {
 	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
+	var collectionItems = BehaviorSubject<[Frequent]>(value: [])
 	
 		
 	func addKeyword(keyword: String) {
@@ -40,6 +43,14 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 		storage.fetchKeyword().bind { (keywordList) in
 			self.keywords.onNext(keywordList.reversed())
 			} .disposed(by: disposeBag)
+	}
+	
+	func readFrequents() {
+		let storage = FrequentsStorage()
+		storage.fetchFrequents()
+			.bind { (frequentsList) in
+				self.collectionItems.onNext(frequentsList)
+		}.disposed(by: disposeBag)
 	}
 	
 	

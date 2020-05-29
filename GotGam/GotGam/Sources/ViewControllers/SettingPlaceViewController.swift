@@ -139,8 +139,7 @@ extension SettingPlaceViewController: UITableViewDataSource {
 			cell.placeIconImageView.image = type.image
 			
 			cell.placeIconImageView.layer.cornerRadius = cell.placeIconImageView.frame.height / 2
-			cell.placeIconImageView.layer.masksToBounds = true
-			cell.placeIconImageView.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
+			cell.placeIconImageView.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
 			return cell
 		}else {
 
