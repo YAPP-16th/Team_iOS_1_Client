@@ -92,7 +92,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     func createGot(location: CLLocationCoordinate2D){
         
-        let got = Got(id: "", title: addText.value, latitude: location.latitude, longitude: location.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
+        let got = Got(id: "\(Int64(arc4random()))", title: addText.value, latitude: location.latitude, longitude: location.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
         if UserDefaults.standard.bool(forDefines: .isLogined){
             NetworkAPIManager.shared.createTask(got: got) { (got) in
                 if let got = got{
@@ -125,8 +125,6 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
                 self.doneAction.onNext(gotToUpdate)
             }.disposed(by: self.disposeBag)
         }
-        
-        
     }
     
     func updateGot(got: Got){
