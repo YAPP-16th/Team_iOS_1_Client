@@ -68,7 +68,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		
 		self.SearchBar.rx.controlEvent(.primaryActionTriggered)
 			.subscribe(onNext: {
-				var keyword = self.SearchBar.text ?? ""
+				let keyword = self.SearchBar.text ?? ""
 				self.viewModel.inputs.addKeyword(keyword: keyword)
 			}) .disposed(by: disposeBag)
 		
@@ -78,7 +78,16 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 			})
 			.disposed(by: disposeBag)
 
-	}
+		tableView.rx.itemSelected
+			.subscribe(onNext: { [weak self] (indexPath) in
+				if indexPath.section == 0{
+					self?.SearchBar.text = self?.historyList[indexPath.row]
+					let keyword = self?.SearchBar.text ?? ""
+					self?.viewModel.inputs.addKeyword(keyword: keyword)
+					self?.searchKeyword(keyword: keyword)
+				}
+			})
+			.disposed(by: disposeBag)	}
 	
 	
 	func searchKeyword(keyword: String){
