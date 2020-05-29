@@ -12,6 +12,9 @@ import RxSwift
 class TextFieldTableViewCell: UITableViewCell {
     
     @objc func didTapDatePickerDone() {
+        if datePicker.date < Date() {
+            datePicker.date = Date()
+        }
         viewModel?.inputs.insertedDateRelay.accept(datePicker.date)
         textField.text = datePicker.date.endTime
         self.endEditing(true)
@@ -23,7 +26,7 @@ class TextFieldTableViewCell: UITableViewCell {
     }
     
     var viewModel: AddPlantViewModel?
-    var disposedBag = DisposeBag()
+    var disposeBag = DisposeBag()
 
     func configure(viewModel vm: AddPlantViewModel, text: String, placeholder: String, enabled: Bool, isDate : Bool = false) {
         print("in textField: \(text)")
@@ -52,6 +55,16 @@ class TextFieldTableViewCell: UITableViewCell {
         let datePicker = UIDatePicker()
         datePicker.locale = .init(identifier: "ko-KR")
         datePicker.datePickerMode = .date
+//        viewModel?.insertedDateRelay
+//            .compactMap { $0 }
+//            .bind(to: datePicker.rx.date)
+//            .disposed(by: disposeBag)
+//
+//        datePicker.rx.date
+//            .map { $0.endTime }
+//            .bind(to: textField.rx.text)
+//            .disposed(by: <#T##DisposeBag#>)
+//
         if let date = viewModel?.insertedDateRelay.value {
             datePicker.date = date
             textField.text = date.endTime
