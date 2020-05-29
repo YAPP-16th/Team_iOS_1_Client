@@ -134,6 +134,16 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             print("set center to \(location) in addPlant")
             setupMapCenter(latitude: Double(location.latitude), longitude: Double(location.longitude))
             
+            let pin = MTMapPOIItem()
+            
+            mapView?.removeAllPolylines()
+            mapView?.removeAllCircles()
+            
+            pin.markerType = .customImage
+            pin.customImage = UIImage(named: "icSeed")
+            pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: Double(location.latitude), longitude: Double(location.longitude)))
+            mapView?.addPOIItems([pin])
+            
             drawCircle(latitude: location.latitude, longitude: location.longitude, radius: Float(radius))
         }
     }
@@ -339,19 +349,19 @@ extension AddPlantViewController {
                     if indexPath.section == 1 {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.dateText)
-                            .disposed(by: cell.disposedBag)
+                            .disposed(by: cell.disposeBag)
                         cell.textField.tag = indexPath.section
                         cell.textField.delegate = vc
                     } else if indexPath.section == 2 {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.arriveText)
-                            .disposed(by: cell.disposedBag)
+                            .disposed(by: cell.disposeBag)
                         cell.textField.tag = indexPath.section
                         cell.textField.delegate = vc
                     } else if indexPath.section == 3 {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.leaveText)
-                            .disposed(by: cell.disposedBag)
+                            .disposed(by: cell.disposeBag)
                         cell.textField.tag = indexPath.section
                         cell.textField.delegate = vc
                     }

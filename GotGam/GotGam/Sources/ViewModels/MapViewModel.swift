@@ -25,6 +25,9 @@ protocol MapViewModelInputs {
 	func showSearchVC()
     func savePlace(location: CLLocationCoordinate2D)
     var addText: BehaviorRelay<String> { get set }
+    
+    var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
+    var tagListCellSelect: PublishSubject<Void> { get set }
 }
 
 protocol MapViewModelOutputs {
@@ -47,6 +50,8 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var storage: GotStorageType!
     var addText = BehaviorRelay<String>(value: "")
     
+    var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
+    var tagListCellSelect = PublishSubject<Void>()
     
     //MARK: - Model Output
     var output: MapViewModelOutputs { return self }
@@ -92,22 +97,27 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     func createGot(location: CLLocationCoordinate2D){
         
-        let got = Got(id: "\(Int64(arc4random()))", title: addText.value, latitude: location.latitude, longitude: location.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
-        if UserDefaults.standard.bool(forDefines: .isLogined){
-            NetworkAPIManager.shared.createTask(got: got) { (got) in
-                if let got = got{
-                    self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
-                        self.updateList()
-                        self.updateTagList()
-                    }).disposed(by: self.disposeBag)
+        APIManager.shared.getPlace(longitude: location.longitude, latitude: location.latitude) { [weak self] (place) in
+            guard let self = self else { return }
+            print(place?.address?.addressName)
+            let got = Got(id: "\(Int64(arc4random()))", title: self.addText.value, latitude: location.latitude, longitude: location.longitude, place: place?.address?.addressName, insertedDate: Date(), tag: nil)
+            if UserDefaults.standard.bool(forDefines: .isLogined){
+                NetworkAPIManager.shared.createTask(got: got) { (got) in
+                    if let got = got{
+                        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+                            self.updateList()
+                            self.updateTagList()
+                        }).disposed(by: self.disposeBag)
+                    }
                 }
+            }else{
+                self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+                    self.updateList()
+                    self.updateTagList()
+                }).disposed(by: self.disposeBag)
             }
-        }else{
-            self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
-                self.updateList()
-                self.updateTagList()
-            }).disposed(by: self.disposeBag)
         }
+        
     }
     
     func setGotDone(got: Got){
@@ -180,7 +190,8 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     func updateList(){
         self.storage.fetchGotList().bind{ list in
-            self.gotList.onNext(list)
+            //self.gotList.onNext(list)
+            self.originGotList.accept(list)
         }.disposed(by: self.disposeBag)
     }
     
@@ -198,9 +209,33 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var aimToPlace = BehaviorSubject<Bool>(value: false)
     var placeSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
     var beforeGotSubject = BehaviorRelay<Got?>(value: nil)
+    private var originGotList = BehaviorRelay<[Got]>(value: [])
     
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
+        
+        filteredTagSubject
+            .subscribe(onNext: {[weak self] filteredTag in
+                guard let self = self else { return }
+                
+                let gotList = self.originGotList.value
+                let filterdList = gotList.filter ({ got -> Bool in
+                    guard let tag = got.tag?.first else { return true }
+                    
+                    return filteredTag.contains(tag) ? false : true
+                })
+                print("filteredTag: ",filteredTag)
+                print(filterdList)
+                self.gotList.onNext(filterdList)
+            })
+            .disposed(by: disposeBag)
+        
+        originGotList
+            .subscribe(onNext: { [weak self] gotList in
+                self?.gotList.onNext(gotList)
+            })
+            .disposed(by: disposeBag)
+        
     }
 }

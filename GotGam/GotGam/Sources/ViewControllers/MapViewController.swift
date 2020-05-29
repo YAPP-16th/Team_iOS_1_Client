@@ -262,18 +262,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
             self.state = state
             }).disposed(by: disposeBag)
-//        viewModel.seedState.subscribe(onNext:{ [weak self] state in
-//            guard let self = self else { return }
-//            self.state = state
-//            switch state{
-//            case .none:
-//                self.setNormalStateUI()
-//            case .seeding:
-//                self.setSeedingStateUI()
-//            case .adding:
-//                self.setAddingStateUI()
-//            }
-//            }).disposed(by: disposeBag)
         
         self.seedButton.rx.tap.subscribe(onNext: { [weak self] in
             print("버튼 클릭됨")
@@ -299,7 +287,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             
             cell.doneButton.rx.tap
             .subscribe(onNext: {
-                guard var got = cell.got else { return }
+                guard let got = cell.got else { return }
                 self.viewModel.setGotDone(got: got)
             }).disposed(by: cell.disposeBag)
             
@@ -307,30 +295,50 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.viewModel.deleteGot(got: cell.got!)
             }).disposed(by: cell.disposeBag)
         }.disposed(by: self.disposeBag)
-        
-//        self.viewModel.output.tagList.bind(to: tagCollectionView.rx.items(cellIdentifier: MapTagCell.reuseIdenfier, cellType: MapTagCell.self)) { (index, tag, cell) in
-//            cell.tagIndicator.backgroundColor = tag.hex.hexToColor()
-//            cell.tagLabel.text = tag.name
-//        }.disposed(by: self.disposeBag)
+    
         
         viewModel.output.tagList
-        .compactMap { [weak self] in self?.appendEmptyTag($0) }
-        .bind(to: tagCollectionView.rx.items) { (collectionView, cellItem, tag) -> UICollectionViewCell in
-            if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
-                cell.configure(tag)
-                cell.layer.cornerRadius = cell.bounds.height/2
-                return cell
-            } else {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagListCollectionViewCell", for: IndexPath(item: cellItem, section: 0)) as? TagListCollectionViewCell else { return UICollectionViewCell()}
-                cell.layer.cornerRadius = cell.bounds.height/2
-                return cell
+            .compactMap { [weak self] in self?.appendEmptyTag($0) }
+            .bind(to: tagCollectionView.rx.items) { (collectionView, cellItem, tag) -> UICollectionViewCell in
+                if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
+                    cell.configure(tag)
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagListCollectionViewCell", for: IndexPath(item: cellItem, section: 0)) as? TagListCollectionViewCell else { return UICollectionViewCell()}
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                }
             }
-        }
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
+        
+        Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
+            .bind { [weak self] indexPath, tag in
+                if let collectionView = self?.tagCollectionView, indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
+                    self?.viewModel.input.tagListCellSelect.onNext(())
+                    return
+                }
+                
+                if var tags = self?.viewModel.input.filteredTagSubject.value {
+                    tags.append(tag)
+                    self?.viewModel.input.filteredTagSubject.accept(tags)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.zip(tagCollectionView.rx.itemDeselected, tagCollectionView.rx.modelDeselected(Tag.self))
+            .bind { [weak self] indexPath, tag in
+                if var tags = self?.viewModel.input.filteredTagSubject.value, let index = tags.firstIndex(of: tag) {
+                    tags.remove(at: index)
+                    self?.viewModel.input.filteredTagSubject.accept(tags)
+                }
+            }
+            .disposed(by: disposeBag)
         
         
         self.viewModel.output.gotList.subscribe(onNext: { list in
+            print("🚨",list)
             self.gotList = list
         }).disposed(by: self.disposeBag)
         
@@ -474,6 +482,7 @@ extension MapViewController: MTMapViewDelegate{
             self.quickAddView.isHidden = true
             viewModel.seedState.onNext(.seeding)
         } else {
+            currentCircle = nil
             viewModel.seedState.onNext(.none)
         }
     }
@@ -516,16 +525,41 @@ extension MapViewController: MTMapViewDelegate{
     }
 }
 
+// MARK: - UICollectionView Delegate
+
+extension MapViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 0.3
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            
+            cell.contentView.alpha = 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 0.3
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 1
+        }
+    }
+}
+
+// MARK: - UICollectionView DelegateFlowLayout
+
 extension MapViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if collectionView == self.tagCollectionView{
-//            guard let tagList = try? self.viewModel.output.tagList.value(), !tagList.isEmpty else { return .zero }
-//            let title = tagList[indexPath.item].name
-//            let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 32), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
-//            let width = 9 + 14 + 8 + rect.width + 16
-//            return CGSize(width: width, height: 32)
-            
             // 8 + 태그뷰
             var tagWidth: CGFloat = 0
             var title = "태그 목록"
