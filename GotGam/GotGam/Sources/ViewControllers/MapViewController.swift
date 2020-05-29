@@ -20,6 +20,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Views
     
     var mapView: MTMapView!
+    @IBOutlet weak var mapBackgroundView: UIView!
     @IBOutlet weak var tagCollectionView: UICollectionView!
     @IBOutlet weak var cardCollectionView: UICollectionView!
     @IBOutlet weak var seedButton: UIButton!
@@ -27,7 +28,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet weak var quickAddView: MapQuickAddView!
     @IBOutlet weak var seedImageView: UIImageView!
     @IBOutlet weak var restoreView: MapRestoreView!
-  
+    @IBOutlet var radiusSlider: UISlider! {
+        didSet{
+            radiusSlider.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+        }
+    }
+    @IBOutlet var circleRadiusLabel: UILabel!
+    @IBOutlet var sliderBackgroundView: UIView!
+    
     // MARK: - Constraints
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
@@ -53,6 +61,19 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
         }
     }
+    var currentCircle: MTMapCircle? {
+        didSet {
+            if let circle = currentCircle {
+                let got = gotList[circle.tag]
+                radiusSlider.value = Float((got.radius ?? 0)/1000.0)
+                circleRadiusLabel.text = "\(Int(radiusSlider.value * 1000))m"
+                sliderBackgroundView.isHidden = false
+            } else {
+                mapView.removeAllCircles()
+                sliderBackgroundView.isHidden = true
+            }
+        }
+    }
 	
 	//search value
 	var x: Double = 0.0
@@ -60,13 +81,49 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 	var addressName: String = ""
 	var placeName: String = ""
     
+    // MARK: - Methods
+    
+    func drawCircle(latitude: CLLocationDegrees, longitude: CLLocationDegrees, radius: Float, tag: Int) {
+        let circle = MTMapCircle()
+        let center = MTMapPoint(geoCoord: .init(latitude: latitude, longitude: longitude))
+        circle.circleCenterPoint = center
+        circle.circleLineColor = .orange
+        circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
+        circle.circleRadius = radius
+        circle.tag = tag
+        mapView?.addCircle(circle)
+        currentCircle = circle
+        
+        mapView?.fitArea(toShow: circle)
+    }
+    @IBAction func didChangeRadius(_ sender: UISlider) {
+        if let tag = currentCircle?.tag, let circle = mapView.findCircle(byTag: tag) {
+            let meter = sender.value * 1000
+            circle.circleRadius = meter
+            mapView.addCircle(circle)
+            
+            var got = gotList[tag]
+            got.radius = Double(meter)
+            viewModel.updateGot(got: got)
+        }
+    }
+    
+    func appendEmptyTag(_ tags: [Tag]) -> [Tag] {
+        var tags = tags
+        let emptyTag = Tag(name: "", hex: "empty")
+        tags.append(emptyTag)
+        return tags
+    }
+    
     // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureMapView()
         
         configureCardCollectionView()
+        configureTagCollectionView()
         
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
@@ -77,13 +134,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         super.viewWillAppear(animated)
         
         self.quickAddView.addAction = { text in
-
-//            let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-//            let got = Got(id: Int64(arc4random()), title: text, latitude: centerPoint.latitude, longitude: centerPoint.longitude, place: "화장실", insertedDate: Date(), tag: [.init(name: "태그1", hex: TagColor.greenishBrown.hex)])
-//            self.viewModel.createGot(got: got)
-            //ToDo: - deliver centerPoint To moedl to create new task
             self.quickAddView.addField.resignFirstResponder()
-//            self.viewModel.seedState.onNext(.none)
             self.cardCollectionView.isHidden = false
             self.view.layoutIfNeeded()
         }
@@ -99,7 +150,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
         self.viewModel.updateList()
         self.viewModel.updateTagList()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -107,9 +157,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         if let beforeGot = viewModel.beforeGotSubject.value,
             let gotList = try? viewModel.output.gotList.value(),
             let beforeGotIndex = gotList.firstIndex(of: beforeGot) {
-            
+
             setCard(index: beforeGotIndex)
             centeredCollectionViewFlowLayout.scrollToPage(index: beforeGotIndex, animated: true)
+        } else if !gotList.isEmpty {
+            setCard(index: 0)
         }
     }
     
@@ -158,14 +210,20 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     // MARK: - Initializing
     
+    func configureTagCollectionView() {
+        tagCollectionView.allowsMultipleSelection = true
+        let tagNibName = UINib(nibName: "TagCollectionViewCell", bundle: nil)
+        tagCollectionView.register(tagNibName, forCellWithReuseIdentifier: "tagCell")
+        let tagListNibName = UINib(nibName: "TagListCollectionViewCell", bundle: nil)
+        tagCollectionView.register(tagListNibName, forCellWithReuseIdentifier: "tagListCollectionViewCell")
+    }
+    
     func configureMapView() {
-        
-      mapView = MTMapView.init(frame: self.view.frame)
+        mapView = MTMapView.init(frame: mapBackgroundView.bounds)
         mapView.delegate = self
         mapView.baseMapType = .standard
-        self.view.addSubview(mapView)
-        self.view.sendSubviewToBack(mapView)
-        
+        mapBackgroundView.insertSubview(mapView, at: 0)
+        view.sendSubviewToBack(mapBackgroundView)
     }
     
     private func configureCardCollectionView(){
@@ -176,6 +234,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     }
     
     func bindViewModel() {
+        
+        radiusSlider.rx.value
+            .map { $0 * 1000 }
+            .subscribe(onNext: { [weak self] meter in
+                self?.circleRadiusLabel.text = "\(Int(meter))m"
+            })
+            .disposed(by: disposeBag)
+        
         Observable.combineLatest(viewModel.aimToPlace, viewModel.seedState)
             .subscribe(onNext:{ [weak self] aimToPlace, state in
             guard let self = self else { return }
@@ -196,18 +262,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
             self.state = state
             }).disposed(by: disposeBag)
-//        viewModel.seedState.subscribe(onNext:{ [weak self] state in
-//            guard let self = self else { return }
-//            self.state = state
-//            switch state{
-//            case .none:
-//                self.setNormalStateUI()
-//            case .seeding:
-//                self.setSeedingStateUI()
-//            case .adding:
-//                self.setAddingStateUI()
-//            }
-//            }).disposed(by: disposeBag)
         
         self.seedButton.rx.tap.subscribe(onNext: { [weak self] in
             print("버튼 클릭됨")
@@ -233,7 +287,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             
             cell.doneButton.rx.tap
             .subscribe(onNext: {
-                guard var got = cell.got else { return }
+                guard let got = cell.got else { return }
                 self.viewModel.setGotDone(got: got)
             }).disposed(by: cell.disposeBag)
             
@@ -241,14 +295,50 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.viewModel.deleteGot(got: cell.got!)
             }).disposed(by: cell.disposeBag)
         }.disposed(by: self.disposeBag)
+    
         
-        self.viewModel.output.tagList.bind(to: tagCollectionView.rx.items(cellIdentifier: MapTagCell.reuseIdenfier, cellType: MapTagCell.self)) { (index, tag, cell) in
-            cell.tagIndicator.backgroundColor = tag.hex.hexToColor()
-            cell.tagLabel.text = tag.name
-        }.disposed(by: self.disposeBag)
+        viewModel.output.tagList
+            .compactMap { [weak self] in self?.appendEmptyTag($0) }
+            .bind(to: tagCollectionView.rx.items) { (collectionView, cellItem, tag) -> UICollectionViewCell in
+                if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
+                    cell.configure(tag)
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagListCollectionViewCell", for: IndexPath(item: cellItem, section: 0)) as? TagListCollectionViewCell else { return UICollectionViewCell()}
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
+            .bind { [weak self] indexPath, tag in
+                if let collectionView = self?.tagCollectionView, indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
+                    self?.viewModel.input.tagListCellSelect.onNext(())
+                    return
+                }
+                
+                if var tags = self?.viewModel.input.filteredTagSubject.value {
+                    tags.append(tag)
+                    self?.viewModel.input.filteredTagSubject.accept(tags)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.zip(tagCollectionView.rx.itemDeselected, tagCollectionView.rx.modelDeselected(Tag.self))
+            .bind { [weak self] indexPath, tag in
+                if var tags = self?.viewModel.input.filteredTagSubject.value, let index = tags.firstIndex(of: tag) {
+                    tags.remove(at: index)
+                    self?.viewModel.input.filteredTagSubject.accept(tags)
+                }
+            }
+            .disposed(by: disposeBag)
         
         
         self.viewModel.output.gotList.subscribe(onNext: { list in
+            print("🚨",list)
             self.gotList = list
         }).disposed(by: self.disposeBag)
         
@@ -294,6 +384,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     func setNormalStateUI(){
         self.mapView.removeAllCircles()
         self.seedButton.backgroundColor = .white
+        self.seedButton.setImage(UIImage(named: "icMapBtnAdd"), for: .normal)
         self.seedButton.isEnabled = true
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
@@ -323,13 +414,14 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     func addPin(){
         mapView.removeAllPOIItems()
-        for got in gotList{
+        for (i, got) in gotList.enumerated() {
             let pin = MTMapPOIItem()
             pin.itemName = got.title
             pin.markerType = .customImage
             pin.customImage = UIImage(named: "icPin1")
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.latitude!, longitude: got.longitude!))
-            pin.showAnimationType = .springFromGround
+            //pin.showAnimationType = .springFromGround
+            pin.tag = i
             mapView.addPOIItems([pin])
         }
     }
@@ -365,8 +457,13 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     func setCard(index: Int) {
         guard let gotList = try? self.viewModel.output.gotList.value() else { return }
         let got = gotList[index]
-        let geo = MTMapPointGeo(latitude: got.latitude ?? .zero, longitude: got.longitude ?? .zero)
-        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
+        if let lat = got.latitude, let long = got.longitude, let radius = got.radius {
+            let geo = MTMapPointGeo(latitude: lat, longitude: long)
+            self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
+            mapView.removeAllCircles()
+            drawCircle(latitude: lat, longitude: long, radius: Float(radius), tag: index)
+        }
+        
     }
 	
 	func updateAddress() {
@@ -382,8 +479,12 @@ extension MapViewController: MTMapViewDelegate{
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
+            self.quickAddView.isHidden = true
+            viewModel.seedState.onNext(.seeding)
+        } else {
+            currentCircle = nil
+            viewModel.seedState.onNext(.none)
         }
-		print(mapPoint.mapPointGeo())
     }
     func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
         switch self.state {
@@ -392,6 +493,12 @@ extension MapViewController: MTMapViewDelegate{
         case .none:
             break
         }
+    }
+    func mapView(_ mapView: MTMapView!, dragEndedOn mapPoint: MTMapPoint!) {
+        if state == .none {
+            currentCircle = nil
+        }
+        
     }
     func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
         switch self.state{
@@ -402,16 +509,78 @@ extension MapViewController: MTMapViewDelegate{
             break
         }
     }
+    
+    func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
+        let got = gotList[poiItem.tag]
+        if let lat = got.latitude, let long = got.longitude, let radius = got.radius {
+            if state != .none {
+                viewModel.seedState.onNext(.none)
+            }
+            mapView?.removeAllCircles()
+            drawCircle(latitude: lat, longitude: long, radius: Float(radius), tag: poiItem.tag)
+            
+        }
+        
+        return true
+    }
 }
+
+// MARK: - UICollectionView Delegate
+
+extension MapViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 0.3
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            
+            cell.contentView.alpha = 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 0.3
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            cell.contentView.alpha = 1
+        }
+    }
+}
+
+// MARK: - UICollectionView DelegateFlowLayout
 
 extension MapViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         if collectionView == self.tagCollectionView{
-            guard let tagList = try? self.viewModel.output.tagList.value(), !tagList.isEmpty else { return .zero }
-            let title = tagList[indexPath.item].name
-            let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 32), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
-            let width = 9 + 14 + 8 + rect.width + 16
-            return CGSize(width: width, height: 32)
+            // 8 + 태그뷰
+            var tagWidth: CGFloat = 0
+            var title = "태그 목록"
+            
+            //마지막 셀 = 태그목록
+            if indexPath.item != collectionView.numberOfItems(inSection: 0) - 1 {
+                tagWidth = 8 + 15
+                if let tagList = try? viewModel.output.tagList.value() {
+                    title = tagList[indexPath.item].name
+                }
+//                title = viewModel.output.tagList.value[indexPath.item].name
+            }
+            
+            let rect = NSString(string: title).boundingRect(with: .init(width: 0, height: 30), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
+            
+            // tagWidth + 8 + 글자
+            let width: CGFloat = tagWidth + 8 + rect.width + 8
+            // cell height - inset(10)
+            let height: CGFloat = 30
+            return CGSize(width: width, height: height)
+            
         }else if collectionView == cardCollectionView{
             return centeredCollectionViewFlowLayout.itemSize
         }else{

@@ -35,14 +35,16 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         mapView?.fitArea(toShow: circle)
     }
     func drawCircle(latitude: CLLocationDegrees, longitude: CLLocationDegrees, radius: Float) {
+        
         let circle = MTMapCircle()
         let center = MTMapPoint(geoCoord: .init(latitude: latitude, longitude: longitude))
         circle.circleCenterPoint = center
         circle.circleLineColor = .orange
         circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
         circle.circleRadius = radius
+        
         mapView?.addCircle(circle)
-    
+        
         mapView?.fitArea(toShow: circle)
     }
     
@@ -57,15 +59,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
 
         return CLLocationCoordinate2D(latitude: lat2 * 180 / Double.pi, longitude: lon2 * 180 / Double.pi)
     }
-    
-    func drawSeed(point: MTMapPoint) {
-        let seed = MTMapPOIItem()
-        seed.mapPoint = point
-        seed.markerType = .customImage
-        seed.customImage = UIImage(named: "icSeed")!
-        mapView?.add(seed)
-    }
-    
     func setupMapCenter(latitude: Double, longitude: Double) {
         let centerPoint = MTMapPoint(geoCoord: .init(latitude: latitude, longitude: longitude))
         mapView?.setMapCenter(centerPoint, animated: false)
@@ -130,6 +123,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -139,6 +133,16 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             print(location)
             print("set center to \(location) in addPlant")
             setupMapCenter(latitude: Double(location.latitude), longitude: Double(location.longitude))
+            
+            let pin = MTMapPOIItem()
+            
+            mapView?.removeAllPolylines()
+            mapView?.removeAllCircles()
+            
+            pin.markerType = .customImage
+            pin.customImage = UIImage(named: "icSeed")
+            pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: Double(location.latitude), longitude: Double(location.longitude)))
+            mapView?.addPOIItems([pin])
             
             drawCircle(latitude: location.latitude, longitude: location.longitude, radius: Float(radius))
         }
@@ -189,57 +193,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        // Input
-        
-        editButton.rx.tap
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .bind(to: viewModel.inputs.editPlace)
-            .disposed(by: disposeBag)
-        
-        saveButton.rx.tap
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .bind(to: viewModel.inputs.save)
-            .disposed(by: disposeBag)
-        
-        cancelButton.rx.tap
-            .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.inputs.close)
-            .disposed(by: disposeBag)
-        
-        titleTextField.rx.text.orEmpty
-            .bind(to: viewModel.nameText)
-            .disposed(by: disposeBag)
-        
-        
-        inputTableView.rx.itemSelected
-            .filter { $0.section == 0 }
-            .subscribe(onNext: { _ in self.viewModel.tapTag.onNext(()) })
-            .disposed(by: disposeBag)
-        
-        Observable.combineLatest(viewModel.inputs.isOnArrive, viewModel.inputs.isOnLeave, viewModel.outputs.placeSubject)
-            .subscribe(onNext: { [unowned self] arrive, leave, place in
-                if !arrive, !leave {
-                    self.alertErrorLabel.isHidden = false
-                    self.saveButton.isEnabled = false
-                    return
-                } else if place != nil {
-                    self.alertErrorLabel.isHidden = true
-                    self.saveButton.isEnabled = true
-                }
-                
-                var msg = ""
-                if arrive, leave {
-                    msg = "도착할 때와 떠날 때 알려줍니다"
-                } else if arrive {
-                    msg = "도착할 때만 알려줍니다"
-                } else if leave {
-                    msg = "떠날 때만 알려줍니다"
-                }
-                
-                self.showAlert(self.alertDefaultLabel, message: msg)
-            })
-            .disposed(by: disposeBag)
-        
         // Output
         
         let dataSource = AddPlantViewController.dataSource(viewModel: viewModel, vc: self)
@@ -273,6 +226,56 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                 self?.placeLabel.text = place
                 self?.placeLabel.textColor = .black
                 //self?.setPlaceTextView(text: place)
+            })
+            .disposed(by: disposeBag)
+        
+        // Input
+        
+        editButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.editPlace)
+            .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.save)
+            .disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
+            .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+            .bind(to: viewModel.inputs.close)
+            .disposed(by: disposeBag)
+        
+        titleTextField.rx.text.orEmpty
+            .bind(to: viewModel.nameText)
+            .disposed(by: disposeBag)
+        
+        inputTableView.rx.itemSelected
+            .filter { $0.section == 0 }
+            .subscribe(onNext: { _ in self.viewModel.tapTag.onNext(()) })
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(viewModel.inputs.isOnArrive, viewModel.inputs.isOnLeave, viewModel.outputs.placeSubject, viewModel.inputs.nameText)
+            .subscribe(onNext: { [unowned self] arrive, leave, place, title in
+                if !arrive, !leave {
+                    self.alertErrorLabel.isHidden = false
+                    self.saveButton.isEnabled = false
+                    return
+                } else if place != nil {
+                    self.alertErrorLabel.isHidden = true
+                    self.saveButton.isEnabled = title.trimmingCharacters(in: .whitespaces).isEmpty ? false : true
+                }
+                
+                var msg = ""
+                if arrive, leave {
+                    msg = "도착할 때와 떠날 때 알려줍니다"
+                } else if arrive {
+                    msg = "도착할 때만 알려줍니다"
+                } else if leave {
+                    msg = "떠날 때만 알려줍니다"
+                }
+                
+                self.showAlert(self.alertDefaultLabel, message: msg)
             })
             .disposed(by: disposeBag)
     }
@@ -346,19 +349,19 @@ extension AddPlantViewController {
                     if indexPath.section == 1 {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.dateText)
-                            .disposed(by: cell.disposedBag)
+                            .disposed(by: cell.disposeBag)
                         cell.textField.tag = indexPath.section
                         cell.textField.delegate = vc
                     } else if indexPath.section == 2 {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.arriveText)
-                            .disposed(by: cell.disposedBag)
+                            .disposed(by: cell.disposeBag)
                         cell.textField.tag = indexPath.section
                         cell.textField.delegate = vc
                     } else if indexPath.section == 3 {
                         cell.textField.rx.text.orEmpty
                             .bind(to: viewModel.leaveText)
-                            .disposed(by: cell.disposedBag)
+                            .disposed(by: cell.disposeBag)
                         cell.textField.tag = indexPath.section
                         cell.textField.delegate = vc
                     }

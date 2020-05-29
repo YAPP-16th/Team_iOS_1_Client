@@ -91,45 +91,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         sceneCoordinator.transition(to: .setTag(addTagViewModel), using: .push, animated: true)
     }
     
-    private func removeItem(section: InputItemType) {
-        var sections = sectionsSubject.value
-        guard sections.count > section.rawValue else { return }
-        var items = sections[section.rawValue].items
-        
-        switch section {
-        case .tag: return
-        default:
-            if items.count >= 2 {
-                items.removeLast()
-            }
-        }
-        
-        sections[section.rawValue] = InputSectionModel(original: sections[section.rawValue], items: items)
-        sectionsSubject.accept(sections)
-    }
-    
-    private func insertItem(section: InputItemType) {
-        var sections = sectionsSubject.value
-        guard sections.count > section.rawValue else { return }
-        var items = sections[section.rawValue].items
-        if items.count >= 2 { return }
-        
-        var item: InputItem = .TextFieldItem(text: "", placeholder: "", enabled: false, isDate: false)
-        
-        switch section {
-        case .tag: return
-        case .date:
-            item = InputItem.TextFieldItem(text: dateText.value, placeholder: section.placeholder, enabled: false, isDate: true)
-        case .arrive:
-            item = InputItem.TextFieldItem(text: arriveText.value, placeholder: section.placeholder, enabled: false, isDate: false)
-        case .leave:
-            item = InputItem.TextFieldItem(text: leaveText.value, placeholder: section.placeholder, enabled: false, isDate: false)
-        }
-        items.append(item)
-        sections[section.rawValue] = InputSectionModel(original: sections[section.rawValue], items: items)
-        sectionsSubject.accept(sections)
-    }
-    
     private func saveGot() {
         guard let location = placeSubject.value else {
             print("🚨 위치정보가 없습니다.")
@@ -218,9 +179,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         
         if let got = currentGot.value {
             mapVM.beforeGotSubject.accept(got)
-            mapVM.beforeGotSubject
-                .bind(to: currentGot)
-                .disposed(by: disposeBag)
         }
         if let location = placeSubject.value {
             mapVM.placeSubject.onNext(location)
@@ -241,33 +199,16 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, got: Got? = nil) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
-        
-        //fetchGot(got: got)
-        currentGot.accept(got)
-        sectionsSubject.accept(configureDataSource(got: got))
+
         configureBind(sceneCoordinator: sceneCoordinator)
-        
+        currentGot.accept(got)
     }
-//
-//    private func fetchGot(got: Got?) {
-//        guard let got = got else { return }
-//
-//        currentGot.accept(got)
-//        if let lat = got.latitude, let long = got.longitude {
-//            placeSubject.accept(.init(latitude: lat, longitude: long))
-//        }
-//
-//        nameText.accept(got.title ?? "")
-//        placeText.accept(got.place ?? "")
-//    }
     
     private func configureBind(sceneCoordinator: SceneCoordinatorType) {
         
         currentGot
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] got in
-                self?.sectionsSubject.accept(self?.configureDataSource(got: got) ?? [])
-                
                 if let lat = got.latitude, let long = got.longitude {
                     self?.placeSubject.accept(.init(latitude: lat, longitude: long))
                 }
@@ -288,9 +229,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 if let departureMsg = got.deparetureMsg, departureMsg != "" {
                     self?.leaveText.accept(departureMsg)
                 }
-                
-                
-                
+                self?.sectionsSubject.accept(self?.configureDataSource() ?? [])
             })
             .disposed(by: disposeBag)
         
@@ -312,24 +251,9 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             })
             .disposed(by: disposeBag)
         
-        isOnDate
-            .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .date)
-                  : self.removeItem(section: .date)
-            })
-            .disposed(by: disposeBag)
-
-        isOnArrive
-            .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .arrive)
-                  : self.removeItem(section: .arrive)
-            })
-            .disposed(by: disposeBag)
-
-        isOnLeave
-            .subscribe(onNext: { [unowned self] b in
-                b ? self.insertItem(section: .leave)
-                  : self.removeItem(section: .leave)
+        Observable.combineLatest(isOnDate, isOnArrive, isOnLeave)
+            .subscribe(onNext: { [weak self] onDate, onArrive, onLeave in
+                self?.sectionsSubject.accept(self?.configureDataSource() ?? [])
             })
             .disposed(by: disposeBag)
         
@@ -348,34 +272,46 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                     self?.placeText.accept(place?.address?.addressName ?? "")
                 }
             })
-            .disposed(by: disposeBag)
-        
-        
+            .disposed(by: disposeBag)   
     }
     
-    private func configureDataSource(got: Got?) -> [InputSectionModel] {
+    private func configureDataSource() -> [InputSectionModel] {
+        
+        var dateItems = [InputItem.ToggleableItem(title: InputItemType.date.title)]
+        var arriveItems = [InputItem.ToggleableItem(title: InputItemType.arrive.title)]
+        var departureItems = [InputItem.ToggleableItem(title: InputItemType.leave.title)]
+        
+        if isOnDate.value {
+            let item = InputItem.TextFieldItem(text: dateText.value, placeholder: InputItemType.date.placeholder, enabled: false, isDate: true)
+            dateItems.append(item)
+        }
+        if isOnArrive.value {
+            let item = InputItem.TextFieldItem(text: arriveText.value, placeholder: InputItemType.arrive.placeholder, enabled: false, isDate: false)
+            arriveItems.append(item)
+        }
+        if isOnLeave.value {
+            let item = InputItem.TextFieldItem(text: leaveText.value, placeholder: InputItemType.leave.placeholder, enabled: false, isDate: false)
+            departureItems.append(item)
+        }
+        print(dateItems)
+        print(arriveItems)
+        print(departureItems)
         return [
             .TagSection(section: InputItemType.tag.rawValue, title: " ", items: [.TagItem(title: InputItemType.tag.title)]),
             .ToggleableSection(
                 section: InputItemType.date.rawValue,
                 title: " ",
-                items: [
-                    .ToggleableItem(title: InputItemType.date.title)
-                    //.TextFieldItem(text: dateText.value, placeholder: InputItemType.date.placeholder, enabled: false, isDate: true)
-                ]),
+                items: dateItems),
             .ToggleableSection(
                 section: InputItemType.arrive.rawValue,
                 title: " ",
-                items: [
-                    .ToggleableItem(title: InputItemType.arrive.title)
-                ]),
+                items: arriveItems),
             .ToggleableSection(
                 section: InputItemType.leave.rawValue,
                 title: " ",
-                items: [
-                    .ToggleableItem(title: InputItemType.leave.title)
-                ])
+                items: departureItems)
         ]
+        
     }
 }
 
