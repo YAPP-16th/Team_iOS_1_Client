@@ -114,9 +114,17 @@ extension SettingPlaceViewController: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if section == 0 {
-			return self.placeList.count
+			if self.placeList.count > 5 {
+				return 5
+			}else {
+				return self.placeList.count
+			}
 		} else {
-			return 2
+			if self.placeList.count > 5 {
+				return 0
+			} else {
+				return 5 - self.placeList.count
+			}
 		}
 	}
 	
