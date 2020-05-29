@@ -61,7 +61,8 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 	}
 	
 	func searchKeyword(keyword: String){
-		APIManager.shared.search(keyword: keyword) { placeList in
+		guard let location = LocationManager.shared.currentLocation else { return }
+		APIManager.shared.search(keyword: keyword, latitude: location.latitude, longitude: location.longitude) { placeList in
 			self.placeList = placeList
 		}
 	}

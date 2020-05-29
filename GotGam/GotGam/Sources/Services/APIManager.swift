@@ -12,11 +12,11 @@ import RxSwift
 class APIManager {
 	static let shared = APIManager()
 	
-	func search(keyword: String, completion: @escaping ([Place]) -> Void){
+	func search(keyword: String, latitude: Double, longitude: Double, completion: @escaping ([Place]) -> Void){
 		let urlString = "https://dapi.kakao.com/v2/local/search/keyword.json"
         let parameters = [
-            "y": "37.514322572335935",
-            "x": "127.06283102249932",
+            "y": "\(latitude)",
+            "x": "\(longitude)",
 //            "radius": "20000",
             "query": keyword
         ]

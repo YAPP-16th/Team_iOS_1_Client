@@ -27,14 +27,16 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 			}
 		}
 	}
+	
 	var historyList: [String] = [] {
 		didSet{
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
 			}
 		}
-		
 	}
+	
+	var collectionList = [Frequent]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -53,6 +55,10 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		self.viewModel.inputs.readKeyword()
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		viewModel.inputs.readFrequents()
+	}
 	
 	func bindViewModel() {
 		
@@ -65,11 +71,19 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 				var keyword = self.SearchBar.text ?? ""
 				self.viewModel.inputs.addKeyword(keyword: keyword)
 			}) .disposed(by: disposeBag)
+		
+		viewModel.outputs.collectionItems
+			.subscribe(onNext: { [weak self] frequents in
+				self?.collectionList = frequents
+			})
+			.disposed(by: disposeBag)
+
 	}
 	
 	
 	func searchKeyword(keyword: String){
-		APIManager.shared.search(keyword: keyword) { placeList in
+		guard let location = LocationManager.shared.currentLocation else { return }
+		APIManager.shared.search(keyword: keyword, latitude: location.latitude, longitude: location.longitude) { placeList in
 			self.placeList = placeList
 		}
 	}
@@ -127,17 +141,17 @@ extension SearchBarViewController: UITableViewDataSource{
 }
 
 class SearchHistoryCell: UITableViewCell {
-	
 	@IBOutlet var historyLabel: UILabel!
-	
 }
 
-
 class SearchKakaoCell: UITableViewCell {
-	
 	@IBOutlet var kewordLabel: UILabel!
 	@IBOutlet var resultLabel: UILabel!
-	
+}
+
+class FrequentsCollectionCell: UICollectionViewCell {
+	@IBOutlet var frequentsIcon: UIButton!
+	@IBOutlet var frequentsLabel: UILabel!
 }
 
 
@@ -162,10 +176,51 @@ extension SearchBarViewController: UITableViewDelegate {
 				viewModel.sceneCoordinator.close(animated: true) {
 					mapVC?.updateAddress()
 				}
-				
-				
 			}
 		}
 	}
+}
+
+extension SearchBarViewController: UICollectionViewDataSource {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return collectionList.count
+	}
 	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FrequentsCollectionCell", for: indexPath) as! FrequentsCollectionCell
+		cell.frequentsLabel.text = collectionList[indexPath.row].name
+		cell.frequentsIcon.setImage(collectionList[indexPath.row].type.image, for: .normal)
+		cell.frequentsIcon.layer.cornerRadius = cell.frequentsIcon.frame.height / 2
+		return cell
+	}
+}
+
+extension SearchBarViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+		let rect = NSString(string: "\(self.collectionList[indexPath.item].name)").boundingRect(with: .init(width: 0, height: 48), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+
+		let width: CGFloat = 8 + 16 + 7 + rect.width + 8
+        // cell height - inset(10)
+        let height: CGFloat = 48
+        return CGSize(width: width, height: height)
+    }
+}
+
+extension SearchBarViewController: UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let frequents = self.collectionList[indexPath.row]
+		if let tabVC = self.presentingViewController as? TabBarController{
+			let mapVC = tabVC.viewControllers?.first as? MapViewController
+			mapVC?.x = frequents.latitude
+			mapVC?.y = frequents.longitude
+			mapVC?.placeName = frequents.name
+			mapVC?.addressName = frequents.address
+			print("서치바 자주가는장소 주소!!!!", frequents )
+			viewModel.sceneCoordinator.close(animated: true) {
+				mapVC?.updateAddress()
+			}
+		}
+	}
 }

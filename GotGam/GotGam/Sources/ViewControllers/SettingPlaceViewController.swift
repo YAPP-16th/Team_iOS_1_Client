@@ -17,7 +17,6 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
     var viewModel: SettingPlaceViewModel!
 	
 	@IBOutlet var settingPlaceTableView: UITableView!
-	@IBOutlet var massageLabel: UILabel!
 	
 	var placeList: [Frequent] = [] {
 		didSet{
@@ -49,28 +48,17 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 			.subscribe(onNext: { [weak self] (indexPath) in
 				if indexPath.section == 0 {
 					self?.viewModel.inputs.detailVC()
-				}
-				else if indexPath.section == 1{
-					if self?.placeList.count ?? 0 > 4 {
-						self?.showMessage(message: "자주 가는 장소는 5개까지 설정할 수 있습니다.")
-					}
-					else {
-						self?.viewModel.inputs.showFrequentsDetailVC()
-					}
+				} else {
+					self?.viewModel.inputs.showFrequentsDetailVC()
 				}
 			}) .disposed(by: disposeBag)
-		
-		
+	
+	
 		viewModel.outputs.frequentsList
 					.bind { (List) in
 						self.placeList = List
 				} .disposed(by: disposeBag)
 
-	}
-	
-	func showMessage(message: String) {
-		massageLabel.text = message
-		massageLabel.backgroundColor = UIColor.saffron
 	}
 		
 }
@@ -126,18 +114,32 @@ extension SettingPlaceViewController: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if section == 0 {
-			return self.placeList.count
+			if self.placeList.count > 5 {
+				return 5
+			}else {
+				return self.placeList.count
+			}
 		} else {
-			return 2
+			if self.placeList.count > 5 {
+				return 0
+			} else {
+				return 5 - self.placeList.count
+			}
 		}
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		
 		if indexPath.section == 0 {
 			let place = placeList[indexPath.row]
+			let type: IconType = place.type
 			let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath ) as! PlaceCell
 			cell.placeNameLabel.text = place.name
 			cell.placeAddressLabel.text = place.address
+			cell.placeIconImageView.image = type.image
+			
+			cell.placeIconImageView.layer.cornerRadius = cell.placeIconImageView.frame.height / 2
+			cell.placeIconImageView.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
 			return cell
 		}else {
 
@@ -181,5 +183,6 @@ class PlaceCell: UITableViewCell{
 	
 	@IBOutlet var placeNameLabel: UILabel!
 	@IBOutlet var placeAddressLabel: UILabel!
+	@IBOutlet var placeIconImageView: UIImageView!
 	
 }

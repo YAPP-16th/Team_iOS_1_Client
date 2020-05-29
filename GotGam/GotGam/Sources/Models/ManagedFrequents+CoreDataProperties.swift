@@ -10,7 +10,6 @@
 import Foundation
 import CoreData
 
-
 extension ManagedFrequents {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ManagedFrequents> {
@@ -21,5 +20,5 @@ extension ManagedFrequents {
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
     @NSManaged public var name: String
-
+	@NSManaged public var type: Int16
 }

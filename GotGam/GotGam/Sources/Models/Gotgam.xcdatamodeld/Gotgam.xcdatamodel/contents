@@ -16,6 +16,7 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="ManagedGot" representedClassName="ManagedGot" syncable="YES">
         <attribute name="arriveMsg" optional="YES" attributeType="String"/>
@@ -44,7 +45,7 @@
     <elements>
         <element name="History" positionX="-144" positionY="171" width="128" height="58"/>
         <element name="ManagedAlarm" positionX="-135" positionY="180" width="128" height="133"/>
-        <element name="ManagedFrequents" positionX="-144" positionY="216" width="128" height="103"/>
+        <element name="ManagedFrequents" positionX="-144" positionY="216" width="128" height="118"/>
         <element name="ManagedGot" positionX="-54" positionY="90" width="128" height="283"/>
         <element name="ManagedTag" positionX="-232.640625" positionY="80.38671875" width="128" height="103"/>
     </elements>

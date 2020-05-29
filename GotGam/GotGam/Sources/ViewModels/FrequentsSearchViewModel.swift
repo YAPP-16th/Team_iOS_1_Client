@@ -29,7 +29,8 @@ protocol FrequentsSearchViewModelType {
 class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs, FrequentsSearchViewModelOutputs, FrequentsSearchViewModelType {
 	
 	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
-	var placeSearchText = BehaviorRelay<String>(value: "")
+	var placeBehavior = BehaviorRelay<Place?>(value: nil)
+	var frequentsPlaceSearch = BehaviorRelay<Place?>(value: nil)
 		
 	func addKeyword(keyword: String) {
 		let storage = SearchStorage()
@@ -48,11 +49,9 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 	func showMapVC(){
 		let movemapVM = FrequentsMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
 		movemapVM.placeBehavior.accept(placeBehavior.value)
-		movemapVM.placeMapText.bind(to: placeSearchText).disposed(by: disposeBag)
+		movemapVM.frequentsPlaceMap.bind(to: frequentsPlaceSearch).disposed(by: disposeBag)
 		sceneCoordinator.transition(to: .frequentsMap(movemapVM), using: .push, animated: true)
 	}
-	
-	var placeBehavior = BehaviorRelay<Place?>(value: nil)
 	
 	
 	var inputs: FrequentsSearchViewModelInputs { return self }
