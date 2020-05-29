@@ -259,13 +259,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aRT-0t-ucU">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icFrequentsHome" translatesAutoresizingMaskIntoConstraints="NO" id="aRT-0t-ucU">
                                                     <rect key="frame" x="24" y="29.5" width="40" height="40"/>
                                                     <color key="backgroundColor" name="saffron"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="LQN-aY-6nd"/>
                                                         <constraint firstAttribute="height" constant="40" id="jsP-wg-RiI"/>
                                                     </constraints>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="곳감" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJt-pX-7Ky">
                                                     <rect key="frame" x="82" y="29.5" width="308" height="19"/>
@@ -294,6 +295,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="placeAddressLabel" destination="g5D-Ng-AmN" id="VD7-PR-Uvc"/>
+                                            <outlet property="placeIconImageView" destination="aRT-0t-ucU" id="wzl-zW-yWh"/>
                                             <outlet property="placeNameLabel" destination="qJt-pX-7Ky" id="aiT-hU-oEq"/>
                                         </connections>
                                     </tableViewCell>
@@ -380,7 +382,7 @@
                                                 <color key="textColor" name="brownishGrey"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiV-nH-ULN">
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiV-nH-ULN">
                                                 <rect key="frame" x="18.5" y="45" width="40" height="40"/>
                                                 <color key="backgroundColor" name="brownGrey"/>
                                                 <constraints>
@@ -418,6 +420,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="vK4-9G-Eef"/>
                                                 </constraints>
                                                 <state key="normal" image="icFrequentsOffice"/>
+                                                <connections>
+                                                    <action selector="icOffice:" destination="uxc-ar-Peh" eventType="touchUpInside" id="YJc-yX-rqG"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -445,6 +450,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="rA5-el-zue"/>
                                                 </constraints>
                                                 <state key="normal" image="icFrequentsSchool"/>
+                                                <connections>
+                                                    <action selector="icSchool:" destination="uxc-ar-Peh" eventType="touchUpInside" id="eQi-jO-tq7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -472,6 +480,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="iox-4N-Rir"/>
                                                 </constraints>
                                                 <state key="normal" image="icFrequentsOther"/>
+                                                <connections>
+                                                    <action selector="icOther:" destination="uxc-ar-Peh" eventType="touchUpInside" id="Tw6-JP-sY8"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -528,6 +539,9 @@
                     <connections>
                         <outlet property="addFrequents" destination="xMA-Nz-P52" id="oM3-zJ-Ced"/>
                         <outlet property="icHomeBtn" destination="eiV-nH-ULN" id="1Tv-er-1BH"/>
+                        <outlet property="icOfficeBtn" destination="aHe-sk-wTf" id="4DL-FN-8dc"/>
+                        <outlet property="icOtherBtn" destination="Edf-XC-z7c" id="jME-J5-HaB"/>
+                        <outlet property="icSchoolBtn" destination="jji-Ys-AgP" id="IVK-Xf-VtV"/>
                         <outlet property="placeAddress" destination="Zlm-Gf-ylR" id="lNt-SW-tKj"/>
                         <outlet property="placeName" destination="MfK-Lu-get" id="Qzz-d5-3eP"/>
                     </connections>

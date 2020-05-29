@@ -19,8 +19,22 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 	@IBOutlet var addFrequents: UIBarButtonItem!
 	
 	@IBOutlet var icHomeBtn: UIButton!
+	@IBOutlet var icOfficeBtn: UIButton!
+	@IBOutlet var icSchoolBtn: UIButton!
+	@IBOutlet var icOtherBtn: UIButton!
+	
 	@IBAction func icHome(_ sender: Any) {
+		
 		icHomeBtn.backgroundColor = UIColor.saffron
+	}
+	@IBAction func icOffice(_ sender: Any) {
+		icOfficeBtn.backgroundColor = UIColor.saffron
+	}
+	@IBAction func icSchool(_ sender: Any) {
+		icSchoolBtn.backgroundColor = UIColor.saffron
+	}
+	@IBAction func icOther(_ sender: Any) {
+		icOtherBtn.backgroundColor = UIColor.saffron
 	}
 	
 	
@@ -28,6 +42,14 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		super.viewDidLoad()
 		
 		icHomeBtn.layer.cornerRadius = self.icHomeBtn.frame.height / 2
+		icHomeBtn.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
+		icOfficeBtn.layer.cornerRadius = self.icHomeBtn.frame.height / 2
+		icOfficeBtn.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
+		icSchoolBtn.layer.cornerRadius = self.icHomeBtn.frame.height / 2
+		icSchoolBtn.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
+		icOtherBtn.layer.cornerRadius = self.icHomeBtn.frame.height / 2
+		icOtherBtn.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
+		
 		placeName.layer.masksToBounds = true
 		placeName.layer.borderColor = UIColor.saffron.cgColor
 		placeName.layer.borderWidth = 1.0
@@ -64,6 +86,11 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		viewModel.placeText
 			.bind(to: viewModel.inputs.addressPlace)
 			.disposed(by: disposeBag)
+		
+		icHomeBtn.rx.tap
+			.subscribe({ [weak self] _ in
+				self?.viewModel.inputs.typePlace.accept(.home)
+			}).disposed(by: disposeBag)
 	}
 	
 

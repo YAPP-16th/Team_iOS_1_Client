@@ -8,21 +8,44 @@
 
 import Foundation
 
+enum IconType: Int16 {
+	case home = 0
+	case office
+	case school
+	case other
+
+	var image: UIImage {
+		switch self {
+			case .home:
+				return UIImage(named: "icFrequentsHome")!
+			case .office:
+				return UIImage(named: "icFrequentsOffice")!
+			case .school:
+				return UIImage(named: "icFrequentsSchool")!
+			case .other:
+				return UIImage(named: "icFrequentsOther")!
+		}
+	}
+}
+
 struct Frequent: Equatable {
 	var name: String
     var address: String
     var latitude: Double
     var longitude: Double
+	var type: IconType
 	
 	init(
 		name: String,
 		address: String,
 		latitude: Double,
-		longitude: Double
+		longitude: Double,
+		type: IconType
 	) {
 		self.name = name
 		self.address = address
 		self.latitude = latitude
 		self.longitude = longitude
+		self.type = type
 	}
 }

@@ -16,6 +16,7 @@ protocol FrequentsViewModelInputs {
 	var addressPlace: BehaviorRelay<String> { get set }
 	var latitudePlace: BehaviorRelay<Double> { get set }
 	var longitudePlace: BehaviorRelay<Double> { get set }
+	var typePlace: BehaviorRelay<IconType> { get set }
 
 	func addFrequents()
 	func readFrequents()
@@ -32,10 +33,12 @@ protocol FrequentsViewModelType {
 }
 
 class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsViewModelOutputs, FrequentsViewModelType {
+	
 	var namePlace = BehaviorRelay<String>(value: "")
 	var addressPlace = BehaviorRelay<String>(value: "")
 	var latitudePlace = BehaviorRelay<Double>(value: 0)
 	var longitudePlace = BehaviorRelay<Double>(value: 0)
+	var typePlace = BehaviorRelay<IconType>(value: .other)
 	
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	var placeText = BehaviorRelay<String>(value: "")
@@ -43,11 +46,13 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	func addFrequents() {
 		let storage = FrequentsStorage()
 		
-		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: latitudePlace.value, longitude: longitudePlace.value)
+		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: latitudePlace.value, longitude: longitudePlace.value, type: typePlace.value)
 
 		storage.createFrequents(frequent: frequent).bind { _ in
 			self.readFrequents()
 			} .disposed(by: disposeBag)
+		
+		print("frequent", frequent)
 		
 	}
 	

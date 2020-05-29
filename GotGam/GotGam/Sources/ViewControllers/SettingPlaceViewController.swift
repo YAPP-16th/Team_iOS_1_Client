@@ -129,11 +129,18 @@ extension SettingPlaceViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		
 		if indexPath.section == 0 {
 			let place = placeList[indexPath.row]
+			let type: IconType = place.type
 			let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath ) as! PlaceCell
 			cell.placeNameLabel.text = place.name
 			cell.placeAddressLabel.text = place.address
+			cell.placeIconImageView.image = place.type.image
+			
+			cell.placeIconImageView.layer.cornerRadius = cell.placeIconImageView.frame.height / 2
+			cell.placeIconImageView.layer.masksToBounds = true
+			cell.placeIconImageView.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
 			return cell
 		}else {
 
@@ -177,5 +184,6 @@ class PlaceCell: UITableViewCell{
 	
 	@IBOutlet var placeNameLabel: UILabel!
 	@IBOutlet var placeAddressLabel: UILabel!
+	@IBOutlet var placeIconImageView: UIImageView!
 	
 }
