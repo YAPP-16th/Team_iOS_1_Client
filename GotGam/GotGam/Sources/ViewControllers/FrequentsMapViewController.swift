@@ -21,7 +21,6 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	@IBOutlet var okay: UIButton!
 	@IBAction func okay(_ sender: UIButton) {
 		viewModel.placeMapText.accept(addressLabel.text ?? "")
-//		viewModel.inputs.showFrequentsVC()
 		for controller in self.navigationController!.viewControllers as Array {
 			if controller.isKind(of: FrequentsViewController.self) {
 				_ =  self.navigationController!.popToViewController(controller, animated: true)
