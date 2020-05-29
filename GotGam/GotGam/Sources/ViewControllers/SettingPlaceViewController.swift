@@ -17,7 +17,6 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
     var viewModel: SettingPlaceViewModel!
 	
 	@IBOutlet var settingPlaceTableView: UITableView!
-	@IBOutlet var massageLabel: UILabel!
 	
 	var placeList: [Frequent] = [] {
 		didSet{
@@ -49,28 +48,17 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 			.subscribe(onNext: { [weak self] (indexPath) in
 				if indexPath.section == 0 {
 					self?.viewModel.inputs.detailVC()
-				}
-				else if indexPath.section == 1{
-					if self?.placeList.count ?? 0 > 4 {
-						self?.showMessage(message: "자주 가는 장소는 5개까지 설정할 수 있습니다.")
-					}
-					else {
-						self?.viewModel.inputs.showFrequentsDetailVC()
-					}
+				} else {
+					self?.viewModel.inputs.showFrequentsDetailVC()
 				}
 			}) .disposed(by: disposeBag)
-		
-		
+	
+	
 		viewModel.outputs.frequentsList
 					.bind { (List) in
 						self.placeList = List
 				} .disposed(by: disposeBag)
 
-	}
-	
-	func showMessage(message: String) {
-		massageLabel.text = message
-		massageLabel.backgroundColor = UIColor.saffron
 	}
 		
 }
