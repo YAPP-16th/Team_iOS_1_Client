@@ -225,8 +225,6 @@ extension SearchBarViewController: UITableViewDelegate {
 				viewModel.sceneCoordinator.close(animated: true) {
 					let index = self.gotList.firstIndex(of: got)
 					mapVC?.setCard(index: index!)
-//					mapVC?.updateAddress()
-					print("index🍏", index)
 				}
 			}
 		}
