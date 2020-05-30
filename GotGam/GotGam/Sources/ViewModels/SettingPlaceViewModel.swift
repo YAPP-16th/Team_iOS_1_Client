@@ -73,7 +73,6 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
     var inputs: SettingPlaceViewModelInputs { return self }
     var outputs: SettingPlaceViewModelOutputs { return self }
    	var storage: GotStorageType!
-	//var storagePlace: FrequentsStorageType!
     
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
@@ -81,23 +80,5 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 		
     }
     
-//    init(sceneCoordinator: SceneCoordinatorType, storage: FrequentsStorageType) {
-//        super.init(sceneCoordinator: sceneCoordinator)
-//        self.storagePlace = storage
-//    }
   
-}
-
-enum ListFrequentsItem {
-    case frequentsItem(frequent: Frequent)
-}
-
-extension ListFrequentsItem: IdentifiableType, Equatable {
-   typealias Identity = String
-
-   var identity: Identity {
-       switch self {
-       case let .frequentsItem(frequent): return frequent.name
-       }
-   }
 }

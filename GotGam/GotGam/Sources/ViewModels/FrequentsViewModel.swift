@@ -46,10 +46,11 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 		
 	func addFrequents() {
 		let storage = FrequentsStorage()
+		let id = String(Date().timeIntervalSince1970)
 		
 		guard let la = Double(latitudePlace.value) else { return  }
 		guard let lo = Double(longitudePlace.value) else { return  }
-		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value)
+		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value, id: id)
 
 		storage.createFrequents(frequent: frequent).bind { _ in
 			self.readFrequents()

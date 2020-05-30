@@ -45,6 +45,14 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		}
 	}
 	
+	var filteredList: [Got] = [] {
+		didSet{
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+	}
+	
 	var gotSections: [ListSectionModel]? = []
 	
 	var collectionList = [Frequent]()
@@ -111,20 +119,18 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 			})
 			.disposed(by: disposeBag)
 		
-//		SearchBar.rx.text.orEmpty
-//			.subscribe(onNext: { [weak self] (text) in
-//				
-//				let filteredList = self?.gotList.filter ({ got -> Bool in
-//                    if text != "", let title = got.title, !title.lowercased().contains(text.lowercased()) {
-//                        return false
-//                    }
-//                    return true
-//                })
-//				let filteredDataSources = self?.configureDataSource(gotList: filteredList ?? [])
-//				self?.gotSections?.append(filteredDataSources)
-//				
-////				accept(filteredDataSources ?? [])
-//			}).disposed(by: disposeBag)
+		SearchBar.rx.text.orEmpty
+			.subscribe(onNext: { [weak self] (text) in
+				
+				let filteredList = self?.gotList.filter ({ got -> Bool in
+                    if let title = got.title, title.lowercased().contains(text.lowercased()) {
+                        return true
+                    }
+                    return false
+                })
+				
+				self?.filteredList = filteredList ?? []
+			}).disposed(by: disposeBag)
 		
 //		SearchBar.rx.text.orEmpty
 //		.debounce(.milliseconds(800), scheduler: MainScheduler.instance)
@@ -137,13 +143,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 //		.disposed(by: disposeBag)
 	}
 	
-	func configureDataSource(gotList: [Got]) -> [ListSectionModel] {
-        return [
-            .listSection(title: "", items: gotList.map {
-                ListItem.gotItem(got: $0)
-            })
-        ]
-    }
+
 	
 	
 	func searchKeyword(keyword: String){
@@ -170,6 +170,9 @@ extension SearchBarViewController: UITableViewDataSource{
 		}else if section == 1 {
 			return self.placeList.count
 		}else {
+			if self.SearchBar.text!.count > 0{
+				return filteredList.count
+			}
 			return self.gotList.count
 		}
 		
@@ -205,12 +208,23 @@ extension SearchBarViewController: UITableViewDataSource{
 			cell.resultLabel.text = place.addressName
 			return cell
 		} else {
-			let got = gotList[indexPath.row]
-			let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
-			cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
-			cell.gotLabel.text = got.title
-			cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
-			return cell
+			
+			if SearchBar.text!.count > 0 {
+				let got = filteredList[indexPath.row]
+				let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
+				cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
+				cell.gotLabel.text = got.title
+			
+				cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
+				return cell
+			}else{
+				let got = gotList[indexPath.row]
+				let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
+				cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
+				cell.gotLabel.text = got.title
+				cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
+				return cell
+			}
 		}
 	}
 }
