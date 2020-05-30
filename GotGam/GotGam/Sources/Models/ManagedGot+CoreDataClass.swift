@@ -67,6 +67,8 @@ public class ManagedGot: NSManagedObject {
     self.onArrive = got.onArrive
     self.onDeparture = got.onDeparture
     self.onDate = got.onDate
+    
+    AlarmManager.shared.createLocationTrigger(got: self)
   }
     
     func fetchTag(tag: Tag) -> ManagedTag? {

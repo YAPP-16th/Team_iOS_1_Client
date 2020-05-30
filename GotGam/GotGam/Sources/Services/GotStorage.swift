@@ -117,7 +117,7 @@ class GotStorage: GotStorageType {
     func createGot(gotToCreate: Got) -> Observable<Got>{
         do{
             var got = gotToCreate
-          let managedGot = ManagedGot(context: self.context)
+            let managedGot = ManagedGot(context: self.context)
             managedGot.fromGot(got: got)
             try self.context.save()
             return .just(got)

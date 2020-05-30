@@ -215,17 +215,22 @@ extension GotListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+            self?.gotListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+            success(true)
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let gamAction = UIContextualAction(style: .normal, title: "감") { (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             guard let cell = tableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
             cell.isChecked = true
             success(true)
         }
-        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-            self?.gotListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
-            success(true)
-        }
         gamAction.backgroundColor = .saffron
-        return UISwipeActionsConfiguration(actions: [deleteAction, gamAction])
+        return UISwipeActionsConfiguration(actions: [gamAction])
     }
 }
 

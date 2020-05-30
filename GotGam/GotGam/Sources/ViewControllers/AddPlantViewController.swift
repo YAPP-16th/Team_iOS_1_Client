@@ -76,10 +76,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         label.layer.add(animation, forKey: "opacity")
     }
 
-    @IBAction func didTapEditMapButton(_ sender: UIButton) {
-    
-    }
-    
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardHeight = keyboardFrame.cgRectValue.height
@@ -105,7 +101,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         }
     }
     
-    @IBAction func didTapPlaceLabel(_ sender: Any) {
+    @objc func didTapPlaceLabel(_ sender: Any) {
         print("\(sender)")
         if placeLabel.textColor != .black {
             viewModel.inputs.editPlace.onNext(())
@@ -123,15 +119,15 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPlaceLabel(_:)))
+        textFieldStackView.addGestureRecognizer(tapGesture)
     }
+    @IBOutlet var textFieldStackView: UIStackView!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let location = viewModel.placeSubject.value, let radius = viewModel.outputs.currentGot.value?.radius {
-            print(location)
-            print("set center to \(location) in addPlant")
+        if let location = viewModel.placeSubject.value {
             setupMapCenter(latitude: Double(location.latitude), longitude: Double(location.longitude))
             
             let pin = MTMapPOIItem()
@@ -144,8 +140,11 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: Double(location.latitude), longitude: Double(location.longitude)))
             mapView?.addPOIItems([pin])
             
+            let radius = viewModel.inputs.radiusSubject.value
             drawCircle(latitude: location.latitude, longitude: location.longitude, radius: Float(radius))
         }
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -200,13 +199,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .bind(to: inputTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        viewModel.outputs.currentGot
-            .compactMap { $0?.title }
-            .subscribe(onNext: { [weak self] title in
-                self?.titleTextField.text = title
-            })
-            .disposed(by: disposeBag)
-        
         viewModel.outputs.placeSubject
             .compactMap { $0 }
             .observeOn(MainScheduler.instance)
@@ -218,6 +210,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                     self?.setupMapView()
                 }
             })
+            .disposed(by: disposeBag)
+        
+        viewModel.inputs.nameText
+            .bind(to: titleTextField.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.outputs.placeText

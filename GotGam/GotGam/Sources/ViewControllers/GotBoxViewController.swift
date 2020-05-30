@@ -165,22 +165,23 @@ extension GotBoxViewController {
     }
 }
 
+// MARK: - UITableView Delegate
+
 extension GotBoxViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
         let recoverAction = UIContextualAction(style: .normal, title: "되돌리기") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-
             guard let cell = tableView.cellForRow(at: indexPath) as? GotBoxTableViewCell else { return }
-
             self?.viewModel.inputs.recover(got: cell.got, at: indexPath)
-
             success(true)
         }
 
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-
             self?.gotBoxListTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
-
             success(true)
         }
         

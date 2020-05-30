@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import RxSwift
 
 struct MapQuickAddViewModel{
     
 }
 
 class MapQuickAddView: UIView{
+    
+    var disposeBag = DisposeBag()
     @IBOutlet weak var addField: UITextField!
     @IBOutlet weak var addButotn: UIButton!
     
@@ -41,6 +44,14 @@ class MapQuickAddView: UIView{
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(showDetailSeeding))
         gesture.direction = .up
         self.addGestureRecognizer(gesture)
+        
+        addField.rx.text
+            .map { $0 != "" }
+            .subscribe(onNext: { [weak self] b in
+                self?.addButotn.isEnabled = b
+                self?.addButotn.backgroundColor = b ? .saffron : .lightGray
+            })
+            .disposed(by: disposeBag)
     }
     
     override func layoutSubviews() {
