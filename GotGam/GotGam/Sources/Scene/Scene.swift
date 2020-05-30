@@ -26,6 +26,7 @@ enum Scene {
 	case frequents(FrequentsViewModel)
 	case frequentsSearch(FrequentsSearchViewModel)
 	case frequentsMap(FrequentsMapViewModel)
+    case tutorial(TutorialViewModel)
 }
 
 extension Scene {
@@ -177,6 +178,10 @@ extension Scene {
 			
 			frequentsMapVC.bind(viewModel: viewModel)
 			return frequentsMapVC
+        case .tutorial(let viewModel):
+            guard var tutorialVC = storyboard.instantiateInitialViewController() as? TutorialPageViewController else { fatalError() }
+            tutorialVC.bind(viewModel: viewModel)
+            return tutorialVC
         }
     }
 }

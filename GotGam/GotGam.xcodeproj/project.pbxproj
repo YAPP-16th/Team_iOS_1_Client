@@ -115,6 +115,7 @@
 		4CF1D0AD24499F4200B45751 /* GotListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0AC24499F4200B45751 /* GotListViewModel.swift */; };
 		4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0AE244AA41D00B45751 /* Tab.swift */; };
 		4CF1D0B3244AABC000B45751 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1D0B2244AABC000B45751 /* TabBarViewModel.swift */; };
+		A125612424821CC900519020 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125612324821CC900519020 /* TutorialViewModel.swift */; };
 		A125E79424695B80007767D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E79324695B80007767D7 /* LoginViewController.swift */; };
 		A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A125E7A52469B2D1007767D7 /* MapRestoreView.swift */; };
 		A125E7A82469B300007767D7 /* MapRestoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A125E7A72469B300007767D7 /* MapRestoreView.xib */; };
@@ -162,6 +163,10 @@
 		A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16439732454002300C740F4 /* MapQuickAddView.xib */; };
 		A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164397524540A0F00C740F4 /* MapQuickAddView.swift */; };
 		A164548D2481F3C40036CF15 /* splashLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = A164548C2481F3C40036CF15 /* splashLogo.png */; };
+		A16454902481F4B60036CF15 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A164548F2481F4B60036CF15 /* Tutorial.storyboard */; };
+		A16454932481F7680036CF15 /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16454922481F7680036CF15 /* TutorialPageViewController.swift */; };
+		A16454952481F7B50036CF15 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16454942481F7B50036CF15 /* TutorialViewController.swift */; };
+		A1645497248206700036CF15 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1645496248206700036CF15 /* StartViewController.swift */; };
 		A1A5DE042471132C00AFA9D5 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */; };
 		A1A5DEA024753CC100AFA9D5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1A5DE9F24753CC100AFA9D5 /* credentials.plist */; };
 		A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */; };
@@ -293,6 +298,7 @@
 		4CF1D0AE244AA41D00B45751 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		4CF1D0B2244AABC000B45751 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		62F5E6A8D63547BFE9C83CD5 /* Pods_GotGam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GotGam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A125612324821CC900519020 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		A125E79224695AF8007767D7 /* GotGam.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GotGam.entitlements; sourceTree = "<group>"; };
 		A125E79324695B80007767D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A125E7A52469B2D1007767D7 /* MapRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestoreView.swift; sourceTree = "<group>"; };
@@ -349,6 +355,10 @@
 		A16439732454002300C740F4 /* MapQuickAddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapQuickAddView.xib; sourceTree = "<group>"; };
 		A164397524540A0F00C740F4 /* MapQuickAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuickAddView.swift; sourceTree = "<group>"; };
 		A164548C2481F3C40036CF15 /* splashLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashLogo.png; sourceTree = "<group>"; };
+		A164548F2481F4B60036CF15 /* Tutorial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tutorial.storyboard; sourceTree = "<group>"; };
+		A16454922481F7680036CF15 /* TutorialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
+		A16454942481F7B50036CF15 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		A1645496248206700036CF15 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		A1A5DE9F24753CC100AFA9D5 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		A1A5DEA1247544AE00AFA9D5 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
@@ -488,6 +498,7 @@
 		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A16454912481F75D0036CF15 /* Tutorial */,
 				295C03C22464652700789967 /* SearchBarViewController.swift */,
 				4269388324306B66007B60FD /* BaseViewController.swift */,
 				4CE037D92438C9330093E39D /* ViewModelBindableType.swift */,
@@ -583,6 +594,7 @@
 		4CE037D12438C5340093E39D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				A164548E2481F48E0036CF15 /* Tutorial */,
 				295C03BF2464643B00789967 /* SearchBar */,
 				425836B52442FE5300EC9C76 /* Map */,
 				4CF1D0A624499E5000B45751 /* List */,
@@ -617,6 +629,7 @@
 				29618D62247C3C17008E112E /* FrequentsViewModel.swift */,
 				29618DB2247CEEF5008E112E /* FrequentsSearchViewModel.swift */,
 				29618DBC247E5A99008E112E /* FrequentsMapViewModel.swift */,
+				A125612324821CC900519020 /* TutorialViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -782,6 +795,24 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		A164548E2481F48E0036CF15 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				A164548F2481F4B60036CF15 /* Tutorial.storyboard */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		A16454912481F75D0036CF15 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				A16454922481F7680036CF15 /* TutorialPageViewController.swift */,
+				A16454942481F7B50036CF15 /* TutorialViewController.swift */,
+				A1645496248206700036CF15 /* StartViewController.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		A1A5DF582477D48E00AFA9D5 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +936,7 @@
 				A157E10124555A90001E310D /* copyright.png in Resources */,
 				A164548D2481F3C40036CF15 /* splashLogo.png in Resources */,
 				A157E10524555A90001E310D /* map_pin@3x.png in Resources */,
+				A16454902481F4B60036CF15 /* Tutorial.storyboard in Resources */,
 				425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */,
 				A157E10D24555A90001E310D /* map_present_direction.png in Resources */,
 				A157E0FC24555A90001E310D /* map_pinup.png in Resources */,
@@ -1007,6 +1039,7 @@
 				4CD03D742479056F00210353 /* GotBoxTableViewCell.swift in Sources */,
 				A157E11D2455754A001E310D /* Extensions.swift in Sources */,
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
+				A125612424821CC900519020 /* TutorialViewModel.swift in Sources */,
 				A1DF638F247E813D00444175 /* GotAPIResponse.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
@@ -1022,6 +1055,7 @@
 				4CBD536A245E3AF400B235D5 /* TextFieldTableViewCell.swift in Sources */,
 				4CF1D0B3244AABC000B45751 /* TabBarViewModel.swift in Sources */,
 				29618D63247C3C17008E112E /* FrequentsViewModel.swift in Sources */,
+				A1645497248206700036CF15 /* StartViewController.swift in Sources */,
 				4CC5AC092476B9F800FE9034 /* AlarmShareTableViewCell.swift in Sources */,
 				29618DB1247C4C70008E112E /* ManagedFrequents+CoreDataProperties.swift in Sources */,
 				4CF1D0AD24499F4200B45751 /* GotListViewModel.swift in Sources */,
@@ -1043,6 +1077,7 @@
 				29618DBD247E5A99008E112E /* FrequentsMapViewModel.swift in Sources */,
 				4C96D370247A71470014101F /* ShareListViewController.swift in Sources */,
 				4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */,
+				A16454952481F7B50036CF15 /* TutorialViewController.swift in Sources */,
 				A127E714246D4BA7005137D3 /* ManagedGot+CoreDataClass.swift in Sources */,
 				29618DB7247E4894008E112E /* BadgeButton.swift in Sources */,
 				4CE037DD2438CA590093E39D /* GotStorageType.swift in Sources */,
@@ -1107,6 +1142,7 @@
 				29618D67247C3C56008E112E /* FrequentsStorage.swift in Sources */,
 				297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
+				A16454932481F7680036CF15 /* TutorialPageViewController.swift in Sources */,
 				4C96D36E247A71390014101F /* ShareListViewModel.swift in Sources */,
 				4CBD535E245B134A00B235D5 /* SetTagViewModel.swift in Sources */,
 			);
