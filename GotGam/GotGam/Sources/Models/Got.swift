@@ -40,7 +40,7 @@ struct Got: Equatable {
         arriveMsg: String? = "",
         deparetureMsg: String? = "",
         insertedDate: Date?,
-        onArrive: Bool = false,
+        onArrive: Bool = true,
         onDeparture: Bool = false,
         onDate: Bool = false,
         tag: [Tag]?,
