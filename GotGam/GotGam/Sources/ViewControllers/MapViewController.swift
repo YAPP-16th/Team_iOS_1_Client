@@ -74,6 +74,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 }
                 
                 //circleRadiusLabel.text = "\(Int(radiusSlider.value * 1000))m"
+                mapView.currentLocationTrackingMode = .off
+                mapView.showCurrentLocationMarker = false
                 sliderBackgroundView.isHidden = false
             } else {
                 mapView.removeAllCircles()
@@ -126,7 +128,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @objc func didChangeRadius(slider: UISlider, event: UIEvent) {
         if let touchEvent = event.allTouches?.first {
             switch touchEvent.phase {
-            case .began: ""
             case .moved:
                 if let tag = currentCircle?.tag, let circle = mapView.findCircle(byTag: tag) {
                     let meter = slider.value * 1000
@@ -145,10 +146,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 break
             }
         }
-        
-    }
-    @IBAction func didEndRadius(_ sender: UISlider) {
-        mapView.fitArea(toShow: currentCircle)
     }
     
     func appendEmptyTag(_ tags: [Tag]) -> [Tag] {
@@ -329,9 +326,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             case .adding:
                 self.viewModel.seedState.onNext(.none)
             }
-        }).disposed(by: disposeBag)
-        self.myLocationButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.setMyLocation()
+            }).disposed(by: disposeBag)
+        self.myLocationButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.setMyLocation()
             }).disposed(by: disposeBag)
         
         self.tagCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
@@ -463,6 +461,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         //drawCircle(latitude: conter.lat, longitude: <#T##CLLocationDegrees#>, radius: <#T##Float#>, tag: <#T##Int#>)
         radiusSlider.value = 0.1
         drawCircle(point: mapView.mapCenterPoint)
+        mapView.fitArea(toShow: currentCircle)
         //setCircle(point: mapView.mapCenterPoint)
         self.seedButton.backgroundColor = .saffron
         self.seedButton.setImage(UIImage(named: "icMapBtnSeeding"), for: .normal)
@@ -497,6 +496,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         }
     }
     func setMyLocation(){
+        viewModel.seedState.onNext(.none)
         LocationManager.shared.requestAuthorization()
         if LocationManager.shared.locationServicesEnabled {
             let status = LocationManager.shared.authorizationStatus
@@ -508,6 +508,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             case .authorizedWhenInUse, .authorizedAlways:
                 guard let currentLocation = LocationManager.shared.currentLocation else { return }
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: currentLocation.latitude, longitude: currentLocation.longitude)), animated: true)
+                mapView.currentLocationTrackingMode = .onWithoutHeading
+                mapView.showCurrentLocationMarker = true
             }
             
         }else{
@@ -551,7 +553,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 
 extension MapViewController: MTMapViewDelegate{
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
-        print(LocationManager.shared.currentLocation)
+        print(LocationManager.shared.currentLocation ?? "Not found current Location")
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
             self.quickAddView.isHidden = true
@@ -573,20 +575,20 @@ extension MapViewController: MTMapViewDelegate{
             break
         }
     }
+    
     func mapView(_ mapView: MTMapView!, dragEndedOn mapPoint: MTMapPoint!) {
         if state == .none {
             currentCircle = nil
         }
+        mapView.currentLocationTrackingMode = .off
+        mapView.showCurrentLocationMarker = false
     }
     func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
         switch self.state{
         case .adding, .seeding:
             if let currentCircle = currentCircle {
                 drawCircle(point: mapCenterPoint, radius: currentCircle.circleRadius, tag: currentCircle.tag)
-                mapView?.fitArea(toShow: currentCircle)
             }
-            
-            //setCircle(point: mapCenterPoint)
             break
         case .none:
             break
