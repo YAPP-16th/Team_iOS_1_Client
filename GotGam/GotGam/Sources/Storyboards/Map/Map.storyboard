@@ -257,7 +257,7 @@
                                             <constraint firstAttribute="width" constant="200" id="zrr-Qu-lex"/>
                                         </constraints>
                                         <connections>
-                                            <action selector="didChangeRadius:" destination="KGN-0W-myJ" eventType="valueChanged" id="XOE-an-PqO"/>
+                                            <action selector="didEndRadius:" destination="KGN-0W-myJ" eventType="editingDidEnd" id="YCp-Co-J59"/>
                                         </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHJ-Hm-4IT">
