@@ -68,7 +68,7 @@ public class ManagedGot: NSManagedObject {
     self.onDeparture = got.onDeparture
     self.onDate = got.onDate
     
-    AlarmManager.shared.createLocationTrigger(got: self)
+    AlarmManager.shared.setLocationTrigger(got: self)
   }
     
     func fetchTag(tag: Tag) -> ManagedTag? {
@@ -86,5 +86,23 @@ public class ManagedGot: NSManagedObject {
         } catch {
             return nil
         }
+    }
+}
+
+extension ManagedGot {
+    var arriveID: String {
+        return id == "" ? "\(objectID)_arrive" : "\(id!)_arrive"
+    }
+    
+    var departureID: String {
+        return id == "" ? "\(objectID)_departure" : "\(id!)_departure"
+    }
+    
+    var dateID: String {
+        return id == "" ? "\(objectID)_date" : "\(id!)_date"
+    }
+    
+    var requestIds: [String] {
+        return [arriveID, departureID, dateID]
     }
 }

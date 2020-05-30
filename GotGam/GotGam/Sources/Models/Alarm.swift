@@ -16,7 +16,12 @@ enum AlarmType: Int16 {
     case date = 3
     
     func getTriggerID(of got: ManagedGot) -> String {
-        return got.id == "" ? "\(got.objectID)_arrive" : "\(got.id!)_arrive"
+        switch self {
+        case .arrive: return got.arriveID
+        case .departure: return got.departureID
+        case .date: return got.dateID
+        default: return ""
+        }
     }
     
     func getContentBody(of got: ManagedGot) -> String {
@@ -69,18 +74,3 @@ struct Alarm: Equatable {
         self.got = got
     }
 }
-
-//
-//YesterdaySection(
-//    title: "어제", items: [
-//        GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 244913826, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:32:53 +0000), isChecked: true, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1549160322), createdDate: Optional(2020-05-27 11:32:28 +0000), title: Optional("Rd"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("도도착함"), deparetureMsg: Optional("떠남"), insertedDate: nil, onArrive: true, onDeparture: true, onDate: false, tag: Optional([GotGam.Tag(name: "할일", hex: "#ff3b3b")]), isDone: false)))),
-//        GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 1604354600, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:35:21 +0000), isChecked: true, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1046008635), createdDate: Optional(2020-05-27 11:30:35 +0000), title: Optional("0000"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("9999"), deparetureMsg: Optional(""), insertedDate: nil, onArrive: true, onDeparture: false, onDate: false, tag: Optional([]), isDone: false)))),
-//        GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 893890102, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:35:21 +0000), isChecked: true, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1549160322), createdDate: Optional(2020-05-27 11:32:28 +0000), title: Optional("Rd"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("도도착함"), deparetureMsg: Optional("떠남"), insertedDate: nil, onArrive: true, onDeparture: true, onDate: false, tag: Optional([GotGam.Tag(name: "할일", hex: "#ff3b3b")]), isDone: false)))),
-//        GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 3458719854, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:37:55 +0000), isChecked: true, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1046008635), createdDate: Optional(2020-05-27 11:30:35 +0000), title: Optional("0000"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("9999"), deparetureMsg: Optional(""), insertedDate: nil, onArrive: true, onDeparture: false, onDate: false, tag: Optional([]), isDone: false)))),
-//        GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 3357947500, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:37:55 +0000), isChecked: false, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1549160322), createdDate: Optional(2020-05-27 11:32:28 +0000), title: Optional("Rd"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("도도착함"), deparetureMsg: Optional("떠남"), insertedDate: nil, onArrive: true, onDeparture: true, onDate: false, tag: Optional([GotGam.Tag(name: "할일", hex: "#ff3b3b")]), isDone: false))))])
-//
-//Expected it should return items: [
-//    GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 1604354600, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:35:21 +0000), isChecked: true, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1046008635), createdDate: Optional(2020-05-27 11:30:35 +0000), title: Optional("0000"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("9999"), deparetureMsg: Optional(""), insertedDate: nil, onArrive: true, onDeparture: false, onDate: false, tag: Optional([]), isDone: false)))),
-//GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 893890102, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:35:21 +0000), isChecked: true, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1549160322), createdDate: Optional(2020-05-27 11:32:28 +0000), title: Optional("Rd"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("도도착함"), deparetureMsg: Optional("떠남"), insertedDate: nil, onArrive: true, onDeparture: true, onDate: false, tag: Optional([GotGam.Tag(name: "할일", hex: "#ff3b3b")]), isDone: false)))),
-//GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 3458719854, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:37:55 +0000), isChecked: true, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1046008635), createdDate: Optional(2020-05-27 11:30:35 +0000), title: Optional("0000"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("9999"), deparetureMsg: Optional(""), insertedDate: nil, onArrive: true, onDeparture: false, onDate: false, tag: Optional([]), isDone: false)))),
-//GotGam.AlarmItem.ArriveItem(alarm: GotGam.Alarm(id: 3357947500, type: GotGam.AlarmType.arrive, createdDate: Optional(2020-05-27 11:37:55 +0000), isChecked: false, checkedDate: nil, got: Optional(GotGam.Got(id: Optional(1549160322), createdDate: Optional(2020-05-27 11:32:28 +0000), title: Optional("Rd"), latitude: Optional(37.566407799201336), longitude: Optional(126.97787363088995), radius: Optional(100.0), place: Optional("서울 중구 태평로1가 31"), arriveMsg: Optional("도도착함"), deparetureMsg: Optional("떠남"), insertedDate: nil, onArrive: true, onDeparture: true, onDate: false, tag: Optional([GotGam.Tag(name: "할일", hex: "#ff3b3b")]), isDone: false))))]

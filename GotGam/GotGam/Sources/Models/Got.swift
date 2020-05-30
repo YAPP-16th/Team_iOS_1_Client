@@ -83,3 +83,9 @@ func ==(lhs: Got, rhs: Got) -> Bool{
         && lhs.place == rhs.place
         && lhs.insertedDate == rhs.insertedDate
 }
+
+extension Got {
+    var mapPoint: MTMapPoint {
+        .init(geoCoord: .init(latitude: latitude!, longitude: longitude!))
+    }
+}
