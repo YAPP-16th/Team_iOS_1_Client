@@ -21,21 +21,27 @@ class SettingOtherViewController: BaseViewController, ViewModelBindableType {
 		navigationItem.largeTitleDisplayMode = .never
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+	}
+	
 	func bindViewModel() {
 		
 		settingOtherTableView.rx.setDelegate(self)
 			.disposed(by: disposeBag)
 		
-		
 		viewModel.outputs.settingOtherMenu
 			.bind(to: settingOtherTableView.rx.items(cellIdentifier: "settingOtherCell")) {
 				(index: Int, element: String, cell: SettingOtherCell) in
-				
 				cell.settingOtherLabel?.text = element
-				
-				
 		}.disposed(by: disposeBag)
 		
+		settingOtherTableView.rx.itemSelected
+		.subscribe(onNext: { [weak self] (indexPath) in
+			self?.viewModel.inputs.showPersonalInfoVC(row: indexPath.row)
+		}) .disposed(by: disposeBag)
+
 	}
 	
 }
@@ -54,6 +60,5 @@ extension SettingOtherViewController: UITableViewDelegate {
 }
 
 class SettingOtherCell: UITableViewCell {
-	
 	@IBOutlet var settingOtherLabel: UILabel!
 }

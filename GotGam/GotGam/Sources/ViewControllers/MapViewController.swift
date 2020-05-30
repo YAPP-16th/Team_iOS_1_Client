@@ -459,6 +459,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         if let lat = got.latitude, let long = got.longitude, let radius = got.radius {
             let geo = MTMapPointGeo(latitude: lat, longitude: long)
             self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
+			centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
             mapView.removeAllCircles()
             drawCircle(latitude: lat, longitude: long, radius: Float(radius), tag: index)
         }

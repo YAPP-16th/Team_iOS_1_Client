@@ -28,6 +28,7 @@ extension Scene {
 			case .frequents:    return instantiate(from: "Setting")
 			case .frequentsSearch:    return instantiate(from: "Setting")
 			case .frequentsMap:		return instantiate(from: "Setting")
+			case .settingDetail:	return instantiate(from: "Setting")
 		}
     }
 }
