@@ -20,6 +20,14 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ga-SC-jTq">
+                    <rect key="frame" x="192" y="6" width="30" height="3"/>
+                    <color key="backgroundColor" name="brownishGrey"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="Hy3-e4-lzT"/>
+                        <constraint firstAttribute="height" constant="3" id="yZZ-OB-LtA"/>
+                    </constraints>
+                </view>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="장소를 입력해주세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M2F-Lu-jM9">
                     <rect key="frame" x="20" y="10" width="297" height="31"/>
                     <constraints>
@@ -46,8 +54,11 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="R14-mb-WoR" firstAttribute="leading" secondItem="M2F-Lu-jM9" secondAttribute="trailing" constant="5" id="AvK-WK-5Yy"/>
+                <constraint firstItem="M2F-Lu-jM9" firstAttribute="top" secondItem="8Ga-SC-jTq" secondAttribute="bottom" constant="1" id="FwH-KA-scG"/>
+                <constraint firstItem="8Ga-SC-jTq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="Id3-Hv-vuW"/>
                 <constraint firstItem="M2F-Lu-jM9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="OCH-47-T51"/>
                 <constraint firstItem="M2F-Lu-jM9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="PaE-lE-Q2w"/>
+                <constraint firstItem="8Ga-SC-jTq" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="aFM-DB-D05"/>
                 <constraint firstItem="R14-mb-WoR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="bXN-25-syQ"/>
                 <constraint firstAttribute="trailing" secondItem="R14-mb-WoR" secondAttribute="trailing" constant="8" id="gbL-Ky-7PT"/>
             </constraints>
@@ -55,10 +66,13 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="139" y="139"/>
+            <point key="canvasLocation" x="137.68115942028987" y="138.95089285714286"/>
         </view>
     </objects>
     <resources>
+        <namedColor name="brownishGrey">
+            <color red="0.3919999897480011" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -199,13 +199,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .bind(to: inputTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        viewModel.outputs.currentGot
-            .compactMap { $0?.title }
-            .subscribe(onNext: { [weak self] title in
-                self?.titleTextField.text = title
-            })
-            .disposed(by: disposeBag)
-        
         viewModel.outputs.placeSubject
             .compactMap { $0 }
             .observeOn(MainScheduler.instance)
@@ -217,6 +210,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
                     self?.setupMapView()
                 }
             })
+            .disposed(by: disposeBag)
+        
+        viewModel.inputs.nameText
+            .bind(to: titleTextField.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.outputs.placeText

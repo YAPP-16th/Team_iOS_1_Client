@@ -35,7 +35,7 @@ class ShareListViewController: BaseViewController, ViewModelBindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        presentationController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,5 +141,13 @@ extension ShareListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         (view as! UITableViewHeaderFooterView).contentView.backgroundColor = tableView.backgroundColor
+    }
+}
+
+extension ShareListViewController: UIAdaptivePresentationControllerDelegate {
+    // MARK: UIAdaptivePresentationControllerDelegate
+
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        self.viewModel.sceneCoordinator.close(animated: true, completion: nil)
     }
 }

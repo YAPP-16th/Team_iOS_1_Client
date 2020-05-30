@@ -21,6 +21,54 @@ class AlarmManager {
     private let departureKey = "listForDeparuture"
     //var departureGots = [Got]()
     
+    func createLocationTrigger(got: ManagedGot) {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
+            
+            if granted {
+                print("push auth granted")
+            }
+            
+            let arriveContent = UNMutableNotificationContent()
+            arriveContent.title = got.title!
+            arriveContent.body = got.arriveMsg ?? ""
+            arriveContent.sound = .default
+            let arriveId = got.id == "" ? "\(got.objectID)_arrive" : "\(got.id!)_arrive"
+            let arriveRegion = CLCircularRegion(center: .init(latitude: got.latitude, longitude: got.longitude), radius: got.radius, identifier: arriveId)
+            arriveRegion.notifyOnEntry = true
+            arriveRegion.notifyOnExit = false
+            let arriveTrigger = UNLocationNotificationTrigger(region: arriveRegion, repeats: true)
+            let arriveRequest = UNNotificationRequest(identifier: arriveId, content: arriveContent, trigger: arriveTrigger)
+            
+            center.add(arriveRequest) { (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                print("✅ Success add arrive request")
+            }
+            
+            let departureContent = UNMutableNotificationContent()
+            departureContent.title = got.title!
+            departureContent.body = got.departureMsg ?? ""
+            departureContent.sound = .default
+            let departureId = got.id == "" ? "\(got.objectID)_departure" : "\(got.id!)_departure"
+            let departureRegion = CLCircularRegion(center: .init(latitude: got.latitude, longitude: got.longitude), radius: got.radius, identifier: departureId)
+            departureRegion.notifyOnEntry = false
+            departureRegion.notifyOnExit = true
+            let departureTrigger = UNLocationNotificationTrigger(region: departureRegion, repeats: true)
+            let departureRequest = UNNotificationRequest(identifier: departureId, content: departureContent, trigger: departureTrigger)
+            center.add(departureRequest) { (error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                    // Handle any errors.
+                }
+                print("✅ Success add departure request")
+            }
+        }
+    }
+    
     func createAlarm(from current: CLLocation) {
         
         // TODO: 아이디 값이 managedObject의 id를 사용할거면 바꾸기
@@ -74,41 +122,22 @@ class AlarmManager {
         alarmStorage.createAlarm(alarm)
         
         // TODO: 타입설정
-        pushNotification(got: got, type: type)
+        //pushNotification(got: got, type: type)
     }
     
-    func pushNotification(got: Got, type: AlarmType) {
-        let title = got.title ?? "곳감"
-        
-        var body = ""
-        
-        switch type {
-        case .arrive:
-            if got.onArrive { body = got.arriveMsg ?? "" }
-        case .departure:
-            if got.onDeparture { body = got.deparetureMsg ?? ""}
-        case .share:
-            body = "슬기로운 곳감생활님이 태그를 공유하셨어요?"
-        case .date:
-            if let date = got.insertedDate { body = "\(date.format("MM월 dd일"))에 가야 할 🍊이 있어요" }
-        }
+    func pushNotification(got: ManagedGot, type: AlarmType) {
         
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
-            
             if granted {
                 print("push auth granted")
             }
-            let content = UNMutableNotificationContent()
-            content.title = title
-            content.body = body
-            content.sound = .default
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-            let request = UNNotificationRequest(identifier: "alarm",
+            let triggerID = type.getTriggerID(of: got)
+            let content = type.getContent(of: got)
+            let trigger = type.getLocationTrigger(of: got)
+
+            let request = UNNotificationRequest(identifier: triggerID,
                                                 content: content, trigger: trigger)
-            
-            // Schedule the request with the system.
-            //let notificationCenter = UNUserNotificationCenter.current()
             center.add(request) { (error) in
                 if error != nil {
                     print(error?.localizedDescription)

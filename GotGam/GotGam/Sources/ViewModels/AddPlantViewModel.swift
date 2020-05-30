@@ -183,7 +183,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             mapVM.placeSubject.onNext(location)
         }
         mapVM.placeSubject
-            .bind(to: placeSubject)
+            .bind(to: placeSubject) 
             .disposed(by: disposeBag)
         sceneCoordinator.transition(to: .map(mapVM), using: .push, animated: true)
     }

@@ -64,9 +64,16 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     var currentCircle: MTMapCircle? {
         didSet {
             if let circle = currentCircle {
-                let got = gotList[circle.tag]
-                radiusSlider.value = Float((got.radius ?? 0)/1000.0)
-                circleRadiusLabel.text = "\(Int(radiusSlider.value * 1000))m"
+                if circle.tag != -1 {
+                    let got = gotList[circle.tag]
+                    radiusSlider.value = Float((got.radius ?? 0)/1000.0)
+                    circleRadiusLabel.text = "\(Int(got.radius ?? 100))m"
+                    
+                } else {
+                    //radiusSlider.value = Float(100.0/1000.0)
+                }
+                
+                //circleRadiusLabel.text = "\(Int(radiusSlider.value * 1000))m"
                 sliderBackgroundView.isHidden = false
             } else {
                 mapView.removeAllCircles()
@@ -84,6 +91,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Methods
     
     func drawCircle(latitude: CLLocationDegrees, longitude: CLLocationDegrees, radius: Float, tag: Int) {
+        
         let circle = MTMapCircle()
         let center = MTMapPoint(geoCoord: .init(latitude: latitude, longitude: longitude))
         circle.circleCenterPoint = center
@@ -91,6 +99,26 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
         circle.circleRadius = radius
         circle.tag = tag
+        
+        mapView.removeAllCircles()
+        mapView?.addCircle(circle)
+        currentCircle = circle
+        mapView?.fitArea(toShow: circle)
+    }
+    func drawCircle(point: MTMapPoint, radius: Float = 100, tag: Int? = nil) {
+        
+        let circle = MTMapCircle()
+        circle.circleCenterPoint = point
+        circle.circleLineColor = .orange
+        circle.circleFillColor = UIColor.orange.withAlphaComponent(0.1)
+        circle.circleRadius = radiusSlider.value * 1000
+        circleRadiusLabel.text = "\(Int(radiusSlider.value * 1000))m"
+        if let tag = tag {
+            circle.tag = tag
+        } else {
+            circle.tag = -1
+        }
+        mapView.removeAllCircles()
         mapView?.addCircle(circle)
         currentCircle = circle
         
@@ -101,10 +129,15 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             let meter = sender.value * 1000
             circle.circleRadius = meter
             mapView.addCircle(circle)
+            circleRadiusLabel.text = "\(Int(meter))m"
             
-            var got = gotList[tag]
-            got.radius = Double(meter)
-            viewModel.updateGot(got: got)
+            if tag != -1 {
+                var got = gotList[tag]
+                got.radius = Double(meter)
+                viewModel.updateGot(got: got)
+            }
+            
+            //self?.circleRadiusLabel.text = "\(Int(meter))m"
         }
     }
     
@@ -133,19 +166,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.quickAddView.addAction = { text in
-            self.quickAddView.addField.resignFirstResponder()
-            self.cardCollectionView.isHidden = false
-            self.view.layoutIfNeeded()
-        }
+        configureQuickAddView()
         
-        self.quickAddView.detailAction = { [weak self] in
-            guard let self = self else { return }
-            let center = self.mapView.mapCenterPoint.mapPointGeo()
-            let centerLocation = CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude)
-            self.viewModel.input.showAddVC(location: centerLocation)
-            self.viewModel.seedState.onNext(.none)
-        }
         LocationManager.shared.startUpdatingLocation()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -178,30 +200,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         super.viewDidDisappear(animated)
     }
     
-    @objc func keyboardWillShow(noti: Notification){
-        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.quickAddViewBottomConstraint.constant == 0{
-                let moveY = keyboardSize.height - self.view.safeAreaInsets.bottom
-                self.quickAddViewBottomConstraint.constant = moveY
-                mapView.frame.origin.y -= moveY/2
-                seedImageView.transform = CGAffineTransform(translationX: 0, y: -moveY/2)
-                setCircle(point: mapView.mapCenterPoint)
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
-    
-    @objc func keyboardWillHide(noti: Notification){
-        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.quickAddViewBottomConstraint.constant != 0 {
-                self.quickAddViewBottomConstraint.constant = 0
-                mapView.frame.origin.y = 0
-                seedImageView.transform = .identity
-                setCircle(point: mapView.mapCenterPoint)
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.seedButton.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
@@ -218,6 +216,47 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     
     // MARK: - Initializing
+    
+    @objc func keyboardWillShow(noti: Notification){
+        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.quickAddViewBottomConstraint.constant == 0{
+                let moveY = keyboardSize.height - self.view.safeAreaInsets.bottom
+                self.quickAddViewBottomConstraint.constant = moveY
+                mapView.frame.origin.y -= moveY/2
+                seedImageView.transform = CGAffineTransform(translationX: 0, y: -moveY/2)
+                sliderBackgroundView.isHidden = true
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(noti: Notification){
+        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.quickAddViewBottomConstraint.constant != 0 {
+                self.quickAddViewBottomConstraint.constant = 0
+                mapView.frame.origin.y = 0
+                seedImageView.transform = .identity
+                sliderBackgroundView.isHidden = false
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    func configureQuickAddView() {
+        self.quickAddView.addAction = { text in
+            self.quickAddView.addField.resignFirstResponder()
+            self.cardCollectionView.isHidden = false
+            self.view.layoutIfNeeded()
+        }
+        
+        self.quickAddView.detailAction = { [weak self] in
+            guard let self = self else { return }
+            let center = self.mapView.mapCenterPoint.mapPointGeo()
+            let centerLocation = CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude)
+            self.viewModel.input.showAddDetailVC(location: centerLocation, text: self.quickAddView.addField.text ?? "")
+            self.viewModel.seedState.onNext(.none)
+        }
+    }
     
     func configureTagCollectionView() {
         tagCollectionView.allowsMultipleSelection = true
@@ -243,13 +282,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     }
     
     func bindViewModel() {
-        
-        radiusSlider.rx.value
-            .map { $0 * 1000 }
-            .subscribe(onNext: { [weak self] meter in
-                self?.circleRadiusLabel.text = "\(Int(meter))m"
-            })
-            .disposed(by: disposeBag)
         
         Observable.combineLatest(viewModel.aimToPlace, viewModel.seedState)
             .subscribe(onNext:{ [weak self] aimToPlace, state in
@@ -291,20 +323,23 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.tagCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
         self.cardCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
         
-        self.viewModel.output.gotList.bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { (index, got, cell) in
-            cell.got = got
-            
-            cell.doneButton.rx.tap
-            .subscribe(onNext: {
-                guard let got = cell.got else { return }
-                self.viewModel.setGotDone(got: got)
-            }).disposed(by: cell.disposeBag)
-            
-            cell.cancelButton.rx.tap.subscribe(onNext: {
-                self.viewModel.deleteGot(got: cell.got!)
-            }).disposed(by: cell.disposeBag)
-        }.disposed(by: self.disposeBag)
-    
+        self.viewModel.output.gotList
+            .bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { (index, got, cell) in
+                cell.got = got
+                
+                cell.doneButton.rx.tap
+                .subscribe(onNext: {
+                    guard let got = cell.got else { return }
+                    self.viewModel.setGotDone(got: got)
+                }).disposed(by: cell.disposeBag)
+                
+                cell.cancelButton.rx.tap.subscribe(onNext: {
+                    self.viewModel.deleteGot(got: cell.got!)
+                    self.currentCircle = nil
+                }).disposed(by: cell.disposeBag)
+                
+                self.setCard(index: 0)
+            }.disposed(by: self.disposeBag)
         
         viewModel.output.tagList
             .compactMap { [weak self] in self?.appendEmptyTag($0) }
@@ -322,14 +357,18 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
             .disposed(by: disposeBag)
         
+        cardCollectionView.rx.modelSelected(Got.self)
+            .subscribe(onNext: { [weak self] got in
+                self?.viewModel.input.showAddDetailVC(got: got)
+            })
+            .disposed(by: disposeBag)
+        
         Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
             .bind { [weak self] indexPath, tag in
                 if let collectionView = self?.tagCollectionView, indexPath.item == collectionView.numberOfItems(inSection: 0)-1 {
                     self?.viewModel.input.tagListCellSelect.onNext(())
                     return
-                }
-                
-                if var tags = self?.viewModel.input.filteredTagSubject.value {
+                } else if var tags = self?.viewModel.input.filteredTagSubject.value {
                     tags.append(tag)
                     self?.viewModel.input.filteredTagSubject.accept(tags)
                 }
@@ -346,7 +385,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
         
         self.viewModel.output.gotList.subscribe(onNext: { list in
-            print("🚨",list)
             self.gotList = list
         }).disposed(by: self.disposeBag)
         
@@ -355,7 +393,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             .subscribe(onNext: { [weak self] _ in
                 if let centerPoint = self?.mapView.mapCenterPoint.mapPointGeo() {
                     let location = CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude)
-                    self?.viewModel.input.quickAdd(location: location)
+                    
+                    let currentSliderValue = self?.radiusSlider.value ?? 0.1
+                    self?.viewModel.input.quickAdd(location: location, radius: Double(currentSliderValue * 1000))
+                    
                 }
             })
             .disposed(by: disposeBag)
@@ -374,7 +415,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 //        }
         
         self.viewModel.output.doneAction.bind { got in
-            self.viewModel.input.updateList()
             self.restoreView.isHidden = false
             self.restoreView.restoreAction = {
                 self.restoreView.isHidden = true
@@ -383,6 +423,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.viewModel.input.updateGot(got: tmpGot)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.viewModel.updateList()
+                //self.currentCircle = nil
                 self.restoreView.isHidden = true
             }
         }.disposed(by: self.disposeBag)
@@ -391,15 +433,23 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     //MARK: Set UI According to the State
     func setNormalStateUI(){
         self.mapView.removeAllCircles()
+        self.radiusSlider.value = 0.1
+        circleRadiusLabel.text = "\(Int(radiusSlider.value * 1000))m"
+        sliderBackgroundView.isHidden = true
         self.seedButton.backgroundColor = .white
         self.seedButton.setImage(UIImage(named: "icMapBtnAdd"), for: .normal)
         self.seedButton.isEnabled = true
         self.quickAddView.isHidden = true
+        self.quickAddView.addField.text = ""
         self.seedImageView.isHidden = true
     }
     
     func setSeedingStateUI(){
-        setCircle(point: mapView.mapCenterPoint)
+        
+        //drawCircle(latitude: conter.lat, longitude: <#T##CLLocationDegrees#>, radius: <#T##Float#>, tag: <#T##Int#>)
+        radiusSlider.value = 0.1
+        drawCircle(point: mapView.mapCenterPoint)
+        //setCircle(point: mapView.mapCenterPoint)
         self.seedButton.backgroundColor = .saffron
         self.seedButton.setImage(UIImage(named: "icMapBtnSeeding"), for: .normal)
         self.seedButton.isEnabled = true
@@ -411,8 +461,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.quickAddView.isHidden = false
         self.seedImageView.isHidden = false
         self.seedButton.backgroundColor = .white
-        self.seedButton.setImage(UIImage(named: "icMapBtnAdd"), for: .normal
-        )
+        self.seedButton.setImage(UIImage(named: "icMapBtnAdd"), for: .normal)
         self.quickAddView.addField.becomeFirstResponder()
     }
     
@@ -471,6 +520,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
             mapView.removeAllCircles()
             drawCircle(latitude: lat, longitude: long, radius: Float(radius), tag: index)
+            centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
         }
         
     }
@@ -541,12 +591,13 @@ extension MapViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
             cell.contentView.alpha = 0.3
+        } else {
+            tagCollectionView.deselectItem(at: indexPath, animated: true)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
-            
             cell.contentView.alpha = 1
         }
     }
