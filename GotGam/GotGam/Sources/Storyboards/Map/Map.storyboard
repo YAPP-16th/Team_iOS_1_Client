@@ -382,15 +382,9 @@
                                                 <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
                                                 <color key="textColor" systemColor="placeholderTextColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="G8P-GZ-ujz" appends="YES" id="zN8-WN-xEA"/>
-                                                </connections>
                                             </label>
                                         </subviews>
                                         <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="G8P-GZ-ujz" appends="YES" id="8Vu-w5-Zdb"/>
-                                        </connections>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -415,9 +409,6 @@
                                             <constraint firstAttribute="height" constant="80" id="tQd-22-zoC"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="edit_pencel"/>
-                                        <connections>
-                                            <action selector="didTapEditMapButton:" destination="9o4-1I-vlQ" eventType="touchUpInside" id="wso-r0-7a5"/>
-                                        </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="떠날 때만 알려줍니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaG-8z-suT" customClass="PaddingLabel" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="155" y="14" width="104" height="14.5"/>
@@ -582,15 +573,12 @@
                         <outlet property="mapBackgroundZeroHeightConstraint" destination="Mri-sG-y98" id="pel-B7-CXh"/>
                         <outlet property="placeLabel" destination="HXr-kf-kxC" id="sXT-St-fx3"/>
                         <outlet property="saveButton" destination="hjn-bF-KUB" id="Rk3-oU-SzG"/>
+                        <outlet property="textFieldStackView" destination="5lv-AR-bWD" id="7PU-wT-wzL"/>
                         <outlet property="titleTextField" destination="KwC-ZF-ds1" id="FKE-Cr-PZA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="41C-cp-0Sd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="G8P-GZ-ujz">
-                    <connections>
-                        <action selector="didTapPlaceLabel:" destination="9o4-1I-vlQ" id="v2c-7R-2pb"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="G8P-GZ-ujz"/>
             </objects>
             <point key="canvasLocation" x="2650.7246376811595" y="-883.25892857142856"/>
         </scene>

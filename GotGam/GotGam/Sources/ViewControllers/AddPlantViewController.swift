@@ -76,10 +76,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         label.layer.add(animation, forKey: "opacity")
     }
 
-    @IBAction func didTapEditMapButton(_ sender: UIButton) {
-    
-    }
-    
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardHeight = keyboardFrame.cgRectValue.height
@@ -105,7 +101,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         }
     }
     
-    @IBAction func didTapPlaceLabel(_ sender: Any) {
+    @objc func didTapPlaceLabel(_ sender: Any) {
         print("\(sender)")
         if placeLabel.textColor != .black {
             viewModel.inputs.editPlace.onNext(())
@@ -123,8 +119,10 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPlaceLabel(_:)))
+        textFieldStackView.addGestureRecognizer(tapGesture)
     }
+    @IBOutlet var textFieldStackView: UIStackView!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

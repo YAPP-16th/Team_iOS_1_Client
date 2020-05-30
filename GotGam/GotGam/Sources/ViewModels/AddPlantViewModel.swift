@@ -13,7 +13,8 @@ import RxCocoa
 import RxDataSources
 
 protocol AddPlantViewModelInputs {
-    
+    var placeSubject: BehaviorRelay<CLLocationCoordinate2D?> { get set }
+    var radiusSubject: BehaviorRelay<Double> { get set }
     var nameText: BehaviorRelay<String> { get set }
     var dateText: BehaviorRelay<String> { get set }
     var arriveText: BehaviorRelay<String> { get set }
@@ -47,6 +48,8 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     // MARK: - Input
     
+    var placeSubject = BehaviorRelay<CLLocationCoordinate2D?>(value: nil)
+    var radiusSubject = BehaviorRelay<Double>(value: 100)
     var nameText = BehaviorRelay<String>(value: "")
     var dateText = BehaviorRelay<String>(value: "")
     var arriveText = BehaviorRelay<String>(value: "")
@@ -69,10 +72,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     var tag = BehaviorRelay<Tag?>(value: nil)
     var sectionsSubject = BehaviorRelay<[InputSectionModel]>(value: [])
     
-    // MARK: - Private
-    
-    var placeSubject = BehaviorRelay<CLLocationCoordinate2D?>(value: nil)
-
     // MARK: - Methods
     
     private func pushAddTagVC() {
@@ -215,6 +214,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 
                 self?.nameText.accept(got.title ?? "")
                 self?.placeText.accept(got.place ?? "")
+                self?.radiusSubject.accept(got.radius ?? 0)
                 self?.tag.accept(got.tag?.first)
                 self?.isOnDate.accept(got.onDate)
                 self?.isOnArrive.accept(got.onArrive)
