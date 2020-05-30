@@ -139,8 +139,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             self.view.layoutIfNeeded()
         }
         
-        self.quickAddView.detailAction = {
-            self.viewModel.input.showAddVC()
+        self.quickAddView.detailAction = { [weak self] in
+            guard let self = self else { return }
+            let center = self.mapView.mapCenterPoint.mapPointGeo()
+            let centerLocation = CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude)
+            self.viewModel.input.showAddVC(location: centerLocation)
             self.viewModel.seedState.onNext(.none)
         }
         LocationManager.shared.startUpdatingLocation()
@@ -178,7 +181,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     @objc func keyboardWillShow(noti: Notification){
         if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.quickAddViewBottomConstraint.constant == 0{
-                self.quickAddViewBottomConstraint.constant = keyboardSize.height - self.view.safeAreaInsets.bottom
+                let moveY = keyboardSize.height - self.view.safeAreaInsets.bottom
+                self.quickAddViewBottomConstraint.constant = moveY
+                mapView.frame.origin.y -= moveY/2
+                seedImageView.frame.origin.y -= moveY/2
+                setCircle(point: mapView.mapCenterPoint)
                 self.view.layoutIfNeeded()
             }
         }
@@ -188,6 +195,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.quickAddViewBottomConstraint.constant != 0 {
                 self.quickAddViewBottomConstraint.constant = 0
+                mapView.frame.origin.y = 0
+                seedImageView.frame.origin.y = 0
+                setCircle(point: mapView.mapCenterPoint)
                 self.view.layoutIfNeeded()
             }
         }
@@ -335,7 +345,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             }
             .disposed(by: disposeBag)
         
-        
         self.viewModel.output.gotList.subscribe(onNext: { list in
             print("🚨",list)
             self.gotList = list
@@ -434,7 +443,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             case .notDetermined, .restricted:
                 print("설정으로 이동시키기")
             case .authorizedWhenInUse, .authorizedAlways:
-                self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: LocationManager.shared.currentLocation!.latitude, longitude: LocationManager.shared.currentLocation!.longitude)), animated: true)
+                guard let currentLocation = LocationManager.shared.currentLocation else { return }
+                self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: currentLocation.latitude, longitude: currentLocation.longitude)), animated: true)
             }
             
         }else{
@@ -476,6 +486,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 
 extension MapViewController: MTMapViewDelegate{
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
+        print(LocationManager.shared.currentLocation)
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
             self.quickAddView.isHidden = true

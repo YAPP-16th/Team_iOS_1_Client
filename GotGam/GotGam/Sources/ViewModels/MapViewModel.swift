@@ -14,7 +14,7 @@ import CoreLocation
 
 protocol MapViewModelInputs {
     //func createGot(got: Got)
-    func showAddVC()
+    func showAddVC(location: CLLocationCoordinate2D?)
     func updateGot(got: Got)
     func setGotDone(got: Got)
     func deleteGot(got: Got)
@@ -22,7 +22,7 @@ protocol MapViewModelInputs {
     func updateTagList()
     //func quickAdd(text: String, location: CLLocationCoordinate2D)
     func quickAdd(location: CLLocationCoordinate2D)
-	func showSearchVC()
+    func showSearchVC()
     func savePlace(location: CLLocationCoordinate2D)
     var addText: BehaviorRelay<String> { get set }
     
@@ -69,9 +69,11 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     //var seedState = PublishSubject<SeedState>()
     var seedState = BehaviorSubject<SeedState>(value: .none)
     
-    func showAddVC() {
+    func showAddVC(location: CLLocationCoordinate2D? = nil) {
         //let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
         let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: nil)
+        addVM.placeSubject.accept(location)
+        addVM.radiusSubject.accept(100)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     

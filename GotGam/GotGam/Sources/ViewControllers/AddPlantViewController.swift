@@ -129,9 +129,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let location = viewModel.placeSubject.value, let radius = viewModel.outputs.currentGot.value?.radius {
-            print(location)
-            print("set center to \(location) in addPlant")
+        if let location = viewModel.placeSubject.value {
             setupMapCenter(latitude: Double(location.latitude), longitude: Double(location.longitude))
             
             let pin = MTMapPOIItem()
@@ -144,8 +142,11 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: Double(location.latitude), longitude: Double(location.longitude)))
             mapView?.addPOIItems([pin])
             
+            let radius = viewModel.inputs.radiusSubject.value
             drawCircle(latitude: location.latitude, longitude: location.longitude, radius: Float(radius))
         }
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
