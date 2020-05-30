@@ -30,6 +30,29 @@ class LoginViewController: UIViewController, ViewModelBindableType{
     var viewModel: LoginViewModel!
     
     //MARK: Views
+    lazy var logoImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "icLoginLogo")?.withRenderingMode(.alwaysOriginal)
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    lazy var cancelLoginButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("로그인 없이 시작하기", for: .normal)
+        btn.setTitleColor(.saffron, for: .normal)
+        btn.layer.cornerRadius = 9
+        btn.layer.borderWidth = 1
+        btn.layer.borderColor = UIColor.saffron.cgColor
+        btn.layer.masksToBounds = true
+        btn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        return btn
+    }()
+    
     lazy var facebookLoginButton: FBLoginButton = {
         let b = FBLoginButton(frame: .zero, permissions: [.publicProfile])
         b.delegate = self.viewModel
@@ -51,6 +74,7 @@ class LoginViewController: UIViewController, ViewModelBindableType{
 //        b.addTarget(self, action: #selector(googleLoginTapped), for: .touchUpInside)
         return b
     }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +115,7 @@ class LoginViewController: UIViewController, ViewModelBindableType{
         authController.performRequests()
     }
     @objc func kakaoLoginTapped(){
-        self.viewModel.kakaoLogin()
+        self.viewModel.inputs.kakaoLogin()
     }
     @objc private func googleLoginTapped(){
         GIDSignIn.sharedInstance()?.signIn()
@@ -110,6 +134,9 @@ class LoginViewController: UIViewController, ViewModelBindableType{
             }
         })
     }
+    @objc func cancel(){
+        self.viewModel.close()
+    }
     
     func bindViewModel() {
         
@@ -118,88 +145,107 @@ class LoginViewController: UIViewController, ViewModelBindableType{
 
 //MARK: - UI
 extension LoginViewController{
-  private func prepareLoginButtons(){
-          prepareFacebookLoginButton()
-          prepareKakaoLoginButton()
-          prepareSignInGoogle()
-          if #available(iOS 13.0, *) {
-              prepareSignInApple()
-          }
-      }
-      
-      private func prepareKakaoLoginButton(){
-          self.view.addSubview(kakaoLoginButton)
-          NSLayoutConstraint.activate([
-              kakaoLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
-              kakaoLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-              kakaoLoginButton.bottomAnchor.constraint(equalTo: self.facebookLoginButton.topAnchor, constant: -8),
-              kakaoLoginButton.heightAnchor.constraint(equalToConstant: 45)
-          ])
-      }
-      
-      private func prepareFacebookLoginButton(){
-          self.view.addSubview(facebookLoginButton)
-          
-          for ic in facebookLoginButton.constraints{
-              if ic.constant == 28{
-                  ic.isActive = false
-                  break
-              }
-          }
-          NSLayoutConstraint.activate([
-              facebookLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
-              facebookLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-              facebookLoginButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
-              facebookLoginButton.heightAnchor.constraint(equalToConstant: 45)
-          ])
-          facebookLoginButton.permissions = ["public_profile", "email"]
-      }
-      
-      private func prepareSignInGoogle(){
-          GIDSignIn.sharedInstance()?.presentingViewController = self
-          GIDSignIn.sharedInstance()?.restorePreviousSignIn()
-          
-          self.view.addSubview(googleLoginButton)
-          
-          NSLayoutConstraint.activate([
-              googleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
-              googleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-              googleLoginButton.bottomAnchor.constraint(equalTo: self.kakaoLoginButton.topAnchor, constant: -8),
-              googleLoginButton.heightAnchor.constraint(equalToConstant: 45)
-          ])
-      }
-      
-      @available(iOS 13.0, *)
-      private func prepareSignInApple(){
-          let siwaButton = ASAuthorizationAppleIDButton()
-          self.view.addSubview(siwaButton)
-          siwaButton.translatesAutoresizingMaskIntoConstraints = false
-          NSLayoutConstraint.activate([
-              siwaButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
-              siwaButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-              siwaButton.bottomAnchor.constraint(equalTo: self.googleLoginButton.topAnchor, constant: -8),
-              siwaButton.heightAnchor.constraint(equalToConstant: 45)
-          ])
-          
-          siwaButton.addTarget(self, action: #selector(appleSignInTapped), for: .touchUpInside)
-          
-          if let userID = UserDefaults.standard.string(forDefines: .userID){
-              print("이전에 로그인 한 적 있음")
-              ASAuthorizationAppleIDProvider().getCredentialState(forUserID: userID) { (credentialState, error) in
-                  switch credentialState{
-                  case .authorized:
-                      print("여전리 해당 아이디로 로그인한 상태")
-                  case .revoked:
-                      print("로그인한 적은 있으나, 현재는 제거됨")
-                  case .notFound:
-                      print("로그인한 적 없음")
-                  default:
-                      print("알수 없음")
-                  }
-              }
-          }
-          
-      }
+    private func prepareLoginButtons(){
+        prepareLoginImageView()
+        prepareCancelLoginButton()
+        prepareFacebookLoginButton()
+        prepareKakaoLoginButton()
+        prepareSignInGoogle()
+        if #available(iOS 13.0, *) {
+            prepareSignInApple()
+        }
+    }
+    
+    private func prepareCancelLoginButton(){
+        self.view.addSubview(cancelLoginButton)
+        NSLayoutConstraint.activate([
+            cancelLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+            cancelLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+            cancelLoginButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
+            cancelLoginButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+    }
+    private func prepareLoginImageView(){
+        self.view.addSubview(logoImageView)
+        NSLayoutConstraint.activate([
+            logoImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 120),
+            logoImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        ])
+    }
+    
+    private func prepareKakaoLoginButton(){
+        self.view.addSubview(kakaoLoginButton)
+        NSLayoutConstraint.activate([
+            kakaoLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+            kakaoLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+            kakaoLoginButton.bottomAnchor.constraint(equalTo: self.facebookLoginButton.topAnchor, constant: -8),
+            kakaoLoginButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+    }
+    
+    private func prepareFacebookLoginButton(){
+        self.view.addSubview(facebookLoginButton)
+        
+        for ic in facebookLoginButton.constraints{
+            if ic.constant == 28{
+                ic.isActive = false
+                break
+            }
+        }
+        NSLayoutConstraint.activate([
+            facebookLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+            facebookLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+            facebookLoginButton.bottomAnchor.constraint(equalTo: self.cancelLoginButton.topAnchor, constant: -8),
+            facebookLoginButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+        facebookLoginButton.permissions = ["public_profile", "email"]
+    }
+    
+    private func prepareSignInGoogle(){
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+        
+        self.view.addSubview(googleLoginButton)
+        
+        NSLayoutConstraint.activate([
+            googleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+            googleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+            googleLoginButton.bottomAnchor.constraint(equalTo: self.kakaoLoginButton.topAnchor, constant: -8),
+            googleLoginButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+    }
+    
+    @available(iOS 13.0, *)
+    private func prepareSignInApple(){
+        let siwaButton = ASAuthorizationAppleIDButton()
+        self.view.addSubview(siwaButton)
+        siwaButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            siwaButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+            siwaButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+            siwaButton.bottomAnchor.constraint(equalTo: self.googleLoginButton.topAnchor, constant: -8),
+            siwaButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+        
+        siwaButton.addTarget(self, action: #selector(appleSignInTapped), for: .touchUpInside)
+        
+        if let userID = UserDefaults.standard.string(forDefines: .userID){
+            print("이전에 로그인 한 적 있음")
+            ASAuthorizationAppleIDProvider().getCredentialState(forUserID: userID) { (credentialState, error) in
+                switch credentialState{
+                case .authorized:
+                    print("여전리 해당 아이디로 로그인한 상태")
+                case .revoked:
+                    print("로그인한 적은 있으나, 현재는 제거됨")
+                case .notFound:
+                    print("로그인한 적 없음")
+                default:
+                    print("알수 없음")
+                }
+            }
+        }
+        
+    }
 }
 
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding{

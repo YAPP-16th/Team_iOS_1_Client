@@ -28,15 +28,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                name: Notification.Name.KOSessionDidChange,
                                                object: nil)
     
-    let gotStorage = GotStorage()
-    let alarmStorage = AlarmStorage()
-    let coordinator = SceneCoordinator(window: window!)
-    coordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)
-    
-    let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, alarmStorage: alarmStorage)
+        
+        if UserDefaults.standard.bool(forDefines: .tutorialShown){
+            let gotStorage = GotStorage()
+            let alarmStorage = AlarmStorage()
+            let coordinator = SceneCoordinator(window: window!)
+            coordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)
+
+            let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, alarmStorage: alarmStorage)
 
 
-        coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
+                coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
+        }else{
+            let coordinator = SceneCoordinator(window: window!)
+            let tutorialViewModel = TutorialViewModel(sceneCoordinator: coordinator)
+            coordinator.transition(to: .tutorial(tutorialViewModel), using: .root, animated: false)
+        }
+        
+        
         return true
     }
     @objc func kakaoSessionDidChange(notification: Notification){
@@ -117,8 +126,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         UserDefaults.standard.set(token, forDefines: .userToken)
                         UserDefaults.standard.set(true, forDefines: .isLogined)
                         UserDefaults.standard.set(email, forDefines: .userID)
-                        if let LoginVC = self.window?.rootViewController as? LoginViewController{
-                            LoginVC.viewModel.close()
+                        if let loginVC = self.window?.rootViewController?.presentedViewController as? LoginViewController{
+                            loginVC.viewModel.close()
                         }
                     }catch let error{
                         print(error)
