@@ -32,6 +32,8 @@
 		2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */; };
 		297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */; };
 		29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727852247451C500B75AC7 /* SettingLoginViewController.swift */; };
+		29BC6CC82481F39A0011C482 /* SettingOtherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BC6CC72481F39A0011C482 /* SettingOtherDetailViewController.swift */; };
+		29BC6CCA2481F4B50011C482 /* SettingOtherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BC6CC92481F4B50011C482 /* SettingOtherDetailViewModel.swift */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -205,6 +207,8 @@
 		2972784E2473CA3B00B75AC7 /* SettingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewController.swift; sourceTree = "<group>"; };
 		297278502473CA6300B75AC7 /* SettingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAlarmViewModel.swift; sourceTree = "<group>"; };
 		29727852247451C500B75AC7 /* SettingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewController.swift; sourceTree = "<group>"; };
+		29BC6CC72481F39A0011C482 /* SettingOtherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherDetailViewController.swift; sourceTree = "<group>"; };
+		29BC6CC92481F4B50011C482 /* SettingOtherDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherDetailViewModel.swift; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -508,6 +512,7 @@
 				29618D64247C3C37008E112E /* FrequentsViewController.swift */,
 				29618DB4247CEF3F008E112E /* FrequentsSearchViewController.swift */,
 				29618DBE247E5AA4008E112E /* FrequentsMapViewController.swift */,
+				29BC6CC72481F39A0011C482 /* SettingOtherDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -614,6 +619,7 @@
 				29618D62247C3C17008E112E /* FrequentsViewModel.swift */,
 				29618DB2247CEEF5008E112E /* FrequentsSearchViewModel.swift */,
 				29618DBC247E5A99008E112E /* FrequentsMapViewModel.swift */,
+				29BC6CC92481F4B50011C482 /* SettingOtherDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1033,6 +1039,7 @@
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */,
+				29BC6CC82481F39A0011C482 /* SettingOtherDetailViewController.swift in Sources */,
 				4269388424306B66007B60FD /* BaseViewController.swift in Sources */,
 				295C03C32464652700789967 /* SearchBarViewController.swift in Sources */,
 				2972784D2473C9E300B75AC7 /* SettingPlaceViewModel.swift in Sources */,
@@ -1079,6 +1086,7 @@
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
 				29618DB0247C4C70008E112E /* ManagedFrequents+CoreDataClass.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,
+				29BC6CCA2481F4B50011C482 /* SettingOtherDetailViewModel.swift in Sources */,
 				A157E11B24557410001E310D /* GGUserDefault.swift in Sources */,
 				29618DB5247CEF3F008E112E /* FrequentsSearchViewController.swift in Sources */,
 				4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */,

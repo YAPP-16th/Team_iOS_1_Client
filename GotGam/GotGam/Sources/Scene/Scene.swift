@@ -26,6 +26,7 @@ enum Scene {
 	case frequents(FrequentsViewModel)
 	case frequentsSearch(FrequentsSearchViewModel)
 	case frequentsMap(FrequentsMapViewModel)
+	case settingDetail(SettingOtherDetailViewModel)
 }
 
 extension Scene {
@@ -177,6 +178,14 @@ extension Scene {
 			
 			frequentsMapVC.bind(viewModel: viewModel)
 			return frequentsMapVC
+		
+		case .settingDetail(let viewModel):
+			guard var settingDetailVC = storyboard.instantiateViewController(withIdentifier: "SettingOtherDetailViewController") as? SettingOtherDetailViewController else {
+				fatalError()
+			}
+			
+			settingDetailVC.bind(viewModel: viewModel)
+			return settingDetailVC
         }
     }
 }

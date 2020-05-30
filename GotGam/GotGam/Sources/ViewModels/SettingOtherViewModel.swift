@@ -11,7 +11,7 @@ import RxSwift
 
 
 protocol SettingOtherViewModelInputs {
-	
+	func showPersonalInfoVC()
 }
 
 protocol SettingOtherViewModelOutputs {
@@ -26,7 +26,13 @@ protocol SettingOtherViewModelType {
 
 class SettingOtherViewModel: CommonViewModel, SettingOtherViewModelType, SettingOtherViewModelInputs, SettingOtherViewModelOutputs {
 	
-	var settingOtherMenu = Observable<[String]>.just(["위치정보 이용약관", "개인정보처리방침", "오픈소스 라이선스", "법적 공지 / 정보제공처"])
+	var settingOtherMenu = Observable<[String]>.just(["개인 정보 처리 방침", "서비스 이용 약관", "위치 기반 서비스 약관"])
+	
+	func showPersonalInfoVC() {
+        let settingOtherDetailVM = SettingOtherDetailViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		settingOtherDetailVM.settingOtherMenuList
+        sceneCoordinator.transition(to: .settingDetail(settingOtherDetailVM), using: .modal, animated: true)
+	}
 	
     var inputs: SettingOtherViewModelInputs { return self }
     var outputs: SettingOtherViewModelOutputs { return self }
