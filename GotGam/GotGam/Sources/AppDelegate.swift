@@ -126,8 +126,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         UserDefaults.standard.set(token, forDefines: .userToken)
                         UserDefaults.standard.set(true, forDefines: .isLogined)
                         UserDefaults.standard.set(email, forDefines: .userID)
-                        if let LoginVC = self.window?.rootViewController as? LoginViewController{
-                            LoginVC.viewModel.close()
+                        if let loginVC = self.window?.rootViewController?.presentedViewController as? LoginViewController{
+                            loginVC.viewModel.close()
                         }
                     }catch let error{
                         print(error)
