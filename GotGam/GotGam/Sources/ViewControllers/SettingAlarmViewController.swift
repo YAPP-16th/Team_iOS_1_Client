@@ -34,7 +34,7 @@ class SettingAlarmViewController: BaseViewController, ViewModelBindableType {
 				(index: Int, element: String, cell: SettingAlarmCell) in
 				
 				cell.settingAlarmListLabel?.text = element
-				
+				cell.alarmSwitch.onTintColor = .saffron
 				
 		}.disposed(by: disposeBag)
 		
@@ -81,4 +81,5 @@ extension SettingAlarmViewController: UITableViewDelegate {
 class SettingAlarmCell: UITableViewCell {
 	
 	@IBOutlet var settingAlarmListLabel: UILabel!
+	@IBOutlet var alarmSwitch: UISwitch!
 }
