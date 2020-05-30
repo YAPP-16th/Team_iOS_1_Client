@@ -18,7 +18,8 @@ public class ManagedFrequents: NSManagedObject {
 			address: address,
 			latitude: latitude,
 			longitude: longitude,
-			type: IconType(rawValue: type)! 
+			type: IconType(rawValue: type)!,
+			id: id
         )
     }
 }

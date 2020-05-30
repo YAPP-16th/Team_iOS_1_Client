@@ -20,6 +20,7 @@ class FrequentsStorage: FrequentsStorageType{
 		managedFrequents.latitude = frequent.latitude
 		managedFrequents.longitude = frequent.longitude
 		managedFrequents.type = frequent.type.rawValue
+		managedFrequents.id = frequent.id
 		do{
 			try self.context.save()
 			return .just(managedFrequents.toFrequents())

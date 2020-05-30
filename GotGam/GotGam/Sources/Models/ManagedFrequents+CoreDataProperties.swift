@@ -21,4 +21,5 @@ extension ManagedFrequents {
     @NSManaged public var longitude: Double
     @NSManaged public var name: String
 	@NSManaged public var type: Int16
+	@NSManaged public var id: String
 }
