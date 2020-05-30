@@ -223,9 +223,10 @@ extension SearchBarViewController: UITableViewDelegate {
 				mapVC?.y = got.latitude!
 				
 				viewModel.sceneCoordinator.close(animated: true) {
-					mapVC?.updateAddress()
 					let index = self.gotList.firstIndex(of: got)
-//					mapVC?.setCard(index: index)
+					mapVC?.setCard(index: index!)
+//					mapVC?.updateAddress()
+					print("index🍏", index)
 				}
 			}
 		}
