@@ -161,6 +161,7 @@
 		A16439722454001100C740F4 /* MapTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16439702454001100C740F4 /* MapTagCell.swift */; };
 		A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16439732454002300C740F4 /* MapQuickAddView.xib */; };
 		A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164397524540A0F00C740F4 /* MapQuickAddView.swift */; };
+		A164548D2481F3C40036CF15 /* splashLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = A164548C2481F3C40036CF15 /* splashLogo.png */; };
 		A1A5DE042471132C00AFA9D5 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */; };
 		A1A5DEA024753CC100AFA9D5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1A5DE9F24753CC100AFA9D5 /* credentials.plist */; };
 		A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */; };
@@ -347,6 +348,7 @@
 		A16439702454001100C740F4 /* MapTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTagCell.swift; sourceTree = "<group>"; };
 		A16439732454002300C740F4 /* MapQuickAddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapQuickAddView.xib; sourceTree = "<group>"; };
 		A164397524540A0F00C740F4 /* MapQuickAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuickAddView.swift; sourceTree = "<group>"; };
+		A164548C2481F3C40036CF15 /* splashLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashLogo.png; sourceTree = "<group>"; };
 		A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		A1A5DE9F24753CC100AFA9D5 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		A1A5DEA1247544AE00AFA9D5 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 		4CE037CD2438BDD10093E39D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A164548C2481F3C40036CF15 /* splashLogo.png */,
 				A1BE454F2451A57700B7467B /* Fonts */,
 				4269388824306B68007B60FD /* Assets.xcassets */,
 				A1BE45582451A72200B7467B /* UIColor+Extensions.swift */,
@@ -900,6 +903,7 @@
 				A157E11024555A90001E310D /* noimage.png in Resources */,
 				A157E11224555A90001E310D /* daum_th_line.png in Resources */,
 				A157E10124555A90001E310D /* copyright.png in Resources */,
+				A164548D2481F3C40036CF15 /* splashLogo.png in Resources */,
 				A157E10524555A90001E310D /* map_pin@3x.png in Resources */,
 				425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */,
 				A157E10D24555A90001E310D /* map_present_direction.png in Resources */,
