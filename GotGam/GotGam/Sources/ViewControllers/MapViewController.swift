@@ -184,7 +184,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 let moveY = keyboardSize.height - self.view.safeAreaInsets.bottom
                 self.quickAddViewBottomConstraint.constant = moveY
                 mapView.frame.origin.y -= moveY/2
-                seedImageView.frame.origin.y -= moveY/2
+                seedImageView.transform = CGAffineTransform(translationX: 0, y: -moveY/2)
                 setCircle(point: mapView.mapCenterPoint)
                 self.view.layoutIfNeeded()
             }
@@ -196,7 +196,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             if self.quickAddViewBottomConstraint.constant != 0 {
                 self.quickAddViewBottomConstraint.constant = 0
                 mapView.frame.origin.y = 0
-                seedImageView.frame.origin.y = 0
+                seedImageView.transform = .identity
                 setCircle(point: mapView.mapCenterPoint)
                 self.view.layoutIfNeeded()
             }
