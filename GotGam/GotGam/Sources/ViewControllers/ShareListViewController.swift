@@ -61,6 +61,14 @@ class ShareListViewController: BaseViewController, ViewModelBindableType {
             .bind(to: shareListTableView.rx.items(dataSource: dataSources))
             .disposed(by: disposeBag)
         
+        shareListTableView.rx.modelSelected(ShareItem.self)
+            .subscribe(onNext: { [weak self] item in
+                if case let .shareItem(tag) = item {
+                    self?.viewModel.showCreateTag(tag: tag)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         Observable.zip(shareListTableView.rx.itemDeleted, shareListTableView.rx.modelDeleted(ShareItem.self))
             .subscribe(onNext: { [weak self] indexPath, item in
                 
