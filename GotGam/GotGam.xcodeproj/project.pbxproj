@@ -166,6 +166,10 @@
 		A16439722454001100C740F4 /* MapTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16439702454001100C740F4 /* MapTagCell.swift */; };
 		A16439742454002300C740F4 /* MapQuickAddView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A16439732454002300C740F4 /* MapQuickAddView.xib */; };
 		A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A164397524540A0F00C740F4 /* MapQuickAddView.swift */; };
+		A17CD90F248279B700F0C30E /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17CD90C248279B700F0C30E /* TutorialPageViewController.swift */; };
+		A17CD910248279B700F0C30E /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17CD90D248279B700F0C30E /* TutorialViewController.swift */; };
+		A17CD911248279B700F0C30E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17CD90E248279B700F0C30E /* StartViewController.swift */; };
+		A17CD913248279C600F0C30E /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17CD912248279C600F0C30E /* TutorialViewModel.swift */; };
 		A1A5DE042471132C00AFA9D5 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */; };
 		A1A5DEA024753CC100AFA9D5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1A5DE9F24753CC100AFA9D5 /* credentials.plist */; };
 		A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */; };
@@ -357,6 +361,10 @@
 		A16439702454001100C740F4 /* MapTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTagCell.swift; sourceTree = "<group>"; };
 		A16439732454002300C740F4 /* MapQuickAddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapQuickAddView.xib; sourceTree = "<group>"; };
 		A164397524540A0F00C740F4 /* MapQuickAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuickAddView.swift; sourceTree = "<group>"; };
+		A17CD90C248279B700F0C30E /* TutorialPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
+		A17CD90D248279B700F0C30E /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		A17CD90E248279B700F0C30E /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		A17CD912248279C600F0C30E /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		A1A5DE032471132C00AFA9D5 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		A1A5DE9F24753CC100AFA9D5 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		A1A5DEA1247544AE00AFA9D5 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
@@ -506,6 +514,7 @@
 		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A17CD90B248279B700F0C30E /* Tutorial */,
 				295C03C22464652700789967 /* SearchBarViewController.swift */,
 				4269388324306B66007B60FD /* BaseViewController.swift */,
 				4CE037D92438C9330093E39D /* ViewModelBindableType.swift */,
@@ -616,6 +625,7 @@
 		4CE037D22438C5550093E39D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				A17CD912248279C600F0C30E /* TutorialViewModel.swift */,
 				A1A5DF5B2477D52700AFA9D5 /* LoginViewModel.swift */,
 				295C03C42464655100789967 /* SearchBarViewModel.swift */,
 				4CE037E22438CAF20093E39D /* CommonViewModel.swift */,
@@ -800,6 +810,16 @@
 				29618DB6247E4894008E112E /* BadgeButton.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		A17CD90B248279B700F0C30E /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				A17CD90C248279B700F0C30E /* TutorialPageViewController.swift */,
+				A17CD90D248279B700F0C30E /* TutorialViewController.swift */,
+				A17CD90E248279B700F0C30E /* StartViewController.swift */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		A1A5DF582477D48E00AFA9D5 /* Recovered References */ = {
@@ -1073,8 +1093,10 @@
 				2972781B246FDADD00B75AC7 /* KakaoResponse.swift in Sources */,
 				4CA2351C24758DBB005323EF /* AlarmStorage.swift in Sources */,
 				A1DF638B247E6D5700444175 /* KakaoLinkManager.swift in Sources */,
+				A17CD913248279C600F0C30E /* TutorialViewModel.swift in Sources */,
 				4CE037DF2438CA780093E39D /* GotStorage.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+.swift in Sources */,
+				A17CD90F248279B700F0C30E /* TutorialPageViewController.swift in Sources */,
 				4C620D12246C370300B25B86 /* PaddingLabel.swift in Sources */,
 				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
 				4C5185ED2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift in Sources */,
@@ -1092,6 +1114,7 @@
 				29618DB3247CEEF5008E112E /* FrequentsSearchViewModel.swift in Sources */,
 				4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */,
 				A127E715246D4BA7005137D3 /* ManagedGot+CoreDataProperties.swift in Sources */,
+				A17CD910248279B700F0C30E /* TutorialViewController.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
 				4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */,
@@ -1103,6 +1126,7 @@
 				4C96D36B247A60AF0014101F /* TagListCollectionViewCell.swift in Sources */,
 				4CA2352824758F8D005323EF /* History+CoreDataProperties.swift in Sources */,
 				A157E117245572F4001E310D /* LocationManager.swift in Sources */,
+				A17CD911248279B700F0C30E /* StartViewController.swift in Sources */,
 				4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */,
 				29618DB0247C4C70008E112E /* ManagedFrequents+CoreDataClass.swift in Sources */,
 				A16439722454001100C740F4 /* MapTagCell.swift in Sources */,

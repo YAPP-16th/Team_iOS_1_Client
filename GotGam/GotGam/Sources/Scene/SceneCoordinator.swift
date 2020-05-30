@@ -170,6 +170,8 @@ extension UIViewController {
             if let currentVC = tabBarController.viewControllers?[index] {
                 return currentVC.children.first ?? currentVC
             }
+        }else if let pageViewController = self as? UIPageViewController{
+            return pageViewController
         }
         
         return self.children.first ?? self
