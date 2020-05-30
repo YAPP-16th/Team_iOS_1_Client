@@ -14,15 +14,16 @@ import CoreLocation
 
 protocol MapViewModelInputs {
     //func createGot(got: Got)
-    func showAddVC()
+    func showAddDetailVC(location: CLLocationCoordinate2D?, text: String)
+    func showAddDetailVC(got: Got)
     func updateGot(got: Got)
     func setGotDone(got: Got)
     func deleteGot(got: Got)
     func updateList()
     func updateTagList()
     //func quickAdd(text: String, location: CLLocationCoordinate2D)
-    func quickAdd(location: CLLocationCoordinate2D)
-	func showSearchVC()
+    func quickAdd(location: CLLocationCoordinate2D, radius: Double)
+    func showSearchVC()
     func savePlace(location: CLLocationCoordinate2D)
     var addText: BehaviorRelay<String> { get set }
     
@@ -42,7 +43,21 @@ protocol MapViewModelType {
 }
 
 class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapViewModelOutputs {
+    
+    
+    
+    enum SeedState{
+        case none
+        case seeding
+        case adding
+    }
 
+    //MARK: - Model Output
+    
+    var output: MapViewModelOutputs { return self }
+    var gotList = BehaviorSubject<[Got]>(value: [])
+    var tagList = BehaviorSubject<[Tag]>(value: [])
+    var doneAction = PublishSubject<Got>()
     
     //MARK: - Model Input
 
@@ -53,25 +68,20 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
     var tagListCellSelect = PublishSubject<Void>()
     
-    //MARK: - Model Output
-    var output: MapViewModelOutputs { return self }
-    var gotList = BehaviorSubject<[Got]>(value: [])
-    var tagList = BehaviorSubject<[Tag]>(value: [])
-    var doneAction = PublishSubject<Got>()
-    
-    enum SeedState{
-        case none
-        case seeding
-        case adding
-    }
-    
-    
     //var seedState = PublishSubject<SeedState>()
     var seedState = BehaviorSubject<SeedState>(value: .none)
     
-    func showAddVC() {
+    func showAddDetailVC(location: CLLocationCoordinate2D? = nil, text: String) {
         //let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
         let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: nil)
+        addVM.placeSubject.accept(location)
+        addVM.nameText.accept(text)
+        addVM.radiusSubject.accept(100)
+        sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
+    }
+    
+    func showAddDetailVC(got: Got) {
+        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     
@@ -79,28 +89,17 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         placeSubject.onNext(location)
         sceneCoordinator.pop(animated: true)
     }
-    
-    func quickAdd(text: String, location: CLLocationCoordinate2D) {
-//        let got = Got(id: Int64(arc4random()), createdDate: Date(), title: text, latitude: location.latitude, longitude: location.longitude, radius: false, place: "", arriveMsg: Date())
-//        
-//        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
-//            self.seedState.onNext(.none)
-//            self.updateList()
-//            self.updateTagList()
-//        }).disposed(by: self.disposeBag)
-    }
-    
-    func quickAdd(location: CLLocationCoordinate2D) {
-        createGot(location: location)
+    func quickAdd(location: CLLocationCoordinate2D, radius: Double) {
+        createGot(location: location, radius: radius)
         seedState.onNext(.none)
     }
     
-    func createGot(location: CLLocationCoordinate2D){
+    func createGot(location: CLLocationCoordinate2D, radius: Double){
         
         APIManager.shared.getPlace(longitude: location.longitude, latitude: location.latitude) { [weak self] (place) in
             guard let self = self else { return }
-            print(place?.address?.addressName)
-            let got = Got(id: "\(Int64(arc4random()))", title: self.addText.value, latitude: location.latitude, longitude: location.longitude, place: place?.address?.addressName, insertedDate: Date(), tag: nil)
+
+            let got = Got(id: "\(Int64(arc4random()))", title: self.addText.value, latitude: location.latitude, longitude: location.longitude, radius: radius, place: place?.address?.addressName, insertedDate: Date(), tag: nil)
             if UserDefaults.standard.bool(forDefines: .isLogined){
                 NetworkAPIManager.shared.createTask(got: got) { (got) in
                     if let got = got{
@@ -193,10 +192,12 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     }
     
     func updateList(){
-        self.storage.fetchGotList().bind{ list in
-            //self.gotList.onNext(list)
-            self.originGotList.accept(list)
-        }.disposed(by: self.disposeBag)
+        self.storage.fetchGotList()
+            .map { $0.filter {!$0.isDone} }
+            .map { $0.reversed() }
+            .bind{ list in
+                self.originGotList.accept(list)
+            }.disposed(by: self.disposeBag)
     }
     
     func updateTagList(){
@@ -209,6 +210,11 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
 		let movesearchVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
         sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .fullScreen, animated: false)
 	}
+    
+    func showShareList() {
+        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        sceneCoordinator.transition(to: .shareList(shareListVM), using: .modal, animated: true)
+    }
 	
     var aimToPlace = BehaviorSubject<Bool>(value: false)
     var placeSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
@@ -241,5 +247,8 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             })
             .disposed(by: disposeBag)
         
+        tagListCellSelect
+            .subscribe(onNext: {[weak self] in self?.showShareList()})
+            .disposed(by: disposeBag)
     }
 }

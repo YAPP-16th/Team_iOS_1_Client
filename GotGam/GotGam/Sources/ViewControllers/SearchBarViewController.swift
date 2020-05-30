@@ -147,8 +147,8 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	
 	
 	func searchKeyword(keyword: String){
-		guard let location = LocationManager.shared.currentLocation else { return }
-		APIManager.shared.search(keyword: keyword, latitude: location.latitude, longitude: location.longitude) { placeList in
+		let location = LocationManager.shared.currentLocation
+        APIManager.shared.search(keyword: keyword, latitude: location?.latitude ?? 0, longitude: location?.longitude ?? 0) { placeList in
 			self.placeList = placeList
 		}
 	}
@@ -254,8 +254,20 @@ extension SearchBarViewController: UITableViewDelegate {
 				
 				viewModel.sceneCoordinator.close(animated: true) {
 					mapVC?.updateAddress()
-				}
-			}
+                }
+            } else if let navVC = self.presentingViewController as? UINavigationController {
+                let currentIndex = navVC.viewControllers.count
+                if let mapVC = navVC.viewControllers[currentIndex-1] as? MapViewController {
+                    mapVC.x = Double(place.x!)!
+                    mapVC.y = Double(place.y!)!
+                    mapVC.placeName = place.placeName!
+                    mapVC.addressName = place.addressName!
+                    
+                    viewModel.sceneCoordinator.close(animated: true) {
+                        mapVC.updateAddress()
+                    }
+                }
+            }
 		} else if indexPath.section == 2 {
 			let got = self.gotList[indexPath.row]
 			if let tabVC = self.presentingViewController as? TabBarController{

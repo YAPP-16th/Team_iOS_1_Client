@@ -7,12 +7,42 @@
 //
 
 import Foundation
+import CoreLocation
 
 enum AlarmType: Int16 {
     case arrive = 0
     case departure = 1
     case share = 2
     case date = 3
+    
+    func getTriggerID(of got: ManagedGot) -> String {
+        return got.id == "" ? "\(got.objectID)_arrive" : "\(got.id!)_arrive"
+    }
+    
+    func getContentBody(of got: ManagedGot) -> String {
+        switch self {
+        case .arrive: return got.arriveMsg ?? ""
+        case .departure: return got.departureMsg ?? ""
+        case .date:
+            guard let date = got.insertedDate else { return "" }
+            return "\(date.format("MM월 dd일"))에 가야 할 🍊이 있어요"
+        default: return ""
+        }
+    }
+    
+    func getLocationTrigger(of got: ManagedGot) -> UNLocationNotificationTrigger {
+        let circleRegion = CLCircularRegion(center: .init(latitude: got.latitude, longitude: got.longitude), radius: got.radius, identifier: getTriggerID(of: got))
+        return UNLocationNotificationTrigger(region: circleRegion, repeats: true)
+    }
+    
+    func getContent(of got: ManagedGot) -> UNMutableNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.title = got.title ?? "곳감"
+        content.body = self.getContentBody(of: got)
+        content.sound = .default
+        
+        return content
+    }
 }
 
 struct Alarm: Equatable {

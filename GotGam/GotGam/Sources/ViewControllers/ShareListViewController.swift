@@ -35,7 +35,7 @@ class ShareListViewController: BaseViewController, ViewModelBindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        presentationController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +59,14 @@ class ShareListViewController: BaseViewController, ViewModelBindableType {
         let dataSources = ShareListViewController.dataSource(viewModel: viewModel, vc: self)
         viewModel.outputs.shareListDataSources
             .bind(to: shareListTableView.rx.items(dataSource: dataSources))
+            .disposed(by: disposeBag)
+        
+        shareListTableView.rx.modelSelected(ShareItem.self)
+            .subscribe(onNext: { [weak self] item in
+                if case let .shareItem(tag) = item {
+                    self?.viewModel.showCreateTag(tag: tag)
+                }
+            })
             .disposed(by: disposeBag)
         
         Observable.zip(shareListTableView.rx.itemDeleted, shareListTableView.rx.modelDeleted(ShareItem.self))
@@ -133,5 +141,13 @@ extension ShareListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         (view as! UITableViewHeaderFooterView).contentView.backgroundColor = tableView.backgroundColor
+    }
+}
+
+extension ShareListViewController: UIAdaptivePresentationControllerDelegate {
+    // MARK: UIAdaptivePresentationControllerDelegate
+
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        self.viewModel.sceneCoordinator.close(animated: true, completion: nil)
     }
 }
