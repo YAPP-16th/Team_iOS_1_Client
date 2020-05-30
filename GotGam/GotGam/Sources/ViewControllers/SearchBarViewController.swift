@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	
@@ -44,6 +45,8 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		}
 	}
 	
+	var gotSections: [ListSectionModel]? = []
+	
 	var collectionList = [Frequent]()
 	
 	override func viewDidLoad() {
@@ -67,6 +70,8 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		super.viewWillAppear(animated)
 		viewModel.inputs.readFrequents()
 		viewModel.inputs.readGot()
+		
+		print("😢", viewModel.gotSections.value)
 	}
 	
 	func bindViewModel() {
@@ -79,6 +84,8 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 			.subscribe(onNext: {
 				let keyword = self.SearchBar.text ?? ""
 				self.viewModel.inputs.addKeyword(keyword: keyword)
+				print("😢", self.viewModel.gotSections.value)
+				
 			}) .disposed(by: disposeBag)
 		
 		viewModel.outputs.collectionItems
@@ -103,7 +110,40 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 				self?.gotList = gotLists
 			})
 			.disposed(by: disposeBag)
+		
+//		SearchBar.rx.text.orEmpty
+//			.subscribe(onNext: { [weak self] (text) in
+//				
+//				let filteredList = self?.gotList.filter ({ got -> Bool in
+//                    if text != "", let title = got.title, !title.lowercased().contains(text.lowercased()) {
+//                        return false
+//                    }
+//                    return true
+//                })
+//				let filteredDataSources = self?.configureDataSource(gotList: filteredList ?? [])
+//				self?.gotSections?.append(filteredDataSources)
+//				
+////				accept(filteredDataSources ?? [])
+//			}).disposed(by: disposeBag)
+		
+//		SearchBar.rx.text.orEmpty
+//		.debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+//		.bind(to: viewModel.inputs.filteredGotSubject)
+//		.disposed(by: disposeBag)
+		
+		
+//		viewModel.outputs.gotSections
+//		.bind(to: gotListTableView.rx.items(dataSource: dataSource))
+//		.disposed(by: disposeBag)
 	}
+	
+	func configureDataSource(gotList: [Got]) -> [ListSectionModel] {
+        return [
+            .listSection(title: "", items: gotList.map {
+                ListItem.gotItem(got: $0)
+            })
+        ]
+    }
 	
 	
 	func searchKeyword(keyword: String){
@@ -114,6 +154,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	}
 	
 }
+
 
 extension SearchBarViewController: UITableViewDataSource{
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -237,8 +278,6 @@ extension SearchBarViewController: UITableViewDelegate {
 				viewModel.sceneCoordinator.close(animated: true) {
 					let index = self.gotList.firstIndex(of: got)
 					mapVC?.setCard(index: index!)
-//					mapVC?.updateAddress()
-					print("index🍏", index)
 				}
 			}
 		}

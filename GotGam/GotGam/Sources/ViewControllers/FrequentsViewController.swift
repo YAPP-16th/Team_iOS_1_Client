@@ -23,6 +23,7 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 	@IBOutlet var icSchoolBtn: UIButton!
 	@IBOutlet var icOtherBtn: UIButton!
 	
+	@IBOutlet var textNum: UILabel!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -120,7 +121,27 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 			self?.icSchoolBtn.backgroundColor = UIColor.brownGrey
 			self?.icOtherBtn.backgroundColor = UIColor.saffron
 		}).disposed(by: disposeBag)
+		
+		placeName.rx.text
+			.subscribe(onNext: { [weak self] (text) in
+				self?.textNum.text = "\(text!.count)"
+			}).disposed(by: disposeBag)
+		
 	}
 	
 
+}
+
+extension FrequentsViewController: UITextFieldDelegate {
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+		guard let textFieldText = textField.text,
+			let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+				return false
+		}
+		let substringToReplace = textFieldText[rangeOfTextToReplace]
+		let count = textFieldText.count - substringToReplace.count + string.count
+		return count <= 15
+	}
+	
+	
 }
