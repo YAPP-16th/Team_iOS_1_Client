@@ -830,52 +830,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ThA-fG-aZF">
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xa9-j6-cKX">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c1Y-yY-1w9">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1000"/>
-                                        <subviews>
-                                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWe-g8-DXS">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="1000"/>
-                                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="1000" id="3qP-xq-gK1"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1000" id="Pth-K9-rVY"/>
-                                                </constraints>
-                                            </webView>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstItem="gWe-g8-DXS" firstAttribute="top" secondItem="c1Y-yY-1w9" secondAttribute="top" id="Qpl-f6-O0s"/>
-                                            <constraint firstAttribute="bottom" secondItem="gWe-g8-DXS" secondAttribute="bottom" id="S4A-cA-hyj"/>
-                                            <constraint firstItem="gWe-g8-DXS" firstAttribute="leading" secondItem="c1Y-yY-1w9" secondAttribute="leading" id="enQ-Gm-4qi"/>
-                                            <constraint firstAttribute="trailing" secondItem="gWe-g8-DXS" secondAttribute="trailing" id="jsU-vK-iH2"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="c1Y-yY-1w9" secondAttribute="trailing" id="FFO-hR-CpS"/>
-                                    <constraint firstItem="c1Y-yY-1w9" firstAttribute="leading" secondItem="ThA-fG-aZF" secondAttribute="leading" id="Y0M-f4-HLB"/>
-                                    <constraint firstItem="c1Y-yY-1w9" firstAttribute="width" secondItem="ThA-fG-aZF" secondAttribute="width" id="oKi-Jn-6WM"/>
-                                    <constraint firstAttribute="bottom" secondItem="c1Y-yY-1w9" secondAttribute="bottom" id="sEY-bR-sU7"/>
-                                    <constraint firstItem="c1Y-yY-1w9" firstAttribute="top" secondItem="ThA-fG-aZF" secondAttribute="top" id="ufL-J9-pVT"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="ccI-p3-cs0"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="u5a-jJ-g6g"/>
-                            </scrollView>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="ThA-fG-aZF" firstAttribute="top" secondItem="nyJ-7f-aLg" secondAttribute="top" id="1VX-7p-vSV"/>
-                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="trailing" secondItem="ThA-fG-aZF" secondAttribute="trailing" id="g8a-aI-WLX"/>
-                            <constraint firstItem="ThA-fG-aZF" firstAttribute="leading" secondItem="nyJ-7f-aLg" secondAttribute="leading" id="rAV-Xv-zYT"/>
-                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="bottom" secondItem="ThA-fG-aZF" secondAttribute="bottom" id="sAY-KN-SL6"/>
+                            <constraint firstItem="xa9-j6-cKX" firstAttribute="leading" secondItem="nyJ-7f-aLg" secondAttribute="leading" id="0Yj-A8-Ugp"/>
+                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="bottom" secondItem="xa9-j6-cKX" secondAttribute="bottom" id="5Th-51-yr4"/>
+                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="trailing" secondItem="xa9-j6-cKX" secondAttribute="trailing" id="OFu-L2-zja"/>
+                            <constraint firstItem="xa9-j6-cKX" firstAttribute="top" secondItem="nyJ-7f-aLg" secondAttribute="top" id="pub-Hy-z2E"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nyJ-7f-aLg"/>
                     </view>
                     <navigationItem key="navigationItem" id="Rep-Tx-WVB"/>
                     <size key="freeformSize" width="414" height="896"/>
+                    <connections>
+                        <outlet property="webView" destination="xa9-j6-cKX" id="Mcm-Mc-tuw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="opG-rJ-wp3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -53,11 +53,10 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 				}
 			}) .disposed(by: disposeBag)
 	
-	
 		viewModel.outputs.frequentsList
-					.bind { (List) in
-						self.placeList = List
-				} .disposed(by: disposeBag)
+			.bind { (List) in
+				self.placeList = List
+		} .disposed(by: disposeBag)
 
 	}
 		

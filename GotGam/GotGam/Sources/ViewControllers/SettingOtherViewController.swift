@@ -23,13 +23,13 @@ class SettingOtherViewController: BaseViewController, ViewModelBindableType {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
 	}
 	
 	func bindViewModel() {
 		
 		settingOtherTableView.rx.setDelegate(self)
 			.disposed(by: disposeBag)
-		
 		
 		viewModel.outputs.settingOtherMenu
 			.bind(to: settingOtherTableView.rx.items(cellIdentifier: "settingOtherCell")) {
@@ -39,8 +39,9 @@ class SettingOtherViewController: BaseViewController, ViewModelBindableType {
 		
 		settingOtherTableView.rx.itemSelected
 		.subscribe(onNext: { [weak self] (indexPath) in
-			self?.viewModel.inputs.showPersonalInfoVC()
+			self?.viewModel.inputs.showPersonalInfoVC(row: indexPath.row)
 		}) .disposed(by: disposeBag)
+
 	}
 	
 }

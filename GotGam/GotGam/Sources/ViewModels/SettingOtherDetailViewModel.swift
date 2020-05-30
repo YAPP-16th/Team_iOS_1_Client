@@ -8,10 +8,11 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 
 protocol SettingOtherDetailViewModelInputs {
-	
+
 }
 
 protocol SettingOtherDetailViewModelOutputs {
@@ -26,16 +27,16 @@ protocol SettingOtherDetailViewModelType {
 
 class SettingOtherDetailViewModel: CommonViewModel, SettingOtherDetailViewModelType, SettingOtherDetailViewModelInputs, SettingOtherDetailViewModelOutputs {
 	
-	var settingOtherMenuList = Observable<[String]>(value: "")
-	
-	
     var inputs: SettingOtherDetailViewModelInputs { return self }
     var outputs: SettingOtherDetailViewModelOutputs { return self }
     var storage: GotStorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
+	var fileName: String
+	
+	init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, name: String) {
         self.storage = storage
+		self.fileName = name
+		super.init(sceneCoordinator: sceneCoordinator)
     }
     
 }

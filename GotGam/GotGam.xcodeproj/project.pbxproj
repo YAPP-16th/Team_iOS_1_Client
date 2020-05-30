@@ -34,6 +34,9 @@
 		29727853247451C500B75AC7 /* SettingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29727852247451C500B75AC7 /* SettingLoginViewController.swift */; };
 		29BC6CC82481F39A0011C482 /* SettingOtherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BC6CC72481F39A0011C482 /* SettingOtherDetailViewController.swift */; };
 		29BC6CCA2481F4B50011C482 /* SettingOtherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BC6CC92481F4B50011C482 /* SettingOtherDetailViewModel.swift */; };
+		29BC6CDC24823B330011C482 /* 서비스이용약관.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CD924823B330011C482 /* 서비스이용약관.html */; };
+		29BC6CDD24823B330011C482 /* 개인정보처리방침.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CDA24823B330011C482 /* 개인정보처리방침.html */; };
+		29BC6CDE24823B340011C482 /* 위치기반서비스약관.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CDB24823B330011C482 /* 위치기반서비스약관.html */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -209,6 +212,9 @@
 		29727852247451C500B75AC7 /* SettingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewController.swift; sourceTree = "<group>"; };
 		29BC6CC72481F39A0011C482 /* SettingOtherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherDetailViewController.swift; sourceTree = "<group>"; };
 		29BC6CC92481F4B50011C482 /* SettingOtherDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOtherDetailViewModel.swift; sourceTree = "<group>"; };
+		29BC6CD924823B330011C482 /* 서비스이용약관.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "서비스이용약관.html"; sourceTree = "<group>"; };
+		29BC6CDA24823B330011C482 /* 개인정보처리방침.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "개인정보처리방침.html"; sourceTree = "<group>"; };
+		29BC6CDB24823B330011C482 /* 위치기반서비스약관.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "위치기반서비스약관.html"; sourceTree = "<group>"; };
 		425836B62442FE6C00EC9C76 /* Map.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		425836B92442FEC300EC9C76 /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
 		4269387C24306B66007B60FD /* GotGam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotGam.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -405,6 +411,16 @@
 			path = SearchBar;
 			sourceTree = "<group>";
 		};
+		29BC6CD2248225CC0011C482 /* Html */ = {
+			isa = PBXGroup;
+			children = (
+				29BC6CDA24823B330011C482 /* 개인정보처리방침.html */,
+				29BC6CD924823B330011C482 /* 서비스이용약관.html */,
+				29BC6CDB24823B330011C482 /* 위치기반서비스약관.html */,
+			);
+			path = Html;
+			sourceTree = "<group>";
+		};
 		425836B52442FE5300EC9C76 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -543,6 +559,7 @@
 		4CE037CD2438BDD10093E39D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29BC6CD2248225CC0011C482 /* Html */,
 				A1BE454F2451A57700B7467B /* Fonts */,
 				4269388824306B68007B60FD /* Assets.xcassets */,
 				A1BE45582451A72200B7467B /* UIColor+Extensions.swift */,
@@ -906,6 +923,7 @@
 				A157E11024555A90001E310D /* noimage.png in Resources */,
 				A157E11224555A90001E310D /* daum_th_line.png in Resources */,
 				A157E10124555A90001E310D /* copyright.png in Resources */,
+				29BC6CDE24823B340011C482 /* 위치기반서비스약관.html in Resources */,
 				A157E10524555A90001E310D /* map_pin@3x.png in Resources */,
 				425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */,
 				A157E10D24555A90001E310D /* map_present_direction.png in Resources */,
@@ -914,7 +932,9 @@
 				A157E10224555A90001E310D /* th_line.png in Resources */,
 				A157E0FE24555A90001E310D /* map_pin_custom@3x.png in Resources */,
 				A157E0FF24555A90001E310D /* map_pinup@3x.png in Resources */,
+				29BC6CDD24823B330011C482 /* 개인정보처리방침.html in Resources */,
 				4269388724306B66007B60FD /* Main.storyboard in Resources */,
+				29BC6CDC24823B330011C482 /* 서비스이용약관.html in Resources */,
 				A157E10A24555A90001E310D /* map_pinup_custom.png in Resources */,
 				4C5F0F64246538D200C7A6E9 /* Alarm.storyboard in Resources */,
 				A157E10624555A90001E310D /* map_present_tracking.png in Resources */,

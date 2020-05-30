@@ -11,15 +11,17 @@ import Foundation
 class SettingOtherDetailViewController: BaseViewController, ViewModelBindableType {
 	var viewModel: SettingOtherDetailViewModel!
 	
-
-	
+	@IBOutlet var webView: UIWebView!
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		presentationController?.delegate = self
 		
+		let localFilePath = Bundle.main.url(forResource: self.viewModel.fileName, withExtension: "html")
+		let request = URLRequest(url: localFilePath!)
+		webView.loadRequest(request)
 		
 	}
-	
+
 	func bindViewModel() {
 		
 	}
@@ -30,7 +32,9 @@ extension SettingOtherDetailViewController: UIAdaptivePresentationControllerDele
 	
 	// MARK: UIAdaptivePresentationControllerDelegate
 	func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-		self.viewModel.sceneCoordinator.close(animated: true, completion: nil)
+		self.viewModel.sceneCoordinator.close(animated: true, completion: {
+			
+		})
 	}
 
 }
