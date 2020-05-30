@@ -10,7 +10,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 protocol TutorialViewModelInputs{
-    
+    func showLoginVC()
+    func showMain()
 }
 
 protocol TutorialViewModelOutputs{
@@ -27,5 +28,17 @@ class TutorialViewModel: CommonViewModel, TutorialViewModelType, TutorialViewMod
     var input: TutorialViewModelInputs { return self }
     var output: TutorialViewModelOutputs { return self }
     
+    func showLoginVC() {
+        let loginViewModel = LoginViewModel(sceneCoordinator: sceneCoordinator)
+        sceneCoordinator.transition(to: .login(loginViewModel), using: .modal, animated: true)
+    }
     
+    func showMain() {
+        let gotStorage = GotStorage()
+        let alarmStorage = AlarmStorage()
+        sceneCoordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)
+        
+        let tabBarViewModel = TabBarViewModel(sceneCoordinator: sceneCoordinator, alarmStorage: alarmStorage)
+        sceneCoordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
+    }
 }

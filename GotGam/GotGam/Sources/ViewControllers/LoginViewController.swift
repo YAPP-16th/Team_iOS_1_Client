@@ -37,6 +37,22 @@ class LoginViewController: UIViewController, ViewModelBindableType{
         return iv
     }()
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    lazy var cancelLoginButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("로그인 없이 시작하기", for: .normal)
+        btn.setTitleColor(.saffron, for: .normal)
+        btn.layer.cornerRadius = 9
+        btn.layer.borderWidth = 1
+        btn.layer.borderColor = UIColor.saffron.cgColor
+        btn.layer.masksToBounds = true
+        btn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        return btn
+    }()
+    
     lazy var facebookLoginButton: FBLoginButton = {
         let b = FBLoginButton(frame: .zero, permissions: [.publicProfile])
         b.delegate = self.viewModel
@@ -99,7 +115,7 @@ class LoginViewController: UIViewController, ViewModelBindableType{
         authController.performRequests()
     }
     @objc func kakaoLoginTapped(){
-        self.viewModel.kakaoLogin()
+        self.viewModel.inputs.kakaoLogin()
     }
     @objc private func googleLoginTapped(){
         GIDSignIn.sharedInstance()?.signIn()
@@ -118,6 +134,9 @@ class LoginViewController: UIViewController, ViewModelBindableType{
             }
         })
     }
+    @objc func cancel(){
+        self.viewModel.close()
+    }
     
     func bindViewModel() {
         
@@ -128,6 +147,7 @@ class LoginViewController: UIViewController, ViewModelBindableType{
 extension LoginViewController{
     private func prepareLoginButtons(){
         prepareLoginImageView()
+        prepareCancelLoginButton()
         prepareFacebookLoginButton()
         prepareKakaoLoginButton()
         prepareSignInGoogle()
@@ -135,7 +155,16 @@ extension LoginViewController{
             prepareSignInApple()
         }
     }
-      
+    
+    private func prepareCancelLoginButton(){
+        self.view.addSubview(cancelLoginButton)
+        NSLayoutConstraint.activate([
+            cancelLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+            cancelLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+            cancelLoginButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
+            cancelLoginButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+    }
     private func prepareLoginImageView(){
         self.view.addSubview(logoImageView)
         NSLayoutConstraint.activate([
@@ -166,7 +195,7 @@ extension LoginViewController{
         NSLayoutConstraint.activate([
             facebookLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
             facebookLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-            facebookLoginButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
+            facebookLoginButton.bottomAnchor.constraint(equalTo: self.cancelLoginButton.topAnchor, constant: -8),
             facebookLoginButton.heightAnchor.constraint(equalToConstant: 45)
         ])
         facebookLoginButton.permissions = ["public_profile", "email"]

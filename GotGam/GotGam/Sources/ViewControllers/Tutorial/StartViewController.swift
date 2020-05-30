@@ -13,6 +13,7 @@ class StartViewController: UIViewController{
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var withoutLoginButton: UIButton!
     
+    var delegate: TutorialDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,26 +26,22 @@ class StartViewController: UIViewController{
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserDefaults.standard.bool(forDefines: .tutorialShown){
+            delegate?.start()
+        }
+    }
+    
     @IBAction func startWithLogin(){
-        
+        UserDefaults.standard.set(true, forDefines: .tutorialShown)
+        delegate?.startWithLogin()
     }
     
     @IBAction func startWithoutLogin(){
-        start()
+        UserDefaults.standard.set(true, forDefines: .tutorialShown)
+        delegate?.start()
     }
     
-    func start(){
-        UserDefaults.standard.set(true, forDefines: .tutorialShown)
-        guard let window = UIApplication.shared.keyWindow else { return }
-        
-        let gotStorage = GotStorage()
-        let alarmStorage = AlarmStorage()
-        let coordinator = SceneCoordinator(window: window)
-        coordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)
-
-        let tabBarViewModel = TabBarViewModel(sceneCoordinator: coordinator, alarmStorage: alarmStorage)
-
-
-            coordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)
-    }
+    
 }

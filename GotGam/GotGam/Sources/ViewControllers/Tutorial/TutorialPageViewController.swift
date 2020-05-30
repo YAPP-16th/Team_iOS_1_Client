@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol TutorialDelegate{
+    func startWithLogin()
+    func start()
+}
+
 class TutorialPageViewController: UIPageViewController, ViewModelBindableType{
     
     var viewModel: TutorialViewModel!
@@ -29,6 +34,7 @@ class TutorialPageViewController: UIPageViewController, ViewModelBindableType{
                 tutorialVC.message = self.messages[i]
                 viewControllers.append(tutorialVC)
             }else if let startVC = vc as? StartViewController{
+                startVC.delegate = self
                 viewControllers.append(startVC)
             }
         }
@@ -69,5 +75,14 @@ extension TutorialPageViewController: UIPageViewControllerDataSource{
             return nil
         }
         
+    }
+}
+extension TutorialPageViewController: TutorialDelegate{
+    func startWithLogin() {
+        self.viewModel.input.showLoginVC()
+    }
+    
+    func start() {
+        self.viewModel.input.showMain()
     }
 }
