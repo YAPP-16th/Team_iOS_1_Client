@@ -88,6 +88,7 @@
 		4CBD536A245E3AF400B235D5 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD5369245E3AF400B235D5 /* TextFieldTableViewCell.swift */; };
 		4CBD536C245E725400B235D5 /* InputTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD536B245E725400B235D5 /* InputTagTableViewCell.swift */; };
 		4CBD5370245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD536F245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift */; };
+		4CC202F424827E60007161A6 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CC202F324827E60007161A6 /* Tutorial.storyboard */; };
 		4CC5AC07247672AD00FE9034 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5AC06247672AD00FE9034 /* Date+.swift */; };
 		4CC5AC092476B9F800FE9034 /* AlarmShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5AC082476B9F800FE9034 /* AlarmShareTableViewCell.swift */; };
 		4CC5AC0B2477E59400FE9034 /* GotBoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5AC0A2477E59400FE9034 /* GotBoxViewModel.swift */; };
@@ -272,6 +273,7 @@
 		4CBD5369245E3AF400B235D5 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		4CBD536B245E725400B235D5 /* InputTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTagTableViewCell.swift; sourceTree = "<group>"; };
 		4CBD536F245EBAB200B235D5 /* SetSelectedTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSelectedTagTableViewCell.swift; sourceTree = "<group>"; };
+		4CC202F324827E60007161A6 /* Tutorial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Tutorial.storyboard; sourceTree = "<group>"; };
 		4CC5AC06247672AD00FE9034 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		4CC5AC082476B9F800FE9034 /* AlarmShareTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmShareTableViewCell.swift; sourceTree = "<group>"; };
 		4CC5AC0A2477E59400FE9034 /* GotBoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GotBoxViewModel.swift; sourceTree = "<group>"; };
@@ -511,6 +513,14 @@
 			path = SetTag;
 			sourceTree = "<group>";
 		};
+		4CC202F224827E60007161A6 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				4CC202F324827E60007161A6 /* Tutorial.storyboard */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		4CE037CA2438BCAC0093E39D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -615,6 +625,7 @@
 				425836B52442FE5300EC9C76 /* Map */,
 				4CF1D0A624499E5000B45751 /* List */,
 				4C5F0F62246538BE00C7A6E9 /* Alarm */,
+				4CC202F224827E60007161A6 /* Tutorial */,
 				425836B82442FEBA00EC9C76 /* Setting */,
 				4269388524306B66007B60FD /* Main.storyboard */,
 				4269388A24306B68007B60FD /* LaunchScreen.storyboard */,
@@ -958,6 +969,7 @@
 				A157E10A24555A90001E310D /* map_pinup_custom.png in Resources */,
 				4C5F0F64246538D200C7A6E9 /* Alarm.storyboard in Resources */,
 				A157E10624555A90001E310D /* map_present_tracking.png in Resources */,
+				4CC202F424827E60007161A6 /* Tutorial.storyboard in Resources */,
 				A157E10724555A90001E310D /* map_pin_red.png in Resources */,
 				295C03C12464646300789967 /* SearchBar.storyboard in Resources */,
 				A157E11324555A90001E310D /* map_pin_shadow.png in Resources */,
