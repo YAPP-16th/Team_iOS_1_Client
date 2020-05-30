@@ -8,17 +8,23 @@
 
 import Foundation
 import RxSwift
-
+import RxCocoa
+import RxDataSources
 
 protocol SearchBarViewModelInputs {
 	func addKeyword(keyword: String)
 	func readKeyword()
 	func readFrequents()
+	func readGot()
+	
+	var filteredGotSubject: BehaviorRelay<String> { get set }
+	var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
 }
 
 protocol SearchBarViewModelOutputs {
 	var keywords: BehaviorSubject<[String]> { get set }
 	var collectionItems: BehaviorSubject<[Frequent]> { get set }
+	var gotSections: BehaviorRelay<[ListSectionModel]> { get }
 }
 
 protocol SearchBarViewModelType {
@@ -29,7 +35,12 @@ protocol SearchBarViewModelType {
 class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarViewModelOutputs, SearchBarViewModelType {
 	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
 	var collectionItems = BehaviorSubject<[Frequent]>(value: [])
+	var gotList = BehaviorRelay<[Got]>(value: [])
+	var gotLists = BehaviorRelay<[Got]>(value: [])
 	
+	var gotSections = BehaviorRelay<[ListSectionModel]>(value: [])
+	var filteredGotSubject = BehaviorRelay<String>(value: "")
+	var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
 		
 	func addKeyword(keyword: String) {
 		let storage = SearchStorage()
@@ -53,6 +64,14 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 		}.disposed(by: disposeBag)
 	}
 	
+	func readGot() {
+		let storage = GotStorage()
+		storage.fetchGotList()
+			.bind { (gotList) in
+				self.gotList.accept(gotList)
+		}.disposed(by: disposeBag)
+	}
+	
 	
 	
 	var inputs: SearchBarViewModelInputs { return self }
@@ -62,5 +81,36 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
     init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
-    }
+
+//		gotLists
+//		.subscribe(onNext: { [unowned self] gotList in
+//			self.gotSections.accept(self.configureDataSource(gotList: gotList))
+//		})
+//		.disposed(by: disposeBag)
+//		
+//		filteredGotSubject
+//		.subscribe(onNext: { [weak self] searchText in
+//			guard let gotList = self?.gotLists.value else { return }
+//			let filteredList = gotList.filter ({ got -> Bool in
+//				if searchText != "", let title = got.title, !title.lowercased().contains(searchText.lowercased()) {
+//					return false
+//				}
+//				return true
+//			})
+//			let filteredDataSources = self?.configureDataSource(gotList: filteredList)
+//			self?.gotSections.accept(filteredDataSources ?? [])
+//		})
+//		.disposed(by: disposeBag)
+//    }
+//	
+//	func configureDataSource(gotList: [Got]) -> [ListSectionModel] {
+//        return [
+//            .listSection(title: "", items: gotList.map {
+//                ListItem.gotItem(got: $0)
+//            })
+//        ]
+//    }
+
+	}
+	
 }

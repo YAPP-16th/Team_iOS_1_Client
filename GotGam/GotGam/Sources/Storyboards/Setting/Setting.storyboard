@@ -495,6 +495,9 @@
                                 <color key="textColor" name="brownishGrey"/>
                                 <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="uxc-ar-Peh" id="PbH-5i-1lZ"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="장소를 등록해주세요" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zlm-Gf-ylR">
                                 <rect key="frame" x="49.5" y="359" width="315" height="48"/>
@@ -506,15 +509,31 @@
                                 <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/ 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAl-ME-V9O">
+                                <rect key="frame" x="333.5" y="292" width="21" height="14"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                <color key="textColor" name="brownishGrey"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efB-xu-ic7">
+                                <rect key="frame" x="325" y="288" width="7" height="14"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
+                                <color key="textColor" name="brownishGrey"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="MfK-Lu-get" firstAttribute="top" secondItem="S7k-YW-INH" secondAttribute="bottom" constant="59" id="35j-La-SR7"/>
                             <constraint firstItem="S7k-YW-INH" firstAttribute="leading" secondItem="9VC-Co-Mzs" secondAttribute="leading" constant="54" id="I8N-7m-hMA"/>
                             <constraint firstItem="Zlm-Gf-ylR" firstAttribute="top" secondItem="MfK-Lu-get" secondAttribute="bottom" constant="34" id="Irt-4s-sHB"/>
+                            <constraint firstItem="pAl-ME-V9O" firstAttribute="leading" secondItem="efB-xu-ic7" secondAttribute="trailing" constant="1.5" id="N8f-ZH-z7Y"/>
                             <constraint firstItem="9VC-Co-Mzs" firstAttribute="trailing" secondItem="S7k-YW-INH" secondAttribute="trailing" constant="54" id="ObN-Ck-QeD"/>
+                            <constraint firstItem="efB-xu-ic7" firstAttribute="top" secondItem="pAl-ME-V9O" secondAttribute="bottom" constant="-18" id="TBY-AW-Itq"/>
                             <constraint firstItem="Zlm-Gf-ylR" firstAttribute="centerX" secondItem="DMb-WA-pEZ" secondAttribute="centerX" id="dFq-UC-RLv"/>
+                            <constraint firstItem="pAl-ME-V9O" firstAttribute="top" secondItem="MfK-Lu-get" secondAttribute="bottom" constant="-33" id="joW-eq-S1l"/>
                             <constraint firstItem="MfK-Lu-get" firstAttribute="centerX" secondItem="DMb-WA-pEZ" secondAttribute="centerX" id="l6a-Z1-Y4p"/>
+                            <constraint firstItem="pAl-ME-V9O" firstAttribute="trailing" secondItem="MfK-Lu-get" secondAttribute="trailing" constant="-10" id="qdS-Xz-fQ5"/>
                             <constraint firstItem="S7k-YW-INH" firstAttribute="top" secondItem="9VC-Co-Mzs" secondAttribute="top" id="y5c-Sr-3sJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9VC-Co-Mzs"/>
@@ -532,6 +551,7 @@
                         <outlet property="icSchoolBtn" destination="jji-Ys-AgP" id="IVK-Xf-VtV"/>
                         <outlet property="placeAddress" destination="Zlm-Gf-ylR" id="lNt-SW-tKj"/>
                         <outlet property="placeName" destination="MfK-Lu-get" id="Qzz-d5-3eP"/>
+                        <outlet property="textNum" destination="efB-xu-ic7" id="doj-fQ-7hB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LCd-PQ-Rrq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -822,6 +842,38 @@
             </objects>
             <point key="canvasLocation" x="3721.739130434783" y="109.82142857142857"/>
         </scene>
+        <!--Setting Other Detail View Controller-->
+        <scene sceneID="4kC-qo-jPR">
+            <objects>
+                <viewController storyboardIdentifier="SettingOtherDetailViewController" id="A3e-WT-Z7y" customClass="SettingOtherDetailViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nRO-pi-NSX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xa9-j6-cKX">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="xa9-j6-cKX" firstAttribute="leading" secondItem="nyJ-7f-aLg" secondAttribute="leading" id="0Yj-A8-Ugp"/>
+                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="bottom" secondItem="xa9-j6-cKX" secondAttribute="bottom" id="5Th-51-yr4"/>
+                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="trailing" secondItem="xa9-j6-cKX" secondAttribute="trailing" id="OFu-L2-zja"/>
+                            <constraint firstItem="xa9-j6-cKX" firstAttribute="top" secondItem="nyJ-7f-aLg" secondAttribute="top" id="pub-Hy-z2E"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nyJ-7f-aLg"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Rep-Tx-WVB"/>
+                    <size key="freeformSize" width="414" height="896"/>
+                    <connections>
+                        <outlet property="webView" destination="xa9-j6-cKX" id="Mcm-Mc-tuw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="opG-rJ-wp3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4505.7971014492759" y="109.82142857142857"/>
+        </scene>
         <!--푸시 알림 설정-->
         <scene sceneID="IJz-r6-J4O">
             <objects>
@@ -859,6 +911,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="alarmSwitch" destination="8dS-YA-Vvy" id="sVB-F3-56E"/>
                                             <outlet property="settingAlarmListLabel" destination="YjN-PB-1ze" id="Qzv-Ce-EJz"/>
                                         </connections>
                                     </tableViewCell>
@@ -1028,6 +1081,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TUN-N9-ytH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4506" y="1501"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Egp-aE-C97">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iPy-es-cxW" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1Cq-cq-TpO">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="A3e-WT-Z7y" kind="relationship" relationship="rootViewController" id="umO-Eh-gk7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gLN-nd-Ftl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4506" y="-610"/>
         </scene>
     </scenes>
     <resources>

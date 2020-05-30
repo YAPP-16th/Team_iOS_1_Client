@@ -53,11 +53,10 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 				}
 			}) .disposed(by: disposeBag)
 	
-	
 		viewModel.outputs.frequentsList
-					.bind { (List) in
-						self.placeList = List
-				} .disposed(by: disposeBag)
+			.bind { (List) in
+				self.placeList = List
+		} .disposed(by: disposeBag)
 
 	}
 		
@@ -88,21 +87,24 @@ extension SettingPlaceViewController: UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let editAction = UIContextualAction(style: .normal, title: "수정") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-            guard let cell = tableView.cellForRow(at: indexPath) as? PlaceCell else { return }
-			//edit
-            success(true)
-        }
-        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-//            self?.settingPlaceTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
-			//self?.placeList.remove(at: indexPath.row)
-			guard let self = self else {return}
-			let frequent = self.placeList[indexPath.row]
-			self.viewModel.inputs.removeFrequents(indexPath: indexPath, frequent: frequent)
-			
-            success(true)
-        }
-		return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+		if indexPath.section == 0 {
+			let editAction = UIContextualAction(style: .normal, title: "수정") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+				guard let cell = tableView.cellForRow(at: indexPath) as? PlaceCell else { return }
+				//edit
+				success(true)
+			}
+			let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+				//            self?.settingPlaceTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+				//self?.placeList.remove(at: indexPath.row)
+				guard let self = self else {return}
+				let frequent = self.placeList[indexPath.row]
+				self.viewModel.inputs.removeFrequents(indexPath: indexPath, frequent: frequent)
+				success(true)
+			}
+			return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+		} else {
+			return UISwipeActionsConfiguration()
+		}
 	}
 
 }

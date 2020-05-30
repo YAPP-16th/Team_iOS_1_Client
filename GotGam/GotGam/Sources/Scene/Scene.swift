@@ -26,6 +26,8 @@ enum Scene {
 	case frequents(FrequentsViewModel)
 	case frequentsSearch(FrequentsSearchViewModel)
 	case frequentsMap(FrequentsMapViewModel)
+	case settingDetail(SettingOtherDetailViewModel)
+    case tutorial(TutorialViewModel)
 }
 
 extension Scene {

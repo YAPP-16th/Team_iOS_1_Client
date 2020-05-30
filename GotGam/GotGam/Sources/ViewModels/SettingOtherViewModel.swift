@@ -8,14 +8,14 @@
 
 import Foundation
 import RxSwift
-
+import RxCocoa
 
 protocol SettingOtherViewModelInputs {
-	
+	func showPersonalInfoVC(row: Int)
 }
 
 protocol SettingOtherViewModelOutputs {
-	var settingOtherMenu: Observable<[String]> { get }
+	var settingOtherMenu: BehaviorRelay<[String]> { get }
 }
 
 protocol SettingOtherViewModelType {
@@ -26,7 +26,21 @@ protocol SettingOtherViewModelType {
 
 class SettingOtherViewModel: CommonViewModel, SettingOtherViewModelType, SettingOtherViewModelInputs, SettingOtherViewModelOutputs {
 	
-	var settingOtherMenu = Observable<[String]>.just(["위치정보 이용약관", "개인정보처리방침", "오픈소스 라이선스", "법적 공지 / 정보제공처"])
+	var settingOtherMenu =  BehaviorRelay<[String]>(value: ["개인 정보 처리 방침", "서비스 이용 약관", "위치 기반 서비스 약관"])
+
+
+	func showPersonalInfoVC(row: Int) {
+		var fileName: String
+		switch row{
+			case 0: fileName = "개인정보처리방침"
+			case 1: fileName = "서비스이용약관"
+			case 2: fileName = "위치기반서비스약관"
+			default:
+			fatalError()
+		}
+        let settingOtherDetailVM = SettingOtherDetailViewModel(sceneCoordinator: sceneCoordinator, storage: storage, name: fileName)
+        sceneCoordinator.transition(to: .settingDetail(settingOtherDetailVM), using: .modal, animated: true)
+	}
 	
     var inputs: SettingOtherViewModelInputs { return self }
     var outputs: SettingOtherViewModelOutputs { return self }
