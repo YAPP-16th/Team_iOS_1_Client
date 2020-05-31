@@ -53,8 +53,6 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		}
 	}
 	
-	var gotSections: [ListSectionModel]? = []
-	
 	var collectionList = [Frequent]()
 	
 	override func viewDidLoad() {

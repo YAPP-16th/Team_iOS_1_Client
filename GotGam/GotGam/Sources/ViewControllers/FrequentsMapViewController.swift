@@ -18,6 +18,7 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	@IBOutlet var addressView: UIView!
 	@IBOutlet var placeLabel: UILabel!
 	@IBOutlet var addressLabel: UILabel!
+	@IBOutlet var currentBtn: UIButton!
 	@IBOutlet var okay: UIButton!
 	@IBAction func okay(_ sender: UIButton) {
 		if viewModel?.placeBehavior.value != nil {
@@ -29,6 +30,9 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 				break
 			}
 		}
+	}
+	@IBAction func currentBtn(_ sender: Any) {
+		setMyLocation()
 	}
 	
 	//search value
@@ -45,10 +49,14 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		addressView.layer.masksToBounds = true
 		addressView.layer.cornerRadius = 17
 		okay.layer.cornerRadius = 17
+		currentBtn.layer.cornerRadius = currentBtn.frame.height / 2
+		currentBtn.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		self.addPin()
+		
 		guard let currentLocation = LocationManager.shared.currentLocation else { return }
 		if viewModel.placeBehavior.value == nil {
 			APIManager.shared.getPlace(longitude: currentLocation.longitude, latitude: currentLocation.latitude) { [weak self] (place) in
@@ -66,7 +74,6 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 					}
 
 			}
-			
 		}
 	}
 	
@@ -105,12 +112,12 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 			.bind(to: viewModel.frequentsPlaceMap)
 			.disposed(by: disposeBag)
 		
-//		viewModel.frequentsPlaceMap
+//		viewModel.currentPlace
 //			.compactMap { $0?.placeName }
 //			.bind(to: placeLabel.rx.text)
 //			.disposed(by: disposeBag)
-//		
-//		viewModel.frequentsPlaceMap
+//
+//		viewModel.currentPlace
 //			.compactMap { $0?.addressName }
 //			.bind(to: addressName.rx.text)
 //			.disposed(by: disposeBag)
@@ -127,8 +134,6 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
                 print("설정으로 이동시키기")
             case .authorizedWhenInUse, .authorizedAlways:
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: LocationManager.shared.currentLocation!.latitude, longitude: LocationManager.shared.currentLocation!.longitude)), animated: true)
-				x = LocationManager.shared.currentLocation!.latitude
-				y = LocationManager.shared.currentLocation!.longitude
             }
             
         }
@@ -137,6 +142,16 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	func updateAddress() {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
 	}
+	
+	func addPin(){
+        mapView.removeAllPOIItems()
+            let pin = MTMapPOIItem()
+			pin.itemName = placeName
+            pin.markerType = .customImage
+            pin.customImage = UIImage(named: "icPin1")
+            pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x))
+            mapView.addPOIItems([pin])
+    }
 	
 }
 

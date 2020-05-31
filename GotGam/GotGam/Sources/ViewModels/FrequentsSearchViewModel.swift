@@ -13,6 +13,7 @@ import RxCocoa
 protocol FrequentsSearchViewModelInputs {
 	func addKeyword(keyword: String)
 	func readKeyword()
+	func readGot()
 	func showMapVC()
 	var placeBehavior: BehaviorRelay<Place?> { get set }
 }
@@ -31,6 +32,7 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
 	var placeBehavior = BehaviorRelay<Place?>(value: nil)
 	var frequentsPlaceSearch = BehaviorRelay<Place?>(value: nil)
+	var gotList = BehaviorRelay<[Got]>(value: [])
 		
 	func addKeyword(keyword: String) {
 		let storage = SearchStorage()
@@ -45,6 +47,15 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 			self.keywords.onNext(keywordList.reversed())
 			} .disposed(by: disposeBag)
 	}
+	
+	func readGot() {
+		let storage = GotStorage()
+		storage.fetchGotList()
+			.bind { (gotList) in
+				self.gotList.accept(gotList)
+		}.disposed(by: disposeBag)
+	}
+	
 	
 	func showMapVC(){
 		let movemapVM = FrequentsMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
