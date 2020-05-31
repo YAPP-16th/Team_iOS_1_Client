@@ -20,12 +20,11 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	@IBOutlet var addressLabel: UILabel!
 	@IBOutlet var okay: UIButton!
 	@IBAction func okay(_ sender: UIButton) {
-		
-		viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
-		
+		if viewModel?.placeBehavior.value != nil {
+			viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
+		}
 		for controller in self.navigationController!.viewControllers as Array {
 			if controller.isKind(of: FrequentsViewController.self) {
-//				viewModel.frequentsPlaceMap.bind(to: FrequentsViewModel.)
 				_ =  self.navigationController!.popToViewController(controller, animated: true)
 				break
 			}
@@ -53,10 +52,21 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		guard let currentLocation = LocationManager.shared.currentLocation else { return }
 		if viewModel.placeBehavior.value == nil {
 			APIManager.shared.getPlace(longitude: currentLocation.longitude, latitude: currentLocation.latitude) { [weak self] (place) in
-				self?.placeLabel.text = place?.roadAddress?.buildingName
-				self?.addressLabel.text = place?.roadAddress?.addressName
-				
+				if place?.roadAddress != nil {
+					if place?.roadAddress?.buildingName == "" {
+						self?.placeLabel.text = place!.roadAddress?.addressName
+						self?.addressLabel.text = place!.roadAddress?.addressName
+					} else {
+						self?.placeLabel.text = place!.roadAddress?.buildingName
+						self?.addressLabel.text = place!.roadAddress?.addressName
+					}
+				} else {
+						self?.placeLabel.text = place!.address?.addressName
+						self?.addressLabel.text = place!.address?.addressName
+					}
+
 			}
+			
 		}
 	}
 	
@@ -88,14 +98,22 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		
 		viewModel.placeBehavior
 			.compactMap { $0?.addressName }
-		.bind(to: addressLabel.rx.text)
-		.disposed(by: disposeBag)
+			.bind(to: addressLabel.rx.text)
+			.disposed(by: disposeBag)
 		
 		viewModel.placeBehavior
 			.bind(to: viewModel.frequentsPlaceMap)
-		.disposed(by: disposeBag)
+			.disposed(by: disposeBag)
 		
-		
+//		viewModel.frequentsPlaceMap
+//			.compactMap { $0?.placeName }
+//			.bind(to: placeLabel.rx.text)
+//			.disposed(by: disposeBag)
+//		
+//		viewModel.frequentsPlaceMap
+//			.compactMap { $0?.addressName }
+//			.bind(to: addressName.rx.text)
+//			.disposed(by: disposeBag)
 	}
 	
 	func setMyLocation(){
@@ -109,9 +127,10 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
                 print("설정으로 이동시키기")
             case .authorizedWhenInUse, .authorizedAlways:
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: LocationManager.shared.currentLocation!.latitude, longitude: LocationManager.shared.currentLocation!.longitude)), animated: true)
+				x = LocationManager.shared.currentLocation!.latitude
+				y = LocationManager.shared.currentLocation!.longitude
             }
             
-        }else{
         }
     }
 	
