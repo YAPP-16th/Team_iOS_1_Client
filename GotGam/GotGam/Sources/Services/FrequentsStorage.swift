@@ -45,12 +45,13 @@ class FrequentsStorage: FrequentsStorageType{
 	func updateFrequents(frequent: Frequent) -> Observable<Frequent> {
 		do{
 			let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
-			fetchRequest.predicate = NSPredicate(format: "id == %s", frequent.id)
+			fetchRequest.predicate = NSPredicate(format: "id == %@", frequent.id)
 			let results = try self.context.fetch(fetchRequest)
 			if let managedFrequents = results.first {
 				do{
+					managedFrequents.fromFrequents(frequent: frequent)
 					try self.context.save()
-					return .just(frequent)
+					return .just(managedFrequents.toFrequents())
 				}catch let error{
 					return .error(error)
 				}

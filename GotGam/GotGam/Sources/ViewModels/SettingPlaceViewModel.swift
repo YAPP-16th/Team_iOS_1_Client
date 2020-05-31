@@ -14,7 +14,7 @@ import RxDataSources
 protocol SettingPlaceViewModelInputs {
 	func showFrequentsDetailVC()
 	func readFrequents()
-	func detailVC()
+	func detailVC(frequent: Frequent)
 	func removeFrequents(indexPath: IndexPath, frequent: Frequent)
 	
 	var placeName: BehaviorRelay<String> { get set }
@@ -43,9 +43,9 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 		sceneCoordinator.transition(to: .frequents(moveFrequentsDetailVM), using: .push, animated: true)
 	}
 	
-	func detailVC() {
+	func detailVC(frequent: Frequent) {
 		let detailVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-		
+		detailVM.frequentOrigin = frequent
 		sceneCoordinator.transition(to: .frequents(detailVM), using: .push, animated: true)
 	}
 	
@@ -69,6 +69,7 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 			})
 			.disposed(by: disposeBag)
     }
+	
 	
     var inputs: SettingPlaceViewModelInputs { return self }
     var outputs: SettingPlaceViewModelOutputs { return self }

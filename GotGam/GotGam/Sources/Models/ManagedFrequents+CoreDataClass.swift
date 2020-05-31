@@ -22,4 +22,13 @@ public class ManagedFrequents: NSManagedObject {
 			id: id
         )
     }
+	
+	func fromFrequents(frequent: Frequent) {
+		self.id = frequent.id
+		self.name = frequent.name
+		self.address = frequent.address
+		self.latitude = frequent.latitude
+		self.longitude = frequent.longitude
+		self.type = frequent.type.rawValue
+	}
 }

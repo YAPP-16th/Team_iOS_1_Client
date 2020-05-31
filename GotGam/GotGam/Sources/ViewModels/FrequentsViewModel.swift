@@ -19,6 +19,7 @@ protocol FrequentsViewModelInputs {
 	var typePlace: BehaviorRelay<IconType> { get set }
 
 	func addFrequents()
+	func updateFrequents()
 	func readFrequents()
 	func moveSearchVC()
 }
@@ -44,10 +45,12 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	var frequentsPlace = BehaviorRelay<Place?>(value: nil)
 		
-	func addFrequents() {
+	var frequentOrigin: Frequent?
+	
+	
+	func addFrequents(){
 		let storage = FrequentsStorage()
 		let id = String(Date().timeIntervalSince1970)
-		
 		guard let la = Double(latitudePlace.value) else { return  }
 		guard let lo = Double(longitudePlace.value) else { return  }
 		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value, id: id)
@@ -55,14 +58,41 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 		storage.createFrequents(frequent: frequent).bind { _ in
 			self.readFrequents()
 			} .disposed(by: disposeBag)
-		
+		print("새로 등록된 값들 🍎", frequent)
 	}
 	
+	func updateFrequents(){
+		let storagePlace = FrequentsStorage()
+		
+		if latitudePlace.value == ""{
+			let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: frequentOrigin!.latitude, longitude: frequentOrigin!.longitude, type: typePlace.value, id: frequentOrigin!.id)
+			
+			storagePlace.updateFrequents(frequent: frequent)
+				.bind { _ in
+					self.sceneCoordinator.close(animated: true, completion: nil)
+			}.disposed(by: self.disposeBag)
+			print("nil 일 때 업뎃된 값들 🍏", frequent)
+		} else {
+			guard let la = Double(latitudePlace.value) else { return }
+			guard let lo = Double(longitudePlace.value) else { return }
+			let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value, id: frequentOrigin!.id)
+			
+			storagePlace.updateFrequents(frequent: frequent)
+				.bind { _ in
+					self.readFrequents()
+			}.disposed(by: self.disposeBag)
+			
+		}
+		
+		
+	}
+
 	func readFrequents() {
 		let storage = FrequentsStorage()
 		storage.fetchFrequents()
 			.bind { (frequentsList) in
 				self.frequentsList.onNext(frequentsList)
+				self.sceneCoordinator.close(animated: true, completion: nil)
 			}
 			.disposed(by: disposeBag)
 	}
@@ -80,13 +110,22 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
     var storage: GotStorageType!
 	var storagePlace: FrequentsStorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+	init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
+		
     }
     
     init(sceneCoordinator: SceneCoordinatorType, storage: FrequentsStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storagePlace = storage
     }
+	
+	init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, frequent: Frequent?) {
+		self.frequentOrigin = frequent
+		super.init(sceneCoordinator: sceneCoordinator)
+        self.storage = storage
+		
+    }
+	
 }
