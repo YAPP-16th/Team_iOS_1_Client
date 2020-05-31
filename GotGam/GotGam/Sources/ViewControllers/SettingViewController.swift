@@ -28,11 +28,12 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
 		loginView.isUserInteractionEnabled = true
 		let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(loginTapped))
 		loginView.addGestureRecognizer(tapRecognizer)
-		
+    
 	}
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel.inputs.updateUserInfo()
+      NetworkAPIManagerTest.shared.uploadAllTags()
     }
 	
 	@objc func loginTapped(sender: UIView) {

@@ -175,6 +175,11 @@
 		A1A5DEA024753CC100AFA9D5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1A5DE9F24753CC100AFA9D5 /* credentials.plist */; };
 		A1A5DF542476D59700AFA9D5 /* GotAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */; };
 		A1A5DF5C2477D52700AFA9D5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A5DF5B2477D52700AFA9D5 /* LoginViewModel.swift */; };
+		A1B618382483738F00844BEB /* TaskStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B618372483738F00844BEB /* TaskStorageType.swift */; };
+		A1B6183A2483749300844BEB /* TaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B618392483749300844BEB /* TaskStorage.swift */; };
+		A1B6183D24837E9C00844BEB /* NetworkAPIManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6183C24837E9C00844BEB /* NetworkAPIManagerType.swift */; };
+		A1B6183F248384FF00844BEB /* TagStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6183E248384FF00844BEB /* TagStorageType.swift */; };
+		A1B618432483870000844BEB /* TagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B618422483870000844BEB /* TagStorage.swift */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
 		A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */; };
@@ -374,6 +379,11 @@
 		A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GotAPIService.swift; sourceTree = "<group>"; };
 		A1A5DF552476E71E00AFA9D5 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		A1A5DF5B2477D52700AFA9D5 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		A1B618372483738F00844BEB /* TaskStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStorageType.swift; sourceTree = "<group>"; };
+		A1B618392483749300844BEB /* TaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStorage.swift; sourceTree = "<group>"; };
+		A1B6183C24837E9C00844BEB /* NetworkAPIManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIManagerType.swift; sourceTree = "<group>"; };
+		A1B6183E248384FF00844BEB /* TagStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStorageType.swift; sourceTree = "<group>"; };
+		A1B618422483870000844BEB /* TagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStorage.swift; sourceTree = "<group>"; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
 		A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Bold.ttf"; sourceTree = "<group>"; };
@@ -679,6 +689,8 @@
 		4CE037DB2438CA3E0093E39D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A1B6183B2483794600844BEB /* Network */,
+				A1B618362483737500844BEB /* CoreData */,
 				A1DF638A247E6D5700444175 /* KakaoLinkManager.swift */,
 				A1A5DF532476D59700AFA9D5 /* GotAPIService.swift */,
 				A159DBF32459C1B9004FCA66 /* DBManager.swift */,
@@ -841,6 +853,25 @@
 				A1A5DEAB24755B7B00AFA9D5 /* LoginViewModel.swift */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		A1B618362483737500844BEB /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				A1B618372483738F00844BEB /* TaskStorageType.swift */,
+				A1B618392483749300844BEB /* TaskStorage.swift */,
+				A1B6183E248384FF00844BEB /* TagStorageType.swift */,
+				A1B618422483870000844BEB /* TagStorage.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		A1B6183B2483794600844BEB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				A1B6183C24837E9C00844BEB /* NetworkAPIManagerType.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		A1BE454F2451A57700B7467B /* Fonts */ = {
@@ -1053,9 +1084,11 @@
 			files = (
 				A1A5DF5C2477D52700AFA9D5 /* LoginViewModel.swift in Sources */,
 				A127E717246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift in Sources */,
+				A1B6183F248384FF00844BEB /* TagStorageType.swift in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				2972784B2473C9CB00B75AC7 /* SettingOtherViewModel.swift in Sources */,
 				4CA2352024758DC3005323EF /* SearchStorage.swift in Sources */,
+				A1B618382483738F00844BEB /* TaskStorageType.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
 				4C5F0F6624654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift in Sources */,
 				4CD03D742479056F00210353 /* GotBoxTableViewCell.swift in Sources */,
@@ -1088,6 +1121,7 @@
 				2972784F2473CA3B00B75AC7 /* SettingAlarmViewController.swift in Sources */,
 				4CD03D6F2478D35C00210353 /* TagCollectionViewCell.swift in Sources */,
 				4C620CF0246AB62A00B25B86 /* Tag.swift in Sources */,
+				A1B618432483870000844BEB /* TagStorage.swift in Sources */,
 				4CB00DEB244C991F00EA39E7 /* Tab+ViewController.swift in Sources */,
 				4CE037DA2438C9330093E39D /* ViewModelBindableType.swift in Sources */,
 				A1BE45592451A72200B7467B /* UIColor+Extensions.swift in Sources */,
@@ -1117,7 +1151,9 @@
 				4C96D372247A7FFE0014101F /* ShareListTableViewCell.swift in Sources */,
 				4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */,
 				A127E716246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift in Sources */,
+				A1B6183D24837E9C00844BEB /* NetworkAPIManagerType.swift in Sources */,
 				A125E79424695B80007767D7 /* LoginViewController.swift in Sources */,
+				A1B6183A2483749300844BEB /* TaskStorage.swift in Sources */,
 				4C5185EF247550B8009E1B08 /* Alarm.swift in Sources */,
 				297278492473C97E00B75AC7 /* SettingPlaceViewController.swift in Sources */,
 				4CA2352524758F5D005323EF /* BadgeButton.swift in Sources */,
