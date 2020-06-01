@@ -16,9 +16,10 @@ class AlarmStorage: AlarmStorageType {
     func createAlarm(_ alarm: Alarm) -> Observable<Alarm> {
         do {
             var alarm = alarm
-            self.createId(alarm: &alarm)
+            //self.createId(alarm: &alarm)
             let managedAlarm = ManagedAlarm(context: self.context)
             managedAlarm.fromAlarm(alarm)
+            alarm.id = "\(managedAlarm.objectID)"
             try self.context.save()
             return .just(alarm)
         } catch let error {
@@ -38,7 +39,7 @@ class AlarmStorage: AlarmStorageType {
         }
     }
     
-    func fetchAlarm(id: Int64) -> Observable<Alarm> {
+    func fetchAlarm(id: String) -> Observable<Alarm> {
         do {
             let fetchReqeust = NSFetchRequest<ManagedAlarm>(entityName: "ManagedTag")
             let p1 = NSPredicate(format: "id == %lld", id)
@@ -78,7 +79,7 @@ class AlarmStorage: AlarmStorageType {
         }
     }
     
-    func deleteAlarm(id: Int64) -> Observable<Alarm> {
+    func deleteAlarm(id: String) -> Observable<Alarm> {
         do{
             let fetchRequest = NSFetchRequest<ManagedAlarm>(entityName: "ManagedAlarm")
             fetchRequest.predicate = NSPredicate(format: "id == %lld", id)
@@ -109,10 +110,10 @@ class AlarmStorage: AlarmStorageType {
 
 //MARK: - Helper
 
-extension AlarmStorage {
-    
-    
-    func createId(alarm: inout Alarm) {
-        alarm.id = Int64(arc4random())
-    }
-}
+//extension AlarmStorage {
+//
+//
+//    func createId(alarm: inout Alarm) {
+//        alarm.id = Int64(arc4random())
+//    }
+//}

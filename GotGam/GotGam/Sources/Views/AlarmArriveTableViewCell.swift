@@ -17,7 +17,7 @@ class AlarmArriveTableViewCell: UITableViewCell {
     func configure(viewModel: AlarmViewModel, alarm: Alarm) {
         self.viewModel = viewModel
         
-        guard let got = alarm.got else { return }
+        let got = alarm.got
         
         titleLabel.text = got.title
         memoLabel.text = got.arriveMsg
@@ -30,11 +30,8 @@ class AlarmArriveTableViewCell: UITableViewCell {
             dateDescriptionLabel.text = "마감일시가 없습니다."
         }
         
-        if let createdDate = alarm.createdDate {
-            let agoDate = Calendar.current.dateComponents([.hour, .minute], from: createdDate, to: Date()).minute
-            agoTimeLabel.text = "\(agoDate ?? 0)분 전"
-            //agoTimeLabel.text = agoDate?.format("mm분 전")
-        }
+        let agoDate = Calendar.current.dateComponents([.hour, .minute], from: alarm.createdDate, to: Date()).minute
+        agoTimeLabel.text = "\(agoDate ?? 0)분 전"
         
         self.backgroundColor = alarm.isChecked ? .white : .offWhite
     }

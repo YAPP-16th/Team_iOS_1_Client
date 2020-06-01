@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 struct Got: Equatable {
    
@@ -26,6 +27,8 @@ struct Got: Equatable {
     var onDate: Bool
     var tag : [Tag]?
     var isDone: Bool
+    var readyArrive: Bool
+    var readyDeparture: Bool
     // ManagedGot을 가져오기 위한
     var objectId: NSManagedObjectID?
     
@@ -44,7 +47,9 @@ struct Got: Equatable {
         onDeparture: Bool = false,
         onDate: Bool = false,
         tag: [Tag]?,
-        isDone: Bool = false
+        isDone: Bool = false,
+        readyArrive: Bool = true,
+        readyDeparture: Bool = false
     ) {
         self.id = id
         self.createdDate = createdDate
@@ -61,6 +66,8 @@ struct Got: Equatable {
         self.onDate = onDate
         self.tag = tag
         self.isDone = isDone
+        self.readyArrive = readyArrive
+        self.readyDeparture = readyDeparture
         
     }
     
@@ -86,6 +93,10 @@ func ==(lhs: Got, rhs: Got) -> Bool{
 
 extension Got {
     var mapPoint: MTMapPoint {
-        .init(geoCoord: .init(latitude: latitude!, longitude: longitude!))
+        return .init(geoCoord: .init(latitude: latitude!, longitude: longitude!))
+    }
+    
+    var locationCoordinate2D: CLLocationCoordinate2D {
+        return .init(latitude: latitude!, longitude: longitude!)
     }
 }
