@@ -148,12 +148,19 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 	
 	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
-		view.backgroundColor = .clear
+		let text = self.searchBar.text ?? ""
+		if text != "" && !text.isEmpty {
+			if section == 0 {
+				view.backgroundColor = .lightGray
+			} else {
+				view.backgroundColor = .clear
+			}
+		}
         return view
     }
 	
 	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return 0.1
+		return 0.5
 	}
 	
 }

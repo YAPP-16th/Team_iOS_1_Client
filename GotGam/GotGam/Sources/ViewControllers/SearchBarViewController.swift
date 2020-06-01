@@ -156,7 +156,7 @@ extension SearchBarViewController: UITableViewDataSource{
 			if SearchBar.text == "" {
 				return self.historyList.count
 			} else {
-				return 3
+				return historyList.count <= 3 ? historyList.count : 3
 			}
 		}else if section == 1 {
 			if SearchBar.text == "" {
@@ -180,6 +180,7 @@ extension SearchBarViewController: UITableViewDataSource{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! SearchHistoryCell
+			guard indexPath.row < historyList.count else {return UITableViewCell()}
 			cell.historyLabel.text = historyList[indexPath.row]
 			return cell
 		}else if indexPath.section == 2 {
