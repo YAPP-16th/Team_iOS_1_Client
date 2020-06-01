@@ -556,7 +556,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 
 extension MapViewController: MTMapViewDelegate{
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
-        print(LocationManager.shared.currentLocation ?? "Not found current Location")
+        print(mapPoint.mapPointGeo())
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
             self.quickAddView.isHidden = true

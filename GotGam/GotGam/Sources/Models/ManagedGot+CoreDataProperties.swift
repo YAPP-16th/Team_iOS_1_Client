@@ -33,7 +33,8 @@ extension ManagedGot {
     @NSManaged public var onDate: Bool
     @NSManaged public var alarms: NSSet?
     @NSManaged public var tag: NSSet?
-
+    @NSManaged public var readyArrive: Bool
+    @NSManaged public var readyDeparture: Bool
 }
 
 // MARK: Generated accessors for alarms
