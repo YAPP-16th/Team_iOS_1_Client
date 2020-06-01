@@ -31,8 +31,7 @@ class AlarmDepartureTableViewCell: UITableViewCell {
             dateDescriptionLabel.text = "마감일시가 없습니다."
         }
         
-        let agoDate = Calendar.current.dateComponents([.hour, .minute], from: alarm.createdDate, to: Date()).minute
-        agoTimeLabel.text = "\(agoDate ?? 0)분 전"
+        agoTimeLabel.text = Date().agoText(from: alarm.createdDate)
         
         self.backgroundColor = alarm.isChecked ? .white : .offWhite
     }
