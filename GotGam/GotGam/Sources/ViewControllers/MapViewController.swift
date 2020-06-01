@@ -107,7 +107,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         currentCircle = circle
         //mapView?.fitArea(toShow: circle)
     }
-    func drawCircle(point: MTMapPoint, radius: Float = 100, tag: Int? = nil) {
+    func drawCircle(point: MTMapPoint, radius: Float = 150, tag: Int? = nil) {
         
         mapView.removeAllCircles()
         let circle = MTMapCircle()
@@ -238,7 +238,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     }
     
     @objc func keyboardWillHide(noti: Notification){
-        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let _ = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.quickAddViewBottomConstraint.constant != 0 {
                 self.quickAddViewBottomConstraint.constant = 0
                 mapView.frame.origin.y = 0
@@ -258,9 +258,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
         self.quickAddView.detailAction = { [weak self] in
             guard let self = self else { return }
+            guard let radius = self.currentCircle?.circleRadius else { return }
             let center = self.mapView.mapCenterPoint.mapPointGeo()
             let centerLocation = CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude)
-            self.viewModel.input.showAddDetailVC(location: centerLocation, text: self.quickAddView.addField.text ?? "")
+            
+            self.viewModel.input.showAddDetailVC(location: centerLocation, text: self.quickAddView.addField.text ?? "", radius: Double(radius))
             self.viewModel.seedState.onNext(.none)
         }
     }
@@ -445,7 +447,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     //MARK: Set UI According to the State
     func setNormalStateUI(){
         self.mapView.removeAllCircles()
-        self.radiusSlider.value = 0.1
+        self.radiusSlider.value = 0.15
         circleRadiusLabel.text = "\(Int(radiusSlider.value * 1000))m"
         sliderBackgroundView.isHidden = true
         self.seedButton.backgroundColor = .white
@@ -459,7 +461,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     func setSeedingStateUI(){
         
         //drawCircle(latitude: conter.lat, longitude: <#T##CLLocationDegrees#>, radius: <#T##Float#>, tag: <#T##Int#>)
-        radiusSlider.value = 0.1
+        radiusSlider.value = 0.15
         drawCircle(point: mapView.mapCenterPoint)
         mapView.fitArea(toShow: currentCircle)
         //setCircle(point: mapView.mapCenterPoint)
@@ -510,23 +512,25 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: currentLocation.latitude, longitude: currentLocation.longitude)), animated: true)
                 mapView.currentLocationTrackingMode = .onWithoutHeading
                 mapView.showCurrentLocationMarker = true
+            @unknown default:
+                break
             }
             
         }else{
         }
     }
     
-    func setCircle(point: MTMapPoint){
-        mapView.removeAllCircles()
-        let circle = MTMapCircle()
-        circle.circleCenterPoint = point
-        circle.circleLineColor = .saffron
-        circle.circleLineWidth = 2.0
-        circle.circleFillColor = UIColor.saffron.withAlphaComponent(0.17)
-        circle.tag = 1234
-        circle.circleRadius = 100
-      mapView.addCircle(circle)
-    }
+//    func setCircle(point: MTMapPoint){
+//        mapView.removeAllCircles()
+//        let circle = MTMapCircle()
+//        circle.circleCenterPoint = point
+//        circle.circleLineColor = .saffron
+//        circle.circleLineWidth = 2.0
+//        circle.circleFillColor = UIColor.saffron.withAlphaComponent(0.17)
+//        circle.tag = 1234
+//        circle.circleRadius = 100
+//      mapView.addCircle(circle)
+//    }
     
     func setCard(index: Int) {
         guard let gotList = try? self.viewModel.output.gotList.value() else { return }
@@ -556,7 +560,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 
 extension MapViewController: MTMapViewDelegate{
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
-        print(mapPoint.mapPointGeo())
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
             self.quickAddView.isHidden = true
