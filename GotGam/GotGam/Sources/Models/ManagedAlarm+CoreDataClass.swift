@@ -14,7 +14,7 @@ import CoreData
 public class ManagedAlarm: NSManagedObject {
     func toAlarm() -> Alarm {
         return .init(
-            id: "\(objectID)",
+            id: objectID,
             type: AlarmType(rawValue: type)!,
             createdDate: createdDate,
             checkedDate: checkedDate,

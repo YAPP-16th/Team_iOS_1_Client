@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import CoreLocation
 
 enum AlarmType: Int16 {
@@ -63,7 +64,7 @@ enum AlarmType: Int16 {
 }
 
 struct Alarm: Equatable {
-    var id: String
+    var id: NSManagedObjectID?
     var type: AlarmType
     var createdDate: Date
     var isChecked: Bool
@@ -71,7 +72,7 @@ struct Alarm: Equatable {
     var got: Got
     
     init(
-        id: String = "",
+        id: NSManagedObjectID? = nil,
         type: AlarmType,
         createdDate: Date = Date(),
         checkedDate: Date? = nil,
