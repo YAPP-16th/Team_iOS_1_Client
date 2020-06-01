@@ -34,23 +34,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 			}
 		}
 	}
-	
-	var gotList: [Got] = [] {
-		didSet{
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
-		}
-	}
-	
-	var filteredList: [Got] = [] {
-		didSet{
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
-		}
-	}
-	
+
 	var collectionItems = [String]()
 
 	override func viewDidLoad() {
@@ -62,13 +46,18 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		setCollectionItems()
 		
 		searchBar.borderStyle = .none
+		
+		viewModel.inputs.readKeyword()
 	}
 	
 	func bindViewModel() {
 		searchBar.rx.controlEvent(.primaryActionTriggered)
 			.subscribe(onNext: {
 				let keyword = self.searchBar.text ?? ""
-				self.viewModel.inputs.addKeyword(keyword: keyword)
+				if !keyword.isEmpty && keyword != ""{
+					self.viewModel.inputs.addKeyword(keyword: keyword)
+					self.searchKeyword(keyword: keyword)
+				}
 			}) .disposed(by: disposeBag)
 		
 		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
@@ -76,13 +65,22 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 				self.searchKeyword(keyword: text)
 			}).disposed(by: self.disposeBag)
 		
-		searchBar.rx.controlEvent(.primaryActionTriggered)
-			.subscribe(onNext: {
-			let text = self.searchBar.text ?? ""
-			self.searchKeyword(keyword: text)
+		viewModel.outputs.keywords
+			.bind { (List) in
+				self.historyList = List
+			} .disposed(by: disposeBag)
+		
+		tableView.rx.itemSelected
+			.subscribe(onNext: { [weak self] (indexPath) in
+				if indexPath.section == 0{
+					self?.searchBar.text = self?.historyList[indexPath.row]
+					let keyword = self?.searchBar.text ?? ""
+					if !keyword.isEmpty && keyword != ""{
+						self?.viewModel.inputs.addKeyword(keyword: keyword)
+					}
+					self?.searchKeyword(keyword: keyword)
+				}
 			}).disposed(by: disposeBag)
-		
-		
 	}
 	
 	func searchKeyword(keyword: String){
@@ -100,7 +98,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 
 extension FrequentsSearchViewController: UITableViewDataSource{
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 3
+		return 2
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -109,16 +107,6 @@ extension FrequentsSearchViewController: UITableViewDataSource{
 				return self.historyList.count
 			} else {
 				return 3
-			}
-		}else if section == 1 {
-			if searchBar.text == "" {
-				return 0
-			} else {
-				if self.searchBar.text!.count > 0{
-					return filteredList.count
-				} else {
-					return 0
-				}
 			}
 		}else {
 			if searchBar.text == "" {
@@ -131,33 +119,14 @@ extension FrequentsSearchViewController: UITableViewDataSource{
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0{
-			let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! SearchHistoryCell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "historyFCell", for: indexPath) as! FrequentHistoryCell
 			cell.historyLabel.text = historyList[indexPath.row]
 			return cell
-		}else if indexPath.section == 2 {
+		}else {
 			let place = placeList[indexPath.row]
-			let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchKakaoCell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "searchFCell", for: indexPath) as! FrequentSearchCell
 			cell.kewordLabel.text = place.placeName
-			cell.resultLabel.text = place.addressName
 			return cell
-		} else {
-			
-			if searchBar.text!.count > 0 {
-				let got = filteredList[indexPath.row]
-				let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
-				cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
-				cell.gotLabel.text = got.title
-			
-				cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
-				return cell
-			}else{
-				let got = gotList[indexPath.row]
-				let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
-				cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
-				cell.gotLabel.text = got.title
-				cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
-				return cell
-			}
 		}
 	}
 	
@@ -170,13 +139,23 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		if indexPath.section == 2 {
+		if indexPath.section == 1 {
 			let place = self.placeList[indexPath.row]
 			viewModel.inputs.placeBehavior.accept(place)
 			viewModel.inputs.showMapVC()
 		}
-		
 	}
+	
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+		view.backgroundColor = .clear
+        return view
+    }
+	
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return 0.1
+	}
+	
 }
 
 extension FrequentsSearchViewController: UICollectionViewDataSource{
@@ -219,7 +198,10 @@ class MoveMapCell: UICollectionViewCell{
 	@IBOutlet var collectionLabel: UILabel!
 }
 
-class SearchCell: UITableViewCell{
+class FrequentSearchCell: UITableViewCell{
 	@IBOutlet var kewordLabel: UILabel!
 }
 
+class FrequentHistoryCell: UITableViewCell {
+	@IBOutlet var historyLabel: UILabel!
+}

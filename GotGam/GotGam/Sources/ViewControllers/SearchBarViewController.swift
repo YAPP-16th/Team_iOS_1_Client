@@ -277,6 +277,16 @@ extension SearchBarViewController: UITableViewDelegate {
 			}
 		}
 	}
+	
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+		view.backgroundColor = .clear
+        return view
+    }
+	
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return 0.1
+	}
 }
 
 extension SearchBarViewController: UICollectionViewDataSource {
