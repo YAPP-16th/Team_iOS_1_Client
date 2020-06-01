@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -278,12 +279,12 @@ enum AlarmSectionModel {
 }
 
 enum AlarmItem: IdentifiableType, Equatable {
-    typealias Identity = String
+    typealias Identity = NSManagedObjectID
     var identity: Identity {
         switch self {
-        case let .ArriveItem(alarm): return alarm.id
-        case let .DepartureItem(alarm): return alarm.id
-        case let .ShareItem(alarm): return alarm.id
+        case let .ArriveItem(alarm): return alarm.id!
+        case let .DepartureItem(alarm): return alarm.id!
+        case let .ShareItem(alarm): return alarm.id!
         }
     }
     

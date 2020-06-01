@@ -66,6 +66,7 @@
 		4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */; };
 		4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */; };
 		4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */; };
+		4C792B692484D8A6002ADB33 /* Notification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C792B682484D8A6002ADB33 /* Notification+Name.swift */; };
 		4C96D36B247A60AF0014101F /* TagListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */; };
 		4C96D36C247A60AF0014101F /* TagListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */; };
 		4C96D36E247A71390014101F /* ShareListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D36D247A71390014101F /* ShareListViewModel.swift */; };
@@ -251,6 +252,7 @@
 		4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagViewController.swift; sourceTree = "<group>"; };
 		4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGridTableViewCell.swift; sourceTree = "<group>"; };
+		4C792B682484D8A6002ADB33 /* Notification+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Name.swift"; sourceTree = "<group>"; };
 		4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagListCollectionViewCell.xib; sourceTree = "<group>"; };
 		4C96D36D247A71390014101F /* ShareListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListViewModel.swift; sourceTree = "<group>"; };
@@ -791,6 +793,7 @@
 				4C5F0F692465540700C7A6E9 /* Date+String.swift */,
 				4CC5AC06247672AD00FE9034 /* Date+.swift */,
 				4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */,
+				4C792B682484D8A6002ADB33 /* Notification+Name.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1153,6 +1156,7 @@
 				A159DBFD2459C360004FCA66 /* AddPlantViewController.swift in Sources */,
 				4CA2351D24758DBB005323EF /* AlarmStorageType.swift in Sources */,
 				4CE037E72438CB310093E39D /* Scene.swift in Sources */,
+				4C792B692484D8A6002ADB33 /* Notification+Name.swift in Sources */,
 				4CBD5368245E3AC500B235D5 /* ToggleableTableViewCell.swift in Sources */,
 				4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */,
 				29618D65247C3C37008E112E /* FrequentsViewController.swift in Sources */,
@@ -1317,7 +1321,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 97C96KP84G;
+				DEVELOPMENT_TEAM = N23K7ZS482;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
@@ -1400,7 +1404,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 97C96KP84G;
+				DEVELOPMENT_TEAM = N23K7ZS482;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
