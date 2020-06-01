@@ -649,14 +649,48 @@
                                 <rect key="frame" x="0.0" y="186" width="414" height="676"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" id="JWy-W7-86E" customClass="SearchCell" customModule="GotGam" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="historyFCell" id="gt3-Ni-ANO" customClass="FrequentHistoryCell" customModule="GotGam" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gt3-Ni-ANO" id="dhH-Ij-AOE">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3W-vz-ipS">
+                                                    <rect key="frame" x="39" y="12.5" width="39.5" height="19"/>
+                                                    <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
+                                                    <color key="textColor" name="brownishGrey"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Uo-G4-lyE">
+                                                    <rect key="frame" x="16" y="15.5" width="13" height="13"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="13" id="2JA-JO-WRm"/>
+                                                        <constraint firstAttribute="height" constant="13" id="f2h-YQ-IOo"/>
+                                                    </constraints>
+                                                    <inset key="imageEdgeInsets" minX="1" minY="1" maxX="1" maxY="1"/>
+                                                    <state key="normal" title="Button" image="icSearchBtn"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="e3W-vz-ipS" firstAttribute="centerY" secondItem="dhH-Ij-AOE" secondAttribute="centerY" id="NRW-Rj-ze5"/>
+                                                <constraint firstItem="e3W-vz-ipS" firstAttribute="leading" secondItem="3Uo-G4-lyE" secondAttribute="trailing" constant="10" id="aN5-9L-q6f"/>
+                                                <constraint firstItem="3Uo-G4-lyE" firstAttribute="centerY" secondItem="dhH-Ij-AOE" secondAttribute="centerY" id="blJ-UA-Ia4"/>
+                                                <constraint firstItem="3Uo-G4-lyE" firstAttribute="leading" secondItem="dhH-Ij-AOE" secondAttribute="leading" constant="16" id="sfY-Pv-EYx"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="historyLabel" destination="e3W-vz-ipS" id="pwg-Et-ofb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchFCell" id="JWy-W7-86E" customClass="FrequentSearchCell" customModule="GotGam" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="71.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JWy-W7-86E" id="WQ1-f3-FrR">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icSearchBtnPin" translatesAutoresizingMaskIntoConstraints="NO" id="IPn-gz-vJu">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tab_map_active" translatesAutoresizingMaskIntoConstraints="NO" id="IPn-gz-vJu">
                                                     <rect key="frame" x="16" y="15.5" width="13" height="13"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="13" id="Ecb-QB-CNM"/>
@@ -766,11 +800,25 @@
                                     <constraint firstItem="ExJ-wk-X4c" firstAttribute="leading" secondItem="pPy-1f-JOH" secondAttribute="leading" constant="24" id="yeZ-Gm-Jzl"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VX3-oz-I9S">
+                                <rect key="frame" x="330.5" y="610" width="48" height="48"/>
+                                <color key="backgroundColor" name="white"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="Kxq-sK-0xB"/>
+                                    <constraint firstAttribute="height" constant="48" id="M1M-9t-a9G"/>
+                                </constraints>
+                                <state key="normal" image="icMapBtnMyLocation"/>
+                                <connections>
+                                    <action selector="currentBtn:" destination="ba4-04-y9j" eventType="touchUpInside" id="dHq-UJ-U2b"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="pPy-1f-JOH" firstAttribute="top" secondItem="VX3-oz-I9S" secondAttribute="bottom" constant="22" id="0Zu-ra-Siy"/>
                             <constraint firstItem="pPy-1f-JOH" firstAttribute="centerX" secondItem="uKB-Rd-vyJ" secondAttribute="centerX" id="4fl-aa-qqq"/>
                             <constraint firstItem="mHq-r6-C0D" firstAttribute="bottom" secondItem="pPy-1f-JOH" secondAttribute="bottom" constant="43" id="FbW-Zd-evk"/>
+                            <constraint firstItem="VX3-oz-I9S" firstAttribute="trailing" secondItem="pPy-1f-JOH" secondAttribute="trailing" id="mPf-SK-xCb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mHq-r6-C0D"/>
                     </view>
@@ -778,6 +826,7 @@
                     <connections>
                         <outlet property="addressLabel" destination="p3w-Cs-xSZ" id="Ijg-Si-Qjd"/>
                         <outlet property="addressView" destination="pPy-1f-JOH" id="BUC-Fr-7Vw"/>
+                        <outlet property="currentBtn" destination="VX3-oz-I9S" id="c1I-f6-zM5"/>
                         <outlet property="okay" destination="lxq-n9-HKz" id="gTr-Qi-hNI"/>
                         <outlet property="placeLabel" destination="ExJ-wk-X4c" id="Vlg-K9-xEc"/>
                     </connections>
@@ -944,7 +993,7 @@
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="YDp-ya-fgi">
-                        <rect key="frame" x="0.0" y="44" width="414" height="103.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1108,9 +1157,10 @@
         <image name="icFrequentsSchool" width="20" height="20"/>
         <image name="icListAddBtn" width="18" height="18"/>
         <image name="icMapBtnMyLocation" width="20.5" height="20.5"/>
+        <image name="icSearchBtn" width="13" height="13"/>
         <image name="icSearchBtnBack" width="9" height="16"/>
-        <image name="icSearchBtnPin" width="11.5" height="16"/>
         <image name="icsettingLogin" width="60" height="60"/>
+        <image name="tab_map_active" width="17" height="24"/>
         <namedColor name="black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

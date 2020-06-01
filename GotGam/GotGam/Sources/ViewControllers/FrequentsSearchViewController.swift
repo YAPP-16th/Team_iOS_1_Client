@@ -27,6 +27,14 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 			}
 		}
 	}
+	var historyList: [String] = [] {
+		didSet{
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+	}
+
 	var collectionItems = [String]()
 
 	override func viewDidLoad() {
@@ -38,13 +46,18 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		setCollectionItems()
 		
 		searchBar.borderStyle = .none
+		
+		viewModel.inputs.readKeyword()
 	}
 	
 	func bindViewModel() {
 		searchBar.rx.controlEvent(.primaryActionTriggered)
 			.subscribe(onNext: {
 				let keyword = self.searchBar.text ?? ""
-				self.viewModel.inputs.addKeyword(keyword: keyword)
+				if !keyword.isEmpty && keyword != ""{
+					self.viewModel.inputs.addKeyword(keyword: keyword)
+					self.searchKeyword(keyword: keyword)
+				}
 			}) .disposed(by: disposeBag)
 		
 		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
@@ -52,12 +65,22 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 				self.searchKeyword(keyword: text)
 			}).disposed(by: self.disposeBag)
 		
-		searchBar.rx.controlEvent(.primaryActionTriggered).subscribe(onNext: {
-			let text = self.searchBar.text ?? ""
-			self.searchKeyword(keyword: text)
+		viewModel.outputs.keywords
+			.bind { (List) in
+				self.historyList = List
+			} .disposed(by: disposeBag)
+		
+		tableView.rx.itemSelected
+			.subscribe(onNext: { [weak self] (indexPath) in
+				if indexPath.section == 0{
+					self?.searchBar.text = self?.historyList[indexPath.row]
+					let keyword = self?.searchBar.text ?? ""
+					if !keyword.isEmpty && keyword != ""{
+						self?.viewModel.inputs.addKeyword(keyword: keyword)
+					}
+					self?.searchKeyword(keyword: keyword)
+				}
 			}).disposed(by: disposeBag)
-		
-		
 	}
 	
 	func searchKeyword(keyword: String){
@@ -74,16 +97,37 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 }
 
 extension FrequentsSearchViewController: UITableViewDataSource{
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 2
+	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-			return self.placeList.count
+		if section == 0{
+			if searchBar.text == "" {
+				return self.historyList.count
+			} else {
+				return 3
+			}
+		}else {
+			if searchBar.text == "" {
+				return 0
+			} else {
+				return self.placeList.count
+			}
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if indexPath.section == 0{
+			let cell = tableView.dequeueReusableCell(withIdentifier: "historyFCell", for: indexPath) as! FrequentHistoryCell
+			cell.historyLabel.text = historyList[indexPath.row]
+			return cell
+		}else {
 			let place = placeList[indexPath.row]
-			let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchCell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "searchFCell", for: indexPath) as! FrequentSearchCell
 			cell.kewordLabel.text = place.placeName
 			return cell
+		}
 	}
 	
 }
@@ -95,11 +139,30 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		
-		let place = self.placeList[indexPath.row]
-		viewModel.inputs.placeBehavior.accept(place)
-		viewModel.inputs.showMapVC()
+		if indexPath.section == 1 {
+			let place = self.placeList[indexPath.row]
+			viewModel.inputs.placeBehavior.accept(place)
+			viewModel.inputs.showMapVC()
+		}
 	}
+	
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+		let text = self.searchBar.text ?? ""
+		if text != "" && !text.isEmpty {
+			if section == 0 {
+				view.backgroundColor = .lightGray
+			} else {
+				view.backgroundColor = .clear
+			}
+		}
+        return view
+    }
+	
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return 0.5
+	}
+	
 }
 
 extension FrequentsSearchViewController: UICollectionViewDataSource{
@@ -142,7 +205,10 @@ class MoveMapCell: UICollectionViewCell{
 	@IBOutlet var collectionLabel: UILabel!
 }
 
-class SearchCell: UITableViewCell{
+class FrequentSearchCell: UITableViewCell{
 	@IBOutlet var kewordLabel: UILabel!
 }
 
+class FrequentHistoryCell: UITableViewCell {
+	@IBOutlet var historyLabel: UILabel!
+}

@@ -34,18 +34,21 @@ struct Frequent: Equatable {
     var latitude: Double
     var longitude: Double
 	var type: IconType
+	var id: String
 	
 	init(
 		name: String,
 		address: String,
 		latitude: Double,
 		longitude: Double,
-		type: IconType
+		type: IconType,
+		id: String
 	) {
 		self.name = name
 		self.address = address
 		self.latitude = latitude
 		self.longitude = longitude
 		self.type = type
+		self.id = id
 	}
 }

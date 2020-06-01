@@ -45,23 +45,19 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		}
 	}
 	
-	var gotSections: [ListSectionModel]? = []
+	var filteredList: [Got] = [] {
+		didSet{
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+	}
 	
 	var collectionList = [Frequent]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		SearchBar.becomeFirstResponder()
-		
-		SearchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
-			.subscribe(onNext: { text in
-				self.searchKeyword(keyword: text)
-			}).disposed(by: self.disposeBag)
-		SearchBar.rx.controlEvent(.primaryActionTriggered).subscribe(onNext: {
-			let text = self.SearchBar.text ?? ""
-			self.historyList.insert(text, at: 0)
-			self.searchKeyword(keyword: text)
-			}).disposed(by: disposeBag)
 		
 		self.viewModel.inputs.readKeyword()
 	}
@@ -70,11 +66,23 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		super.viewWillAppear(animated)
 		viewModel.inputs.readFrequents()
 		viewModel.inputs.readGot()
-		
-		print("😢", viewModel.gotSections.value)
 	}
 	
 	func bindViewModel() {
+		
+		SearchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
+			.subscribe(onNext: { text in
+				self.searchKeyword(keyword: text)
+			}).disposed(by: self.disposeBag)
+		
+		SearchBar.rx.controlEvent(.primaryActionTriggered)
+			.subscribe(onNext: {
+				let text = self.SearchBar.text ?? ""
+				if !text.isEmpty && text != ""{
+					self.historyList.insert(text, at: 0)
+					self.searchKeyword(keyword: text)
+				}
+			}).disposed(by: disposeBag)
 		
 		self.viewModel.outputs.keywords.bind { (List) in
 			self.historyList = List
@@ -83,9 +91,9 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		self.SearchBar.rx.controlEvent(.primaryActionTriggered)
 			.subscribe(onNext: {
 				let keyword = self.SearchBar.text ?? ""
-				self.viewModel.inputs.addKeyword(keyword: keyword)
-				print("😢", self.viewModel.gotSections.value)
-				
+				if !keyword.isEmpty && keyword != ""{
+					self.viewModel.inputs.addKeyword(keyword: keyword)
+				}
 			}) .disposed(by: disposeBag)
 		
 		viewModel.outputs.collectionItems
@@ -99,7 +107,9 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 				if indexPath.section == 0{
 					self?.SearchBar.text = self?.historyList[indexPath.row]
 					let keyword = self?.SearchBar.text ?? ""
-					self?.viewModel.inputs.addKeyword(keyword: keyword)
+					if !keyword.isEmpty && keyword != ""{
+						self?.viewModel.inputs.addKeyword(keyword: keyword)
+					}
 					self?.searchKeyword(keyword: keyword)
 				}
 			})
@@ -111,39 +121,19 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 			})
 			.disposed(by: disposeBag)
 		
-//		SearchBar.rx.text.orEmpty
-//			.subscribe(onNext: { [weak self] (text) in
-//				
-//				let filteredList = self?.gotList.filter ({ got -> Bool in
-//                    if text != "", let title = got.title, !title.lowercased().contains(text.lowercased()) {
-//                        return false
-//                    }
-//                    return true
-//                })
-//				let filteredDataSources = self?.configureDataSource(gotList: filteredList ?? [])
-//				self?.gotSections?.append(filteredDataSources)
-//				
-////				accept(filteredDataSources ?? [])
-//			}).disposed(by: disposeBag)
-		
-//		SearchBar.rx.text.orEmpty
-//		.debounce(.milliseconds(800), scheduler: MainScheduler.instance)
-//		.bind(to: viewModel.inputs.filteredGotSubject)
-//		.disposed(by: disposeBag)
-		
-		
-//		viewModel.outputs.gotSections
-//		.bind(to: gotListTableView.rx.items(dataSource: dataSource))
-//		.disposed(by: disposeBag)
+		SearchBar.rx.text.orEmpty
+			.subscribe(onNext: { [weak self] (text) in
+				
+				let filteredList = self?.gotList.filter ({ got -> Bool in
+                    if let title = got.title, title.lowercased().contains(text.lowercased()) {
+                        return true
+                    }
+                    return false
+                })
+				
+				self?.filteredList = filteredList ?? []
+			}).disposed(by: disposeBag)
 	}
-	
-	func configureDataSource(gotList: [Got]) -> [ListSectionModel] {
-        return [
-            .listSection(title: "", items: gotList.map {
-                ListItem.gotItem(got: $0)
-            })
-        ]
-    }
 	
 	
 	func searchKeyword(keyword: String){
@@ -163,54 +153,60 @@ extension SearchBarViewController: UITableViewDataSource{
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if section == 0{
-			if self.historyList.count > 3 {
-				return 3
-			} else { return self.historyList.count }
-//			return historyList.count + placeList.count
+			if SearchBar.text == "" {
+				return self.historyList.count
+			} else {
+				return historyList.count <= 3 ? historyList.count : 3
+			}
 		}else if section == 1 {
-			return self.placeList.count
+			if SearchBar.text == "" {
+				return 0
+			} else {
+				if self.SearchBar.text!.count > 0{
+					return filteredList.count
+				} else {
+					return 0
+				}
+			}
 		}else {
-			return self.gotList.count
-		}
-		
-		
+			if SearchBar.text == "" {
+				return 0
+			} else {
+				return self.placeList.count
+			}
+		}	
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		let history = historyList[indexPath]
-//		let type: HistoryType = HistoryType(rawValue: history.type)
-//
-//		switch type {
-//			case .search:
-//				let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchKakaoCell
-//				cell.imageView.image = type.image
-//
-//			case .got:
-//
-//		}
-//		if historyList[indexPath].type == .search {
-//			let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchKakaoCell
-//		} else if == .got {
-//
-//		}
-
 		if indexPath.section == 0{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! SearchHistoryCell
+			guard indexPath.row < historyList.count else {return UITableViewCell()}
 			cell.historyLabel.text = historyList[indexPath.row]
 			return cell
-		}else if indexPath.section == 1 {
+		}else if indexPath.section == 2 {
 			let place = placeList[indexPath.row]
 			let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchKakaoCell
 			cell.kewordLabel.text = place.placeName
 			cell.resultLabel.text = place.addressName
 			return cell
 		} else {
-			let got = gotList[indexPath.row]
-			let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
-			cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
-			cell.gotLabel.text = got.title
-			cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
-			return cell
+			
+			if SearchBar.text!.count > 0 {
+				let got = filteredList[indexPath.row]
+				let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
+				cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
+				cell.gotLabel.text = got.title
+			
+				cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
+				return cell
+			}else{
+				let got = gotList[indexPath.row]
+				let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
+				cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
+				cell.gotLabel.text = got.title
+				cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
+				return cell
+			}
 		}
 	}
 }
@@ -236,14 +232,14 @@ class GotCell: UITableViewCell {
 
 extension SearchBarViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.section == 1 {
+		if indexPath.section == 2 {
 			return 90
 		} else { return 48 }
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		if indexPath.section == 1 {
+		if indexPath.section == 2 {
 			let place = self.placeList[indexPath.row]
 			if let tabVC = self.presentingViewController as? TabBarController{
 				let mapVC = tabVC.viewControllers?.first as? MapViewController
@@ -268,7 +264,7 @@ extension SearchBarViewController: UITableViewDelegate {
                     }
                 }
             }
-		} else if indexPath.section == 2 {
+		} else if indexPath.section == 1 {
 			let got = self.gotList[indexPath.row]
 			if let tabVC = self.presentingViewController as? TabBarController{
 				let mapVC = tabVC.viewControllers?.first as? MapViewController
@@ -281,6 +277,16 @@ extension SearchBarViewController: UITableViewDelegate {
 				}
 			}
 		}
+	}
+	
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+		view.backgroundColor = .clear
+        return view
+    }
+	
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return 0.1
 	}
 }
 
@@ -304,8 +310,7 @@ extension SearchBarViewController: UICollectionViewDelegateFlowLayout {
         
 		let rect = NSString(string: "\(self.collectionList[indexPath.item].name)").boundingRect(with: .init(width: 0, height: 48), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
 
-		let width: CGFloat = 8 + 16 + 7 + rect.width + 8
-        // cell height - inset(10)
+		let width: CGFloat = 16 + 16 + 7 + rect.width + 8
         let height: CGFloat = 48
         return CGSize(width: width, height: height)
     }

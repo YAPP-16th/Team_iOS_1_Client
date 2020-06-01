@@ -82,34 +82,6 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
 
-//		gotLists
-//		.subscribe(onNext: { [unowned self] gotList in
-//			self.gotSections.accept(self.configureDataSource(gotList: gotList))
-//		})
-//		.disposed(by: disposeBag)
-//		
-//		filteredGotSubject
-//		.subscribe(onNext: { [weak self] searchText in
-//			guard let gotList = self?.gotLists.value else { return }
-//			let filteredList = gotList.filter ({ got -> Bool in
-//				if searchText != "", let title = got.title, !title.lowercased().contains(searchText.lowercased()) {
-//					return false
-//				}
-//				return true
-//			})
-//			let filteredDataSources = self?.configureDataSource(gotList: filteredList)
-//			self?.gotSections.accept(filteredDataSources ?? [])
-//		})
-//		.disposed(by: disposeBag)
-//    }
-//	
-//	func configureDataSource(gotList: [Got]) -> [ListSectionModel] {
-//        return [
-//            .listSection(title: "", items: gotList.map {
-//                ListItem.gotItem(got: $0)
-//            })
-//        ]
-//    }
 
 	}
 	
