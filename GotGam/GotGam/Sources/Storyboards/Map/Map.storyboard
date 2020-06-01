@@ -29,8 +29,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ox-eA-E1s">
                                 <rect key="frame" x="0.0" y="80" width="414" height="782"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n2t-Q7-lmx" userLabel="searchView">
-                                <rect key="frame" x="0.0" y="44" width="414" height="36"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n2t-Q7-lmx" userLabel="searchView">
+                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h2K-l7-chH">
                                         <rect key="frame" x="46" y="0.0" width="363" height="36"/>

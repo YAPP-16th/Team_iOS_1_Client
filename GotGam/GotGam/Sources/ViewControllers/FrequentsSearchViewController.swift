@@ -57,6 +57,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 				if !keyword.isEmpty && keyword != ""{
 					self.viewModel.inputs.addKeyword(keyword: keyword)
 					self.searchKeyword(keyword: keyword)
+					self.historyList.insert(keyword, at: 0)
 				}
 			}) .disposed(by: disposeBag)
 		
@@ -81,6 +82,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 					self?.searchKeyword(keyword: keyword)
 				}
 			}).disposed(by: disposeBag)
+		
 	}
 	
 	func searchKeyword(keyword: String){

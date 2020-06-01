@@ -37,7 +37,6 @@
 		29BC6CDC24823B330011C482 /* 서비스이용약관.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CD924823B330011C482 /* 서비스이용약관.html */; };
 		29BC6CDD24823B330011C482 /* 개인정보처리방침.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CDA24823B330011C482 /* 개인정보처리방침.html */; };
 		29BC6CDE24823B340011C482 /* 위치기반서비스약관.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CDB24823B330011C482 /* 위치기반서비스약관.html */; };
-		29C41DB22483936300C82021 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C41DB12483936300C82021 /* Tutorial.storyboard */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -1332,7 +1331,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = N23K7ZS482;
+				DEVELOPMENT_TEAM = 97C96KP84G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
@@ -1415,7 +1414,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = N23K7ZS482;
+				DEVELOPMENT_TEAM = 97C96KP84G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",

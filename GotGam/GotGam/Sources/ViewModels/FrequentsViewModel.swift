@@ -16,7 +16,7 @@ protocol FrequentsViewModelInputs {
 	var addressPlace: BehaviorRelay<String> { get set }
 	var latitudePlace: BehaviorRelay<String> { get set }
 	var longitudePlace: BehaviorRelay<String> { get set }
-	var typePlace: BehaviorRelay<IconType> { get set }
+	var typePlace: BehaviorRelay<IconType?> { get set }
 
 	func addFrequents()
 	func updateFrequents()
@@ -40,7 +40,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	var addressPlace = BehaviorRelay<String>(value: "")
 	var latitudePlace = BehaviorRelay<String>(value: "")
 	var longitudePlace = BehaviorRelay<String>(value: "")
-	var typePlace = BehaviorRelay<IconType>(value: .other)
+	var typePlace = BehaviorRelay<IconType?>(value: nil)
 	
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	var frequentsPlace = BehaviorRelay<Place?>(value: nil)
@@ -53,7 +53,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 		let id = String(Date().timeIntervalSince1970)
 		guard let la = Double(latitudePlace.value) else { return  }
 		guard let lo = Double(longitudePlace.value) else { return  }
-		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value, id: id)
+		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value!, id: id)
 
 		storage.createFrequents(frequent: frequent).bind { _ in
 			self.readFrequents()
@@ -65,7 +65,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 		let storagePlace = FrequentsStorage()
 		
 		if latitudePlace.value == ""{
-			let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: frequentOrigin!.latitude, longitude: frequentOrigin!.longitude, type: typePlace.value, id: frequentOrigin!.id)
+			let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: frequentOrigin!.latitude, longitude: frequentOrigin!.longitude, type: typePlace.value!, id: frequentOrigin!.id)
 			
 			storagePlace.updateFrequents(frequent: frequent)
 				.bind { _ in
@@ -75,7 +75,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 		} else {
 			guard let la = Double(latitudePlace.value) else { return }
 			guard let lo = Double(longitudePlace.value) else { return }
-			let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value, id: frequentOrigin!.id)
+			let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value!, id: frequentOrigin!.id)
 			
 			storagePlace.updateFrequents(frequent: frequent)
 				.bind { _ in

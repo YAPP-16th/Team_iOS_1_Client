@@ -510,6 +510,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: currentLocation.latitude, longitude: currentLocation.longitude)), animated: true)
                 mapView.currentLocationTrackingMode = .onWithoutHeading
                 mapView.showCurrentLocationMarker = true
+				let currentIcon: MTMapLocationMarkerItem = MTMapLocationMarkerItem()
+				currentIcon.customTrackingAnimationImageNames = ["group189", "group467", "group468", "group469", "group470"]
+				mapView.updateCurrentLocationMarker(currentIcon)
             }
             
         }else{

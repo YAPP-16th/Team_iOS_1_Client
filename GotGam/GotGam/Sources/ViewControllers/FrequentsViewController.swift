@@ -162,6 +162,16 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 				self?.textNum.text = "\(text!.count)"
 			}).disposed(by: disposeBag)
 		
+		Observable.combineLatest(viewModel.namePlace, viewModel.addressPlace, viewModel.inputs.typePlace)
+		.subscribe(onNext: {[weak self] name, address, type in
+			print(name, address, type)
+			if name.isEmpty || address.isEmpty || type == nil{
+				self?.addFrequents.isEnabled = false
+			} else {
+				self?.addFrequents.isEnabled = true
+			}
+		})
+		.disposed(by: disposeBag)
 	}
 	
 
