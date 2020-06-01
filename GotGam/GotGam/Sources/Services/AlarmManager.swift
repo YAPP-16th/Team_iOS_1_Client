@@ -79,50 +79,6 @@ class AlarmManager {
                 removeNotification(ofGot: got, type: .departure)
             }
         }
-
-//        // TODO: 아이디 값이 managedObject의 id를 사용할거면 바꾸기
-//        if let departureGotIds = UserDefaults.standard.array(forKey: departureKey) as? [String] {
-//            let managedDepartureGots = departureGotIds.compactMap({Int64($0)}).compactMap { DBManager.share.fetchGot(id: $0) }
-//            let departureGots = managedDepartureGots.map {$0.toGot()}
-//
-//            var remainDepartureIds = [String]()
-//
-//            for i in 0..<departureGots.count {
-//                let got = departureGots[i]
-//                if !isInRange(got: got, from: current) {
-//                    createAlarm(got: got, type: .departure)
-//                } else {
-//                    guard let id = got.id else { return }
-//                    remainDepartureIds.append(String(id))
-//                }
-//            }
-//            UserDefaults.standard.set(remainDepartureIds, forKey: departureKey)
-//        }
-
-//        gotStorage.fetchGotList()
-//            .map{ self.findInRange(gotList: $0, from: current) }
-//            .subscribe(onNext: { [weak self] gotList in
-//                for got in gotList {
-//                    if got.onArrive {
-//                        self?.createAlarm(got: got, type: .arrive)
-//                    }
-//                    if got.onDeparture {
-//                        guard
-//                            let self = self,
-//                            let id = got.id
-//                        else { return }
-//
-//                        if var departureGotIds = UserDefaults.standard.array(forKey: self.departureKey) as? [String] {
-//                            departureGotIds.append(String(id))
-//                            UserDefaults.standard.set(departureGotIds, forKey: self.departureKey)
-//                        } else {
-//                            let departureGotIds = [String(id)]
-//                            UserDefaults.standard.set(departureGotIds, forKey: self.departureKey)
-//                        }
-//                    }
-//                }
-//            })
-//            .disposed(by: disposeBag)
     }
 
     func createAlarm(got: ManagedGot, type: AlarmType) {
@@ -130,7 +86,8 @@ class AlarmManager {
         let alarm = Alarm(type: type, got: got.toGot())
         print("create Alarm: \(alarm)")
         alarmStorage.createAlarm(alarm)
-
+        NotificationCenter.default.post(name: .onDidUpdateAlarm, object: nil)
+        
         // TODO: 타입설정
         //pushNotification(got: got, type: type)
     }
