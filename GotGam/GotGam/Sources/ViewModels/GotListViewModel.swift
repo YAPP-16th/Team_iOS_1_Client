@@ -182,7 +182,8 @@ extension ListItem: IdentifiableType, Equatable {
 
    var identity: Identity {
        switch self {
-       case let .gotItem(got): return got.id!
+       case let .gotItem(got):
+        return got.id! == "" ? "\(got.objectId!)" : got.id!
        }
    }
 }
