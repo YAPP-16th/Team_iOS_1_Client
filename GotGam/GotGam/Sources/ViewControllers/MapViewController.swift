@@ -105,7 +105,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         mapView.removeAllCircles()
         mapView?.addCircle(circle)
         currentCircle = circle
-        //mapView?.fitArea(toShow: circle)
     }
     func drawCircle(point: MTMapPoint, radius: Float = 150, tag: Int? = nil) {
         

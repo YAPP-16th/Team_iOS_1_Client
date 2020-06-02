@@ -16,6 +16,7 @@ extension Scene {
 			case .gotBox:      return instantiate(from: "List")
 			case .shareList:   return instantiate(from: "List")
 			case .add:        return instantiate(from: "Map")
+            case .addMap:      return instantiate(from: "Map")
 			case .setTag:      return instantiate(from: "Map")
 			case .createTag:   return instantiate(from: "Map")
 			case .login:       return instantiate()
@@ -29,7 +30,7 @@ extension Scene {
 			case .frequentsSearch:    return instantiate(from: "Setting")
 			case .frequentsMap:		return instantiate(from: "Setting")
 			case .settingDetail:	return instantiate(from: "Setting")
-        case .tutorial: return instantiate(from: "Tutorial")
+            case .tutorial: return instantiate(from: "Tutorial")
 		}
     }
 }

@@ -103,8 +103,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.tag = tag.value == nil ? [] : [tag.value!]
             currentGot.latitude = location.latitude
             currentGot.longitude = location.longitude
-            // TODO: Radius 추가
-            currentGot.radius = 100
+            currentGot.radius = radiusSubject.value
             currentGot.arriveMsg = arriveText.value
             currentGot.deparetureMsg = leaveText.value
             currentGot.insertedDate = insertedDateRelay.value
@@ -172,20 +171,32 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     private func showMap() {
         
-        let mapVM = MapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-        mapVM.seedState.onNext(.seeding)
-        mapVM.aimToPlace.onNext(true)
+        let place = placeSubject.value ?? (LocationManager.shared.currentLocation ?? CLLocationCoordinate2D.init())
         
-        if let got = currentGot.value {
-            mapVM.beforeGotSubject.accept(got)
-        }
-        if let location = placeSubject.value {
-            mapVM.placeSubject.onNext(location)
-        }
-        mapVM.placeSubject
-            .bind(to: placeSubject) 
+        let addMapVM = AddMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage, mapPoint: place, radius: radiusSubject.value)
+        
+        addMapVM.locationPublish
+            .bind(to: placeSubject)
             .disposed(by: disposeBag)
-        sceneCoordinator.transition(to: .map(mapVM), using: .push, animated: true)
+
+        addMapVM.radiusPublish
+            .bind(to: radiusSubject)
+            .disposed(by: disposeBag)
+        
+        sceneCoordinator.transition(to: .addMap(addMapVM), using: .push, animated: true)
+        //mapVM.seedState.onNext(.seeding)
+//        mapVM.aimToPlace.onNext(true)
+//
+//        if let got = currentGot.value {
+//            mapVM.beforeGotSubject.accept(got)
+//        }
+//        if let location = placeSubject.value {
+//            mapVM.placeSubject.onNext(location)
+//        }
+//        mapVM.placeSubject
+//            .bind(to: placeSubject)
+//            .disposed(by: disposeBag)
+//        sceneCoordinator.transition(to: .map(mapVM), using: .push, animated: true)
     }
    
     
@@ -266,7 +277,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         placeSubject
             .subscribe(onNext: { [weak self] location in
                 guard let location = location else { return }
-                print(location)
                 
                 APIManager.shared.getPlace(longitude: Double(location.longitude), latitude: Double(location.latitude)) { (place) in
                     self?.placeText.accept(place?.address?.addressName ?? "")
@@ -293,9 +303,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             let item = InputItem.TextFieldItem(text: leaveText.value, placeholder: InputItemType.leave.placeholder, enabled: false, isDate: false)
             departureItems.append(item)
         }
-        print(dateItems)
-        print(arriveItems)
-        print(departureItems)
+        
         return [
             .TagSection(section: InputItemType.tag.rawValue, title: " ", items: [.TagItem(title: InputItemType.tag.title)]),
             .ToggleableSection(

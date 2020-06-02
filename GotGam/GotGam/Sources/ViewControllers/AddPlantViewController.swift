@@ -102,7 +102,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     }
     
     @objc func didTapPlaceLabel(_ sender: Any) {
-        print("\(sender)")
         if placeLabel.textColor != .black {
             viewModel.inputs.editPlace.onNext(())
         }
@@ -132,14 +131,13 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             
             let pin = MTMapPOIItem()
             
-            mapView?.removeAllPolylines()
             mapView?.removeAllCircles()
             
             pin.markerType = .customImage
             pin.customImage = UIImage(named: "icSeed")
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: Double(location.latitude), longitude: Double(location.longitude)))
             mapView?.addPOIItems([pin])
-            
+
             let radius = viewModel.inputs.radiusSubject.value
             drawCircle(latitude: location.latitude, longitude: location.longitude, radius: Float(radius))
         }
@@ -226,6 +224,19 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             .disposed(by: disposeBag)
         
         // Input
+        
+//        radiusView.setRadius(value: Float(viewModel.inputs.radiusSubject.value/1000))
+//        radiusView.radiusSlider.rx.value
+//            .map { Double($0) }
+//            .bind(to: viewModel.inputs.radiusSubject)
+//            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(viewModel.inputs.placeSubject, viewModel.inputs.radiusSubject)
+            .subscribe(onNext: { [weak self] place, radius in
+                guard let place = place else { return }
+                self?.drawCircle(latitude: place.latitude, longitude: place.longitude, radius: Float(radius))
+            })
+            .disposed(by: disposeBag)
         
         editButton.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
