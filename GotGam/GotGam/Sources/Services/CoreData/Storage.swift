@@ -127,6 +127,17 @@ extension Storage{
       }
     }
     
+    func fetchEmptyTagList() -> Observable<[Tag]> {
+      let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+      do{
+        let managedTagList = try self.context.fetch(fetchRequest)
+        let tagList = managedTagList.filter({$0.got.count == 0}).map { $0.toTag() }
+        return .just(tagList)
+      }catch let error{
+        return .error(StorageError.read(error.localizedDescription))
+      }
+    }
+    
     func fetchTag(tagObjectId: NSManagedObjectID) -> Observable<Tag> {
       guard let managedTag = self.context.object(with: tagObjectId) as? ManagedTag else {
         return .error(StorageError.read("ObjectId 오류"))

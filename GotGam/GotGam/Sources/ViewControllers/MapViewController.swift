@@ -56,18 +56,22 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     var gotList: [Got] = []{
         didSet{
             DispatchQueue.main.async {
+                print(self.gotList)
                 self.cardCollectionViewHeightConstraint.constant = self.gotList.isEmpty ? 0 : 170
+                self.cardCollectionView.reloadData()
                 self.addPin()
             }
+            
         }
     }
     var currentCircle: MTMapCircle? {
         didSet {
             if let circle = currentCircle {
                 if circle.tag != -1 {
+                    guard !gotList.isEmpty else { return }
                     let got = gotList[circle.tag]
-                    radiusSlider.value = Float((got.radius ?? 0)/1000.0)
-                    circleRadiusLabel.text = "\(Int(got.radius ?? 100))m"
+                    radiusSlider.value = Float(got.radius/1000.0)
+                    circleRadiusLabel.text = "\(Int(got.radius))m"
                     
                 } else {
                     //radiusSlider.value = Float(100.0/1000.0)
@@ -184,14 +188,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let beforeGot = viewModel.beforeGotSubject.value,
-            let gotList = try? viewModel.output.gotList.value(),
-            let beforeGotIndex = gotList.firstIndex(of: beforeGot) {
-
-            setCard(index: beforeGotIndex)
-            centeredCollectionViewFlowLayout.scrollToPage(index: beforeGotIndex, animated: true)
-        } else if !gotList.isEmpty {
+        if !gotList.isEmpty {
             setCard(index: 0)
+        } else {
+            currentCircle = nil
         }
     }
     
@@ -337,29 +337,43 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.tagCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
         self.cardCollectionView.rx.setDelegate(self).disposed(by: self.disposeBag)
         
+//        self.viewModel.output.gotList
+//            .subscribe(onNext: { list in
+//            self.gotList = list
+//        }).disposed(by: self.disposeBag)
+        
         self.viewModel.output.gotList
+            .do(onNext: { [weak self] in self?.gotList = $0})
             .bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { (index, got, cell) in
+                
                 cell.got = got
                 
                 cell.doneButton.rx.tap
-                .subscribe(onNext: {
-                    guard let got = cell.got else { return }
-                    self.viewModel.setGotDone(got: got)
-                }).disposed(by: cell.disposeBag)
+                    .subscribe(onNext: {
+                        guard let got = cell.got else { return }
+                        self.viewModel.setGotDone(got: got)
+                    }).disposed(by: cell.disposeBag)
                 
-                cell.cancelButton.rx.tap.subscribe(onNext: {
-                    self.viewModel.deleteGot(got: cell.got!)
-                    self.currentCircle = nil
-                }).disposed(by: cell.disposeBag)
+                cell.cancelButton.rx.tap
+                    .subscribe(onNext: {
+                        self.viewModel.deleteGot(got: cell.got!)
+                        self.currentCircle = nil
+                    }).disposed(by: cell.disposeBag)
                 
                 self.setCard(index: 0)
             }.disposed(by: self.disposeBag)
         
         viewModel.output.tagList
             .compactMap { [weak self] in self?.appendEmptyTag($0) }
-            .bind(to: tagCollectionView.rx.items) { (collectionView, cellItem, tag) -> UICollectionViewCell in
+            .bind(to: tagCollectionView.rx.items) { [weak self] (collectionView, cellItem, tag) -> UICollectionViewCell in
                 if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
+                    
+                    if self?.viewModel.output.emptyTagList.value.contains(tag) ?? false {
+                        cell.isEmpty = true
+                    } else {
+                        cell.isEmpty = false
+                    }
                     cell.configure(tag)
                     cell.layer.cornerRadius = cell.bounds.height/2
                     return cell
@@ -397,11 +411,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 }
             }
             .disposed(by: disposeBag)
-        
-        self.viewModel.output.gotList.subscribe(onNext: { list in
-            self.gotList = list
-        }).disposed(by: self.disposeBag)
-        
+
         quickAddView.addButotn.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -627,6 +637,7 @@ extension MapViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            guard !cell.isEmpty else { return }
             cell.contentView.alpha = 1
         }
     }
@@ -639,6 +650,7 @@ extension MapViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            guard !cell.isEmpty else { return }
             cell.contentView.alpha = 1
         }
     }

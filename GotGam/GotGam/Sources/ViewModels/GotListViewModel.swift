@@ -27,6 +27,7 @@ protocol GotListViewModelOutputs {
     var gotSections: BehaviorRelay<[ListSectionModel]> { get }
     //var gotList: BehaviorRelay<[Got]> { get }
     var tagList: BehaviorRelay<[Tag]> { get }
+    var emptyTagList: BehaviorRelay<[Tag]> { get }
 }
 
 protocol GotListViewModelType {
@@ -37,24 +38,20 @@ protocol GotListViewModelType {
 
 class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelInputs, GotListViewModelOutputs {
     
-    
-    
-    
     // MARK: - Inputs
     
     func fetchRequest() {
        storage.fetchTagList()
-           .subscribe(onNext: { [weak self] in
-                self?.tagList.accept($0)
-           })
-           .disposed(by: disposeBag)
+            .bind(to: tagList)
+            .disposed(by: disposeBag)
+        
+        storage.fetchEmptyTagList()
+            .bind(to: emptyTagList)
+            .disposed(by: disposeBag)
        
        storage.fetchTaskList()
-           // .do(onNext: { print($0)})
            .map { $0.filter { $0.isDone != true }}
-           .subscribe(onNext: { [weak self] list in
-               self?.gotList.accept(list)
-           })
+            .bind(to: gotList)
            .disposed(by: disposeBag)
     }
     
@@ -89,6 +86,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     var gotSections = BehaviorRelay<[ListSectionModel]>(value: [])
     var gotList = BehaviorRelay<[Got]>(value: [])
     var tagList = BehaviorRelay<[Tag]>(value: [])
+    var emptyTagList = BehaviorRelay<[Tag]>(value: [])
     
     // MARK: - Methods
     
