@@ -8,48 +8,52 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 struct Got: Equatable {
    
-    var id: String = ""
-    var createdDate: Date = Date()
-    var title: String
-    var latitude: Double
-    var longitude: Double
-    var radius: Double = 150
-    var place: String
-    var arriveMsg: String = ""
-    var deparetureMsg: String = ""
+    var id: String?
+    var createdDate: Date?
+    var title: String?
+    var latitude: Double?
+    var longitude: Double?
+    var radius: Double?
+    var place: String?
+    var arriveMsg: String?
+    var deparetureMsg: String?
     var insertedDate: Date?
-    var onArrive: Bool = false
-    var onDeparture: Bool = false
-    var onDate: Bool = false
-    var tag : Tag?
-    var isDone: Bool = false
-  
+    var onArrive: Bool
+    var onDeparture: Bool
+    var onDate: Bool
+    var tag : [Tag]?
+    var isDone: Bool
+    var readyArrive: Bool
+    var readyDeparture: Bool
     // ManagedGot을 가져오기 위한
     var objectId: NSManagedObjectID?
     
     init(
-        id: String = "",
-        createdDate: Date = Date(),
-        title: String,
+        id: String?,
+        createdDate: Date? = Date(),
+        title: String?,
         latitude: Double,
-        longitude: Double,
-        radius: Double = 150,
-        place: String,
-        arriveMsg: String = "",
-        deparetureMsg: String = "",
+        longitude: Double?,
+        radius: Double? = 100,
+        place: String?,
+        arriveMsg: String? = "",
+        deparetureMsg: String? = "",
         insertedDate: Date?,
         onArrive: Bool = true,
         onDeparture: Bool = false,
         onDate: Bool = false,
-        tag: Tag?,
-        isDone: Bool = false
+        tag: [Tag]?,
+        isDone: Bool = false,
+        readyArrive: Bool = true,
+        readyDeparture: Bool = false
     ) {
         self.id = id
         self.createdDate = createdDate
-        self.title = title
+        self.title = title ?? ""
         self.latitude = latitude
         self.longitude = longitude
         self.radius = radius
@@ -62,20 +66,12 @@ struct Got: Equatable {
         self.onDate = onDate
         self.tag = tag
         self.isDone = isDone
+        self.readyArrive = readyArrive
+        self.readyDeparture = readyDeparture
+        
     }
-    //빠른심기
-	init
-        (
-        title: String,
-        latitude: Double,
-        longitude: Double,
-        place: String
-        ){
-        self.title = title
-        self.latitude = latitude
-        self.longitude = longitude
-        self.place = place
-    }
+    
+	
     
     //타이틀만 바꿀 때
     init(original: Got, updatedTitle: String){
@@ -97,6 +93,10 @@ func ==(lhs: Got, rhs: Got) -> Bool{
 
 extension Got {
     var mapPoint: MTMapPoint {
-        .init(geoCoord: .init(latitude: latitude, longitude: longitude))
+        return .init(geoCoord: .init(latitude: latitude!, longitude: longitude!))
+    }
+    
+    var locationCoordinate2D: CLLocationCoordinate2D {
+        return .init(latitude: latitude!, longitude: longitude!)
     }
 }

@@ -20,6 +20,7 @@ class FrequentsStorage: FrequentsStorageType{
 		managedFrequents.latitude = frequent.latitude
 		managedFrequents.longitude = frequent.longitude
 		managedFrequents.type = frequent.type.rawValue
+		managedFrequents.id = frequent.id
 		do{
 			try self.context.save()
 			return .just(managedFrequents.toFrequents())
@@ -41,32 +42,33 @@ class FrequentsStorage: FrequentsStorageType{
 		}
 	}
 	
-//	func updateFrequents(Frequents: Frequents) -> Observable<Frequents> {
-//		do{
-//			let fetchRequest = NSFetchRequest<Frequents>(entityName: "Frequents")
-//			fetchRequest.predicate = NSPredicate(format: "name == %s", Frequents.name)
-//			let results = try self.context.fetch(fetchRequest)
-//			if let managedFrequents = results.first {
-//				do{
-//					try self.context.save()
-//					return .just(Frequents)
-//				}catch let error{
-//					return .error(error)
-//				}
-//			}else if let error as NSError{
-//				print("해당 데이터에 대한 Frequents을 찾을 수 없음. error: ", error.userInfo)
-//				return .error(error)
-//			}
-//		} catch let error as NSError{
-//			print("error: ", error.localizedDescription)
-//			return .error(error)
-//		}
-//	}
+	func updateFrequents(frequent: Frequent) -> Observable<Frequent> {
+		do{
+			let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
+			fetchRequest.predicate = NSPredicate(format: "id == %@", frequent.id)
+			let results = try self.context.fetch(fetchRequest)
+			if let managedFrequents = results.first {
+				do{
+					managedFrequents.fromFrequents(frequent: frequent)
+					try self.context.save()
+					return .just(managedFrequents.toFrequents())
+				}catch let error{
+					return .error(error)
+				}
+			}else{
+				print("해당 데이터에 대한 Frequents을 찾을 수 없음. error: ")
+				return .error(FrequentsStorageError.updateError("Error"))
+			}
+		} catch let error as NSError{
+			print("error: ", error.localizedDescription)
+			return .error(error)
+		}
+	}
 	
-	func deleteFrequents(name: String) -> Observable<Frequent> {
+	func deleteFrequents(id: String) -> Observable<Frequent> {
         do{
             let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
-            fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
             let results = try self.context.fetch(fetchRequest)
             if let managedFrequents = results.first {
                 let frequents = managedFrequents.toFrequents()
@@ -75,7 +77,7 @@ class FrequentsStorage: FrequentsStorageType{
                     try self.context.save()
                     return .just(frequents)
                 }catch{
-                    return .error(FrequentsStorageError.deleteError("name이 \(name)인 Frequents을 제거하는데 오류 발생"))
+                    return .error(FrequentsStorageError.deleteError("id이 \(id)인 Frequents을 제거하는데 오류 발생"))
                 }
             }else{
                 return .error(FrequentsStorageError.fetchError("해당 데이터에 대한 Frequents을 찾을 수 없음"))
@@ -86,6 +88,6 @@ class FrequentsStorage: FrequentsStorageType{
     }
 	
 	func deleteFrequents(frequent: Frequent) -> Observable<Frequent> {
-		deleteFrequents(name: frequent.name)
+		deleteFrequents(id: frequent.id)
 	}
 }

@@ -12,6 +12,10 @@ import RxCocoa
 
 class FrequentsViewController: BaseViewController, ViewModelBindableType {
 
+	enum State{
+		case create
+		case update
+	}
 	var viewModel: FrequentsViewModel!
 	
 	@IBOutlet var placeName: UITextField!
@@ -24,6 +28,8 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 	@IBOutlet var icOtherBtn: UIButton!
 	
 	@IBOutlet var textNum: UILabel!
+	
+	var state: State = .create
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -45,6 +51,26 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		placeAddress.layer.borderColor = UIColor.saffron.cgColor
 		placeAddress.layer.borderWidth = 1.0
 		placeAddress.layer.cornerRadius = 17
+		
+		
+		if var frequents = self.viewModel.frequentOrigin{
+			//Update logic
+			placeName.text = frequents.name
+			placeAddress.text = frequents.address
+			self.viewModel.inputs.typePlace.accept(frequents.type)
+			
+			if frequents.type == .home {
+				self.icHomeBtn.backgroundColor = UIColor.saffron
+			} else if frequents.type == .office {
+				self.icOfficeBtn.backgroundColor = UIColor.saffron
+			} else if frequents.type == .school {
+				self.icSchoolBtn.backgroundColor = UIColor.saffron
+			} else {
+				self.icOtherBtn.backgroundColor = UIColor.saffron
+			}
+			
+			self.state = .update
+		}
 	}
 	
 	func bindViewModel() {
@@ -52,6 +78,10 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		placeName.rx.text.orEmpty
 			.bind(to: viewModel.inputs.namePlace)
 			.disposed(by: disposeBag)
+		
+		placeAddress.rx.text.orEmpty
+		.bind(to: viewModel.inputs.addressPlace)
+		.disposed(by: disposeBag)
 
 		placeAddress.rx.controlEvent(.touchDown)
 			.asObservable().subscribe(onNext:{ _ in
@@ -61,9 +91,13 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		
 		addFrequents.rx.tap
 			.subscribe(onNext: { [weak self] in
-				
-				self?.viewModel.inputs.addFrequents()
-				self?.viewModel.sceneCoordinator.close(animated: true, completion: nil)
+				switch self?.state{
+					case .create:
+						self?.viewModel.addFrequents()
+					case .update:
+						self?.viewModel.updateFrequents()
+					case .none: break
+				}
 			}).disposed(by: disposeBag)
 
 		viewModel.frequentsPlace
@@ -85,6 +119,7 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 			.compactMap { $0?.y }
 			.bind(to: viewModel.longitudePlace)
 			.disposed(by: disposeBag)
+		
 		
 		icHomeBtn.rx.tap
 			.subscribe({ [weak self] _ in

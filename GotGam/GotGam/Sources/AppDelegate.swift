@@ -85,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         KOSession.handleDidEnterBackground()
+        LocationManager.shared.startBackgroundUpdates()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {

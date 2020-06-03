@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import CoreLocation
 
 enum AlarmType: Int16 {
@@ -36,7 +37,19 @@ enum AlarmType: Int16 {
     }
     
     func getLocationTrigger(of got: ManagedGot) -> UNLocationNotificationTrigger {
+        
         let circleRegion = CLCircularRegion(center: .init(latitude: got.latitude, longitude: got.longitude), radius: got.radius, identifier: getTriggerID(of: got))
+        
+        switch self {
+        case .arrive:
+            circleRegion.notifyOnEntry = true
+            circleRegion.notifyOnExit = false
+        case .departure:
+            circleRegion.notifyOnEntry = false
+            circleRegion.notifyOnExit = true
+        default: break
+        }
+        
         return UNLocationNotificationTrigger(region: circleRegion, repeats: true)
     }
     
@@ -51,20 +64,20 @@ enum AlarmType: Int16 {
 }
 
 struct Alarm: Equatable {
-    var id: Int64
+    var id: NSManagedObjectID?
     var type: AlarmType
-    var createdDate: Date?
+    var createdDate: Date
     var isChecked: Bool
     var checkedDate: Date?
-    var got: Got?
+    var got: Got
     
     init(
-        id: Int64,
+        id: NSManagedObjectID? = nil,
         type: AlarmType,
-        createdDate: Date? = Date(),
+        createdDate: Date = Date(),
         checkedDate: Date? = nil,
         isChecked: Bool = false,
-        got: Got?
+        got: Got
     ) {
         self.id = id
         self.type = type

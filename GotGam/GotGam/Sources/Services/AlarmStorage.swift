@@ -16,9 +16,10 @@ class AlarmStorage: AlarmStorageType {
     func createAlarm(_ alarm: Alarm) -> Observable<Alarm> {
         do {
             var alarm = alarm
-            self.createId(alarm: &alarm)
+            //self.createId(alarm: &alarm)
             let managedAlarm = ManagedAlarm(context: self.context)
             managedAlarm.fromAlarm(alarm)
+            alarm.id = managedAlarm.objectID
             try self.context.save()
             return .just(alarm)
         } catch let error {
@@ -38,70 +39,50 @@ class AlarmStorage: AlarmStorageType {
         }
     }
     
-    func fetchAlarm(id: Int64) -> Observable<Alarm> {
-        do {
-            let fetchReqeust = NSFetchRequest<ManagedAlarm>(entityName: "ManagedTag")
-            let p1 = NSPredicate(format: "id == %lld", id)
-            
-            
-            let results = try self.context.fetch(fetchReqeust)
-            
-            if let managedAlarm = results.first {
-                return .just(managedAlarm.toAlarm())
-            } else {
-                return .error(AlarmStorageError.fetchError("해당 alarm을 찾을 수 없음"))
-            }
-            
-        } catch let error {
-            return .error(AlarmStorageError.fetchError(error.localizedDescription))
+    func fetchAlarm(id: NSManagedObjectID) -> Observable<Alarm> {
+        if let managedAlarm = self.context.object(with: id) as? ManagedAlarm {
+            return .just(managedAlarm.toAlarm())
+        } else {
+            return .error(AlarmStorageError.fetchError("해당 alarm을 찾을 수 없음"))
         }
     }
     
     func updateAlarm(to alarm: Alarm) -> Observable<Alarm> {
-        do{
-            let fetchRequest = NSFetchRequest<ManagedAlarm>(entityName: "ManagedAlarm")
-            fetchRequest.predicate = NSPredicate(format: "id == %lld", alarm.id)
-            let results = try self.context.fetch(fetchRequest)
-            if let managedAlarm = results.first {
-                managedAlarm.fromAlarm(alarm)
-                do{
-                    try self.context.save()
-                    return .just(alarm)
-                }catch let error{
-                    return .error(error)
-                }
-            }else{
-                return .error(AlarmStorageError.fetchError("해당 데이터에 대한 Alarm을 찾을 수 없음"))
+        guard let id = alarm.id else { return .error(AlarmStorageError.fetchError("Alarm의 ID를 찾을 수 없음"))}
+        
+        if let managedAlarm = context.object(with: id) as? ManagedAlarm {
+            managedAlarm.fromAlarm(alarm)
+            do{
+                try self.context.save()
+                return .just(alarm)
+            }catch let error{
+                return .error(error)
             }
-        } catch let error {
-            return .error(AlarmStorageError.updateError(error.localizedDescription))
+        }else{
+            return .error(AlarmStorageError.fetchError("해당 데이터에 대한 Alarm을 찾을 수 없음"))
         }
     }
     
-    func deleteAlarm(id: Int64) -> Observable<Alarm> {
-        do{
-            let fetchRequest = NSFetchRequest<ManagedAlarm>(entityName: "ManagedAlarm")
-            fetchRequest.predicate = NSPredicate(format: "id == %lld", id)
-            let results = try self.context.fetch(fetchRequest)
-            if let managedAlarm = results.first {
-                let alarm = managedAlarm.toAlarm()
-                self.context.delete(managedAlarm)
-                do{
-                    try self.context.save()
-                    return .just(alarm)
-                }catch{
-                    return .error(AlarmStorageError.deleteError("id가 \(id)인 Alarm을 제거하는데 오류 발생"))
-                }
-            }else{
-                return .error(AlarmStorageError.fetchError("해당 데이터에 대한 Alarm을 찾을 수 없음"))
+    func deleteAlarm(id: NSManagedObjectID) -> Observable<Alarm> {
+        
+        if let managedAlarm = context.object(with: id) as? ManagedAlarm {
+            let alarm = managedAlarm.toAlarm()
+            self.context.delete(managedAlarm)
+            do{
+                try self.context.save()
+                return .just(alarm)
+            }catch{
+                return .error(AlarmStorageError.deleteError("id가 \(id)인 Alarm을 제거하는데 오류 발생"))
             }
-        }catch let error{
-            return .error(AlarmStorageError.deleteError(error.localizedDescription))
+        }else{
+            return .error(AlarmStorageError.fetchError("해당 데이터에 대한 Alarm을 찾을 수 없음"))
         }
     }
     
     func deleteAlarm(alarm: Alarm) -> Observable<Alarm> {
-        deleteAlarm(id: alarm.id)
+        guard let id = alarm.id else { return .error(AlarmStorageError.fetchError("Alarm의 ID를 찾을 수 없음"))}
+        
+        return deleteAlarm(id: id)
     }
     
     
@@ -109,10 +90,10 @@ class AlarmStorage: AlarmStorageType {
 
 //MARK: - Helper
 
-extension AlarmStorage {
-    
-    
-    func createId(alarm: inout Alarm) {
-        alarm.id = Int64(arc4random())
-    }
-}
+//extension AlarmStorage {
+//
+//
+//    func createId(alarm: inout Alarm) {
+//        alarm.id = Int64(arc4random())
+//    }
+//}

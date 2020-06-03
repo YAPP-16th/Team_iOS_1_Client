@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -110,11 +111,11 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
         var alarmList = [Alarm]()
         for got in gotList {
             if got.onArrive == true {
-                alarmList.append(Alarm(id: Int64(arc4random()), type: .arrive, got: got))
+                alarmList.append(Alarm(type: .arrive, got: got))
             }
             
             if got.onDeparture == true {
-                alarmList.append(Alarm(id: Int64(arc4random()), type: .departure, got: got))
+                alarmList.append(Alarm(type: .departure, got: got))
             }
         }
         return alarmList
@@ -134,15 +135,11 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     var inputs: AlarmViewModelInputs { return self }
     var outputs: AlarmViewModelOutputs { return self }
     var alarmStorage: AlarmStorageType!
-    var gotStorage: StorageType!
+    var gotStorage: GotStorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, alarmStorage: AlarmStorageType, gotStorage: StorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, alarmStorage: AlarmStorageType, gotStorage: GotStorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.alarmStorage = alarmStorage
-        self.gotStorage = gotStorage
-        
-        // MARK: Test Alarms 생성코드
-        // 현재있는 곳으로 알람을 만듬
         
         checkAlarm
             .subscribe(onNext: { [weak self] alarm in
@@ -231,7 +228,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
         var beforeItems = [AlarmItem]()
     
         for alarm in alarmList {
-            guard let date = alarm.createdDate else { continue }
+            let date = alarm.createdDate
             
             if date.isInToday {
                 todayItems.append(AlarmItem.init(alarm: alarm))
@@ -282,12 +279,12 @@ enum AlarmSectionModel {
 }
 
 enum AlarmItem: IdentifiableType, Equatable {
-    typealias Identity = Int64
+    typealias Identity = NSManagedObjectID
     var identity: Identity {
         switch self {
-        case let .ArriveItem(alarm): return alarm.id
-        case let .DepartureItem(alarm): return alarm.id
-        case let .ShareItem(alarm): return alarm.id
+        case let .ArriveItem(alarm): return alarm.id!
+        case let .DepartureItem(alarm): return alarm.id!
+        case let .ShareItem(alarm): return alarm.id!
         }
     }
     

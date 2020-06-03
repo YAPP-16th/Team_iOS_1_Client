@@ -47,7 +47,8 @@ class SettingPlaceViewController: BaseViewController, ViewModelBindableType {
 		settingPlaceTableView.rx.itemSelected
 			.subscribe(onNext: { [weak self] (indexPath) in
 				if indexPath.section == 0 {
-					self?.viewModel.inputs.detailVC()
+					let frequent = self!.placeList[indexPath.row]
+					self?.viewModel.inputs.detailVC(frequent: frequent)
 				} else {
 					self?.viewModel.inputs.showFrequentsDetailVC()
 				}
@@ -89,13 +90,13 @@ extension SettingPlaceViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		if indexPath.section == 0 {
 			let editAction = UIContextualAction(style: .normal, title: "수정") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-				guard let cell = tableView.cellForRow(at: indexPath) as? PlaceCell else { return }
-				//edit
+//			let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath ) as! PlaceCell
+				guard let self = self else {return}
+				let frequent = self.placeList[indexPath.row]
+				self.viewModel.inputs.detailVC(frequent: frequent)
 				success(true)
 			}
 			let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-				//            self?.settingPlaceTableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
-				//self?.placeList.remove(at: indexPath.row)
 				guard let self = self else {return}
 				let frequent = self.placeList[indexPath.row]
 				self.viewModel.inputs.removeFrequents(indexPath: indexPath, frequent: frequent)

@@ -14,15 +14,21 @@ class TabBarController: UITabBarController, ViewModelBindableType {
     var viewModel: TabBarViewModel!
     var disposeBag = DisposeBag()
     
+    @objc func updateBadge() {
+        viewModel.updateBadge()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureNotification()
+        
         tabBar.tintColor = .saffron
-      if let items = tabBar.items, items.count == 4 {
-			items[0].image = UIImage(named: "tab_map")?.withRenderingMode(.alwaysOriginal)
+        if let items = tabBar.items, items.count == 4 {
+            items[0].image = UIImage(named: "tab_map")?.withRenderingMode(.alwaysOriginal)
             items[0].selectedImage = UIImage(named: "tab_map_active")?.withRenderingMode(.alwaysOriginal)
-			
-			items[1].image = UIImage(named: "tab_list")?.withRenderingMode(.alwaysOriginal)
+            
+            items[1].image = UIImage(named: "tab_list")?.withRenderingMode(.alwaysOriginal)
             items[1].selectedImage = UIImage(named: "tab_list_active")?.withRenderingMode(.alwaysOriginal)
             
             items[2].image = UIImage(named: "tab_alarm")?.withRenderingMode(.alwaysOriginal)
@@ -33,10 +39,18 @@ class TabBarController: UITabBarController, ViewModelBindableType {
         }
     }
     
+    func configureNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBadge), name: .onDidUpdateAlarm, object: nil)
+    }
+    
     func bindViewModel() {
         
-        let count = viewModel.alarmBadgeCount.value
-        tabBar.items?[2].badgeValue = count == 0 ? nil : "\(viewModel.alarmBadgeCount.value)"
+        viewModel.alarmBadgeCount
+            .subscribe(onNext: { [weak self] count in
+                self?.tabBar.items?[2].badgeValue = count == 0 ? nil : "\(count)"
+            })
+            .disposed(by: disposeBag)
+        
 
 //        rx.didSelect
 //            .map { [weak self] in

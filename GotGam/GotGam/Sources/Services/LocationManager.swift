@@ -39,6 +39,7 @@ class LocationManager: NSObject, LocationManagerType{
     
     func requestAuthorization(){
         manager.requestWhenInUseAuthorization()
+        print("allowsBackgroundLocationUpdates")
     }
     
     func startUpdatingLocation(){
@@ -76,12 +77,15 @@ extension LocationManager: CLLocationManagerDelegate{
         authorizationStatus = status
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
         if let coordinate = locations.last?.coordinate{
             self.delegate?.locationUpdated?(coordinate: coordinate)
         }
         if let location = manager.location {
             self.currentLocation = location.coordinate
-          UserDefaults.standard.set(location.coordinate.asDictionary, forDefines: .location)
+            print("didUpdate Location")
+            AlarmManager.shared.createAlarm(from: location)
+            UserDefaults.standard.set(location.coordinate.asDictionary, forDefines: .location)
         }
     }
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {

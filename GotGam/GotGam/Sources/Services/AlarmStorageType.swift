@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import RxSwift
 
 enum AlarmStorageError: Error{
@@ -25,7 +26,7 @@ protocol AlarmStorageType {
     func fetchAlarmList() -> Observable<[Alarm]>
     
     @discardableResult
-    func fetchAlarm(id: Int64) -> Observable<Alarm>
+    func fetchAlarm(id: NSManagedObjectID) -> Observable<Alarm>
     
 //    @discardableResult
 //    func fetchAlarm(date: Date) -> Observable<[Alarm]>
@@ -34,7 +35,7 @@ protocol AlarmStorageType {
     func updateAlarm(to alarm: Alarm) -> Observable<Alarm>
     
     @discardableResult
-    func deleteAlarm(id: Int64) -> Observable<Alarm>
+    func deleteAlarm(id: NSManagedObjectID) -> Observable<Alarm>
     
     @discardableResult
     func deleteAlarm(alarm: Alarm) -> Observable<Alarm>

@@ -29,7 +29,6 @@ class DBManager {
 	
 	lazy var context = persistentContainer.viewContext
 	func saveContext () {
-		
 		if context.hasChanges {
 			do {
 				try context.save()

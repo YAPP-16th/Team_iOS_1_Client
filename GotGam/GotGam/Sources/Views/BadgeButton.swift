@@ -48,8 +48,6 @@ class BadgeButton: UIButton {
 
     func addbadgetobutton(badge: String?) {
         
-        
-        
         badgeLabel.text = badge
         badgeLabel.textColor = badgeTextColor
         badgeLabel.backgroundColor = badgeBackgroundColor

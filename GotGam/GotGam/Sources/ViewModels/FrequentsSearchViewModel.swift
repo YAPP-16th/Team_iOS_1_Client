@@ -45,7 +45,7 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 			self.keywords.onNext(keywordList.reversed())
 			} .disposed(by: disposeBag)
 	}
-	
+
 	func showMapVC(){
 		let movemapVM = FrequentsMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
 		movemapVM.placeBehavior.accept(placeBehavior.value)

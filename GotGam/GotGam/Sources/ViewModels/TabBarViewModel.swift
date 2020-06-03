@@ -17,13 +17,7 @@ class TabBarViewModel: CommonViewModel {
 //        
 //    }
     
-    
-    var alarmBadgeCount = BehaviorRelay<Int>(value: 0)
-    var alarmStorage: AlarmStorageType!
-    
-    init(sceneCoordinator: SceneCoordinatorType, alarmStorage: AlarmStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        
+    func updateBadge() {
         alarmStorage.fetchAlarmList()
             .subscribe(onNext: { [weak self] alarmList in
                 let badgeCount = alarmList.filter { $0.isChecked == false }.count
@@ -31,5 +25,21 @@ class TabBarViewModel: CommonViewModel {
                 self?.alarmBadgeCount.accept(badgeCount)
             })
             .disposed(by: disposeBag)
+    }
+    
+    var alarmBadgeCount = BehaviorRelay<Int>(value: 0)
+    var alarmStorage: AlarmStorageType!
+    
+    init(sceneCoordinator: SceneCoordinatorType, alarmStorage: AlarmStorageType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+        self.alarmStorage = alarmStorage
+        updateBadge()
+//        alarmStorage.fetchAlarmList()
+//            .subscribe(onNext: { [weak self] alarmList in
+//                let badgeCount = alarmList.filter { $0.isChecked == false }.count
+//
+//                self?.alarmBadgeCount.accept(badgeCount)
+//            })
+//            .disposed(by: disposeBag)
     }
 }

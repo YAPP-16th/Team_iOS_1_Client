@@ -23,11 +23,11 @@ protocol FrequentsStorageType{
 	@discardableResult
 	func fetchFrequents() -> Observable<[Frequent]>
 	
-//	@discardableResult
-//	func updateFrequents(Frequent: Frequent) -> Observable<Frequent>
-//
 	@discardableResult
-	func deleteFrequents(name: String) -> Observable<Frequent>
+	func updateFrequents(frequent: Frequent) -> Observable<Frequent>
+
+	@discardableResult
+	func deleteFrequents(id: String) -> Observable<Frequent>
 
 	@discardableResult
 	func deleteFrequents(frequent: Frequent) -> Observable<Frequent>
