@@ -38,18 +38,13 @@ class SettingOtherViewModel: CommonViewModel, SettingOtherViewModelType, Setting
 			default:
 			fatalError()
 		}
-        let settingOtherDetailVM = SettingOtherDetailViewModel(sceneCoordinator: sceneCoordinator, storage: storage, name: fileName)
+        let settingOtherDetailVM = SettingOtherDetailViewModel(sceneCoordinator: sceneCoordinator, name: fileName)
         sceneCoordinator.transition(to: .settingDetail(settingOtherDetailVM), using: .modal, animated: true)
 	}
 	
     var inputs: SettingOtherViewModelInputs { return self }
     var outputs: SettingOtherViewModelOutputs { return self }
-    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-    }
 	
     
 }

@@ -43,21 +43,21 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 	var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
 		
 	func addKeyword(keyword: String) {
-		let storage = SearchStorage()
+		let storage = Storage()
 		storage.createKeyword(keyword: keyword).bind { _ in
 			self.readKeyword()
 			} .disposed(by: disposeBag)
 	}
 	
 	func readKeyword() {
-		let storage = SearchStorage()
+		let storage = Storage()
 		storage.fetchKeyword().bind { (keywordList) in
 			self.keywords.onNext(keywordList.reversed())
 			} .disposed(by: disposeBag)
 	}
 	
 	func readFrequents() {
-		let storage = FrequentsStorage()
+		let storage = Storage()
 		storage.fetchFrequents()
 			.bind { (frequentsList) in
 				self.collectionItems.onNext(frequentsList)
@@ -76,13 +76,5 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 	
 	var inputs: SearchBarViewModelInputs { return self }
     var outputs: SearchBarViewModelOutputs { return self }
-    var storage: StorageType!
-    
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-
-
-	}
 	
 }

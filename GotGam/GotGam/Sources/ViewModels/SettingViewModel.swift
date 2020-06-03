@@ -47,18 +47,18 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
     
 	func showAlarmDetailVC() {
 		
-		let movesettingalarmVM = SettingAlarmViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		let movesettingalarmVM = SettingAlarmViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .settingAlarm(movesettingalarmVM), using: .push, animated: true)
 	}
 	
 	func showOtherDetailVC() {
 		
-		let movesettingotherVM = SettingOtherViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		let movesettingotherVM = SettingOtherViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .settingOther(movesettingotherVM), using: .push, animated: true)
 	}
 	
 	func showPlaceDetailVC() {
-        let movesettingplaceVM = SettingPlaceViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let movesettingplaceVM = SettingPlaceViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .settingPlace(movesettingplaceVM), using: .push, animated: true)
 	}
 	
@@ -67,7 +67,7 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
             let loginViewModel = LoginViewModel(sceneCoordinator: sceneCoordinator)
             sceneCoordinator.transition(to: .login(loginViewModel), using: .modal, animated: true)
         }else{
-            let movesettingloginVM = SettingLoginViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+            let movesettingloginVM = SettingLoginViewModel(sceneCoordinator: sceneCoordinator)
             sceneCoordinator.transition(to: .settingLogin(movesettingloginVM), using: .push, animated: true)
         }
 		
@@ -77,11 +77,5 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
 	
     var inputs: SettingViewModelInputs { return self }
     var outputs: SettingViewModelOutputs { return self }
-    var storage: StorageType!
     
-
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-    }
 }

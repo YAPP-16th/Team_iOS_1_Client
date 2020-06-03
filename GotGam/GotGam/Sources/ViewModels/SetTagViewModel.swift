@@ -43,7 +43,7 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     func removeTag(indexPath: IndexPath, tag: Tag) {
         let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
         
-        storage.delete(tagObjectId: tag.objectId!).subscribe { [unowned self] _ in
+        storage.deleteTag(tagObjectId: tag.objectId!).subscribe { [unowned self] _ in
                 var updateSections = self.sections.value
                 var items = updateSections[indexPath.section].items
                 items.remove(at: indexPath.row)
@@ -59,7 +59,7 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
         let item = sections.value[indexPath.section].items[indexPath.row]
         
         if case let .TagListItem(tag) = item {
-            let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag)
+            let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, tag: tag)
             sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
         }
     }
@@ -80,7 +80,7 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     // MARK: - Methods
     
     func pushCreateVC() {
-        let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
     }
     
@@ -95,11 +95,9 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     
     var inputs: SetTagViewModelInputs { return self }
     var outputs: SetTagViewModelOutputs { return self }
-    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
+    init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
         
         tagList
             .map { [Tag(name: "미지정", hex: "#cecece")] + $0 }

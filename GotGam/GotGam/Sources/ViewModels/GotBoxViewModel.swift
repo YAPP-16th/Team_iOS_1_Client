@@ -50,7 +50,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     func recover(got: Got, at indexPath: IndexPath) {
         var updatedGot = got
         updatedGot.isDone = false
-        storage.update(taskObjectId: updatedGot.objectId!, toUpdate: updatedGot)
+        storage.updateTask(taskObjectId: updatedGot.objectId!, toUpdate: updatedGot)
         
         var box = boxListRelay.value
         box.remove(at: indexPath.row)
@@ -59,7 +59,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     }
     
     func delete(got: Got, at indexPath: IndexPath) {
-        storage.delete(taskObjectId: got.objectId!)
+        storage.deleteTask(taskObjectId: got.objectId!)
         
         var box = boxListRelay.value
         box.remove(at: indexPath.row)
@@ -77,7 +77,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     // MARK: - Methods
     
     func showShareList() {
-        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .shareList(shareListVM), using: .push, animated: true)
     }
     
@@ -87,11 +87,9 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     
     var inputs: GotBoxViewModelInputs { return self }
     var outputs: GotBoxViewModelOutputs { return self }
-    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
+    override init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
         
         boxListRelay
             .subscribe(onNext: { [weak self] (boxList) in

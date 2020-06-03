@@ -75,7 +75,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     // MARK: - Methods
     
     private func pushAddTagVC() {
-        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let addTagViewModel = SetTagViewModel(sceneCoordinator: sceneCoordinator)
         
         if let tag = tag.value {
             addTagViewModel.selectedTag.accept(tag)
@@ -114,7 +114,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.tag = tag.value
             
             
-            storage.update(taskObjectId: currentGot.objectId!, toUpdate: currentGot)
+            storage.updateTask(taskObjectId: currentGot.objectId!, toUpdate: currentGot)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true, completion: nil)
                 })
@@ -152,7 +152,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     private func showMap() {
         
-        let mapVM = MapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let mapVM = MapViewModel(sceneCoordinator: sceneCoordinator)
         mapVM.seedState.onNext(.seeding)
         mapVM.aimToPlace.onNext(true)
         
@@ -173,11 +173,9 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     var inputs: AddPlantViewModelInputs { return self }
     var outputs: AddPlantViewModelOutputs { return self }
-    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType, got: Got? = nil) {
+    init(sceneCoordinator: SceneCoordinatorType, got: Got? = nil) {
         super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
 
         configureBind(sceneCoordinator: sceneCoordinator)
         currentGot.accept(got)

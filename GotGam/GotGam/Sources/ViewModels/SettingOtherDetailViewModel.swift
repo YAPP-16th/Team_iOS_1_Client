@@ -29,12 +29,10 @@ class SettingOtherDetailViewModel: CommonViewModel, SettingOtherDetailViewModelT
 	
     var inputs: SettingOtherDetailViewModelInputs { return self }
     var outputs: SettingOtherDetailViewModelOutputs { return self }
-    var storage: StorageType!
     
 	var fileName: String
 	
-	init(sceneCoordinator: SceneCoordinatorType, storage: StorageType, name: String) {
-        self.storage = storage
+	init(sceneCoordinator: SceneCoordinatorType, name: String) {
 		self.fileName = name
 		super.init(sceneCoordinator: sceneCoordinator)
     }

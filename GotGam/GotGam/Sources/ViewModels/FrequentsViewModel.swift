@@ -49,7 +49,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	
 	
 	func addFrequents(){
-		let storage = FrequentsStorage()
+		let storage = Storage()
 		let id = String(Date().timeIntervalSince1970)
 		guard let la = Double(latitudePlace.value) else { return  }
 		guard let lo = Double(longitudePlace.value) else { return  }
@@ -62,7 +62,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	}
 	
 	func updateFrequents(){
-		let storagePlace = FrequentsStorage()
+		let storagePlace = Storage()
 		
 		if latitudePlace.value == ""{
 			let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: frequentOrigin!.latitude, longitude: frequentOrigin!.longitude, type: typePlace.value, id: frequentOrigin!.id)
@@ -88,7 +88,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	}
 
 	func readFrequents() {
-		let storage = FrequentsStorage()
+		let storage = Storage()
 		storage.fetchFrequents()
 			.bind { (frequentsList) in
 				self.frequentsList.onNext(frequentsList)
@@ -98,7 +98,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	}
 	
 	func moveSearchVC(){
-		let movesearchVM = FrequentsSearchViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		let movesearchVM = FrequentsSearchViewModel(sceneCoordinator: sceneCoordinator)
 		movesearchVM.frequentsPlaceSearch.bind(to: frequentsPlace).disposed(by: disposeBag)
 		
         sceneCoordinator.transition(to: .frequentsSearch(movesearchVM), using: .push, animated: true)
@@ -107,25 +107,12 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	
 	var inputs: FrequentsViewModelInputs { return self }
     var outputs: FrequentsViewModelOutputs { return self }
-    var storage: GotStorageType!
 	var storagePlace: FrequentsStorageType!
     
-	init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-		
-    }
-    
-    init(sceneCoordinator: SceneCoordinatorType, storage: FrequentsStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storagePlace = storage
-    }
 	
-	init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, frequent: Frequent?) {
+	init(sceneCoordinator: SceneCoordinatorType, frequent: Frequent?) {
 		self.frequentOrigin = frequent
 		super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-		
     }
 	
 }

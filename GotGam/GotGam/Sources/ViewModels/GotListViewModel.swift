@@ -59,7 +59,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     }
     
     func removeGot(indexPath: IndexPath, got: Got) {
-        storage.delete(taskObjectId: got.objectId!).subscribe { [weak self] got in
+        storage.deleteTask(taskObjectId: got.objectId!).subscribe { [weak self] got in
                 if var list = self?.gotList.value {
                     list.remove(at: indexPath.row)
                     self?.gotList.accept(list)
@@ -70,12 +70,12 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     }
     
     func editGot(got: Got? = nil) {
-        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
+        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, got: got)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     
     func updateFinish(of got: Got) {
-        storage.update(taskObjectId:got.objectId!, toUpdate: got)
+        storage.updateTask(taskObjectId:got.objectId!, toUpdate: got)
     }
     
     var filteredGotSubject = BehaviorRelay<String>(value: "")
@@ -93,12 +93,12 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     // MARK: - Methods
     
     func showGotBox() {
-        let gotBoxViewModel = GotBoxViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let gotBoxViewModel = GotBoxViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .gotBox(gotBoxViewModel), using: .push, animated: true)
     }
     
     func showShareList() {
-        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .shareList(shareListVM), using: .push, animated: true)
     }
     
@@ -106,11 +106,9 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     var inputs: GotListViewModelInputs { return self }
     var outputs: GotListViewModelOutputs { return self }
-    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
+    override init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
         
         gotBoxSubject
             .subscribe(onNext: { [weak self] in self?.showGotBox() })

@@ -123,12 +123,12 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
     }
     
     @discardableResult
-    func createTabBar(gotService: StorageType, alarmService: AlarmStorageType) -> Completable {
+    func createTabBar() -> Completable {
         
-        let mapViewModel = MapViewModel(sceneCoordinator: self, storage: gotService)
-        let gotListViewModel = GotListViewModel(sceneCoordinator: self, storage: gotService)
-        let alarmViewModel = AlarmViewModel(sceneCoordinator: self, alarmStorage: alarmService, gotStorage: gotService)
-        let settingViewModel = SettingViewModel(sceneCoordinator: self, storage: gotService)
+        let mapViewModel = MapViewModel(sceneCoordinator: self)
+        let gotListViewModel = GotListViewModel(sceneCoordinator: self)
+        let alarmViewModel = AlarmViewModel(sceneCoordinator: self)
+        let settingViewModel = SettingViewModel(sceneCoordinator: self)
         
         let mapTab = Tab.map(viewModel: mapViewModel)
         let listTab = Tab.list(viewModel: gotListViewModel)

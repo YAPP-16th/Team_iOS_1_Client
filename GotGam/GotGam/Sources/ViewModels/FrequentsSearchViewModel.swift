@@ -33,21 +33,21 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 	var frequentsPlaceSearch = BehaviorRelay<Place?>(value: nil)
 		
 	func addKeyword(keyword: String) {
-		let storage = SearchStorage()
+		let storage = Storage()
 		storage.createKeyword(keyword: keyword).bind { _ in
 			self.readKeyword()
 			} .disposed(by: disposeBag)
 	}
 	
 	func readKeyword() {
-		let storage = SearchStorage()
+		let storage = Storage()
 		storage.fetchKeyword().bind { (keywordList) in
 			self.keywords.onNext(keywordList.reversed())
 			} .disposed(by: disposeBag)
 	}
 
 	func showMapVC(){
-		let movemapVM = FrequentsMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		let movemapVM = FrequentsMapViewModel(sceneCoordinator: sceneCoordinator)
 		movemapVM.placeBehavior.accept(placeBehavior.value)
 		movemapVM.frequentsPlaceMap.bind(to: frequentsPlaceSearch).disposed(by: disposeBag)
 		sceneCoordinator.transition(to: .frequentsMap(movemapVM), using: .push, animated: true)
@@ -56,10 +56,6 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 	
 	var inputs: FrequentsSearchViewModelInputs { return self }
     var outputs: FrequentsSearchViewModelOutputs { return self }
-    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-    }
+    
 }

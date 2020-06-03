@@ -110,11 +110,11 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
         
         if let tag = editableTag.value {
             
-            storage.update(tagObjectId: tag.objectId!, toUpdate: newTag)
+            storage.updateTag(tagObjectId: tag.objectId!, toUpdate: newTag)
             
         } else {
             
-            storage.create(tag: newTag)
+            storage.createTag(tag: newTag)
             
         }
         
@@ -125,11 +125,9 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     
     var inputs: CreateTagViewModelInputs { return self }
     var outputs: CreateTagViewModelOutputs { return self }
-    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType, tag: Tag? = nil) {
+    init(sceneCoordinator: SceneCoordinatorType, tag: Tag? = nil) {
         super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
         
         
         editableTag.accept(tag)

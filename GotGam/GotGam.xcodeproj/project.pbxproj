@@ -71,7 +71,6 @@
 		4C96D36E247A71390014101F /* ShareListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D36D247A71390014101F /* ShareListViewModel.swift */; };
 		4C96D370247A71470014101F /* ShareListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D36F247A71470014101F /* ShareListViewController.swift */; };
 		4C96D372247A7FFE0014101F /* ShareListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D371247A7FFE0014101F /* ShareListTableViewCell.swift */; };
-		4CA2351C24758DBB005323EF /* AlarmStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351A24758DBA005323EF /* AlarmStorage.swift */; };
 		4CA2351D24758DBB005323EF /* AlarmStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351B24758DBA005323EF /* AlarmStorageType.swift */; };
 		4CA2352324758F1F005323EF /* SettingLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352224758F1F005323EF /* SettingLoginViewModel.swift */; };
 		4CA2352524758F5D005323EF /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352424758F5D005323EF /* BadgeButton.swift */; };
@@ -259,7 +258,6 @@
 		4C96D36D247A71390014101F /* ShareListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListViewModel.swift; sourceTree = "<group>"; };
 		4C96D36F247A71470014101F /* ShareListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListViewController.swift; sourceTree = "<group>"; };
 		4C96D371247A7FFE0014101F /* ShareListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListTableViewCell.swift; sourceTree = "<group>"; };
-		4CA2351A24758DBA005323EF /* AlarmStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmStorage.swift; sourceTree = "<group>"; };
 		4CA2351B24758DBA005323EF /* AlarmStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmStorageType.swift; sourceTree = "<group>"; };
 		4CA2352224758F1F005323EF /* SettingLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewModel.swift; sourceTree = "<group>"; };
 		4CA2352424758F5D005323EF /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
@@ -698,8 +696,6 @@
 				A157E115245572F4001E310D /* LocationManager.swift */,
 				A157E116245572F4001E310D /* LocationManagerType.swift */,
 				29727818246FDAAE00B75AC7 /* APIManager.swift */,
-				4CA2351A24758DBA005323EF /* AlarmStorage.swift */,
-				4CA2351B24758DBA005323EF /* AlarmStorageType.swift */,
 				A1DF638C247E7B1500444175 /* NetworkAPIManager.swift */,
 			);
 			path = Services;
@@ -853,6 +849,7 @@
 		A1B618362483737500844BEB /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				4CA2351B24758DBA005323EF /* AlarmStorageType.swift */,
 				29618D68247C3C73008E112E /* FrequentsStorageType.swift */,
 				A1B6184A2487B70900844BEB /* SearchStorageType.swift */,
 				A1B618372483738F00844BEB /* StorageType.swift */,
@@ -1152,7 +1149,6 @@
 				29618DB7247E4894008E112E /* BadgeButton.swift in Sources */,
 				A125E7A62469B2D1007767D7 /* MapRestoreView.swift in Sources */,
 				2972781B246FDADD00B75AC7 /* KakaoResponse.swift in Sources */,
-				4CA2351C24758DBB005323EF /* AlarmStorage.swift in Sources */,
 				A1DF638B247E6D5700444175 /* KakaoLinkManager.swift in Sources */,
 				A17CD913248279C600F0C30E /* TutorialViewModel.swift in Sources */,
 				4CE3B7002459E36000A53BF8 /* UIView+.swift in Sources */,

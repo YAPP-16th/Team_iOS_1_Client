@@ -13,7 +13,7 @@ class CommonViewModel: NSObject {
     
     let disposeBag = DisposeBag()
     let sceneCoordinator: SceneCoordinatorType
-    
+    let storage = Storage()
     init(sceneCoordinator: SceneCoordinatorType) {
         self.sceneCoordinator = sceneCoordinator
     }

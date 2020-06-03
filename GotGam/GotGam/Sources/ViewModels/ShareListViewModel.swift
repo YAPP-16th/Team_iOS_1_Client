@@ -43,7 +43,7 @@ class ShareListViewModel: CommonViewModel, ShareListViewModelType, ShareListView
     }
     
     func remove(tag: Tag, at indexPath: IndexPath) {
-        storage.delete(tagObjectId: tag.objectId!)
+        storage.deleteTag(tagObjectId: tag.objectId!)
             .subscribe { [weak self] _ in
                 guard var updatedDS = self?.shareListDataSources.value else { return }
                 var items = updatedDS[indexPath.section].items
@@ -79,7 +79,7 @@ class ShareListViewModel: CommonViewModel, ShareListViewModelType, ShareListView
     // MARK: - Methods
     
     func showCreateTag(tag: Tag? = nil) {
-        let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, storage: storage, tag: tag)
+        let createTagVM = CreateTagViewModel(sceneCoordinator: sceneCoordinator, tag: tag)
         sceneCoordinator.transition(to: .createTag(createTagVM), using: .push, animated: true)
     }
     
@@ -89,11 +89,9 @@ class ShareListViewModel: CommonViewModel, ShareListViewModelType, ShareListView
     
     var inputs: ShareListViewModelInputs { return self }
     var outputs: ShareListViewModelOutputs { return self }
-    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
+    override init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
         
         tagListRelay
             .subscribe(onNext: { [weak self] tagList in self?.shareListDataSources.accept(self?.configureDataSource(tags: tagList) ?? [])

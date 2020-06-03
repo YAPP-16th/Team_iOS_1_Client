@@ -39,18 +39,18 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	
 	func showFrequentsDetailVC() {
-		let moveFrequentsDetailVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		let moveFrequentsDetailVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator)
 		sceneCoordinator.transition(to: .frequents(moveFrequentsDetailVM), using: .push, animated: true)
 	}
 	
 	func detailVC(frequent: Frequent) {
-		let detailVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		let detailVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator)
 		detailVM.frequentOrigin = frequent
 		sceneCoordinator.transition(to: .frequents(detailVM), using: .push, animated: true)
 	}
 	
 	func readFrequents() {
-		let storage = FrequentsStorage()
+		let storage = Storage()
 		storage.fetchFrequents()
 			.bind { (frequentsList) in
 				self.frequentsList.onNext(frequentsList)
@@ -59,7 +59,7 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 	}
 	
 	func removeFrequents(indexPath: IndexPath, frequent: Frequent) {
-		let storagePlace = FrequentsStorage()
+		let storagePlace = Storage()
 		storagePlace.deleteFrequents(frequent: frequent)
 			.subscribe(onNext: { [weak self] frequent in
 				if var list = try? self?.frequentsList.value() {
@@ -73,13 +73,6 @@ class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, Setting
 	
     var inputs: SettingPlaceViewModelInputs { return self }
     var outputs: SettingPlaceViewModelOutputs { return self }
-   	var storage: GotStorageType!
-    
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-		
-    }
     
   
 }

@@ -62,7 +62,6 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     //MARK: - Model Input
 
     var input: MapViewModelInputs { return self }
-    var storage: StorageType!
     var addText = BehaviorRelay<String>(value: "")
     
     var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
@@ -73,7 +72,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     func showAddDetailVC(location: CLLocationCoordinate2D? = nil, text: String) {
         //let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
-        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: nil)
+        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, got: nil)
         addVM.placeSubject.accept(location)
         addVM.nameText.accept(text)
         addVM.radiusSubject.accept(100)
@@ -81,7 +80,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     }
     
     func showAddDetailVC(got: Got) {
-        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, storage: storage, got: got)
+        let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, got: got)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     
@@ -124,7 +123,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         gotToUpdate.isDone = true
         let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
         
-        self.storage.update(taskObjectId: gotToUpdate.objectId!, toUpdate: gotToUpdate).bind{ got in
+        self.storage.updateTask(taskObjectId: gotToUpdate.objectId!, toUpdate: gotToUpdate).bind{ got in
                 self.doneAction.onNext(gotToUpdate)
             }.disposed(by: self.disposeBag)
     }
@@ -132,7 +131,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     func updateGot(got: Got){
         let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
         
-        self.storage.update(taskObjectId: got.objectId!, toUpdate: got).bind { _ in
+        self.storage.updateTask(taskObjectId: got.objectId!, toUpdate: got).bind { _ in
             self.updateList()
             self.updateTagList()
         }.disposed(by: self.disposeBag)
@@ -142,7 +141,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     func deleteGot(got: Got){
         let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
-        self.storage.delete(taskObjectId: got.objectId!).subscribe { oncompleted in
+        self.storage.deleteTask(taskObjectId: got.objectId!).subscribe { oncompleted in
             switch oncompleted{
             case .completed:
                 self.updateList()
@@ -187,12 +186,12 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     }
 	
 	func showSearchVC() {
-		let movesearchVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		let movesearchVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .fullScreen, animated: false)
 	}
     
     func showShareList() {
-        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .shareList(shareListVM), using: .modal, animated: true)
     }
 	
@@ -201,9 +200,8 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var beforeGotSubject = BehaviorRelay<Got?>(value: nil)
     private var originGotList = BehaviorRelay<[Got]>(value: [])
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
+    override init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
         
         filteredTagSubject
             .subscribe(onNext: {[weak self] filteredTag in

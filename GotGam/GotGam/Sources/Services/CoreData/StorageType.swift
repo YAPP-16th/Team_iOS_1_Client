@@ -17,6 +17,6 @@ enum StorageError: Error{
     case sync(String)
 }
 
-protocol StorageType: TaskStorageType, TagStorageType, FrequentsStorageType, SearchStorageType{
+protocol StorageType: TaskStorageType, TagStorageType, FrequentsStorageType, SearchStorageType,AlarmStorageType{
     
 }

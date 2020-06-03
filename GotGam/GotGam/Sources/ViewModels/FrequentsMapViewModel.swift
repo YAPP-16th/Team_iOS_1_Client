@@ -28,15 +28,9 @@ class FrequentsMapViewModel: CommonViewModel, FrequentsMapViewModelInputs, Frequ
 	
 	var inputs: FrequentsMapViewModelInputs { return self }
     var outputs: FrequentsMapViewModelOutputs { return self }
-    var storage: GotStorageType!
 	var frequentsPlaceMap = BehaviorRelay<Place?>(value:nil)
 	var currentPlace = BehaviorRelay<Place?>(value:nil)
 	
 	var placeBehavior = BehaviorRelay<Place?>(value: nil)
 	
-	
-	init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-    }
 }

@@ -48,7 +48,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     var tappedActive = PublishSubject<Void>()
     var tappedShare = PublishSubject<Void>()
     func fetchAlarmList() {
-        alarmStorage.fetchAlarmList()
+        storage.fetchAlarmList()
             .subscribe(onNext: { [weak self] alarmList in
                 let activeAlarmList = alarmList.filter { $0.type != .share }
                 self?.activeAlarmList.accept(activeAlarmList)
@@ -76,7 +76,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
 //            self.sharedAlarmList.accept(list)
 //        }
         
-        alarmStorage.deleteAlarm(alarm: alarm)
+        storage.deleteAlarm(alarm: alarm)
             .subscribe(onNext: { [weak self] alarm in
                 if alarm.type != .share,
                     var list = self?.activeAlarmList.value,
@@ -134,18 +134,15 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     
     var inputs: AlarmViewModelInputs { return self }
     var outputs: AlarmViewModelOutputs { return self }
-    var alarmStorage: AlarmStorageType!
-    var gotStorage: GotStorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, alarmStorage: AlarmStorageType, gotStorage: GotStorageType) {
+    override init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
-        self.alarmStorage = alarmStorage
         
         checkAlarm
             .subscribe(onNext: { [weak self] alarm in
                 var newAlarm = alarm
                 newAlarm.isChecked = true
-                alarmStorage.updateAlarm(to: newAlarm)
+                self?.storage.updateAlarm(to: newAlarm)
                 
                 if alarm.type == .share {
                     guard var list = self?.sharedAlarmList.value else { return }

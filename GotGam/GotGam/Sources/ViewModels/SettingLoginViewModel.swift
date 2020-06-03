@@ -36,12 +36,6 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
     
     var inputs: SettingLoginViewModelInputs { return self }
     var outputs: SettingLoginViewModelOutputs { return self }
-    var storage: StorageType!
-    
-    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
-        super.init(sceneCoordinator: sceneCoordinator)
-        self.storage = storage
-    }
     
     func getUserInfo() {
         guard let email = UserDefaults.standard.string(forDefines: .userID) else { return }

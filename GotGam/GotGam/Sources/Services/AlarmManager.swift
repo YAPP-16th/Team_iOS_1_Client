@@ -16,8 +16,6 @@ class AlarmManager {
     private init() {}
     
     var disposeBag = DisposeBag()
-    let gotStorage = GotStorage()
-    let alarmStorage = AlarmStorage()
     private let departureKey = "listForDeparuture"
     //var departureGots = [Got]()
     
