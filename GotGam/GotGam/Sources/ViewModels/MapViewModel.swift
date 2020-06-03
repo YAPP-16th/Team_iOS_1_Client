@@ -14,7 +14,7 @@ import CoreLocation
 
 protocol MapViewModelInputs {
     //func createGot(got: Got)
-    func showAddDetailVC(location: CLLocationCoordinate2D?, text: String)
+    func showAddDetailVC(location: CLLocationCoordinate2D?, text: String, radius: Double)
     func showAddDetailVC(got: Got)
     func updateGot(got: Got)
     func setGotDone(got: Got)
@@ -70,12 +70,12 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     //var seedState = PublishSubject<SeedState>()
     var seedState = BehaviorSubject<SeedState>(value: .none)
     
-    func showAddDetailVC(location: CLLocationCoordinate2D? = nil, text: String) {
+    func showAddDetailVC(location: CLLocationCoordinate2D? = nil, text: String, radius: Double) {
         //let got = Got(id: Int64(arc4random()), tag: nil, title: "멍게비빔밥", content: "test", latitude: .zero, longitude: .zero, radius: .zero, isDone: false, place: "맛집", insertedDate: Date())
         let addVM = AddPlantViewModel(sceneCoordinator: sceneCoordinator, got: nil)
         addVM.placeSubject.accept(location)
         addVM.nameText.accept(text)
-        addVM.radiusSubject.accept(100)
+        addVM.radiusSubject.accept(radius)
         sceneCoordinator.transition(to: .add(addVM), using: .fullScreen, animated: true)
     }
     

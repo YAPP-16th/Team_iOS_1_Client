@@ -28,19 +28,24 @@ public class ManagedAlarm: NSManagedObject {
         self.createdDate = alarm.createdDate
         self.checkedDate = alarm.checkedDate
         self.isChecked = alarm.isChecked
-        let managedGot = fetchManagedGot(from: alarm)
+        if let managedGot = fetchManagedGot(from: alarm) {
+            self.got = managedGot
+        } else {
+            print("🚨‼️ 알람으로 곳을 찾을 수가 없어요.")
+        }
         //print("managedGot in fromAlarm \(managedGot)")
         //managedGot?.addToAlarms(self)
-        self.got = managedGot!
+        
+        
     }
     func fetchManagedGot(from alarm: Alarm) -> ManagedGot? {
         
-        guard let context = self.managedObjectContext else {
+        guard let context = self.managedObjectContext, let gotID = alarm.got.id else {
             print("alarm에 곳이 없어요")
             return nil
         }
         
-        let gotID = alarm.got.id
+        
         
         if gotID == "", let objectID = alarm.got.objectId {
             if let managedGot = context.object(with: objectID) as? ManagedGot {

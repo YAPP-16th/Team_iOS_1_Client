@@ -110,11 +110,11 @@ class AlarmManager {
                         if let error = error {
                             print(error.localizedDescription)
                         }
-                        print("✅ Success arrive notification request")
+                        print("✅ Success arrive notification request: \(triggerID)")
                     }
                 } else {
                     center.removePendingNotificationRequests(withIdentifiers: [triggerID])
-                    print("✅ Remove arrive PendingNotificationRequests id: \(trigger)")
+                    print("✅ Remove arrive PendingNotificationRequests id: \(triggerID)")
                 }
             case .departure:
                 if got.onDeparture {
@@ -122,11 +122,11 @@ class AlarmManager {
                         if let error = error {
                             print(error.localizedDescription)
                         }
-                        print("✅ Success departure notification request")
+                        print("✅ Success departure notification request: \(triggerID)")
                     }
                 } else {
                     center.removePendingNotificationRequests(withIdentifiers: [triggerID])
-                    print("✅ Remove departure PendingNotificationRequests id: \(trigger)")
+                    print("✅ Remove departure PendingNotificationRequests id: \(triggerID)")
                 }
             default: return
             }
