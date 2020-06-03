@@ -155,7 +155,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         
         let place = placeSubject.value ?? (LocationManager.shared.currentLocation ?? CLLocationCoordinate2D.init())
         
-        let addMapVM = AddMapViewModel(sceneCoordinator: sceneCoordinator, storage: storage, mapPoint: place, radius: radiusSubject.value)
+        let addMapVM = AddMapViewModel(sceneCoordinator: sceneCoordinator, mapPoint: place, radius: radiusSubject.value)
         
         addMapVM.locationPublish
             .bind(to: placeSubject)
@@ -200,7 +200,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] got in
                 self?.placeSubject.accept(.init(latitude: got.latitude, longitude: got.longitude))
-                
                 
                 self?.nameText.accept(got.title)
                 self?.placeText.accept(got.place)

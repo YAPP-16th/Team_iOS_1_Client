@@ -18,7 +18,7 @@ protocol SceneCoordinatorType {
     func close(animated: Bool, completion: (() -> Void)?) -> Completable
     
     @discardableResult
-    func pop(animated: Bool) -> Completable
+    func pop(animated: Bool, completion: (() -> Void)?) -> Completable
     
     @discardableResult
     func createTabBar() -> Completable

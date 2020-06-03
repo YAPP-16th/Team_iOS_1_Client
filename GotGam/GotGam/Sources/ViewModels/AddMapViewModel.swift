@@ -23,6 +23,7 @@ protocol AddMapViewModelInputs {
 protocol AddMapViewModelOutputs {
     var radiusPublish: PublishSubject<Double> { get }
     var locationPublish: PublishSubject<CLLocationCoordinate2D> { get }
+    var movePoint: PublishSubject<CLLocationCoordinate2D> { get set }
 }
 
 protocol AddMapViewModelType {
@@ -44,25 +45,28 @@ class AddMapViewModel: CommonViewModel, AddMapViewModelInputs, AddMapViewModelOu
     
     var radiusPublish = PublishSubject<Double>()
     var locationPublish = PublishSubject<CLLocationCoordinate2D>()
+    var movePoint = PublishSubject<CLLocationCoordinate2D>()
     
     // MARK: - Methods
     
     func save() {
         radiusPublish.onNext(radiusRelay.value)
         locationPublish.onNext(locationSubject.value)
-        sceneCoordinator.pop(animated: true)
+        sceneCoordinator.pop(animated: true, completion: nil)
     }
     
     func showSearchVC() {
-        let searchBarVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        //let searchBarVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        let searchBarVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator)
         searchBarVM.placeSubject
             .subscribe(onNext: {[weak self] place in
-                if
-                    let x = place.x,
+                if let x = place.x,
                     let y = place.y,
-                    let lat = Double(x),
-                    let long = Double(y) {
+                    let lat = Double(y),
+                    let long = Double(x) {
+                    
                     self?.locationSubject.accept(.init(latitude: lat, longitude: long))
+                    self?.movePoint.onNext(.init(latitude: lat, longitude: long))
                 }
                 
             })
@@ -74,11 +78,8 @@ class AddMapViewModel: CommonViewModel, AddMapViewModelInputs, AddMapViewModelOu
     
     var inputs: AddMapViewModelInputs { return self }
     var outputs: AddMapViewModelOutputs { return self }
-    var storage: GotStorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, mapPoint: CLLocationCoordinate2D, radius: Double) {
-        
-        self.storage = storage
+    init(sceneCoordinator: SceneCoordinatorType, mapPoint: CLLocationCoordinate2D, radius: Double) {
         locationSubject.accept(mapPoint)
         radiusRelay.accept(radius)
         super.init(sceneCoordinator: sceneCoordinator)

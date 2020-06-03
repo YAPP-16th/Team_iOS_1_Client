@@ -40,13 +40,12 @@ public class ManagedAlarm: NSManagedObject {
     }
     func fetchManagedGot(from alarm: Alarm) -> ManagedGot? {
         
-        guard let context = self.managedObjectContext, let gotID = alarm.got.id else {
+        guard let context = self.managedObjectContext else {
             print("alarm에 곳이 없어요")
             return nil
         }
         
-        
-        
+        let gotID = alarm.got.id
         if gotID == "", let objectID = alarm.got.objectId {
             if let managedGot = context.object(with: objectID) as? ManagedGot {
                 return managedGot
