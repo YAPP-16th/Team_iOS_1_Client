@@ -86,7 +86,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     func savePlace(location: CLLocationCoordinate2D) {
         placeSubject.onNext(location)
-        sceneCoordinator.pop(animated: true)
+        sceneCoordinator.pop(animated: true, completion: nil)
     }
     func quickAdd(location: CLLocationCoordinate2D, radius: Double) {
         createGot(location: location, radius: radius)

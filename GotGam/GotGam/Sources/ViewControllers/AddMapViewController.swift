@@ -63,6 +63,10 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
         configureSearch()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     // MARK: - Initializing
     
     func bindViewModel() {
@@ -75,6 +79,12 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
         seedingButton.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: viewModel.inputs.seedSubject)
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.movePoint
+            .subscribe(onNext: { [weak self] point in
+                self?.mapView?.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: point.latitude, longitude: point.longitude)), animated: true)
+            })
             .disposed(by: disposeBag)
     }
     

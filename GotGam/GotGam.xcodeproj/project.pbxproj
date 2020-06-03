@@ -44,6 +44,8 @@
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
 		4C00F8DF24796045006AD726 /* Scene+target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C00F8DE24796045006AD726 /* Scene+target.swift */; };
+		4C1FCB2C2487DA7E0094F9EC /* AddMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1FCB2B2487DA7E0094F9EC /* AddMapViewController.swift */; };
+		4C1FCB2E2487E9900094F9EC /* UINavigationController+completion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1FCB2D2487E9900094F9EC /* UINavigationController+completion.swift */; };
 		4C487319247D4237008503BC /* AlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C487318247D4237008503BC /* AlarmManager.swift */; };
 		4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */; };
 		4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */; };
@@ -69,7 +71,6 @@
 		4C792B6B2484EAF8002ADB33 /* RadiusSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C792B6A2484EAF8002ADB33 /* RadiusSliderView.swift */; };
 		4C792B6D2484EB06002ADB33 /* RadiusSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C792B6C2484EB06002ADB33 /* RadiusSliderView.xib */; };
 		4C792B6F24851D18002ADB33 /* AddMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C792B6E24851D18002ADB33 /* AddMapViewModel.swift */; };
-		4C792B712485238E002ADB33 /* AddMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C792B702485238E002ADB33 /* AddMapViewController.swift */; };
 		4C96D36B247A60AF0014101F /* TagListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */; };
 		4C96D36C247A60AF0014101F /* TagListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */; };
 		4C96D36E247A71390014101F /* ShareListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D36D247A71390014101F /* ShareListViewModel.swift */; };
@@ -235,6 +236,8 @@
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		4C00F8DE24796045006AD726 /* Scene+target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+target.swift"; sourceTree = "<group>"; };
+		4C1FCB2B2487DA7E0094F9EC /* AddMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMapViewController.swift; sourceTree = "<group>"; };
+		4C1FCB2D2487E9900094F9EC /* UINavigationController+completion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+completion.swift"; sourceTree = "<group>"; };
 		4C487318247D4237008503BC /* AlarmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmManager.swift; sourceTree = "<group>"; };
 		4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+centerVertically.swift"; sourceTree = "<group>"; };
 		4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -260,7 +263,6 @@
 		4C792B6A2484EAF8002ADB33 /* RadiusSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiusSliderView.swift; sourceTree = "<group>"; };
 		4C792B6C2484EB06002ADB33 /* RadiusSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadiusSliderView.xib; sourceTree = "<group>"; };
 		4C792B6E24851D18002ADB33 /* AddMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMapViewModel.swift; sourceTree = "<group>"; };
-		4C792B702485238E002ADB33 /* AddMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMapViewController.swift; sourceTree = "<group>"; };
 		4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagListCollectionViewCell.xib; sourceTree = "<group>"; };
 		4C96D36D247A71390014101F /* ShareListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListViewModel.swift; sourceTree = "<group>"; };
@@ -551,7 +553,7 @@
 				4CE037EA2438CD470093E39D /* MapViewController.swift */,
 				4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */,
 				A159DBFC2459C360004FCA66 /* AddPlantViewController.swift */,
-				4C792B702485238E002ADB33 /* AddMapViewController.swift */,
+				4C1FCB2B2487DA7E0094F9EC /* AddMapViewController.swift */,
 				4CBD535B245B133B00B235D5 /* SetTagViewController.swift */,
 				4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */,
 				4C5F0F60246538B700C7A6E9 /* AlarmViewController.swift */,
@@ -804,6 +806,7 @@
 				4CC5AC06247672AD00FE9034 /* Date+.swift */,
 				4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */,
 				4C792B682484D8A6002ADB33 /* Notification+Name.swift */,
+				4C1FCB2D2487E9900094F9EC /* UINavigationController+completion.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1124,6 +1127,7 @@
 				4C65BF822462BFF700FF17BC /* String+hexToColor.swift in Sources */,
 				A1DF638F247E813D00444175 /* GotAPIResponse.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
+				4C1FCB2E2487E9900094F9EC /* UINavigationController+completion.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
 				4C487319247D4237008503BC /* AlarmManager.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
@@ -1226,6 +1230,7 @@
 				4CC5AC0B2477E59400FE9034 /* GotBoxViewModel.swift in Sources */,
 				4C00F8DF24796045006AD726 /* Scene+target.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
+				4C1FCB2C2487DA7E0094F9EC /* AddMapViewController.swift in Sources */,
 				297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
 				4C96D36E247A71390014101F /* ShareListViewModel.swift in Sources */,

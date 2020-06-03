@@ -102,22 +102,20 @@ class SceneCoordinator: NSObject, SceneCoordinatorType {
     }
     
     @discardableResult
-    func pop(animated: Bool) -> Completable {
+    func pop(animated: Bool, completion: (() -> Void)? = nil) -> Completable {
         let subject = PublishSubject<Void>()
         
         //print("✅ will pop, currentVC: \(currentVC)")
         
         if let nav = currentVC.navigationController {
-            guard nav.popViewController(animated: animated) != nil else {
+            guard nav.popViewController(animated: animated, completion: {completion?()}) != nil else {
                 subject.onError(TransitionError.cannotPop)
                 return subject.ignoreElements()
             }
 
             currentVC = nav.viewControllers.last!
-            print(currentVC)
             subject.onCompleted()
         }
-        
         //print("✅ did pop, currentVC: \(currentVC)")
         return subject.ignoreElements()
     }

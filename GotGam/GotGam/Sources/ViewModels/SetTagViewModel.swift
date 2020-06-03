@@ -85,7 +85,7 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     }
     
     func pop() {
-        sceneCoordinator.pop(animated: true)
+        sceneCoordinator.pop(animated: true, completion: nil)
     }
     
     // MARK: - Initializing

@@ -241,7 +241,17 @@ extension SearchBarViewController: UITableViewDelegate {
 		tableView.deselectRow(at: indexPath, animated: true)
 		if indexPath.section == 2 {
 			let place = self.placeList[indexPath.row]
-			if let tabVC = self.presentingViewController as? TabBarController{
+
+            if let navVC = self.navigationController {
+                let currentIndex = navVC.viewControllers.count-1
+                if let _ = navVC.viewControllers[currentIndex-1] as? AddMapViewController {
+                    
+                    viewModel.sceneCoordinator.pop(animated: true, completion: {
+                        self.viewModel.placeSubject.onNext(place)
+                    })
+                    
+                }
+            } else if let tabVC = self.presentingViewController as? TabBarController {
 				let mapVC = tabVC.viewControllers?.first as? MapViewController
 				mapVC?.x = Double(place.x!)!
 				mapVC?.y = Double(place.y!)!
@@ -250,18 +260,6 @@ extension SearchBarViewController: UITableViewDelegate {
 				
 				viewModel.sceneCoordinator.close(animated: true) {
 					mapVC?.updateAddress()
-                }
-            } else if let navVC = self.presentingViewController as? UINavigationController {
-                let currentIndex = navVC.viewControllers.count
-                if let mapVC = navVC.viewControllers[currentIndex-1] as? MapViewController {
-                    mapVC.x = Double(place.x!)!
-                    mapVC.y = Double(place.y!)!
-                    mapVC.placeName = place.placeName!
-                    mapVC.addressName = place.addressName!
-                    
-                    viewModel.sceneCoordinator.close(animated: true) {
-                        mapVC.updateAddress()
-                    }
                 }
             }
 		} else if indexPath.section == 1 {

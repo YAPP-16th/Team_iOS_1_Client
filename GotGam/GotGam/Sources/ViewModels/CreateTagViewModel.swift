@@ -118,7 +118,7 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
             
         }
         
-        sceneCoordinator.pop(animated: true)
+        sceneCoordinator.pop(animated: true, completion: nil)
     }
     
     // MARK: - Initializing
