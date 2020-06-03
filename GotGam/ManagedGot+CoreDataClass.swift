@@ -39,6 +39,8 @@ public class ManagedGot: NSManagedObject {
     if let objectId = got.tag?.objectId, let managedTag = self.managedObjectContext?.object(with: objectId) as? ManagedTag{
         managedTag.fromTag(tag: got.tag!)
         self.tag = managedTag
+    } else {
+        self.tag = nil
     }
     self.id = got.id
     self.createdDate = got.createdDate
