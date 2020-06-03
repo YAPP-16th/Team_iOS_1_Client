@@ -13,7 +13,6 @@
 		295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C03C42464655100789967 /* SearchBarViewModel.swift */; };
 		29618D63247C3C17008E112E /* FrequentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618D62247C3C17008E112E /* FrequentsViewModel.swift */; };
 		29618D65247C3C37008E112E /* FrequentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618D64247C3C37008E112E /* FrequentsViewController.swift */; };
-		29618D67247C3C56008E112E /* FrequentsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618D66247C3C56008E112E /* FrequentsStorage.swift */; };
 		29618D69247C3C73008E112E /* FrequentsStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618D68247C3C73008E112E /* FrequentsStorageType.swift */; };
 		29618D6B247C3C9C008E112E /* Frequents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618D6A247C3C9C008E112E /* Frequents.swift */; };
 		29618DB0247C4C70008E112E /* ManagedFrequents+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29618DAE247C4C6F008E112E /* ManagedFrequents+CoreDataClass.swift */; };
@@ -37,7 +36,6 @@
 		29BC6CDC24823B330011C482 /* 서비스이용약관.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CD924823B330011C482 /* 서비스이용약관.html */; };
 		29BC6CDD24823B330011C482 /* 개인정보처리방침.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CDA24823B330011C482 /* 개인정보처리방침.html */; };
 		29BC6CDE24823B340011C482 /* 위치기반서비스약관.html in Resources */ = {isa = PBXBuildFile; fileRef = 29BC6CDB24823B330011C482 /* 위치기반서비스약관.html */; };
-		29C41DB22483936300C82021 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C41DB12483936300C82021 /* Tutorial.storyboard */; };
 		425836B72442FE6C00EC9C76 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B62442FE6C00EC9C76 /* Map.storyboard */; };
 		425836BA2442FEC300EC9C76 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425836B92442FEC300EC9C76 /* Setting.storyboard */; };
 		4269388024306B66007B60FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269387F24306B66007B60FD /* AppDelegate.swift */; };
@@ -75,8 +73,6 @@
 		4C96D372247A7FFE0014101F /* ShareListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D371247A7FFE0014101F /* ShareListTableViewCell.swift */; };
 		4CA2351C24758DBB005323EF /* AlarmStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351A24758DBA005323EF /* AlarmStorage.swift */; };
 		4CA2351D24758DBB005323EF /* AlarmStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351B24758DBA005323EF /* AlarmStorageType.swift */; };
-		4CA2352024758DC3005323EF /* SearchStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351E24758DC3005323EF /* SearchStorage.swift */; };
-		4CA2352124758DC3005323EF /* SearchStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2351F24758DC3005323EF /* SearchStorageType.swift */; };
 		4CA2352324758F1F005323EF /* SettingLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352224758F1F005323EF /* SettingLoginViewModel.swift */; };
 		4CA2352524758F5D005323EF /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352424758F5D005323EF /* BadgeButton.swift */; };
 		4CA2352824758F8D005323EF /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2352624758F8D005323EF /* History+CoreDataProperties.swift */; };
@@ -178,6 +174,9 @@
 		A1B6183D24837E9C00844BEB /* NetworkAPIManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6183C24837E9C00844BEB /* NetworkAPIManagerType.swift */; };
 		A1B6184824851E9600844BEB /* ManagedGot+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184624851E9600844BEB /* ManagedGot+CoreDataClass.swift */; };
 		A1B6184924851E9600844BEB /* ManagedGot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184724851E9600844BEB /* ManagedGot+CoreDataProperties.swift */; };
+		A1B6184B2487B70900844BEB /* SearchStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184A2487B70900844BEB /* SearchStorageType.swift */; };
+		A1B6184D2487B7AC00844BEB /* TaskStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184C2487B7AC00844BEB /* TaskStorageType.swift */; };
+		A1B6184F2487B7D800844BEB /* TagStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184E2487B7D800844BEB /* TagStorageType.swift */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
 		A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */; };
@@ -199,7 +198,6 @@
 		295C03C42464655100789967 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
 		29618D62247C3C17008E112E /* FrequentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentsViewModel.swift; sourceTree = "<group>"; };
 		29618D64247C3C37008E112E /* FrequentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentsViewController.swift; sourceTree = "<group>"; };
-		29618D66247C3C56008E112E /* FrequentsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentsStorage.swift; sourceTree = "<group>"; };
 		29618D68247C3C73008E112E /* FrequentsStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentsStorageType.swift; sourceTree = "<group>"; };
 		29618D6A247C3C9C008E112E /* Frequents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frequents.swift; sourceTree = "<group>"; };
 		29618DAE247C4C6F008E112E /* ManagedFrequents+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedFrequents+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -263,8 +261,6 @@
 		4C96D371247A7FFE0014101F /* ShareListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListTableViewCell.swift; sourceTree = "<group>"; };
 		4CA2351A24758DBA005323EF /* AlarmStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmStorage.swift; sourceTree = "<group>"; };
 		4CA2351B24758DBA005323EF /* AlarmStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmStorageType.swift; sourceTree = "<group>"; };
-		4CA2351E24758DC3005323EF /* SearchStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorage.swift; sourceTree = "<group>"; };
-		4CA2351F24758DC3005323EF /* SearchStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorageType.swift; sourceTree = "<group>"; };
 		4CA2352224758F1F005323EF /* SettingLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLoginViewModel.swift; sourceTree = "<group>"; };
 		4CA2352424758F5D005323EF /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		4CA2352624758F8D005323EF /* History+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "History+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -380,6 +376,9 @@
 		A1B6183C24837E9C00844BEB /* NetworkAPIManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIManagerType.swift; sourceTree = "<group>"; };
 		A1B6184624851E9600844BEB /* ManagedGot+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A1B6184724851E9600844BEB /* ManagedGot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		A1B6184A2487B70900844BEB /* SearchStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorageType.swift; sourceTree = "<group>"; };
+		A1B6184C2487B7AC00844BEB /* TaskStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStorageType.swift; sourceTree = "<group>"; };
+		A1B6184E2487B7D800844BEB /* TagStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStorageType.swift; sourceTree = "<group>"; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
 		A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Bold.ttf"; sourceTree = "<group>"; };
@@ -701,10 +700,6 @@
 				29727818246FDAAE00B75AC7 /* APIManager.swift */,
 				4CA2351A24758DBA005323EF /* AlarmStorage.swift */,
 				4CA2351B24758DBA005323EF /* AlarmStorageType.swift */,
-				4CA2351E24758DC3005323EF /* SearchStorage.swift */,
-				4CA2351F24758DC3005323EF /* SearchStorageType.swift */,
-				29618D66247C3C56008E112E /* FrequentsStorage.swift */,
-				29618D68247C3C73008E112E /* FrequentsStorageType.swift */,
 				A1DF638C247E7B1500444175 /* NetworkAPIManager.swift */,
 			);
 			path = Services;
@@ -858,8 +853,12 @@
 		A1B618362483737500844BEB /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				29618D68247C3C73008E112E /* FrequentsStorageType.swift */,
+				A1B6184A2487B70900844BEB /* SearchStorageType.swift */,
 				A1B618372483738F00844BEB /* StorageType.swift */,
 				A1B618392483749300844BEB /* Storage.swift */,
+				A1B6184C2487B7AC00844BEB /* TaskStorageType.swift */,
+				A1B6184E2487B7D800844BEB /* TagStorageType.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1105,7 +1104,8 @@
 				A1B6184824851E9600844BEB /* ManagedGot+CoreDataClass.swift in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				2972784B2473C9CB00B75AC7 /* SettingOtherViewModel.swift in Sources */,
-				4CA2352024758DC3005323EF /* SearchStorage.swift in Sources */,
+				A1B6184D2487B7AC00844BEB /* TaskStorageType.swift in Sources */,
+				A1B6184B2487B70900844BEB /* SearchStorageType.swift in Sources */,
 				A1B618382483738F00844BEB /* StorageType.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
 				4C5F0F6624654F4C00C7A6E9 /* AlarmArriveTableViewCell.swift in Sources */,
@@ -1115,9 +1115,9 @@
 				A1DF638F247E813D00444175 /* GotAPIResponse.swift in Sources */,
 				4CE037E12438CA930093E39D /* Transition.swift in Sources */,
 				A164397624540A0F00C740F4 /* MapQuickAddView.swift in Sources */,
-				4CA2352124758DC3005323EF /* SearchStorageType.swift in Sources */,
 				4C487319247D4237008503BC /* AlarmManager.swift in Sources */,
 				4CE037F02438D6990093E39D /* Got.swift in Sources */,
+				A1B6184F2487B7D800844BEB /* TagStorageType.swift in Sources */,
 				4C65BF862462CCA800FF17BC /* CreateTagViewController.swift in Sources */,
 				29618D69247C3C73008E112E /* FrequentsStorageType.swift in Sources */,
 				4CD03D6C2478CC0C00210353 /* GotBoxViewController.swift in Sources */,
@@ -1215,7 +1215,6 @@
 				4CC5AC0B2477E59400FE9034 /* GotBoxViewModel.swift in Sources */,
 				4C00F8DF24796045006AD726 /* Scene+target.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
-				29618D67247C3C56008E112E /* FrequentsStorage.swift in Sources */,
 				297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
 				4C96D36E247A71390014101F /* ShareListViewModel.swift in Sources */,
@@ -1368,7 +1367,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = N23K7ZS482;
+				DEVELOPMENT_TEAM = 97C96KP84G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",

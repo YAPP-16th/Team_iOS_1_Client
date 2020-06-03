@@ -8,14 +8,13 @@
 
 import CoreData
 import RxSwift
-
+ //MARK: - TaskStorageType
 class Storage: StorageType {
-  
-    //MARK: - TaskStorageType
+   
   //MARK: - Offline
   
   private let context = DBManager.share.context
-  func create(task: Got) -> Observable<Got> {
+  func createTask(task: Got) -> Observable<Got> {
     let managedGot = ManagedGot(context: self.context)
     managedGot.fromGot(got: task)
     do{
@@ -50,14 +49,14 @@ class Storage: StorageType {
         }
     }
   
-  func fetch(taskObjectId: NSManagedObjectID) -> Observable<Got> {
+  func fetchTask(taskObjectId: NSManagedObjectID) -> Observable<Got> {
     guard let managedGot = self.context.object(with: taskObjectId) as? ManagedGot else {
       return .error(StorageError.read("objectId 오류"))
     }
     return .just(managedGot.toGot())
   }
   
-  func update(taskObjectId: NSManagedObjectID, toUpdate: Got) -> Observable<Got> {
+  func updateTask(taskObjectId: NSManagedObjectID, toUpdate: Got) -> Observable<Got> {
     guard let managedGot = self.context.object(with: taskObjectId) as? ManagedGot else {
       return .error(StorageError.update("objectId 오류"))
     }
@@ -70,7 +69,7 @@ class Storage: StorageType {
     }
   }
   
-  func delete(taskObjectId: NSManagedObjectID) -> Completable {
+  func deleteTask(taskObjectId: NSManagedObjectID) -> Completable {
     guard let managedGot = self.context.object(with: taskObjectId) as? ManagedGot else {
       return .error(StorageError.delete("objectId 오류"))
     }
@@ -84,7 +83,7 @@ class Storage: StorageType {
   }
   
   //MARK: - Online
-  func sync(_ dataList: [(NSManagedObjectID, Got)]) -> Completable{
+  func syncTask(_ dataList: [(NSManagedObjectID, Got)]) -> Completable{
     return Completable.create { observer in
       for d in dataList{
         guard let managedGot = self.context.object(with: d.0) as? ManagedGot else {
@@ -102,17 +101,11 @@ class Storage: StorageType {
       return Disposables.create()
     }
   }
-    
-    
-    
-    
-    
-    
-    //MARK: - TagStorageType
-    
-    
-    
-    func create(tag: Tag) -> Observable<Tag> {
+}
+
+//MARK: - TagStorageType
+extension Storage{
+    func createTag(tag: Tag) -> Observable<Tag> {
       let managedTag = ManagedTag(context: self.context)
       managedTag.fromTag(tag: tag)
       do{
@@ -134,14 +127,14 @@ class Storage: StorageType {
       }
     }
     
-    func fetch(tagObjectId: NSManagedObjectID) -> Observable<Tag> {
+    func fetchTag(tagObjectId: NSManagedObjectID) -> Observable<Tag> {
       guard let managedTag = self.context.object(with: tagObjectId) as? ManagedTag else {
         return .error(StorageError.read("ObjectId 오류"))
       }
       return .just(managedTag.toTag())
     }
     
-    func update(tagObjectId: NSManagedObjectID, toUpdate: Tag) -> Observable<Tag> {
+    func updateTag(tagObjectId: NSManagedObjectID, toUpdate: Tag) -> Observable<Tag> {
       guard let managedTag = self.context.object(with: tagObjectId) as? ManagedTag else {
         return .error(StorageError.read("ObjectId 오류"))
       }
@@ -155,7 +148,7 @@ class Storage: StorageType {
       }
     }
     
-    func delete(tagObjectId: NSManagedObjectID) -> Completable {
+    func deleteTag(tagObjectId: NSManagedObjectID) -> Completable {
       guard let managedTag = self.context.object(with: tagObjectId) as? ManagedTag else {
         return .error(StorageError.read("ObjectId 오류"))
       }
@@ -168,7 +161,7 @@ class Storage: StorageType {
       }
     }
     
-    func sync(_ dataList: [(NSManagedObjectID, Tag)]) -> Completable{
+    func syncTag(_ dataList: [(NSManagedObjectID, Tag)]) -> Completable{
       return Completable.create { observer in
         for d in dataList{
           guard let managedTag = self.context.object(with: d.0) as? ManagedTag else {
@@ -196,5 +189,117 @@ class Storage: StorageType {
       }catch{
         return nil
       }
+    }
+}
+//MARK: - FrequentStorageType
+
+extension Storage{
+    func createFrequents(frequent: Frequent) -> Observable<Frequent>{
+        let managedFrequents = ManagedFrequents(context: self.context)
+        managedFrequents.name = frequent.name
+        managedFrequents.address = frequent.address
+        managedFrequents.latitude = frequent.latitude
+        managedFrequents.longitude = frequent.longitude
+        managedFrequents.type = frequent.type.rawValue
+        managedFrequents.id = frequent.id
+        do{
+            try self.context.save()
+            return .just(managedFrequents.toFrequents())
+        }catch let error as NSError{
+            print("frequents를 생성할 수 없습니다. error: ", error.userInfo)
+            return .error(error)
+        }
+    }
+    
+    func fetchFrequents() -> Observable<[Frequent]> {
+        do{
+            let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
+            let results = try self.context.fetch(fetchRequest)
+            let frequentsList = results.map { $0.toFrequents()}
+            return .just(frequentsList)
+        }catch let error as NSError{
+            print("frequents를 읽을 수 없습니다. error: ", error.userInfo)
+            return .error(error)
+        }
+    }
+    
+    func updateFrequents(frequent: Frequent) -> Observable<Frequent> {
+        do{
+            let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
+            fetchRequest.predicate = NSPredicate(format: "id == %@", frequent.id)
+            let results = try self.context.fetch(fetchRequest)
+            if let managedFrequents = results.first {
+                do{
+                    managedFrequents.fromFrequents(frequent: frequent)
+                    try self.context.save()
+                    return .just(managedFrequents.toFrequents())
+                }catch let error{
+                    return .error(error)
+                }
+            }else{
+                print("해당 데이터에 대한 Frequents을 찾을 수 없음. error: ")
+                return .error(FrequentsStorageError.updateError("Error"))
+            }
+        } catch let error as NSError{
+            print("error: ", error.localizedDescription)
+            return .error(error)
+        }
+    }
+    
+    func deleteFrequents(id: String) -> Observable<Frequent> {
+        do{
+            let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            let results = try self.context.fetch(fetchRequest)
+            if let managedFrequents = results.first {
+                let frequents = managedFrequents.toFrequents()
+                self.context.delete(managedFrequents)
+                do{
+                    try self.context.save()
+                    return .just(frequents)
+                }catch{
+                    return .error(FrequentsStorageError.deleteError("id이 \(id)인 Frequents을 제거하는데 오류 발생"))
+                }
+            }else{
+                return .error(FrequentsStorageError.fetchError("해당 데이터에 대한 Frequents을 찾을 수 없음"))
+            }
+        }catch let error{
+            return .error(FrequentsStorageError.deleteError(error.localizedDescription))
+        }
+    }
+    
+    func deleteFrequents(frequent: Frequent) -> Observable<Frequent> {
+        deleteFrequents(id: frequent.id)
+    }
+}
+//MARK: - Search StorageType
+extension Storage{
+    func createKeyword(keyword: String) -> Observable<String> {
+        let history = History(context: self.context)
+        history.keyword = keyword
+        do{
+            try self.context.save()
+            return .just(keyword)
+        }catch let error as NSError{
+            print("history를 생성할 수 없습니다. error: ", error.userInfo)
+            return .error(error)
+        }
+    }
+    
+    func fetchKeyword() -> Observable<[String]> {
+        let fetchRequest = NSFetchRequest<History>(entityName: "History")
+        do {
+            let results = try self.context.fetch(fetchRequest)
+            var keywords: [String] = []
+            for h in results{
+                keywords.append(h.keyword!)
+            }
+            return .just(keywords)
+        }catch let error as NSError{
+            print("history를 읽을 수 없습니다. error: ", error.userInfo)
+            return .error(error)
+        }
+        
+        
     }
 }

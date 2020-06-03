@@ -17,45 +17,6 @@ enum StorageError: Error{
     case sync(String)
 }
 
-protocol TaskStorageType{
-    
-    //MARK: - Client
-    @discardableResult
-    func create(task: Got) -> Observable<Got>
-    
-    @discardableResult
-    func fetchTaskList() -> Observable<[Got]>
-    
-    @discardableResult
-    func fetchTaskList(with tag: Tag) -> Observable<[Got]>
-    
-    @discardableResult
-    func fetch(taskObjectId: NSManagedObjectID) -> Observable<Got>
-    
-    @discardableResult
-    func update(taskObjectId: NSManagedObjectID, toUpdate: Got) -> Observable<Got>
-    
-    @discardableResult
-    func delete(taskObjectId: NSManagedObjectID) -> Completable
-}
-
-protocol TagStorageType{
-    @discardableResult
-    func create(tag: Tag) -> Observable<Tag>
-    
-    @discardableResult
-    func fetchTagList() -> Observable<[Tag]>
-    
-    @discardableResult
-    func fetch(tagObjectId: NSManagedObjectID) -> Observable<Tag>
-    
-    @discardableResult
-    func update(tagObjectId: NSManagedObjectID, toUpdate: Tag) -> Observable<Tag>
-    
-    func delete(tagObjectId: NSManagedObjectID) -> Completable
-}
-
-
-protocol StorageType: TaskStorageType, TagStorageType{
+protocol StorageType: TaskStorageType, TagStorageType, FrequentsStorageType, SearchStorageType{
     
 }
