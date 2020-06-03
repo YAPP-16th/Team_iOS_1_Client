@@ -114,5 +114,9 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 		self.frequentOrigin = frequent
 		super.init(sceneCoordinator: sceneCoordinator)
     }
+    
+    override init(sceneCoordinator: SceneCoordinatorType) {
+        super.init(sceneCoordinator: sceneCoordinator)
+    }
 	
 }

@@ -139,9 +139,11 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 onDeparture: isOnLeave.value,
                 onDate: isOnDate.value,
                 tag: tag.value,
-                isDone: false)
+                isDone: false,
+                readyArrive: true,
+                readyDeparture: false)
             
-                storage.create(task: got)
+                storage.createTask(task: got)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true, completion: nil)
                 })

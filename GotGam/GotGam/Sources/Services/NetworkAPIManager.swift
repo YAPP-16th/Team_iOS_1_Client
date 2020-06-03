@@ -123,7 +123,7 @@ class NetworkAPIManager{
                     var syncData: [SyncData<Got>] = []
                     for (i,v) in gotDataList.enumerated(){
                         let task = gotDataList[i]
-                        var newGot = Got(id: v.id, title: v.title, latitude: v.coordinates[0], longitude: v.coordinates[1], place: v.address, insertedDate: Date(), tag: nil)
+                        var newGot = Got(id: v.id, title: v.title, latitude: v.coordinates[0], longitude: v.coordinates[1], place: v.address, insertDate: Date(), tag: nil)
                         if let tagId = task.tag, let tag = self.storage.read(id: tagId){
                             newGot.tag = tag
                         }

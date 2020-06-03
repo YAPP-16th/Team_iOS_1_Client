@@ -54,6 +54,8 @@ public class ManagedGot: NSManagedObject {
     self.onArrive = got.onArrive
     self.onDeparture = got.onDeparture
     self.onDate = got.onDate
+    self.readyArrive = got.readyArrive
+    self.readyDeparture = got.readyDeparture
     
     AlarmManager.shared.setLocationTrigger(got: self)
   }

@@ -18,7 +18,7 @@ class TabBarViewModel: CommonViewModel {
 //    }
     
     func updateBadge() {
-        alarmStorage.fetchAlarmList()
+        storage.fetchAlarmList()
             .subscribe(onNext: { [weak self] alarmList in
                 let badgeCount = alarmList.filter { $0.isChecked == false }.count
                 
@@ -28,7 +28,6 @@ class TabBarViewModel: CommonViewModel {
     }
     
     var alarmBadgeCount = BehaviorRelay<Int>(value: 0)
-    var alarmStorage: AlarmStorageType!
     
     override init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
