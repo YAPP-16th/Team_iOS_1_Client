@@ -56,9 +56,9 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 	
 	var inputs: FrequentsSearchViewModelInputs { return self }
     var outputs: FrequentsSearchViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
     }

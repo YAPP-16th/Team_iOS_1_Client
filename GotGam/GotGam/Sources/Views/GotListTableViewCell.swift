@@ -19,7 +19,7 @@ class GotListTableViewCell: UITableViewCell {
     var got: Got? {
         didSet {
             guard let got = got else { return }
-            tagColor = self.got?.tag?.first?.hex.hexToColor()
+            tagColor = self.got?.tag?.hex.hexToColor()
                 
             titleLabel.text = got.title
             tagView.backgroundColor = tagColor

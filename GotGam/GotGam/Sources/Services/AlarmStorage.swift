@@ -34,7 +34,7 @@ class AlarmStorage: AlarmStorageType {
             
             return .just(alarmList)
         }catch{
-            return .error(GotStorageError.fetchError("TagList 조회 과정에서 문제발생"))
+            return .error(StorageError.read("TagList 조회 과정에서 문제발생"))
         }
     }
     

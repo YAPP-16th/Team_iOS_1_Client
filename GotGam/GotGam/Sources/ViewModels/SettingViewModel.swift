@@ -36,20 +36,13 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
     var profileImage = PublishSubject<UIImage>()
     
     func updateUserInfo() {
-        if UserDefaults.standard.bool(forDefines: .isLogined), let userId = UserDefaults.standard.string(forDefines: .userID){
-            NetworkAPIManager.shared.getUser(email: userId) { user in
-                self.userInfo.onNext(user)
-            }
-        }else{
-            self.userInfo.onNext(nil)
-        }
+        self.userInfo.onNext(nil)
     }
     
     
     func getProfileImage(url: String) {
-        NetworkAPIManager.shared.getProfileImage(url: url) { (image) in
-            self.profileImage.onNext(image)
-        }
+        NetworkAPIManager.shared.downloadImage(url: url).bind(to: self.profileImage)
+            .disposed(by: self.disposeBag)
     }
     
 	func showAlarmDetailVC() {
@@ -84,10 +77,10 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
 	
     var inputs: SettingViewModelInputs { return self }
     var outputs: SettingViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
 
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
     }

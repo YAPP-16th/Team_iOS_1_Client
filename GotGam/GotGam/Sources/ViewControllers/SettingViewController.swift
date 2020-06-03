@@ -33,7 +33,7 @@ class SettingViewController: BaseViewController, ViewModelBindableType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel.inputs.updateUserInfo()
-      NetworkAPIManagerTest.shared.uploadAllTags()
+      NetworkAPIManager.shared.uploadAllTags()
     }
 	
 	@objc func loginTapped(sender: UIView) {

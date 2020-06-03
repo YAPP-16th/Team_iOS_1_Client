@@ -37,7 +37,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     // MARK: - Inputs
     
     func fetchRequest() {
-        storage.fetchGotList()
+        storage.fetchTaskList()
             .map { $0.filter { $0.isDone == true }}
             .bind(to: boxListRelay )
             .disposed(by: disposeBag)
@@ -50,7 +50,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     func recover(got: Got, at indexPath: IndexPath) {
         var updatedGot = got
         updatedGot.isDone = false
-        storage.updateGot(gotToUpdate: updatedGot)
+        storage.update(taskObjectId: updatedGot.objectId!, toUpdate: updatedGot)
         
         var box = boxListRelay.value
         box.remove(at: indexPath.row)
@@ -59,7 +59,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     }
     
     func delete(got: Got, at indexPath: IndexPath) {
-        storage.deleteGot(got: got)
+        storage.delete(taskObjectId: got.objectId!)
         
         var box = boxListRelay.value
         box.remove(at: indexPath.row)
@@ -87,9 +87,9 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     
     var inputs: GotBoxViewModelInputs { return self }
     var outputs: GotBoxViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
         
@@ -102,7 +102,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
         filteredTagSubject
             .subscribe(onNext: {  [weak self] tags in
                 if let filteredGot = self?.boxListRelay.value.filter ({ got in
-                        guard let gotTag = got.tag?.first else { return true }
+                        guard let gotTag = got.tag else { return true }
                         return !tags.contains(gotTag)
                     }) {
                     
@@ -132,7 +132,7 @@ extension BoxItem: IdentifiableType, Equatable {
 
    var identity: Identity {
        switch self {
-       case let .gotItem(got): return got.id!
+       case let .gotItem(got): return got.id
        }
    }
 }

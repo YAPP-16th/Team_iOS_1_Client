@@ -42,29 +42,16 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     
     func removeTag(indexPath: IndexPath, tag: Tag) {
         let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
-        if isLogin{
-            NetworkAPIManager.shared.deleteTag(tag: tag) {
-                self.storage.deleteTag(tag: tag)
-                .subscribe(onNext: { [unowned self] _ in
-                    var updateSections = self.sections.value
-                    var items = updateSections[indexPath.section].items
-                    items.remove(at: indexPath.row)
-                    updateSections[indexPath.section] = AddTagSectionModel(original: updateSections[indexPath.section], items: items)
-                    self.sections.accept(updateSections)
-                })
-                    .disposed(by: self.disposeBag)
-            }
-        }else{
-            storage.deleteTag(tag.objectId!)
-            .subscribe(onNext: { [unowned self] _ in
+        
+        storage.delete(tagObjectId: tag.objectId!).subscribe { [unowned self] _ in
                 var updateSections = self.sections.value
                 var items = updateSections[indexPath.section].items
                 items.remove(at: indexPath.row)
                 updateSections[indexPath.section] = AddTagSectionModel(original: updateSections[indexPath.section], items: items)
                 self.sections.accept(updateSections)
-            })
+            }
             .disposed(by: disposeBag)
-        }
+        
         
     }
     
@@ -108,9 +95,9 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     
     var inputs: SetTagViewModelInputs { return self }
     var outputs: SetTagViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
         

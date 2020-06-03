@@ -15,7 +15,7 @@ class AlarmShareTableViewCell: UITableViewCell {
     func configure(viewModel: AlarmViewModel, alarm: Alarm) {
         self.viewModel = viewModel
         
-        guard let tagName = alarm.got?.tag?.first?.name else { return }
+        guard let tagName = alarm.got?.tag?.name else { return }
         let userName = "슬기로운곳감생활"
         shareTagLabel.text = "\(userName)님이 '\(tagName)'태그를 공유했습니다."
         

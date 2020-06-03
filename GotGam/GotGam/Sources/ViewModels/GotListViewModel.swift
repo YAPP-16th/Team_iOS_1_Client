@@ -49,7 +49,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
            })
            .disposed(by: disposeBag)
        
-       storage.fetchGotList()
+       storage.fetchTaskList()
            // .do(onNext: { print($0)})
            .map { $0.filter { $0.isDone != true }}
            .subscribe(onNext: { [weak self] list in
@@ -59,28 +59,14 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     }
     
     func removeGot(indexPath: IndexPath, got: Got) {
-        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
-        if isLogin{
-            NetworkAPIManager.shared.deleteTask(got: got) {
-                self.storage.deleteGot(got: got)
-                .subscribe(onNext: { [weak self] got in
-                    if var list = self?.gotList.value {
-                        list.remove(at: indexPath.row)
-                        self?.gotList.accept(list)
-                    }
-                })
-                    .disposed(by: self.disposeBag)
-            }
-        }else{
-            storage.deleteGot(got: got)
-            .subscribe(onNext: { [weak self] got in
+        storage.delete(taskObjectId: got.objectId!).subscribe { [weak self] got in
                 if var list = self?.gotList.value {
                     list.remove(at: indexPath.row)
                     self?.gotList.accept(list)
                 }
-            })
+            }
             .disposed(by: disposeBag)
-        }
+        
     }
     
     func editGot(got: Got? = nil) {
@@ -89,13 +75,7 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     }
     
     func updateFinish(of got: Got) {
-        let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
-        if isLogin{
-          storage.updateGot(gotToUpdate: got)
-        }else{
-            storage.updateGot(got)
-        }
-        
+        storage.update(taskObjectId:got.objectId!, toUpdate: got)
     }
     
     var filteredGotSubject = BehaviorRelay<String>(value: "")
@@ -126,9 +106,9 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     var inputs: GotListViewModelInputs { return self }
     var outputs: GotListViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
         
@@ -146,10 +126,10 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
             .subscribe(onNext: { [weak self] (searchText, filteredTag) in
                 guard let gotList = self?.gotList.value else { return }
                 let filteredList = gotList.filter ({ got -> Bool in
-                    if let tag = got.tag?.first, filteredTag.contains(tag) {
+                    if let tag = got.tag, filteredTag.contains(tag) {
                         return false
                     }
-                    if searchText != "", let title = got.title, !title.lowercased().contains(searchText.lowercased()) {
+                    if searchText != "", !got.title.lowercased().contains(searchText.lowercased()) {
                         return false
                     }
                     return true
@@ -182,7 +162,7 @@ extension ListItem: IdentifiableType, Equatable {
 
    var identity: Identity {
        switch self {
-       case let .gotItem(got): return got.id!
+       case let .gotItem(got): return got.id
        }
    }
 }

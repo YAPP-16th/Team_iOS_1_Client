@@ -34,7 +34,7 @@ class MapCardCollectionViewCell: UICollectionViewCell{
             titleLabel.text = got.title
             addressLabel.text = got.place
             dueDateLabel.text = self.dateFormatter.string(from: got.insertedDate ?? Date())
-            tagView.backgroundColor = got.tag?.first?.hex.hexToColor()
+            tagView.backgroundColor = got.tag?.hex.hexToColor()
         }
     }
     

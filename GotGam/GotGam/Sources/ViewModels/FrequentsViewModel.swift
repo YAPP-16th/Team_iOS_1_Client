@@ -76,10 +76,10 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	
 	var inputs: FrequentsViewModelInputs { return self }
     var outputs: FrequentsViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
 	var storagePlace: FrequentsStorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
     }

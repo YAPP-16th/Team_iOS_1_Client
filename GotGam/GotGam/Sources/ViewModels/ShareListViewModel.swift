@@ -43,14 +43,14 @@ class ShareListViewModel: CommonViewModel, ShareListViewModelType, ShareListView
     }
     
     func remove(tag: Tag, at indexPath: IndexPath) {
-        storage.deleteTag(tag: tag)
-            .subscribe(onNext: { [weak self] _ in
+        storage.delete(tagObjectId: tag.objectId!)
+            .subscribe { [weak self] _ in
                 guard var updatedDS = self?.shareListDataSources.value else { return }
                 var items = updatedDS[indexPath.section].items
                 items.remove(at: indexPath.row)
                 updatedDS[indexPath.section] = ShareSectionModel(original: updatedDS[indexPath.section], items: items)
                 self?.shareListDataSources.accept(updatedDS)
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -62,7 +62,7 @@ class ShareListViewModel: CommonViewModel, ShareListViewModelType, ShareListView
     func share(tag: Tag) {
         // TODO: Share 로직 추가
         
-        let gotList = storage.fetchGotList(of: tag)
+        let gotList = storage.fetchTaskList(with: tag)
         gotList
             .subscribe(onNext: { gotList in
                 print("share \(gotList)")
@@ -89,9 +89,9 @@ class ShareListViewModel: CommonViewModel, ShareListViewModelType, ShareListView
     
     var inputs: ShareListViewModelInputs { return self }
     var outputs: ShareListViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
         

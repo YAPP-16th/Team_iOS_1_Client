@@ -100,7 +100,7 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.title = nameText.value
             currentGot.place = placeText.value
             currentGot.insertedDate = insertedDateRelay.value
-            currentGot.tag = tag.value == nil ? [] : [tag.value!]
+            currentGot.tag = tag.value
             currentGot.latitude = location.latitude
             currentGot.longitude = location.longitude
             // TODO: Radius 추가
@@ -111,23 +111,15 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.onArrive = isOnArrive.value
             currentGot.onDeparture = isOnLeave.value
             currentGot.onDate = isOnDate.value
-            currentGot.tag = tag.value == nil ? [] : [tag.value!]
+            currentGot.tag = tag.value
             
-            if isLogin{
-                NetworkAPIManager.shared.updateGot(got: currentGot) {
-                    self.storage.updateGot(gotToUpdate: currentGot)
-                    .subscribe(onNext: { [weak self] _ in
-                        self?.sceneCoordinator.close(animated: true, completion: nil)
-                    })
-                        .disposed(by: self.disposeBag)
-                }
-            }else{
-                storage.updateGot(currentGot)
+            
+            storage.update(taskObjectId: currentGot.objectId!, toUpdate: currentGot)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true, completion: nil)
                 })
                 .disposed(by: disposeBag)
-            }
+            
             
             
         } else {
@@ -146,27 +138,15 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
                 onArrive: isOnArrive.value,
                 onDeparture: isOnLeave.value,
                 onDate: isOnDate.value,
-                tag: tag.value == nil ? [] : [tag.value!],
+                tag: tag.value,
                 isDone: false)
-            if isLogin{
-                NetworkAPIManager.shared.createTask(got: got) { (got) in
-                    if let got = got{
-                        self.storage.createGot(gotToCreate: got)
-                        .subscribe(onNext: { [weak self] _ in
-                            self?.sceneCoordinator.close(animated: true, completion: nil)
-                        })
-                            .disposed(by: self.disposeBag)
-                    }else{
-                        
-                    }
-                }
-            }else{
-                storage.createGot(gotToCreate: got)
+            
+                storage.create(task: got)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true, completion: nil)
                 })
                 .disposed(by: disposeBag)
-            }
+            
         }
     }
     
@@ -193,9 +173,9 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
     
     var inputs: AddPlantViewModelInputs { return self }
     var outputs: AddPlantViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, got: Got? = nil) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType, got: Got? = nil) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
 
@@ -208,26 +188,20 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
         currentGot
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] got in
-                if let lat = got.latitude, let long = got.longitude {
-                    self?.placeSubject.accept(.init(latitude: lat, longitude: long))
-                }
+                self?.placeSubject.accept(.init(latitude: got.latitude, longitude: got.longitude))
                 
-                self?.nameText.accept(got.title ?? "")
-                self?.placeText.accept(got.place ?? "")
-                self?.radiusSubject.accept(got.radius ?? 0)
-                self?.tag.accept(got.tag?.first)
+                
+                self?.nameText.accept(got.title)
+                self?.placeText.accept(got.place)
+                self?.radiusSubject.accept(got.radius)
+                self?.tag.accept(got.tag)
                 self?.isOnDate.accept(got.onDate)
                 self?.isOnArrive.accept(got.onArrive)
                 self?.isOnLeave.accept(got.onDeparture)
-                
+                self?.arriveText.accept(got.arriveMsg)
+                self?.leaveText.accept(got.deparetureMsg)
                 if let insertedDate = got.insertedDate {
                     self?.insertedDateRelay.accept(insertedDate)
-                }
-                if let arriveMsg = got.arriveMsg, arriveMsg != "" {
-                    self?.arriveText.accept(arriveMsg)
-                }
-                if let departureMsg = got.deparetureMsg, departureMsg != "" {
-                    self?.leaveText.accept(departureMsg)
                 }
                 self?.sectionsSubject.accept(self?.configureDataSource() ?? [])
             })

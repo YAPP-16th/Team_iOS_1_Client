@@ -16,7 +16,7 @@ class AlarmManager {
     private init() {}
     
     var disposeBag = DisposeBag()
-    let gotStorage = GotStorage()
+    let gotStorage = Storage()
     let alarmStorage = AlarmStorage()
     private let departureKey = "listForDeparuture"
     //var departureGots = [Got]()
@@ -55,14 +55,14 @@ class AlarmManager {
                 if !isInRange(got: got, from: current) {
                     createAlarm(got: got, type: .departure)
                 } else {
-                    guard let id = got.id else { return }
-                    remainDepartureIds.append(String(id))
+                    guard got.id != "" else { return }
+                    remainDepartureIds.append(String(got.id))
                 }
             }
             UserDefaults.standard.set(remainDepartureIds, forKey: departureKey)
         }
 
-        gotStorage.fetchGotList()
+        gotStorage.fetchTaskList()
             .map{ self.findInRange(gotList: $0, from: current) }
             .subscribe(onNext: { [weak self] gotList in
                 for got in gotList {
@@ -72,14 +72,14 @@ class AlarmManager {
                     if got.onDeparture {
                         guard
                             let self = self,
-                            let id = got.id
+                            got.id != ""
                         else { return }
                         
                         if var departureGotIds = UserDefaults.standard.array(forKey: self.departureKey) as? [String] {
-                            departureGotIds.append(String(id))
+                            departureGotIds.append(String(got.id))
                             UserDefaults.standard.set(departureGotIds, forKey: self.departureKey)
                         } else {
-                            let departureGotIds = [String(id)]
+                            let departureGotIds = [String(got.id)]
                             UserDefaults.standard.set(departureGotIds, forKey: self.departureKey)
                         }
                     }
@@ -156,11 +156,8 @@ class AlarmManager {
     
     func findInRange(gotList: [Got], from target: CLLocation) -> [Got] {
         return gotList.filter { got in
-            guard let gotLat = got.latitude, let gotLong = got.longitude, let radius = got.radius else {return false}
-            let gotLocation = CLLocation.init(latitude: gotLat, longitude: gotLong)
-            
-            
-            if gotLocation.distance(from: target) <= radius {
+            let gotLocation = CLLocation.init(latitude: got.latitude, longitude: got.longitude)
+            if gotLocation.distance(from: target) <= got.radius {
                 return true
             }
             return false
@@ -168,9 +165,8 @@ class AlarmManager {
     }
     
     func isInRange(got: Got, from target: CLLocation) -> Bool {
-        guard let gotLat = got.latitude, let gotLong = got.longitude, let radius = got.radius else {return false}
-        let gotLocation = CLLocation.init(latitude: gotLat, longitude: gotLong)
-        if gotLocation.distance(from: target) <= radius {
+        let gotLocation = CLLocation.init(latitude: got.latitude, longitude: got.longitude)
+        if gotLocation.distance(from: target) <= got.radius {
             return true
         }
         return false

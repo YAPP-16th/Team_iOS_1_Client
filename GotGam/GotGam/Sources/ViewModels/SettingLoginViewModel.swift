@@ -36,26 +36,26 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
     
     var inputs: SettingLoginViewModelInputs { return self }
     var outputs: SettingLoginViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
     }
     
     func getUserInfo() {
         guard let email = UserDefaults.standard.string(forDefines: .userID) else { return }
-        NetworkAPIManager.shared.getUser(email: email) { [weak self] (user) in
-            if let user = user{
-                self?.userInfo.onNext(user)
-            }
-        }
+//        NetworkAPIManager.shared.getUser(email: email) { [weak self] (user) in
+//            if let user = user{
+//                self?.userInfo.onNext(user)
+//            }
+//        }
     }
     
     func getProfileImage(url: String) {
-        NetworkAPIManager.shared.getProfileImage(url: url) { (image) in
-            self.profileImage.onNext(image)
-        }
+//        NetworkAPIManager.shared.getProfileImage(url: url) { (image) in
+//            self.profileImage.onNext(image)
+//        }
     }
     
     func logout() {

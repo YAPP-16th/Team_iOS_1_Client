@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
         
         if UserDefaults.standard.bool(forDefines: .tutorialShown){
-            let gotStorage = GotStorage()
+            let gotStorage = Storage()
             let alarmStorage = AlarmStorage()
             let coordinator = SceneCoordinator(window: window!)
             coordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)

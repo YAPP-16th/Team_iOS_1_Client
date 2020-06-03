@@ -62,7 +62,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     //MARK: - Model Input
 
     var input: MapViewModelInputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     var addText = BehaviorRelay<String>(value: "")
     
     var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
@@ -99,22 +99,22 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         APIManager.shared.getPlace(longitude: location.longitude, latitude: location.latitude) { [weak self] (place) in
             guard let self = self else { return }
 
-            let got = Got(id: "\(Int64(arc4random()))", title: self.addText.value, latitude: location.latitude, longitude: location.longitude, radius: radius, place: place?.address?.addressName, insertedDate: Date(), tag: nil)
-            if UserDefaults.standard.bool(forDefines: .isLogined){
-                NetworkAPIManager.shared.createTask(got: got) { (got) in
-                    if let got = got{
-                        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
-                            self.updateList()
-                            self.updateTagList()
-                        }).disposed(by: self.disposeBag)
-                    }
-                }
-            }else{
-                self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
-                    self.updateList()
-                    self.updateTagList()
-                }).disposed(by: self.disposeBag)
-            }
+            let got = Got(title: self.addText.value, latitude: location.latitude, longitude: location.longitude, place: place?.address?.addressName ?? "")
+//            if UserDefaults.standard.bool(forDefines: .isLogined){
+//                NetworkAPIManager.shared.createTask(got: got) { (got) in
+//                    if let got = got{
+//                        self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+//                            self.updateList()
+//                            self.updateTagList()
+//                        }).disposed(by: self.disposeBag)
+//                    }
+//                }
+//            }else{
+//                self.storage.createGot(gotToCreate: got).bind(onNext: { _ in
+//                    self.updateList()
+//                    self.updateTagList()
+//                }).disposed(by: self.disposeBag)
+//            }
         }
         
     }
@@ -123,76 +123,56 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         var gotToUpdate = got
         gotToUpdate.isDone = true
         let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
-        if isLogin{
-            NetworkAPIManager.shared.updateGot(got: gotToUpdate) {
-                self.storage.updateGot(gotToUpdate: got).bind{ got in
-                    self.doneAction.onNext(gotToUpdate)
-                }.disposed(by: self.disposeBag)
-            }
-        }else{
-            self.storage.updateGot(gotToUpdate).bind{ got in
+        
+        self.storage.update(taskObjectId: gotToUpdate.objectId!, toUpdate: gotToUpdate).bind{ got in
                 self.doneAction.onNext(gotToUpdate)
             }.disposed(by: self.disposeBag)
-        }
     }
     
     func updateGot(got: Got){
         let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
-        if isLogin{
-            NetworkAPIManager.shared.updateGot(got: got) {
-                self.storage.updateGot(gotToUpdate: got).bind { _ in
-                    self.updateList()
-                    self.updateTagList()
-                }.disposed(by: self.disposeBag)
-            }
-        }else{
-            self.storage.updateGot(got).bind { _ in
-                self.updateList()
-                self.updateTagList()
-            }.disposed(by: self.disposeBag)
-        }
+        
+        self.storage.update(taskObjectId: got.objectId!, toUpdate: got).bind { _ in
+            self.updateList()
+            self.updateTagList()
+        }.disposed(by: self.disposeBag)
+        
         
     }
     
     func deleteGot(got: Got){
         let isLogin = UserDefaults.standard.bool(forDefines: .isLogined)
-        if isLogin{
-            NetworkAPIManager.shared.deleteTask(got: got) {
-                self.storage.deleteGot(id: got.id!).bind { _ in
-                    self.updateList()
-                    self.updateTagList()
-                }.disposed(by: self.disposeBag)
+        self.storage.delete(taskObjectId: got.objectId!).subscribe { oncompleted in
+            switch oncompleted{
+            case .completed:
+                self.updateList()
+                self.updateTagList()
+            case .error(let error):
+                print(error.localizedDescription)
             }
-        }else{
-            self.storage.deleteGot(got.objectId!).bind { succeed in
-                if succeed{
-                    self.updateList()
-                    self.updateTagList()
-                }else{
-                    print("error")
-                }
-            }.disposed(by: self.disposeBag)
-        }
+        }.disposed(by: self.disposeBag)
         
     }
     
     func handleError(error: Error){
-        if let error = error as? GotStorageError{
+        if let error = error as? StorageError{
             switch error {
-            case let .createError(err):
+            case let .create(err):
                 print(err)
-            case let .fetchError(err):
+            case let .read(err):
                 print(err)
-            case let .updateError(err):
+            case let .update(err):
                 print(err)
-            case let .deleteError(err):
+            case let .delete(err):
+                print(err)
+            case let .sync(err):
                 print(err)
             }
         }
     }
     
     func updateList(){
-        self.storage.fetchGotList()
+        self.storage.fetchTaskList()
             .map { $0.filter {!$0.isDone} }
             .map { $0.reversed() }
             .bind{ list in
@@ -221,7 +201,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var beforeGotSubject = BehaviorRelay<Got?>(value: nil)
     private var originGotList = BehaviorRelay<[Got]>(value: [])
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
         
@@ -231,7 +211,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
                 
                 let gotList = self.originGotList.value
                 let filterdList = gotList.filter ({ got -> Bool in
-                    guard let tag = got.tag?.first else { return true }
+                    guard let tag = got.tag else { return true }
                     
                     return filteredTag.contains(tag) ? false : true
                 })

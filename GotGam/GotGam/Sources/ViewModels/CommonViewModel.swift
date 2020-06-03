@@ -17,15 +17,4 @@ class CommonViewModel: NSObject {
     init(sceneCoordinator: SceneCoordinatorType) {
         self.sceneCoordinator = sceneCoordinator
     }
-    
-//    convenience init() {
-//        self.in
-//    }
-    
-//    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
-//
-//        self.sceneCoordinator = sceneCoordinator
-//        self.storage = storage
-//
-//    }
 }

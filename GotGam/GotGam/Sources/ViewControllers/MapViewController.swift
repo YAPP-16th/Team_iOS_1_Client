@@ -489,7 +489,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             pin.itemName = got.title
             pin.markerType = .customImage
             pin.customImage = UIImage(named: "icPin1")
-            pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.latitude!, longitude: got.longitude!))
+            pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.latitude, longitude: got.longitude))
             //pin.showAnimationType = .springFromGround
             pin.tag = i
             mapView.addPOIItems([pin])
@@ -531,16 +531,15 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     func setCard(index: Int) {
         guard let gotList = try? self.viewModel.output.gotList.value() else { return }
         let got = gotList[index]
-        if let lat = got.latitude, let long = got.longitude, let radius = got.radius {
-            let geo = MTMapPointGeo(latitude: lat, longitude: long)
-            self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
-			centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
-            mapView.removeAllCircles()
-            drawCircle(latitude: lat, longitude: long, radius: Float(radius), tag: index)
-            centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
-            if let currentCircle = currentCircle {
-                mapView.fitArea(toShow: currentCircle)
-            }
+        let geo = MTMapPointGeo(latitude: got.latitude, longitude: got.longitude)
+        self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
+        centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
+        mapView.removeAllCircles()
+        drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: index)
+        centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
+        if let currentCircle = currentCircle {
+            mapView.fitArea(toShow: currentCircle)
+            
         }
         
     }
@@ -600,14 +599,13 @@ extension MapViewController: MTMapViewDelegate{
     
     func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
         let got = gotList[poiItem.tag]
-        if let lat = got.latitude, let long = got.longitude, let radius = got.radius {
-            if state != .none {
-                viewModel.seedState.onNext(.none)
-            }
-            mapView?.removeAllCircles()
-            drawCircle(latitude: lat, longitude: long, radius: Float(radius), tag: poiItem.tag)
-            
+        if state != .none {
+            viewModel.seedState.onNext(.none)
         }
+        mapView?.removeAllCircles()
+        drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: poiItem.tag)
+        
+        
         
         return true
     }

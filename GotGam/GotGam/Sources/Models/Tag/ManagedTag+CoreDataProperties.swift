@@ -16,10 +16,10 @@ extension ManagedTag {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ManagedTag> {
         return NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
     }
-    @NSManaged public var id: String?
+    @NSManaged public var id: String
     @NSManaged public var hex: String
-    @NSManaged public var name: String?
-    @NSManaged public var got: NSSet?
+    @NSManaged public var name: String
+    @NSManaged public var got: NSSet
 
 }
 

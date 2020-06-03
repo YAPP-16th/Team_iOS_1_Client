@@ -21,7 +21,7 @@ class AlarmDepartureTableViewCell: UITableViewCell {
         
         titleLabel.text = got.title
         messageLabel.text = got.deparetureMsg
-        tagView.backgroundColor = got.tag?.first?.hex.hexToColor()
+        tagView.backgroundColor = got.tag?.hex.hexToColor()
         
         if let date = got.insertedDate {
             insertedDateLabel.text = date.endTime

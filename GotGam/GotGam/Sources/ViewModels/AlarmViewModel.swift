@@ -134,25 +134,15 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     var inputs: AlarmViewModelInputs { return self }
     var outputs: AlarmViewModelOutputs { return self }
     var alarmStorage: AlarmStorageType!
-    var gotStorage: GotStorageType!
+    var gotStorage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, alarmStorage: AlarmStorageType, gotStorage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, alarmStorage: AlarmStorageType, gotStorage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.alarmStorage = alarmStorage
         self.gotStorage = gotStorage
         
         // MARK: Test Alarms 생성코드
         // 현재있는 곳으로 알람을 만듬
-        
-//        gotStorage.fetchGotList()
-//            .compactMap { [weak self] in self?.makeAlarm($0) }
-//            .subscribe(onNext: { [weak self] alarmList in
-//                for alarm in alarmList {
-//                    self?.alarmStorage.createAlarm(alarm)
-//
-//                }
-//            })
-//            .disposed(by: disposeBag)
         
         checkAlarm
             .subscribe(onNext: { [weak self] alarm in

@@ -44,9 +44,9 @@ class SettingOtherViewModel: CommonViewModel, SettingOtherViewModelType, Setting
 	
     var inputs: SettingOtherViewModelInputs { return self }
     var outputs: SettingOtherViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
     }

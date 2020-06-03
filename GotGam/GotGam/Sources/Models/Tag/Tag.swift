@@ -12,16 +12,13 @@ import CoreData
 struct Tag: Equatable {
     var id: String
     var name: String
-    var hex: String // hex. ex) "#FFFFFF"
-    //var gotList: [Got]
-    // Managed object id
+    var hex: String
     var objectId: NSManagedObjectID?
     
     init(id: String = "", name: String, hex: String) {
         self.id = id
         self.name = name
         self.hex = hex
-        //self.gotList = gotList
     }
 }
 

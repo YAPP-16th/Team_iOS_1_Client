@@ -34,9 +34,9 @@ class TutorialViewModel: CommonViewModel, TutorialViewModelType, TutorialViewMod
     }
     
     func showMain() {
-        let gotStorage = GotStorage()
+        let taskStorage = Storage()
         let alarmStorage = AlarmStorage()
-        sceneCoordinator.createTabBar(gotService: gotStorage, alarmService: alarmStorage)
+        sceneCoordinator.createTabBar(gotService: taskStorage, alarmService: alarmStorage)
         
         let tabBarViewModel = TabBarViewModel(sceneCoordinator: sceneCoordinator, alarmStorage: alarmStorage)
         sceneCoordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)

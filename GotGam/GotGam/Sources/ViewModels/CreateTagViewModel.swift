@@ -109,23 +109,13 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
         let newTag = Tag(name: tagName.value, hex: hex)
         
         if let tag = editableTag.value {
-            if isLogin{
-                NetworkAPIManager.shared.updateTag(tag: tag) {
-                    self.storage.update(tag: tag, to: newTag)
-                }
-            }else{
-                storage.update(tag: tag, to: newTag)
-            }
+            
+            storage.update(tagObjectId: tag.objectId!, toUpdate: newTag)
+            
         } else {
-            if UserDefaults.standard.bool(forDefines: .isLogined){
-                NetworkAPIManager.shared.createTag(tag: newTag) { tag in
-                    if let tag = tag{
-                        self.storage.create(tag: tag)
-                    }
-                }
-            }else{
-              storage.create(tag: newTag)
-            }
+            
+            storage.create(tag: newTag)
+            
         }
         
         sceneCoordinator.pop(animated: true)
@@ -135,9 +125,9 @@ class CreateTagViewModel: CommonViewModel, CreateTagViewModelType, CreateTagView
     
     var inputs: CreateTagViewModelInputs { return self }
     var outputs: CreateTagViewModelOutputs { return self }
-    var storage: GotStorageType!
+    var storage: StorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType, storage: GotStorageType, tag: Tag? = nil) {
+    init(sceneCoordinator: SceneCoordinatorType, storage: StorageType, tag: Tag? = nil) {
         super.init(sceneCoordinator: sceneCoordinator)
         self.storage = storage
         

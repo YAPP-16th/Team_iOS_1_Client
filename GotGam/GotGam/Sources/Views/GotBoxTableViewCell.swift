@@ -26,7 +26,7 @@ class GotBoxTableViewCell: UITableViewCell {
         self.viewModel = viewModel
         self.got = got
         
-        tagView.backgroundColor = got.tag?.first?.hex.hexToColor()
+        tagView.backgroundColor = got.tag?.hex.hexToColor()
         titleLabel.text = got.title
         placeLabel.text = got.place
         
