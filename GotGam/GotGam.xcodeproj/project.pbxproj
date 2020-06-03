@@ -171,11 +171,11 @@
 		A1B618382483738F00844BEB /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B618372483738F00844BEB /* StorageType.swift */; };
 		A1B6183A2483749300844BEB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B618392483749300844BEB /* Storage.swift */; };
 		A1B6183D24837E9C00844BEB /* NetworkAPIManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6183C24837E9C00844BEB /* NetworkAPIManagerType.swift */; };
-		A1B6184824851E9600844BEB /* ManagedGot+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184624851E9600844BEB /* ManagedGot+CoreDataClass.swift */; };
-		A1B6184924851E9600844BEB /* ManagedGot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184724851E9600844BEB /* ManagedGot+CoreDataProperties.swift */; };
 		A1B6184B2487B70900844BEB /* SearchStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184A2487B70900844BEB /* SearchStorageType.swift */; };
 		A1B6184D2487B7AC00844BEB /* TaskStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184C2487B7AC00844BEB /* TaskStorageType.swift */; };
 		A1B6184F2487B7D800844BEB /* TagStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B6184E2487B7D800844BEB /* TagStorageType.swift */; };
+		A1B618522487C10E00844BEB /* ManagedGot+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B618502487C10E00844BEB /* ManagedGot+CoreDataClass.swift */; };
+		A1B618532487C10E00844BEB /* ManagedGot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B618512487C10E00844BEB /* ManagedGot+CoreDataProperties.swift */; };
 		A1BE45542451A5D800B7467B /* Spoqa Han Sans Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */; };
 		A1BE45552451A5D800B7467B /* Spoqa Han Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */; };
 		A1BE45562451A5D800B7467B /* Spoqa Han Sans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */; };
@@ -372,11 +372,11 @@
 		A1B618372483738F00844BEB /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		A1B618392483749300844BEB /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		A1B6183C24837E9C00844BEB /* NetworkAPIManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIManagerType.swift; sourceTree = "<group>"; };
-		A1B6184624851E9600844BEB /* ManagedGot+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		A1B6184724851E9600844BEB /* ManagedGot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A1B6184A2487B70900844BEB /* SearchStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStorageType.swift; sourceTree = "<group>"; };
 		A1B6184C2487B7AC00844BEB /* TaskStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStorageType.swift; sourceTree = "<group>"; };
 		A1B6184E2487B7D800844BEB /* TagStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStorageType.swift; sourceTree = "<group>"; };
+		A1B618502487C10E00844BEB /* ManagedGot+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		A1B618512487C10E00844BEB /* ManagedGot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedGot+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A1BE45502451A5D800B7467B /* Spoqa Han Sans Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Thin.ttf"; sourceTree = "<group>"; };
 		A1BE45512451A5D800B7467B /* Spoqa Han Sans Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Regular.ttf"; sourceTree = "<group>"; };
 		A1BE45522451A5D800B7467B /* Spoqa Han Sans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spoqa Han Sans Bold.ttf"; sourceTree = "<group>"; };
@@ -881,8 +881,8 @@
 		A1B618452485182F00844BEB /* Got */ = {
 			isa = PBXGroup;
 			children = (
-				A1B6184624851E9600844BEB /* ManagedGot+CoreDataClass.swift */,
-				A1B6184724851E9600844BEB /* ManagedGot+CoreDataProperties.swift */,
+				A1B618502487C10E00844BEB /* ManagedGot+CoreDataClass.swift */,
+				A1B618512487C10E00844BEB /* ManagedGot+CoreDataProperties.swift */,
 				4CE037EF2438D6990093E39D /* Got.swift */,
 			);
 			path = Got;
@@ -1096,9 +1096,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B618532487C10E00844BEB /* ManagedGot+CoreDataProperties.swift in Sources */,
 				A1A5DF5C2477D52700AFA9D5 /* LoginViewModel.swift in Sources */,
 				A127E717246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift in Sources */,
-				A1B6184824851E9600844BEB /* ManagedGot+CoreDataClass.swift in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				2972784B2473C9CB00B75AC7 /* SettingOtherViewModel.swift in Sources */,
 				A1B6184D2487B7AC00844BEB /* TaskStorageType.swift in Sources */,
@@ -1159,6 +1159,7 @@
 				4C5F0F682465503200C7A6E9 /* AlarmDepartureTableViewCell.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
 				4C96D372247A7FFE0014101F /* ShareListTableViewCell.swift in Sources */,
+				A1B618522487C10E00844BEB /* ManagedGot+CoreDataClass.swift in Sources */,
 				4CE3B6FC2459E28900A53BF8 /* AddPlantViewModel.swift in Sources */,
 				A127E716246D4BA7005137D3 /* ManagedTag+CoreDataClass.swift in Sources */,
 				A1B6183D24837E9C00844BEB /* NetworkAPIManagerType.swift in Sources */,
@@ -1173,7 +1174,6 @@
 				4C5F0F5F246538AA00C7A6E9 /* AlarmViewModel.swift in Sources */,
 				A17CD910248279B700F0C30E /* TutorialViewController.swift in Sources */,
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
-				A1B6184924851E9600844BEB /* ManagedGot+CoreDataProperties.swift in Sources */,
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
 				4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */,
 				4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */,

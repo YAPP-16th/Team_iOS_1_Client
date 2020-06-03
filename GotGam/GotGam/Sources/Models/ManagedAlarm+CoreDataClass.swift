@@ -33,7 +33,6 @@ public class ManagedAlarm: NSManagedObject {
         //managedGot?.addToAlarms(self)
         self.got = managedGot!
     }
-
     func fetchManagedGot(from alarm: Alarm) -> ManagedGot? {
         
         guard let context = self.managedObjectContext else {
@@ -41,7 +40,7 @@ public class ManagedAlarm: NSManagedObject {
             return nil
         }
         
-        let gotID = alarm.got.id!
+        let gotID = alarm.got.id
         
         if gotID == "", let objectID = alarm.got.objectId {
             if let managedGot = context.object(with: objectID) as? ManagedGot {

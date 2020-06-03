@@ -35,7 +35,7 @@ class TutorialViewModel: CommonViewModel, TutorialViewModelType, TutorialViewMod
     
     func showMain() {
         let storage = Storage()
-        sceneCoordinator.createTabBar(storage: storage)
+        sceneCoordinator.createTabBar()
         
         let tabBarViewModel = TabBarViewModel(sceneCoordinator: sceneCoordinator)
         sceneCoordinator.transition(to: .tabBar(tabBarViewModel), using: .root, animated: false)

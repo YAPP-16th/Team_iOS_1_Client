@@ -98,7 +98,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         APIManager.shared.getPlace(longitude: location.longitude, latitude: location.latitude) { [weak self] (place) in
             guard let self = self else { return }
 
-            let got = Got(title: self.addText.value, latitude: location.latitude, longitude: location.longitude, place: place?.address?.addressName ?? "")
+//            let got = Got(title: self.addText.value, latitude: location.latitude, longitude: location.longitude, place: place?.address?.addressName ?? "")
 //            if UserDefaults.standard.bool(forDefines: .isLogined){
 //                NetworkAPIManager.shared.createTask(got: got) { (got) in
 //                    if let got = got{

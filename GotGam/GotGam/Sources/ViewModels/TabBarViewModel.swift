@@ -30,7 +30,7 @@ class TabBarViewModel: CommonViewModel {
     var alarmBadgeCount = BehaviorRelay<Int>(value: 0)
     var alarmStorage: AlarmStorageType!
     
-    init(sceneCoordinator: SceneCoordinatorType) {
+    override init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
         updateBadge()
 //        alarmStorage.fetchAlarmList()

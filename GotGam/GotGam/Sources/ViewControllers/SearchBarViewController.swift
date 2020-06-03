@@ -125,7 +125,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 			.subscribe(onNext: { [weak self] (text) in
 				
 				let filteredList = self?.gotList.filter ({ got -> Bool in
-                    if let title = got.title, title.lowercased().contains(text.lowercased()) {
+                    if got.title.lowercased().contains(text.lowercased()) {
                         return true
                     }
                     return false
@@ -194,7 +194,7 @@ extension SearchBarViewController: UITableViewDataSource{
 			if SearchBar.text!.count > 0 {
 				let got = filteredList[indexPath.row]
 				let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
-				cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
+				cell.gotColor.backgroundColor = got.tag?.hex.hexToColor()
 				cell.gotLabel.text = got.title
 			
 				cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
@@ -202,7 +202,7 @@ extension SearchBarViewController: UITableViewDataSource{
 			}else{
 				let got = gotList[indexPath.row]
 				let cell = tableView.dequeueReusableCell(withIdentifier: "gotCell", for: indexPath) as! GotCell
-				cell.gotColor.backgroundColor = got.tag?.first?.hex.hexToColor()
+				cell.gotColor.backgroundColor = got.tag?.hex.hexToColor()
 				cell.gotLabel.text = got.title
 				cell.gotColor.layer.cornerRadius = cell.gotColor.frame.height / 2
 				return cell
@@ -268,8 +268,8 @@ extension SearchBarViewController: UITableViewDelegate {
 			let got = self.gotList[indexPath.row]
 			if let tabVC = self.presentingViewController as? TabBarController{
 				let mapVC = tabVC.viewControllers?.first as? MapViewController
-				mapVC?.x = got.longitude!
-				mapVC?.y = got.latitude!
+				mapVC?.x = got.longitude
+				mapVC?.y = got.latitude
 				
 				viewModel.sceneCoordinator.close(animated: true) {
 					let index = self.gotList.firstIndex(of: got)

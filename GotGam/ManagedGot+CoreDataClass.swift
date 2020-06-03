@@ -28,7 +28,9 @@ public class ManagedGot: NSManagedObject {
         onDeparture: onDeparture,
         onDate: onDate,
         tag: tag?.toTag(),
-        isDone: isDone)
+        isDone: isDone,
+        readyArrive: readyArrive,
+        readyDeparture: readyDeparture)
     got.objectId = objectID
     return got
   }

@@ -80,10 +80,10 @@ class AlarmManager {
     }
 
     func createAlarm(got: ManagedGot, type: AlarmType) {
-        
+        let storage = Storage()
         let alarm = Alarm(type: type, got: got.toGot())
         print("create Alarm: \(alarm)")
-        alarmStorage.createAlarm(alarm)
+        storage.createAlarm(alarm)
         NotificationCenter.default.post(name: .onDidUpdateAlarm, object: nil)
         
         // TODO: 타입설정

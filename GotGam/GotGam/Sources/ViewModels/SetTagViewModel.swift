@@ -96,7 +96,7 @@ class SetTagViewModel: CommonViewModel, SetTagViewModelType, SetTagViewModelInpu
     var inputs: SetTagViewModelInputs { return self }
     var outputs: SetTagViewModelOutputs { return self }
     
-    init(sceneCoordinator: SceneCoordinatorType) {
+    override init(sceneCoordinator: SceneCoordinatorType) {
         super.init(sceneCoordinator: sceneCoordinator)
         
         tagList

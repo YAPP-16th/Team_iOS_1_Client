@@ -91,7 +91,7 @@ class NetworkAPIManager{
                         let newTag = Tag(id: newTagData.id, name: newTagData.name, hex: newTagData.color)
                         syncData.append((objectId, newTag))
                     }
-                    self.storage.sync(syncData).subscribe { completable in
+                    self.storage.syncTag(syncData).subscribe { completable in
                         observer(completable)
                     }.disposed(by: self.disposeBag)
             }.disposed(by: self.disposeBag)
@@ -129,7 +129,7 @@ class NetworkAPIManager{
                         }
                         syncData.append((gotList[i].objectId!, newGot))
                     }
-                    self.storage.sync(syncData).subscribe { completable in
+                    self.storage.syncTask(syncData).subscribe { completable in
                         observer(completable)
                     }.disposed(by: self.disposeBag)
             }.disposed(by: self.disposeBag)
