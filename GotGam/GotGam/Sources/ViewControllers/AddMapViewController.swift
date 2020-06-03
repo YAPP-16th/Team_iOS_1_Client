@@ -55,10 +55,12 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         configureMapView()
         configureViews()
         configureSlider()
+        configureSearch()
     }
     
     // MARK: - Initializing
@@ -87,6 +89,7 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
     }
     
     func configureViews() {
+        searchTextField.inputView = nil
         seedingButton.layer.cornerRadius = seedingButton.bounds.height/2
         currentButton.layer.cornerRadius = currentButton.bounds.height/2
     }
@@ -94,7 +97,6 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
     func configureSlider() {
         radiusSliderView.radiusSlider.addTarget(self, action: #selector(didChangeRadius(slider:event:)), for: .valueChanged)
     }
-    
     @objc func didChangeRadius(slider: UISlider, event: UIEvent) {
         if let touchEvent = event.allTouches?.first {
             switch touchEvent.phase {
@@ -108,6 +110,14 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
         }
     }
     
+    func configureSearch() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapSearchView))
+        searchView.addGestureRecognizer(tapGesture)
+    }
+    @objc func didTapSearchView() {
+        viewModel.inputs.searchTap.onNext(())
+    }
+    
     // MARK: - Views
     
     @IBOutlet var mapBackgroundView: UIView!
@@ -117,6 +127,7 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
     @IBOutlet var seedImageView: UIImageView!
     @IBOutlet var seedingButton: UIButton!
     @IBOutlet var currentButton: UIButton!
+    @IBOutlet var searchView: UIView!
 }
 
 extension AddMapViewController: MTMapViewDelegate {

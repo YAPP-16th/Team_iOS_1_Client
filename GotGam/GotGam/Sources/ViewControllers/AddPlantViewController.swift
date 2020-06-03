@@ -111,7 +111,6 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //navigationController?.presentationController?.delegate = self
         setupViews()
         setupKeyboard()
     }
@@ -120,8 +119,16 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         super.viewWillAppear(animated)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPlaceLabel(_:)))
         textFieldStackView.addGestureRecognizer(tapGesture)
+        
+        
     }
-    @IBOutlet var textFieldStackView: UIStackView!
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        editButton.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)
+        editButton.layer.cornerRadius = editButton.frame.height / 2
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -129,20 +136,19 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         if let location = viewModel.placeSubject.value {
             setupMapCenter(latitude: Double(location.latitude), longitude: Double(location.longitude))
             
-            let pin = MTMapPOIItem()
             
             mapView?.removeAllCircles()
+            mapView?.removeAllPOIItems()
             
+            let pin = MTMapPOIItem()
             pin.markerType = .customImage
-            pin.customImage = UIImage(named: "icSeed")
+            pin.customImage = UIImage(named: "icSeed2")
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: Double(location.latitude), longitude: Double(location.longitude)))
             mapView?.addPOIItems([pin])
 
             let radius = viewModel.inputs.radiusSubject.value
             drawCircle(latitude: location.latitude, longitude: location.longitude, radius: Float(radius))
         }
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -162,6 +168,8 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
         alertDefaultLabel.layer.cornerRadius = 6
         alertDefaultLabel.alpha = 0
         alertErrorLabel.layer.cornerRadius = 6
+//        print(editButton.frame, editButton.bounds)
+//        editButton.layer.cornerRadius = 50
     }
     
     func setupMapView() {
@@ -294,6 +302,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     
     //@IBOutlet var titleTextView: UITextView!
 //    @IBOutlet var placeTextView: UITextView!
+    @IBOutlet var textFieldStackView: UIStackView!
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var placeLabel: UILabel!
     @IBOutlet var mapBackgroundView: UIView!

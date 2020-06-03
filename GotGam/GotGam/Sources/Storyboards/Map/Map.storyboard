@@ -402,11 +402,12 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ONd-Cp-AX0">
                                 <rect key="frame" x="0.0" y="188" width="414" height="0.0"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsO-E7-ZOT">
-                                        <rect key="frame" x="334" y="-80" width="80" height="80"/>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsO-E7-ZOT">
+                                        <rect key="frame" x="356" y="-58" width="48" height="48"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="7Bj-iP-Gkf"/>
-                                            <constraint firstAttribute="height" constant="80" id="tQd-22-zoC"/>
+                                            <constraint firstAttribute="width" constant="48" id="7Bj-iP-Gkf"/>
+                                            <constraint firstAttribute="height" constant="48" id="tQd-22-zoC"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="edit_pencel"/>
                                     </button>
@@ -429,10 +430,10 @@
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="53n-Ju-icp"/>
                                     <constraint firstAttribute="height" id="Mri-sG-y98"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="NwI-WF-PxO"/>
-                                    <constraint firstAttribute="trailing" secondItem="YsO-E7-ZOT" secondAttribute="trailing" id="VXU-Yk-Bgx"/>
+                                    <constraint firstAttribute="trailing" secondItem="YsO-E7-ZOT" secondAttribute="trailing" constant="10" id="VXU-Yk-Bgx"/>
                                     <constraint firstAttribute="height" priority="700" constant="220" id="es1-ko-4db"/>
                                     <constraint firstItem="buG-hM-P5B" firstAttribute="centerX" secondItem="ONd-Cp-AX0" secondAttribute="centerX" id="gJA-ET-guz"/>
-                                    <constraint firstAttribute="bottom" secondItem="YsO-E7-ZOT" secondAttribute="bottom" id="hat-Mj-7jc"/>
+                                    <constraint firstAttribute="bottom" secondItem="YsO-E7-ZOT" secondAttribute="bottom" constant="10" id="hat-Mj-7jc"/>
                                     <constraint firstItem="UaG-8z-suT" firstAttribute="top" secondItem="ONd-Cp-AX0" secondAttribute="top" constant="14" id="lJW-fJ-C3o"/>
                                 </constraints>
                             </view>
@@ -801,7 +802,7 @@
                                             <constraint firstAttribute="width" constant="17" id="G46-Ge-L9H"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wBw-nH-gEP">
+                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wBw-nH-gEP">
                                         <rect key="frame" x="46" y="0.0" width="368" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -836,6 +837,7 @@
                         <outlet property="mapBackgroundView" destination="s8I-x8-j4v" id="UG2-ga-pIg"/>
                         <outlet property="radiusSliderView" destination="bT9-VK-hku" id="FDT-m6-1Vd"/>
                         <outlet property="searchTextField" destination="wBw-nH-gEP" id="whG-r9-Gn5"/>
+                        <outlet property="searchView" destination="MjR-Za-b04" id="06p-Cj-OEi"/>
                         <outlet property="seedImageView" destination="Lrd-Kq-3YU" id="SL3-6z-uZh"/>
                         <outlet property="seedingButton" destination="EBb-Fw-mIJ" id="Dls-l9-A92"/>
                     </connections>
@@ -1015,7 +1017,7 @@
     <resources>
         <image name="candCancel" width="11" height="11"/>
         <image name="check" width="20" height="20"/>
-        <image name="edit_pencel" width="70" height="70"/>
+        <image name="edit_pencel" width="40" height="40"/>
         <image name="icGam" width="65" height="68.5"/>
         <image name="icListAddBtn" width="18" height="18"/>
         <image name="icMapBtnMyLocation" width="20.5" height="20.5"/>

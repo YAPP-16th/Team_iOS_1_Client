@@ -67,6 +67,10 @@
 		4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */; };
 		4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */; };
 		4C792B692484D8A6002ADB33 /* Notification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C792B682484D8A6002ADB33 /* Notification+Name.swift */; };
+		4C792B6B2484EAF8002ADB33 /* RadiusSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C792B6A2484EAF8002ADB33 /* RadiusSliderView.swift */; };
+		4C792B6D2484EB06002ADB33 /* RadiusSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C792B6C2484EB06002ADB33 /* RadiusSliderView.xib */; };
+		4C792B6F24851D18002ADB33 /* AddMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C792B6E24851D18002ADB33 /* AddMapViewModel.swift */; };
+		4C792B712485238E002ADB33 /* AddMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C792B702485238E002ADB33 /* AddMapViewController.swift */; };
 		4C96D36B247A60AF0014101F /* TagListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */; };
 		4C96D36C247A60AF0014101F /* TagListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */; };
 		4C96D36E247A71390014101F /* ShareListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96D36D247A71390014101F /* ShareListViewModel.swift */; };
@@ -253,6 +257,10 @@
 		4C65BFA824630F0F00FF17BC /* CreateTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		4C65BFAA24630F1B00FF17BC /* CreateGridTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGridTableViewCell.swift; sourceTree = "<group>"; };
 		4C792B682484D8A6002ADB33 /* Notification+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Name.swift"; sourceTree = "<group>"; };
+		4C792B6A2484EAF8002ADB33 /* RadiusSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiusSliderView.swift; sourceTree = "<group>"; };
+		4C792B6C2484EB06002ADB33 /* RadiusSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadiusSliderView.xib; sourceTree = "<group>"; };
+		4C792B6E24851D18002ADB33 /* AddMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMapViewModel.swift; sourceTree = "<group>"; };
+		4C792B702485238E002ADB33 /* AddMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMapViewController.swift; sourceTree = "<group>"; };
 		4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagListCollectionViewCell.xib; sourceTree = "<group>"; };
 		4C96D36D247A71390014101F /* ShareListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListViewModel.swift; sourceTree = "<group>"; };
@@ -534,6 +542,7 @@
 				4CE037EA2438CD470093E39D /* MapViewController.swift */,
 				4CF1D0AA24499F1B00B45751 /* GotListViewController.swift */,
 				A159DBFC2459C360004FCA66 /* AddPlantViewController.swift */,
+				4C792B702485238E002ADB33 /* AddMapViewController.swift */,
 				4CBD535B245B133B00B235D5 /* SetTagViewController.swift */,
 				4C65BF852462CCA800FF17BC /* CreateTagViewController.swift */,
 				4C5F0F60246538B700C7A6E9 /* AlarmViewController.swift */,
@@ -646,6 +655,7 @@
 				4CE037ED2438CD810093E39D /* MapViewModel.swift */,
 				4CF1D0AC24499F4200B45751 /* GotListViewModel.swift */,
 				4CE3B6FB2459E28900A53BF8 /* AddPlantViewModel.swift */,
+				4C792B6E24851D18002ADB33 /* AddMapViewModel.swift */,
 				4CBD535D245B134A00B235D5 /* SetTagViewModel.swift */,
 				4C65BF832462CC5300FF17BC /* CreateTagViewModel.swift */,
 				4C5F0F5E246538AA00C7A6E9 /* AlarmViewModel.swift */,
@@ -822,6 +832,8 @@
 				4C96D369247A60AF0014101F /* TagListCollectionViewCell.swift */,
 				4C96D36A247A60AF0014101F /* TagListCollectionViewCell.xib */,
 				29618DB6247E4894008E112E /* BadgeButton.swift */,
+				4C792B6A2484EAF8002ADB33 /* RadiusSliderView.swift */,
+				4C792B6C2484EB06002ADB33 /* RadiusSliderView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -967,6 +979,7 @@
 				A157E0FE24555A90001E310D /* map_pin_custom@3x.png in Resources */,
 				A157E0FF24555A90001E310D /* map_pinup@3x.png in Resources */,
 				29BC6CDD24823B330011C482 /* 개인정보처리방침.html in Resources */,
+				4C792B6D2484EB06002ADB33 /* RadiusSliderView.xib in Resources */,
 				4269388724306B66007B60FD /* Main.storyboard in Resources */,
 				29BC6CDC24823B330011C482 /* 서비스이용약관.html in Resources */,
 				A157E10A24555A90001E310D /* map_pinup_custom.png in Resources */,
@@ -1133,6 +1146,7 @@
 				A159DBF92459C1DD004FCA66 /* Gotgam.xcdatamodeld in Sources */,
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
 				4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */,
+				4C792B6B2484EAF8002ADB33 /* RadiusSliderView.swift in Sources */,
 				4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */,
@@ -1150,6 +1164,7 @@
 				29618DB5247CEF3F008E112E /* FrequentsSearchViewController.swift in Sources */,
 				4C65BFAB24630F1B00FF17BC /* CreateGridTableViewCell.swift in Sources */,
 				4CA2352924758F8D005323EF /* History+CoreDataClass.swift in Sources */,
+				4C792B6F24851D18002ADB33 /* AddMapViewModel.swift in Sources */,
 				4C5F0F61246538B700C7A6E9 /* AlarmViewController.swift in Sources */,
 				4CBD5362245CEEC100B235D5 /* SetTagListTableViewCell.swift in Sources */,
 				297278472473C96800B75AC7 /* SettingOtherViewController.swift in Sources */,
@@ -1169,6 +1184,7 @@
 				4C00F8DF24796045006AD726 /* Scene+target.swift in Sources */,
 				4CE037EE2438CD810093E39D /* MapViewModel.swift in Sources */,
 				29618D67247C3C56008E112E /* FrequentsStorage.swift in Sources */,
+				4C792B712485238E002ADB33 /* AddMapViewController.swift in Sources */,
 				297278512473CA6300B75AC7 /* SettingAlarmViewModel.swift in Sources */,
 				A159DBF42459C1B9004FCA66 /* DBManager.swift in Sources */,
 				4C96D36E247A71390014101F /* ShareListViewModel.swift in Sources */,

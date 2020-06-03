@@ -20,6 +20,7 @@ class AlarmStorage: AlarmStorageType {
             let managedAlarm = ManagedAlarm(context: self.context)
             managedAlarm.fromAlarm(alarm)
             alarm.id = managedAlarm.objectID
+            print(alarm.id)
             try self.context.save()
             return .just(alarm)
         } catch let error {

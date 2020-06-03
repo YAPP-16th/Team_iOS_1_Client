@@ -14,7 +14,6 @@ class DBManager {
     static let share = DBManager()
     
     lazy var persistentContainer: NSPersistentContainer = {
-           
            let container = NSPersistentContainer(name: "Gotgam")
            container.loadPersistentStores(completionHandler: { (storeDescription, error) in
                if let error = error as NSError? {

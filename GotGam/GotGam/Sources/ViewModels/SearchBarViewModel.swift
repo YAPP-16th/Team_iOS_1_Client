@@ -12,6 +12,7 @@ import RxCocoa
 import RxDataSources
 
 protocol SearchBarViewModelInputs {
+    var placeSubject: PublishSubject<Place> { get set }
 	func addKeyword(keyword: String)
 	func readKeyword()
 	func readFrequents()
@@ -33,6 +34,8 @@ protocol SearchBarViewModelType {
 }
 
 class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarViewModelOutputs, SearchBarViewModelType {
+    var placeSubject = PublishSubject<Place>()
+    
 	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
 	var collectionItems = BehaviorSubject<[Frequent]>(value: [])
 	var gotList = BehaviorRelay<[Got]>(value: [])

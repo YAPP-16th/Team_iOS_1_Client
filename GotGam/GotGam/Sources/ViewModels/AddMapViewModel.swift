@@ -16,6 +16,7 @@ protocol AddMapViewModelInputs {
     var radiusRelay: BehaviorRelay<Double> { get set }
     var locationSubject: BehaviorRelay<CLLocationCoordinate2D> { get set }
     var seedSubject: PublishSubject<Void> { get set }
+    var searchTap: PublishSubject<Void> { get set }
     
 }
 
@@ -37,6 +38,7 @@ class AddMapViewModel: CommonViewModel, AddMapViewModelInputs, AddMapViewModelOu
     var locationSubject = BehaviorRelay<CLLocationCoordinate2D>(value: .init())
     var radiusRelay = BehaviorRelay<Double>(value: 150)
     var seedSubject = PublishSubject<Void>()
+    var searchTap = PublishSubject<Void>()
     
     // MARK: - Outputs
     
@@ -49,6 +51,23 @@ class AddMapViewModel: CommonViewModel, AddMapViewModelInputs, AddMapViewModelOu
         radiusPublish.onNext(radiusRelay.value)
         locationPublish.onNext(locationSubject.value)
         sceneCoordinator.pop(animated: true)
+    }
+    
+    func showSearchVC() {
+        let searchBarVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+        searchBarVM.placeSubject
+            .subscribe(onNext: {[weak self] place in
+                if
+                    let x = place.x,
+                    let y = place.y,
+                    let lat = Double(x),
+                    let long = Double(y) {
+                    self?.locationSubject.accept(.init(latitude: lat, longitude: long))
+                }
+                
+            })
+            .disposed(by: disposeBag)
+        sceneCoordinator.transition(to: .searchBar(searchBarVM), using: .push, animated: false)
     }
     
     // MARK: - Initializing
@@ -68,6 +87,8 @@ class AddMapViewModel: CommonViewModel, AddMapViewModelInputs, AddMapViewModelOu
             .subscribe(onNext: {[weak self] in self?.save()})
             .disposed(by: disposeBag)
         
-        
+        searchTap
+            .subscribe(onNext: { [weak self] in self?.showSearchVC() })
+            .disposed(by: disposeBag)
     }
 }
