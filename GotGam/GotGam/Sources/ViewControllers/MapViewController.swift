@@ -171,7 +171,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        navigationController?.isNavigationBarHidden = true
         configureQuickAddView()
         
         LocationManager.shared.startUpdatingLocation()
@@ -197,6 +197,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         

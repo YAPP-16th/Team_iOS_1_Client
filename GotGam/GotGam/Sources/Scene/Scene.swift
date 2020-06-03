@@ -37,7 +37,11 @@ extension Scene {
         
         switch self {
         case .map(let viewModel):
-            guard var mapVC = storyboard.instantiateViewController(withIdentifier: "MapVC") as? MapViewController else {
+            guard let mapNav = storyboard.instantiateViewController(withIdentifier: "MapNav") as? UINavigationController else {
+                fatalError()
+            }
+            
+            guard var mapVC = mapNav.viewControllers.first as? MapViewController else {
                 fatalError()
             }
             

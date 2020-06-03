@@ -181,7 +181,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     func showShareList() {
         let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator)
-        sceneCoordinator.transition(to: .shareList(shareListVM), using: .modal, animated: true)
+        sceneCoordinator.transition(to: .shareList(shareListVM), using: .push, animated: true)
     }
 	
     var aimToPlace = BehaviorSubject<Bool>(value: false)
