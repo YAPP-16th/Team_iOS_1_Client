@@ -102,11 +102,14 @@ class NetworkAPIManager{
     func uploadAllTags() -> Observable<[TagData]> {
         return Observable.create { observer -> Disposable in
             self.getMergedUnsyncedTags().bind { (info) in
-                self.proviter.rx.request(.synchronize(["tags": info]))
+                self.proviter.rx.request(.synchronize(["frequents": [], "tasks": [], "tags": info]))
                     .asObservable()
                     .map { try JSONDecoder().decode(SyncResponse.self, from: $0.data) }
+                .debug()
                     .catchErrorJustReturn(nil)
+                .debug()
                     .map { $0?.tags ?? [] }
+                .debug()
                     .bind(to: observer )
                     .disposed(by: self.disposeBag)
             }.disposed(by: self.disposeBag)
@@ -140,7 +143,7 @@ class NetworkAPIManager{
     func uploadAllTasks() -> Observable<[GotResponseData]> {
         return Observable.create { observer -> Disposable in
             self.getMergedUnsyncedTasks().bind { info in
-                self.proviter.rx.request(.synchronize(["tasks": info]))
+                self.proviter.rx.request(.synchronize(["frequents": [], "tags": [], "tasks": info]))
                     .asObservable()
                     .map { try JSONDecoder().decode(SyncResponse.self,from: $0.data) }
                     .catchErrorJustReturn(nil)
@@ -177,7 +180,9 @@ class NetworkAPIManager{
                 "iconURL": "",
                 "isFinished": $0.isDone,
                 "isCheckedArrive": $0.onArrive,
-                "isCheckedLeave": $0.onDeparture
+                "isCheckedLeave": $0.onDeparture,
+                "isReadyArrive": $0.readyArrive,
+                "isReadyDeparture": $0.readyDeparture
             ]
             }}
     }

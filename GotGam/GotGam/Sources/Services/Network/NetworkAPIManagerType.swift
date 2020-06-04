@@ -17,4 +17,5 @@ enum NetworkAPIManagerError: Error{
   case syncTask(String)
   case download(String)
 }
+
 typealias SyncData<T> = (NSManagedObjectID, T)

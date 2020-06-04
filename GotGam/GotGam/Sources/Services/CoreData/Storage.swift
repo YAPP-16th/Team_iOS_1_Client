@@ -104,7 +104,7 @@ class Storage: StorageType {
     }
   
   //MARK: - Online
-  func syncTask(_ dataList: [(NSManagedObjectID, Got)]) -> Completable{
+  func syncTask(_ dataList: [SyncData<Got>]) -> Completable{
     return Completable.create { observer in
       for d in dataList{
         guard let managedGot = self.context.object(with: d.0) as? ManagedGot else {
@@ -193,7 +193,7 @@ extension Storage{
       }
     }
     
-    func syncTag(_ dataList: [(NSManagedObjectID, Tag)]) -> Completable{
+    func syncTag(_ dataList: [SyncData<Tag>]) -> Completable{
       return Completable.create { observer in
         for d in dataList{
           guard let managedTag = self.context.object(with: d.0) as? ManagedTag else {
