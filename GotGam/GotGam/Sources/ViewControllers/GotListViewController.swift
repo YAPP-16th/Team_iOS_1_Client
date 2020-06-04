@@ -232,6 +232,10 @@ extension GotListViewController: UITableViewDelegate {
         let gamAction = UIContextualAction(style: .normal, title: "감") { (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             guard let cell = tableView.cellForRow(at: indexPath) as? GotListTableViewCell else { return }
             cell.isChecked = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.viewModel.inputs.fetchRequest()
+            }
             success(true)
         }
         gamAction.backgroundColor = .saffron

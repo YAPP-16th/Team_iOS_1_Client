@@ -76,6 +76,10 @@ class GotListTableViewCell: UITableViewCell {
     
     @IBAction func didTapFinish(_ sender: UIButton) {
         isChecked.toggle()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.viewModel.inputs.fetchRequest()
+        }
     }
     
     // MARK: - Intializing

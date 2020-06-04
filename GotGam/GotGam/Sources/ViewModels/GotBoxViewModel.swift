@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -131,11 +132,11 @@ enum BoxItem {
 }
 
 extension BoxItem: IdentifiableType, Equatable {
-   typealias Identity = String
+   typealias Identity = NSManagedObjectID
 
    var identity: Identity {
        switch self {
-       case let .gotItem(got): return got.id
+       case let .gotItem(got): return got.objectId!
        }
    }
 }
