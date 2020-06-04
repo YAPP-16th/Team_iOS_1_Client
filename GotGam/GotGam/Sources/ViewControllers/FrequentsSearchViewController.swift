@@ -183,7 +183,23 @@ extension FrequentsSearchViewController: UICollectionViewDataSource{
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if indexPath.row == 0{
-			viewModel.inputs.showMapVC()
+			guard let currentLocation = LocationManager.shared.currentLocation else { return }
+			APIManager.shared.getPlace(longitude: currentLocation.longitude, latitude: currentLocation.latitude) { [weak self] (place) in
+				var tempPlace = place
+				tempPlace?.x = String(currentLocation.latitude)
+				tempPlace?.y = String(currentLocation.longitude)
+				self?.viewModel.placeBehavior.accept(tempPlace)
+				
+				self?.viewModel.moveFrequentsVC()
+			}
+				
+//			for controller in self.navigationController!.viewControllers as Array {
+//				if controller.isKind(of: FrequentsViewController.self) {
+//					_ =  self.navigationController!.popToViewController(controller, animated: true)
+//					break
+//				}
+//			}
+//
 		}else {
 			viewModel.inputs.showMapVC()
 		}

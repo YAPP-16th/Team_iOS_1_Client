@@ -71,6 +71,15 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 			
 			self.state = .update
 		}
+		
+	func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		viewModel.addressPlace
+			.bind(to: placeAddress.rx.text)
+			.disposed(by: disposeBag)
+	}
+
 	}
 	
 	func bindViewModel() {
@@ -85,7 +94,11 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 
 		placeAddress.rx.controlEvent(.touchDown)
 			.asObservable().subscribe(onNext:{ _ in
-				self.viewModel.inputs.moveSearchVC()
+				if self.viewModel.frequentOrigin == nil {
+					self.viewModel.inputs.moveSearchVC()
+				} else {
+					self.viewModel.inputs.moveSearchVC()
+				}
 			})
 			.disposed(by: disposeBag)
 		
@@ -100,26 +113,42 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 				}
 			}).disposed(by: disposeBag)
 
+		//도로명 주소 있을 때
 		viewModel.frequentsPlace
 			.compactMap { $0?.addressName }
 			.bind(to: placeAddress.rx.text)
 			.disposed(by: disposeBag)
-		
+
 		viewModel.frequentsPlace
 			.compactMap { $0?.addressName }
 			.bind(to: viewModel.addressPlace)
 			.disposed(by: disposeBag)
+
+		//도로명 주소 없을 때
+		viewModel.frequentsPlace
+			.compactMap { $0?.address?.addressName }
+			.bind(to: placeAddress.rx.text)
+			.disposed(by: disposeBag)
 		
+		viewModel.frequentsPlace
+			.compactMap { $0?.address?.addressName }
+			.bind(to: viewModel.addressPlace)
+			.disposed(by: disposeBag)
+		
+		//경도 위도 
 		viewModel.frequentsPlace
 			.compactMap { $0?.x }
 			.bind(to: viewModel.latitudePlace)
 			.disposed(by: disposeBag)
-			
+
 		viewModel.frequentsPlace
 			.compactMap { $0?.y }
 			.bind(to: viewModel.longitudePlace)
 			.disposed(by: disposeBag)
 		
+		viewModel.addressPlace
+			.bind(to: placeAddress.rx.text)
+			.disposed(by: disposeBag)
 		
 		icHomeBtn.rx.tap
 			.subscribe({ [weak self] _ in
