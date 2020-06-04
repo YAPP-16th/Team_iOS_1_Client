@@ -142,8 +142,12 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
             
             let pin = MTMapPOIItem()
             pin.markerType = .customImage
-            pin.customImage = UIImage(named: "icSeed2")
+            let seedImage = UIImage(named: "icSeed2")
+            pin.customImage = seedImage
+            let imageWidth = (seedImage?.size.width ?? 0)
+            pin.customImageAnchorPointOffset = .init(offsetX: Int32(imageWidth), offsetY: 0)
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: Double(location.latitude), longitude: Double(location.longitude)))
+            
             mapView?.addPOIItems([pin])
 
             let radius = viewModel.inputs.radiusSubject.value
