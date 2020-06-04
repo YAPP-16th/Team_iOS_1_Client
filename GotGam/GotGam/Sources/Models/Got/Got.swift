@@ -90,7 +90,7 @@ struct Got: Equatable {
         self.arriveMsg = ""
         self.deparetureMsg = ""
         self.insertedDate = insertDate
-        self.onArrive = false
+        self.onArrive = true
         self.onDeparture = false
         self.onDate = false
         self.tag = tag
