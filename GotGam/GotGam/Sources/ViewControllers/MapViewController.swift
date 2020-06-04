@@ -129,22 +129,23 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         mapView?.addCircle(circle)
     }
     @objc func didChangeRadius(slider: UISlider, event: UIEvent) {
+        guard let tag = currentCircle?.tag, let circle = mapView.findCircle(byTag: tag) else { return }
+        let meter = slider.value * 1000
+        
         if let touchEvent = event.allTouches?.first {
             switch touchEvent.phase {
             case .moved:
-                if let tag = currentCircle?.tag, let circle = mapView.findCircle(byTag: tag) {
-                    let meter = slider.value * 1000
-                    circle.circleRadius = meter
-                    mapView.addCircle(circle)
-                    circleRadiusLabel.text = "\(Int(meter))m"
-                    if tag != -1 {
-                        var got = gotList[tag]
-                        got.radius = Double(meter)
-                        viewModel.updateGot(got: got)
-                    }
-                }
+                circle.circleRadius = meter
+                mapView.addCircle(circle)
+                circleRadiusLabel.text = "\(Int(meter))m"
             case .ended:
-                mapView.fitArea(toShow: currentCircle)
+                if tag != -1 {
+                    var got = gotList[tag]
+                    got.radius = Double(meter)
+                    viewModel.updateGot(got: got)
+                } else {
+                    mapView.fitArea(toShow: currentCircle)
+                }
             default:
                 break
             }
