@@ -17,6 +17,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Properties
     var viewModel: MapViewModel!
     
+    class CardSwipeGesture: UISwipeGestureRecognizer {
+        var got: Got?
+    }
+    
     // MARK: - Views
     
     var mapView: MTMapView!
@@ -157,6 +161,13 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         let emptyTag = Tag(name: "", hex: "empty")
         tags.append(emptyTag)
         return tags
+    }
+    
+    @objc func swipeCard(gesture: CardSwipeGesture) {
+        if let got = gesture.got {
+            viewModel.input.showAddDetailVC(got: got)
+        }
+        
     }
     
     // MARK: - View Life Cycle
@@ -346,6 +357,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.viewModel.output.gotList
             .do(onNext: { [weak self] in self?.gotList = $0})
             .bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { (index, got, cell) in
+                
+                let swipeGesture = CardSwipeGesture(target: self, action: #selector(self.swipeCard(gesture:)))
+                swipeGesture.direction = .up
+                swipeGesture.got = got
+                cell.addGestureRecognizer(swipeGesture)
                 
                 cell.got = got
                 
