@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -20,6 +21,7 @@ protocol GotListViewModelInputs {
     var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
     var gotBoxSubject: PublishSubject<Void> { get set }
     var tagListCellSelect: PublishSubject<Void> { get set }
+    func changeIndex(at origin: IndexPath, to destination: IndexPath)
     
 }
 
@@ -27,6 +29,7 @@ protocol GotListViewModelOutputs {
     var gotSections: BehaviorRelay<[ListSectionModel]> { get }
     //var gotList: BehaviorRelay<[Got]> { get }
     var tagList: BehaviorRelay<[Tag]> { get }
+    var emptyTagList: BehaviorRelay<[Tag]> { get }
 }
 
 protocol GotListViewModelType {
@@ -37,24 +40,20 @@ protocol GotListViewModelType {
 
 class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelInputs, GotListViewModelOutputs {
     
-    
-    
-    
     // MARK: - Inputs
     
     func fetchRequest() {
        storage.fetchTagList()
-           .subscribe(onNext: { [weak self] in
-                self?.tagList.accept($0)
-           })
-           .disposed(by: disposeBag)
+            .bind(to: tagList)
+            .disposed(by: disposeBag)
+        
+        storage.fetchEmptyTagList()
+            .bind(to: emptyTagList)
+            .disposed(by: disposeBag)
        
        storage.fetchTaskList()
-           // .do(onNext: { print($0)})
            .map { $0.filter { $0.isDone != true }}
-           .subscribe(onNext: { [weak self] list in
-               self?.gotList.accept(list)
-           })
+            .bind(to: gotList)
            .disposed(by: disposeBag)
     }
     
@@ -84,11 +83,23 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     var gotBoxSubject = PublishSubject<Void>()
     var tagListCellSelect = PublishSubject<Void>()
     
+    func changeIndex(at origin: IndexPath, to destination: IndexPath) {
+        var orderedList = gotList.value
+        
+        let originGot = orderedList[origin.row]
+        let destGot = orderedList[destination.row]
+        orderedList[destination.row] = originGot
+        orderedList[origin.row] = destGot
+        gotList.accept(orderedList)
+        storage.reorderTask(toObjectID: destGot.objectId!, fromObjectID: originGot.objectId!)
+    }
+    
     // MARK: - Outputs
     
     var gotSections = BehaviorRelay<[ListSectionModel]>(value: [])
     var gotList = BehaviorRelay<[Got]>(value: [])
     var tagList = BehaviorRelay<[Tag]>(value: [])
+    var emptyTagList = BehaviorRelay<[Tag]>(value: [])
     
     // MARK: - Methods
     
@@ -156,11 +167,11 @@ enum ListItem {
 }
 
 extension ListItem: IdentifiableType, Equatable {
-   typealias Identity = String
+   typealias Identity = NSManagedObjectID
 
    var identity: Identity {
        switch self {
-       case let .gotItem(got): return got.id
+       case let .gotItem(got): return got.objectId!
        }
    }
 }

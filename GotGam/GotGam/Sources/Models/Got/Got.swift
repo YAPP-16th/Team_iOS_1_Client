@@ -79,18 +79,18 @@ struct Got: Equatable {
         self.title = updatedTitle
     }
     
-    init(id: String, title: String, latitude: Double, longitude: Double, place: String, insertDate: Date?, tag: Tag?){
+    init(id: String, title: String, latitude: Double, longitude: Double, radius: Double = 150, place: String, insertDate: Date? = nil, tag: Tag? = nil){
         self.id = id
         self.createdDate = Date()
         self.title = title
         self.latitude = latitude
         self.longitude = longitude
-        self.radius = 150
+        self.radius = radius
         self.place = place
         self.arriveMsg = ""
         self.deparetureMsg = ""
         self.insertedDate = insertDate
-        self.onArrive = false
+        self.onArrive = true
         self.onDeparture = false
         self.onDate = false
         self.tag = tag

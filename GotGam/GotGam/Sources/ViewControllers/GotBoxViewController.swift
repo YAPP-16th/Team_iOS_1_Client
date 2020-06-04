@@ -107,9 +107,14 @@ class GotBoxViewController: BaseViewController, ViewModelBindableType {
         
         viewModel.outputs.tagListRelay
             .compactMap { [weak self] in self?.appendEmptyTag($0) }
-            .bind(to: tagCollectionView.rx.items) { (collectionView, cellItem, tag) -> UICollectionViewCell in
+            .bind(to: tagCollectionView.rx.items) { [weak self] (collectionView, cellItem, tag) -> UICollectionViewCell in
                 if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
+                    if self?.viewModel.outputs.emptyTagList.value.contains(tag) ?? false {
+                        cell.isEmpty = true
+                    } else {
+                        cell.isEmpty = false
+                    }
                     cell.configure(tag)
                     cell.layer.cornerRadius = cell.bounds.height/2
                     return cell
@@ -202,7 +207,7 @@ extension GotBoxViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
-            
+            guard !cell.isEmpty else { return }
             cell.contentView.alpha = 1
         }
     }
@@ -215,6 +220,7 @@ extension GotBoxViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+            guard !cell.isEmpty else { return }
             cell.contentView.alpha = 1
         }
     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -23,6 +24,7 @@ protocol GotBoxViewModelOutputs {
     var boxSections: BehaviorRelay<[BoxSectionModel]> { get }
     //var gotList: BehaviorRelay<[Got]> { get }
     var tagListRelay: BehaviorRelay<[Tag]> { get }
+    var emptyTagList: BehaviorRelay<[Tag]> { get }
 }
 
 protocol GotBoxViewModelType {
@@ -44,6 +46,10 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
         
         storage.fetchTagList()
             .bind(to: tagListRelay)
+            .disposed(by: disposeBag)
+        
+        storage.fetchEmptyTagList()
+            .bind(to: emptyTagList)
             .disposed(by: disposeBag)
     }
     
@@ -73,7 +79,7 @@ class GotBoxViewModel: CommonViewModel, GotBoxViewModelType, GotBoxViewModelInpu
     
     var boxSections = BehaviorRelay<[BoxSectionModel]>(value: [])
     var tagListRelay = BehaviorRelay<[Tag]>(value: [])
-    
+    var emptyTagList = BehaviorRelay<[Tag]>(value: [])
     // MARK: - Methods
     
     func showShareList() {
@@ -126,11 +132,11 @@ enum BoxItem {
 }
 
 extension BoxItem: IdentifiableType, Equatable {
-   typealias Identity = String
+   typealias Identity = NSManagedObjectID
 
    var identity: Identity {
        switch self {
-       case let .gotItem(got): return got.id
+       case let .gotItem(got): return got.objectId!
        }
    }
 }

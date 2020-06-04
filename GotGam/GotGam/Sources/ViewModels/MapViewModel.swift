@@ -34,6 +34,7 @@ protocol MapViewModelInputs {
 protocol MapViewModelOutputs {
     var gotList: BehaviorSubject<[Got]> { get }
     var tagList: BehaviorSubject<[Tag]> { get }
+    var emptyTagList: BehaviorRelay<[Tag]> { get }
     var doneAction: PublishSubject<Got> { get }
 }
 
@@ -43,8 +44,6 @@ protocol MapViewModelType {
 }
 
 class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapViewModelOutputs {
-    
-    
     
     enum SeedState{
         case none
@@ -57,6 +56,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     var output: MapViewModelOutputs { return self }
     var gotList = BehaviorSubject<[Got]>(value: [])
     var tagList = BehaviorSubject<[Tag]>(value: [])
+    var emptyTagList = BehaviorRelay<[Tag]>(value: [])
     var doneAction = PublishSubject<Got>()
     
     //MARK: - Model Input
@@ -97,12 +97,14 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         
         APIManager.shared.getPlace(longitude: location.longitude, latitude: location.latitude) { [weak self] (place) in
             guard let self = self else { return }
-            let got = Got(id: "", title: self.addText.value, latitude: location.latitude, longitude: location.longitude, place: place?.address?.addressName ?? "", insertDate: Date(), tag: nil)
+
+            let got = Got(id: "", title: self.addText.value, latitude: location.latitude, longitude: location.longitude, radius: radius, place: place?.address?.addressName ?? "")
             
-                self.storage.createTask(task: got).bind(onNext: { _ in
-                    self.updateList()
-                    self.updateTagList()
-                }).disposed(by: self.disposeBag)
+            print("✅ create \(got)")
+            self.storage.createTask(task: got).bind(onNext: { _ in
+                self.updateList()
+                self.updateTagList()
+            }).disposed(by: self.disposeBag)
         }
         
     }
@@ -136,7 +138,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
                 self.updateList()
                 self.updateTagList()
             case .error(let error):
-                print(error.localizedDescription)
+                print("🚨🧨 \(error.localizedDescription)")
             }
         }.disposed(by: self.disposeBag)
         
@@ -172,6 +174,10 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         self.storage.fetchTagList().bind { (tagList) in
             self.tagList.onNext(tagList)
         }.disposed(by: self.disposeBag)
+        
+        self.storage.fetchEmptyTagList()
+            .bind(to: emptyTagList)
+            .disposed(by: disposeBag)
     }
 	
 	func showSearchVC() {
@@ -181,7 +187,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     
     func showShareList() {
         let shareListVM = ShareListViewModel(sceneCoordinator: sceneCoordinator)
-        sceneCoordinator.transition(to: .shareList(shareListVM), using: .modal, animated: true)
+        sceneCoordinator.transition(to: .shareList(shareListVM), using: .push, animated: true)
     }
 	
     var aimToPlace = BehaviorSubject<Bool>(value: false)

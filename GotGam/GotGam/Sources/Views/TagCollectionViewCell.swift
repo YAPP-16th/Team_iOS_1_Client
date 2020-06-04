@@ -11,6 +11,12 @@ import RxSwift
 
 class TagCollectionViewCell: UICollectionViewCell {
     
+    var isEmpty = false {
+        didSet {
+            contentView.alpha = isEmpty ? 0.3 : 1
+        }
+    }
+    
     func configure(_ tag: Tag) {
         tagView.backgroundColor = tag.hex.hexToColor()
         tagLabel.text = tag.name

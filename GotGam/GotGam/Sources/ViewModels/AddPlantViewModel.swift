@@ -112,7 +112,6 @@ class AddPlantViewModel: CommonViewModel, AddPlantViewModelType, AddPlantViewMod
             currentGot.onDate = isOnDate.value
             currentGot.tag = tag.value
             
-            
             storage.updateTask(taskObjectId: currentGot.objectId!, toUpdate: currentGot)
                 .subscribe(onNext: { [weak self] _ in
                     self?.sceneCoordinator.close(animated: true, completion: nil)
