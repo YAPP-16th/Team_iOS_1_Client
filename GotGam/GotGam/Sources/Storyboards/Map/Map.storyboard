@@ -122,13 +122,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sdfasdfaasdfasdfasdfasfasf" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vp2-6v-xZj">
-                                                    <rect key="frame" x="19" y="15" width="116" height="19"/>
+                                                    <rect key="frame" x="19" y="13.5" width="116" height="19"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r35-lJ-7h0">
-                                                    <rect key="frame" x="143" y="17.5" width="14" height="14"/>
+                                                    <rect key="frame" x="143" y="16" width="14" height="14"/>
                                                     <color key="backgroundColor" name="veryLightPink"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="9aD-OO-hkS"/>
@@ -136,7 +136,7 @@
                                                     </constraints>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP5-Rq-eDF">
-                                                    <rect key="frame" x="162" y="16.5" width="16" height="16"/>
+                                                    <rect key="frame" x="162" y="15" width="16" height="16"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="16" id="SSL-At-Ct4"/>
@@ -145,20 +145,20 @@
                                                     <color key="tintColor" name="saffron"/>
                                                     <state key="normal" image="candCancel"/>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 강남구 역삼72" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
-                                                    <rect key="frame" x="19" y="42" width="124" height="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 강남구 역삼72서울특별시 강남구 역삼72" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SG7-0v-hEX">
+                                                    <rect key="frame" x="19" y="40.5" width="176" height="28"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감 일시 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23O-JI-yYF">
-                                                    <rect key="frame" x="19" y="69" width="79.5" height="14"/>
+                                                    <rect key="frame" x="19" y="76.5" width="79.5" height="14"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메모 미지정" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VfK-3O-Idv">
-                                                    <rect key="frame" x="19" y="87" width="55.5" height="14"/>
+                                                    <rect key="frame" x="19" y="118" width="55.5" height="14"/>
                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                     <color key="textColor" name="brownishGrey"/>
                                                     <nil key="highlightedColor"/>
@@ -178,20 +178,23 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstItem="VfK-3O-Idv" firstAttribute="centerY" secondItem="wG2-5e-Ypr" secondAttribute="centerY" id="05I-IV-70J"/>
                                                 <constraint firstItem="KP5-Rq-eDF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r35-lJ-7h0" secondAttribute="trailing" constant="5" id="2Xl-Ls-7WX"/>
                                                 <constraint firstItem="23O-JI-yYF" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="BXt-mc-wdd"/>
                                                 <constraint firstAttribute="trailing" secondItem="wG2-5e-Ypr" secondAttribute="trailing" constant="14" id="EQ6-u3-Eng"/>
-                                                <constraint firstItem="KP5-Rq-eDF" firstAttribute="centerY" secondItem="vp2-6v-xZj" secondAttribute="centerY" id="HQr-WD-pdz"/>
                                                 <constraint firstItem="VfK-3O-Idv" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="I2t-nO-xkY"/>
                                                 <constraint firstItem="vp2-6v-xZj" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="KPc-RC-O5E"/>
-                                                <constraint firstItem="23O-JI-yYF" firstAttribute="top" secondItem="SG7-0v-hEX" secondAttribute="bottom" constant="13" id="PYi-3a-hkT"/>
-                                                <constraint firstItem="r35-lJ-7h0" firstAttribute="centerY" secondItem="vp2-6v-xZj" secondAttribute="centerY" id="XoL-GX-aei"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="23O-JI-yYF" secondAttribute="trailing" id="LTB-UJ-UmD"/>
+                                                <constraint firstItem="vp2-6v-xZj" firstAttribute="centerY" secondItem="KP5-Rq-eDF" secondAttribute="centerY" id="ZFE-r0-LcG"/>
                                                 <constraint firstItem="SG7-0v-hEX" firstAttribute="top" secondItem="vp2-6v-xZj" secondAttribute="bottom" constant="8" id="ZRN-fV-XAo"/>
                                                 <constraint firstAttribute="bottom" secondItem="wG2-5e-Ypr" secondAttribute="bottom" constant="16" id="ZTs-jr-e8J"/>
+                                                <constraint firstItem="23O-JI-yYF" firstAttribute="top" secondItem="SG7-0v-hEX" secondAttribute="bottom" constant="8" id="Zg7-76-U0f"/>
+                                                <constraint firstItem="r35-lJ-7h0" firstAttribute="centerY" secondItem="KP5-Rq-eDF" secondAttribute="centerY" id="ZtK-25-rcP"/>
                                                 <constraint firstItem="SG7-0v-hEX" firstAttribute="leading" secondItem="nbG-JQ-IuW" secondAttribute="leading" constant="19" id="dtf-0o-c2P"/>
+                                                <constraint firstItem="wG2-5e-Ypr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="23O-JI-yYF" secondAttribute="bottom" constant="2" id="eNE-Eu-KXb"/>
                                                 <constraint firstAttribute="trailing" secondItem="KP5-Rq-eDF" secondAttribute="trailing" constant="17" id="mk7-Iu-ca3"/>
-                                                <constraint firstItem="VfK-3O-Idv" firstAttribute="top" secondItem="23O-JI-yYF" secondAttribute="bottom" constant="4" id="suA-nr-B47"/>
-                                                <constraint firstItem="vp2-6v-xZj" firstAttribute="top" secondItem="nbG-JQ-IuW" secondAttribute="top" constant="15" id="uX8-pb-fx1"/>
+                                                <constraint firstAttribute="trailing" secondItem="SG7-0v-hEX" secondAttribute="trailing" id="n1n-c3-JNw"/>
+                                                <constraint firstItem="KP5-Rq-eDF" firstAttribute="top" secondItem="nbG-JQ-IuW" secondAttribute="top" constant="15" id="pwb-S4-mMW"/>
                                                 <constraint firstItem="r35-lJ-7h0" firstAttribute="leading" secondItem="vp2-6v-xZj" secondAttribute="trailing" constant="8" id="wV1-g8-8uT"/>
                                             </constraints>
                                         </collectionViewCellContentView>
