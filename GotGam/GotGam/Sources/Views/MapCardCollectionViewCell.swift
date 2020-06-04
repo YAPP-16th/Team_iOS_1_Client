@@ -34,6 +34,11 @@ class MapCardCollectionViewCell: UICollectionViewCell{
             titleLabel.text = got.title
             addressLabel.text = got.place
             dueDateLabel.text = self.dateFormatter.string(from: got.insertedDate ?? Date())
+            if !(got.arriveMsg.isEmpty && got.deparetureMsg.isEmpty) {
+                memoLabel.text = got.arriveMsg == "" ? got.deparetureMsg : got.arriveMsg
+            }
+            
+            
             tagView.backgroundColor = got.tag?.hex.hexToColor()
         }
     }

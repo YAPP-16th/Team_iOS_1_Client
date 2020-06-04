@@ -65,7 +65,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.cardCollectionView.reloadData()
                 self.addPin()
             }
-            
+            if gotList.isEmpty {
+                currentCircle = nil
+            }
         }
     }
     var currentCircle: MTMapCircle? {
@@ -415,8 +417,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                     self?.viewModel.input.tagListCellSelect.onNext(())
                     return
                 } else if var tags = self?.viewModel.input.filteredTagSubject.value {
-                    tags.append(tag)
-                    self?.viewModel.input.filteredTagSubject.accept(tags)
+                    if !tags.contains(tag) {
+                        tags.append(tag)
+                        self?.viewModel.input.filteredTagSubject.accept(tags)
+                    }
+                    
                 }
             }
             .disposed(by: disposeBag)
@@ -518,7 +523,12 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             let pin = MTMapPOIItem()
             pin.itemName = got.title
             pin.markerType = .customImage
-            pin.customImage = UIImage(named: "icPin1")
+            let gamImage = UIImage(named: "icPin1")
+            pin.customImage = gamImage
+            let gamWidth = (gamImage?.size.width ?? .zero)
+            let gamHeight = (gamImage?.size.height ?? .zero)
+            pin.customImageAnchorPointOffset = .init(offsetX: Int32(gamWidth*0.9), offsetY: Int32(gamHeight*0.5))
+            
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.latitude, longitude: got.longitude))
             //pin.showAnimationType = .springFromGround
             pin.tag = i
