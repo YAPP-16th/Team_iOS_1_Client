@@ -21,6 +21,7 @@ protocol GotListViewModelInputs {
     var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
     var gotBoxSubject: PublishSubject<Void> { get set }
     var tagListCellSelect: PublishSubject<Void> { get set }
+    func changeIndex(at origin: IndexPath, to destination: IndexPath)
     
 }
 
@@ -81,6 +82,17 @@ class GotListViewModel: CommonViewModel, GotListViewModelType, GotListViewModelI
     
     var gotBoxSubject = PublishSubject<Void>()
     var tagListCellSelect = PublishSubject<Void>()
+    
+    func changeIndex(at origin: IndexPath, to destination: IndexPath) {
+        var orderedList = gotList.value
+        
+        let originGot = orderedList[origin.row]
+        let destGot = orderedList[destination.row]
+        orderedList[destination.row] = originGot
+        orderedList[origin.row] = destGot
+        gotList.accept(orderedList)
+        storage.reorderTask(toObjectID: destGot.objectId!, fromObjectID: originGot.objectId!)
+    }
     
     // MARK: - Outputs
     

@@ -10,10 +10,13 @@ import CoreData
 import RxSwift
  //MARK: - TaskStorageType
 class Storage: StorageType {
+    
+    
    
   //MARK: - Offline
   
   private let context = DBManager.share.context
+    
   func createTask(task: Got) -> Observable<Got> {
     let managedGot = ManagedGot(context: self.context)
     managedGot.fromGot(got: task)
@@ -81,6 +84,24 @@ class Storage: StorageType {
       return .error(StorageError.delete(error.localizedDescription))
     }
   }
+    
+    func reorderTask(toObjectID origin: NSManagedObjectID, fromObjectID destination: NSManagedObjectID) {
+        guard
+            let fromManagedGot = self.context.object(with: origin) as? ManagedGot,
+            let toManagedGot = self.context.object(with: destination) as? ManagedGot
+            else { return }
+        
+        let fromGot = fromManagedGot.toGot()
+        let toGot = toManagedGot.toGot()
+        
+        do {
+            fromManagedGot.fromGot(got: toGot)
+            toManagedGot.fromGot(got: fromGot)
+            try context.save()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
   
   //MARK: - Online
   func syncTask(_ dataList: [(NSManagedObjectID, Got)]) -> Completable{

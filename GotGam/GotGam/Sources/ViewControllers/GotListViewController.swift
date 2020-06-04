@@ -65,6 +65,10 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         tagCollectionView.register(tagNibName, forCellWithReuseIdentifier: "tagCell")
         let tagListNibName = UINib(nibName: "TagListCollectionViewCell", bundle: nil)
         tagCollectionView.register(tagListNibName, forCellWithReuseIdentifier: "tagListCollectionViewCell")
+        
+        gotListTableView.dragInteractionEnabled = true
+        gotListTableView.dragDelegate = self
+        gotListTableView.dropDelegate = self
     }
   
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +89,34 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
         gotListTableView.rx.setDelegate(self).disposed(by: disposeBag)
         tagCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         tagCollectionView.allowsSelection = true
+        
+        // Outputes
+        
+        let dataSource = GotListViewController.dataSource(viewModel: viewModel, vc: self)
+        viewModel.outputs.gotSections
+            .bind(to: gotListTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.tagList
+            .compactMap { [weak self] in self?.appendEmptyTag($0) }
+            .bind(to: tagCollectionView.rx.items) { [weak self] (collectionView, cellItem, tag) -> UICollectionViewCell in
+                if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
+                    if self?.viewModel.outputs.emptyTagList.value.contains(tag) ?? false {
+                        cell.isEmpty = true
+                    } else {
+                        cell.isEmpty = false
+                    }
+                    cell.configure(tag)
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagListCollectionViewCell", for: IndexPath(item: cellItem, section: 0)) as? TagListCollectionViewCell else { return UICollectionViewCell()}
+                    cell.layer.cornerRadius = cell.bounds.height/2
+                    return cell
+                }
+            }
+            .disposed(by: disposeBag)
         
         // Inputs
         
@@ -114,6 +146,16 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
             }
             .disposed(by: disposeBag)
         
+        gotListTableView.rx.itemMoved
+            .asDriver()
+            .drive(onNext: { [weak self] source, destination in
+                guard source != destination else { return }
+                //print("👀 \(source), \(destination)")
+                self?.viewModel.inputs.changeIndex(at: source, to: destination)
+                //self?.gotListTableView.moveRow(at: source, to: destination)
+            })
+            .disposed(by: disposeBag)
+        
         Observable.zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(Tag.self))
             .bind { [weak self] indexPath, tag in
                 
@@ -138,33 +180,7 @@ class GotListViewController: BaseViewController, ViewModelBindableType {
             }
             .disposed(by: disposeBag)
         
-        // Outputes
         
-        let dataSource = GotListViewController.dataSource(viewModel: viewModel, vc: self)
-        viewModel.outputs.gotSections
-            .bind(to: gotListTableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
-        viewModel.outputs.tagList
-            .compactMap { [weak self] in self?.appendEmptyTag($0) }
-            .bind(to: tagCollectionView.rx.items) { [weak self] (collectionView, cellItem, tag) -> UICollectionViewCell in
-                if cellItem != collectionView.numberOfItems(inSection: 0)-1 {
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: IndexPath(item: cellItem, section: 0)) as? TagCollectionViewCell else { return UICollectionViewCell()}
-                    if self?.viewModel.outputs.emptyTagList.value.contains(tag) ?? false {
-                        cell.isEmpty = true
-                    } else {
-                        cell.isEmpty = false
-                    }
-                    cell.configure(tag)
-                    cell.layer.cornerRadius = cell.bounds.height/2
-                    return cell
-                } else {
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagListCollectionViewCell", for: IndexPath(item: cellItem, section: 0)) as? TagListCollectionViewCell else { return UICollectionViewCell()}
-                    cell.layer.cornerRadius = cell.bounds.height/2
-                    return cell
-                }
-            }
-            .disposed(by: disposeBag)
     }
 
     
@@ -207,6 +223,9 @@ extension GotListViewController {
                 case .gotItem(_):
                     return true
                 }
+            },
+            canMoveRowAtIndexPath: { dataSource, index in
+                return true
             }
         )
     }
@@ -240,6 +259,26 @@ extension GotListViewController: UITableViewDelegate {
         }
         gamAction.backgroundColor = .saffron
         return UISwipeActionsConfiguration(actions: [gamAction])
+    }
+}
+
+extension GotListViewController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+}
+
+extension GotListViewController: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+
+        if session.localDragSession != nil { // Drag originated from the same app.
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
     }
 }
 
