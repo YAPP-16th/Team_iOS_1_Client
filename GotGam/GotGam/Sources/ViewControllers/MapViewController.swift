@@ -65,7 +65,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.cardCollectionView.reloadData()
                 self.addPin()
             }
-            
+            if gotList.isEmpty {
+                currentCircle = nil
+            }
         }
     }
     var currentCircle: MTMapCircle? {
@@ -415,8 +417,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                     self?.viewModel.input.tagListCellSelect.onNext(())
                     return
                 } else if var tags = self?.viewModel.input.filteredTagSubject.value {
-                    tags.append(tag)
-                    self?.viewModel.input.filteredTagSubject.accept(tags)
+                    if !tags.contains(tag) {
+                        tags.append(tag)
+                        self?.viewModel.input.filteredTagSubject.accept(tags)
+                    }
+                    
                 }
             }
             .disposed(by: disposeBag)

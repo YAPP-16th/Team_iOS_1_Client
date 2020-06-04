@@ -44,26 +44,26 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="gotListCell" id="UXA-Sp-RyR" customClass="GotListTableViewCell" customModule="GotGam" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="792"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="793.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UXA-Sp-RyR" id="awT-hN-1Be">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="792"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="793.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Ufg-M5-6ld">
-                                                    <rect key="frame" x="80" y="11" width="276" height="770"/>
+                                                    <rect key="frame" x="80" y="11" width="276" height="771.5"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HtP-GR-FpJ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="276" height="256.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="276" height="257"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="멍게비빔밥 맛집" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CzE-K1-K65">
-                                                                    <rect key="frame" x="30" y="116.5" width="107" height="24"/>
+                                                                    <rect key="frame" x="30" y="119" width="101.5" height="19"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
                                                                     <color key="textColor" name="brownishGrey"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VfX-Ih-PhZ">
-                                                                    <rect key="frame" x="145" y="121.5" width="14" height="14"/>
+                                                                    <rect key="frame" x="139.5" y="121.5" width="14" height="14"/>
                                                                     <color key="backgroundColor" name="softBlue"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="14" id="HFN-hh-8b8"/>
@@ -93,10 +93,10 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51g-Gz-xGi">
-                                                            <rect key="frame" x="0.0" y="256.5" width="276" height="257"/>
+                                                            <rect key="frame" x="0.0" y="257" width="276" height="257.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="서울특별시 서대문구 가재울로4길 47길 남도정식  시 서대문구 가재울로4길 47길 남도정식 " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6b-pW-MlV">
-                                                                    <rect key="frame" x="0.0" y="110.5" width="276" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="115" width="276" height="28"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                                     <color key="textColor" name="brownGrey"/>
                                                                     <nil key="highlightedColor"/>
@@ -111,16 +111,16 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iDZ-yZ-oaC">
-                                                            <rect key="frame" x="0.0" y="513.5" width="276" height="256.5"/>
+                                                            <rect key="frame" x="0.0" y="514.5" width="276" height="257"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감 일시가 없습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wHK-bb-Fj0">
-                                                                    <rect key="frame" x="5" y="119" width="108.5" height="18"/>
+                                                                    <rect key="frame" x="5" y="121.5" width="103.5" height="14"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                                     <color key="textColor" name="brownishGrey"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NV7-MX-Vxp">
-                                                                    <rect key="frame" x="133.5" y="128" width="0.0" height="0.0"/>
+                                                                    <rect key="frame" x="128.5" y="128.5" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                                     <color key="textColor" name="brownishGrey"/>
                                                                     <nil key="highlightedColor"/>
@@ -141,7 +141,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWr-tD-7Yt">
-                                                    <rect key="frame" x="10" y="361" width="70" height="70"/>
+                                                    <rect key="frame" x="10" y="362" width="70" height="70"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="70" id="1PO-jI-xuo"/>
                                                         <constraint firstAttribute="width" secondItem="OWr-tD-7Yt" secondAttribute="height" multiplier="1:1" id="Kte-RX-bsb"/>
@@ -155,7 +155,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nhw-hc-LZO">
-                                                    <rect key="frame" x="364" y="386" width="30" height="20"/>
+                                                    <rect key="frame" x="364" y="387" width="30" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="qdD-cz-DFj"/>
                                                         <constraint firstAttribute="height" constant="20" id="sV6-um-k9j"/>
@@ -226,7 +226,7 @@
                                         </constraints>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dxm-Uy-DeO">
-                                        <rect key="frame" x="47" y="11.5" width="54.5" height="27"/>
+                                        <rect key="frame" x="47" y="14.5" width="53.5" height="21.5"/>
                                         <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -417,13 +417,13 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8j-0Q-qae">
-                                                                    <rect key="frame" x="30" y="0.0" width="43.5" height="20.5"/>
+                                                                    <rect key="frame" x="30" y="0.5" width="39.5" height="19"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="16"/>
                                                                     <color key="textColor" name="brownishGrey"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="56O-fD-FwI">
-                                                                    <rect key="frame" x="81.5" y="3" width="14" height="14"/>
+                                                                    <rect key="frame" x="77.5" y="3" width="14" height="14"/>
                                                                     <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="56O-fD-FwI" secondAttribute="height" multiplier="1:1" id="QeB-Cw-VMa"/>
@@ -447,7 +447,7 @@
                                                             <rect key="frame" x="0.0" y="20.5" width="336" height="20"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MvR-Au-f4x">
-                                                                    <rect key="frame" x="5" y="1" width="331" height="18"/>
+                                                                    <rect key="frame" x="5" y="3" width="331" height="14"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                                     <color key="textColor" name="brownGrey"/>
                                                                     <nil key="highlightedColor"/>
@@ -465,13 +465,13 @@
                                                             <rect key="frame" x="0.0" y="40.5" width="336" height="20.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020. 06 .12 .금 에 감" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pwK-E3-yek" customClass="PaddingLabel" customModule="GotGam" customModuleProvider="target">
-                                                                    <rect key="frame" x="5" y="1.5" width="114" height="18"/>
+                                                                    <rect key="frame" x="5" y="3.5" width="111.5" height="14"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                                     <color key="textColor" name="saffron"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="꼭 방문하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w4B-Qd-cBj">
-                                                                    <rect key="frame" x="129" y="1.5" width="58" height="18"/>
+                                                                    <rect key="frame" x="126.5" y="3.5" width="55.5" height="14"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="12"/>
                                                                     <color key="textColor" name="brownishGrey"/>
                                                                     <nil key="highlightedColor"/>
