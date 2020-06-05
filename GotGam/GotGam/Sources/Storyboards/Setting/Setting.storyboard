@@ -914,24 +914,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xa9-j6-cKX">
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq9-xb-8zm">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </webView>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="xa9-j6-cKX" firstAttribute="leading" secondItem="nyJ-7f-aLg" secondAttribute="leading" id="0Yj-A8-Ugp"/>
-                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="bottom" secondItem="xa9-j6-cKX" secondAttribute="bottom" id="5Th-51-yr4"/>
-                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="trailing" secondItem="xa9-j6-cKX" secondAttribute="trailing" id="OFu-L2-zja"/>
-                            <constraint firstItem="xa9-j6-cKX" firstAttribute="top" secondItem="nyJ-7f-aLg" secondAttribute="top" id="pub-Hy-z2E"/>
+                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="trailing" secondItem="Bq9-xb-8zm" secondAttribute="trailing" id="JdI-mc-1ax"/>
+                            <constraint firstItem="Bq9-xb-8zm" firstAttribute="top" secondItem="nyJ-7f-aLg" secondAttribute="top" id="UPD-oX-iRA"/>
+                            <constraint firstItem="Bq9-xb-8zm" firstAttribute="leading" secondItem="nyJ-7f-aLg" secondAttribute="leading" id="iHk-fa-PUZ"/>
+                            <constraint firstItem="nyJ-7f-aLg" firstAttribute="bottom" secondItem="Bq9-xb-8zm" secondAttribute="bottom" id="u6y-7r-82s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nyJ-7f-aLg"/>
                     </view>
                     <navigationItem key="navigationItem" id="Rep-Tx-WVB"/>
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>
-                        <outlet property="webView" destination="xa9-j6-cKX" id="Mcm-Mc-tuw"/>
+                        <outlet property="webView" destination="Bq9-xb-8zm" id="3ch-bY-3I2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="opG-rJ-wp3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1008,7 +1012,7 @@
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="YDp-ya-fgi">
-                        <rect key="frame" x="0.0" y="44" width="414" height="103.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

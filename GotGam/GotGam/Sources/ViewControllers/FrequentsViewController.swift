@@ -76,6 +76,11 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		navigationController?.isNavigationBarHidden = false
 		navigationController?.interactivePopGestureRecognizer?.delegate = nil
 	}
+
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
 	
 	func bindViewModel() {
 		

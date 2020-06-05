@@ -7,18 +7,20 @@
 //
 
 import Foundation
+import WebKit
 
 class SettingOtherDetailViewController: BaseViewController, ViewModelBindableType {
 	var viewModel: SettingOtherDetailViewModel!
 	
-	@IBOutlet var webView: UIWebView!
+	@IBOutlet var webView: WKWebView!
+//	@IBOutlet var webView: UIWebView!
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		presentationController?.delegate = self
 		
 		let localFilePath = Bundle.main.url(forResource: self.viewModel.fileName, withExtension: "html")
 		let request = URLRequest(url: localFilePath!)
-		webView.loadRequest(request)
+		webView.load(request)
 		
 	}
 
