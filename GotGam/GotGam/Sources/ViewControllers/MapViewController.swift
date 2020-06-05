@@ -186,11 +186,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.seedImageView.isHidden = true
         self.restoreView.isHidden = true
 		
-		if !gotList.isEmpty {
-            setCard(index: 0)
-        } else {
-            currentCircle = nil
-        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -205,7 +201,11 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.viewModel.updateList()
         self.viewModel.updateTagList()
 		
-		
+		if !gotList.isEmpty {
+			setCard(index: 0)
+		} else {
+			currentCircle = nil
+		}
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -379,7 +379,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                         self.currentCircle = nil
                     }).disposed(by: cell.disposeBag)
                 
-                self.setCard(index: 0)
+                
             }.disposed(by: self.disposeBag)
         
         viewModel.output.tagList
@@ -549,6 +549,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: currentLocation.latitude, longitude: currentLocation.longitude)), animated: true)
                 mapView.currentLocationTrackingMode = .onWithoutHeading
                 mapView.showCurrentLocationMarker = true
+				let icon = MTMapLocationMarkerItem()
+				icon.customTrackingImageName = "icCurrent"
+				mapView.updateCurrentLocationMarker(icon)
             @unknown default:
                 break
             }
@@ -574,7 +577,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         let got = gotList[index]
         let geo = MTMapPointGeo(latitude: got.latitude, longitude: got.longitude)
         self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
-        centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
         mapView.removeAllCircles()
         drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: index)
         centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
@@ -587,7 +589,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 	
 	func updateAddress() {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
-		//self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: 0, longitude: 0)), animated: true)
+		currentCircle = nil
+		self.seedImageView.isHidden = false
 	}
     
     func linkTest(){

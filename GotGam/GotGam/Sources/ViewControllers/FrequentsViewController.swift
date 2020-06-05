@@ -72,6 +72,11 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		}
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = false
+		navigationController?.interactivePopGestureRecognizer?.delegate = nil
+	}
+	
 	func bindViewModel() {
 		
 		placeName.rx.text.orEmpty

@@ -54,6 +54,8 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 		okay.layer.cornerRadius = 17
 		currentBtn.layer.cornerRadius = currentBtn.frame.height / 2
 		currentBtn.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
+		
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -88,7 +90,6 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 			updateAddress()
 		} else {
 			setMyLocation()
-//			self.addPin()
 		}
 	}
 	
@@ -98,6 +99,9 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 		mapView.baseMapType = .standard
 		self.view.addSubview(mapView)
 		self.view.sendSubviewToBack(mapView)
+		
+		mapView.currentLocationTrackingMode = .off
+		mapView.showCurrentLocationMarker = false
 	}
 	
 	
@@ -132,6 +136,10 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 				
 				x = LocationManager.shared.currentLocation!.longitude
 				y = LocationManager.shared.currentLocation!.latitude
+				
+				mapView.currentLocationTrackingMode = .off
+				mapView.showCurrentLocationMarker = false
+				
             }
             
         }

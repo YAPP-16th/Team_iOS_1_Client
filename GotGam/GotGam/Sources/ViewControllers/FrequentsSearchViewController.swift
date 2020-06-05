@@ -49,6 +49,10 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		
 		viewModel.inputs.readKeyword()
 	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = true
+	}
 	
 	func bindViewModel() {
 		searchBar.rx.controlEvent(.primaryActionTriggered)
