@@ -85,7 +85,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
     }
     
     func savePlace(location: CLLocationCoordinate2D) {
-        placeSubject.onNext(location)
+        //placeSubject.onNext(location)
         sceneCoordinator.pop(animated: true, completion: nil)
     }
     func quickAdd(location: CLLocationCoordinate2D, radius: Double) {
@@ -182,7 +182,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
 	
 	func showSearchVC() {
 		let movesearchVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator)
-        sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .fullScreen, animated: false)
+        sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .push, animated: false)
 	}
     
     func showShareList() {
@@ -190,9 +190,9 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
         sceneCoordinator.transition(to: .shareList(shareListVM), using: .push, animated: true)
     }
 	
-    var aimToPlace = BehaviorSubject<Bool>(value: false)
-    var placeSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
-    var beforeGotSubject = BehaviorRelay<Got?>(value: nil)
+//    var aimToPlace = BehaviorSubject<Bool>(value: false)
+//    var placeSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: nil)
+//    var beforeGotSubject = BehaviorRelay<Got?>(value: nil)
     private var originGotList = BehaviorRelay<[Got]>(value: [])
     
     override init(sceneCoordinator: SceneCoordinatorType) {
@@ -215,6 +215,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
             .disposed(by: disposeBag)
         
         originGotList
+            .do { print("🚨🚨 origin Updated")}
             .subscribe(onNext: { [weak self] gotList in
                 self?.gotList.onNext(gotList)
             })
