@@ -36,7 +36,13 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
     var profileImage = PublishSubject<UIImage>()
     
     func updateUserInfo() {
-        self.userInfo.onNext(nil)
+        if UserDefaults.standard.bool(forDefines: .isLogined), let userId = UserDefaults.standard.string(forDefines: .userID){
+            NetworkAPIManager.shared.getUser(email: userId) { user in
+                self.userInfo.onNext(user)
+            }
+        }else{
+            self.userInfo.onNext(nil)
+        }
     }
     
     

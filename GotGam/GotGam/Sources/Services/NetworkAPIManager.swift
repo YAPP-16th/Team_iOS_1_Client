@@ -32,10 +32,33 @@ class NetworkAPIManager{
     var email: String{
         return UserDefaults.standard.string(forDefines: .userID)!
     }
+
+    func getUser(email: String, completion: @escaping (UserResponseData?) -> Void){
+        provider.request(.getUser(email)) { (result) in
+            switch result{
+            case .success(let response):
+                do{
+                    let jsonDecoder = JSONDecoder()
+                    let user = try jsonDecoder.decode(LoginResponse.self, from: response.data)
+                    completion(user.user)
+                }catch let error{
+                    print(error.localizedDescription)
+                    completion(nil)
+                }
+            case .failure(let error):
+                print(error)
+                completion(nil)
+            }
+        }
+    }
     
-    
-    
-    
+    func getProfileImage(url urlString: String, completion: @escaping ((UIImage) -> Void)){
+        AF.download(urlString).responseData { result in
+            if let data = result.value, let image = UIImage(data: data){
+                completion(image)
+            }
+        }
+    }
     
     //MARK: - User Info
     func downloadImage(url: String) -> Observable<UIImage>{

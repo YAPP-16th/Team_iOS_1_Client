@@ -55,9 +55,9 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 	}
 	
 	func moveFrequentsVC() {
-		let moveFrequentsVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		let moveFrequentsVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator)
 		moveFrequentsVM.frequentsPlace.accept(frequentsPlaceSearch.value)
-		sceneCoordinator.pop(animated: true)
+        sceneCoordinator.pop(animated: true, completion: nil)
 	}
 	
 	var inputs: FrequentsSearchViewModelInputs { return self }

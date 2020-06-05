@@ -39,17 +39,17 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
     
     func getUserInfo() {
         guard let email = UserDefaults.standard.string(forDefines: .userID) else { return }
-//        NetworkAPIManager.shared.getUser(email: email) { [weak self] (user) in
-//            if let user = user{
-//                self?.userInfo.onNext(user)
-//            }
-//        }
+        NetworkAPIManager.shared.getUser(email: email) { [weak self] (user) in
+            if let user = user{
+                self?.userInfo.onNext(user)
+            }
+        }
     }
     
     func getProfileImage(url: String) {
-//        NetworkAPIManager.shared.getProfileImage(url: url) { (image) in
-//            self.profileImage.onNext(image)
-//        }
+        NetworkAPIManager.shared.getProfileImage(url: url) { (image) in
+            self.profileImage.onNext(image)
+        }
     }
     
     func logout() {
