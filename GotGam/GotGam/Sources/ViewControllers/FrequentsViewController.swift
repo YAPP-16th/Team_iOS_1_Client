@@ -51,8 +51,7 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		placeAddress.layer.borderColor = UIColor.saffron.cgColor
 		placeAddress.layer.borderWidth = 1.0
 		placeAddress.layer.cornerRadius = 17
-		
-		
+
 		if var frequents = self.viewModel.frequentOrigin{
 			//Update logic
 			placeName.text = frequents.name
@@ -71,15 +70,6 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 			
 			self.state = .update
 		}
-		
-	func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		
-		viewModel.addressPlace
-			.bind(to: placeAddress.rx.text)
-			.disposed(by: disposeBag)
-	}
-
 	}
 	
 	func bindViewModel() {
@@ -89,16 +79,12 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 			.disposed(by: disposeBag)
 		
 		placeAddress.rx.text.orEmpty
-		.bind(to: viewModel.inputs.addressPlace)
-		.disposed(by: disposeBag)
+			.bind(to: viewModel.inputs.addressPlace)
+			.disposed(by: disposeBag)
 
 		placeAddress.rx.controlEvent(.touchDown)
 			.asObservable().subscribe(onNext:{ _ in
-				if self.viewModel.frequentOrigin == nil {
-					self.viewModel.inputs.moveSearchVC()
-				} else {
-					self.viewModel.inputs.moveSearchVC()
-				}
+				self.viewModel.inputs.moveSearchVC()
 			})
 			.disposed(by: disposeBag)
 		

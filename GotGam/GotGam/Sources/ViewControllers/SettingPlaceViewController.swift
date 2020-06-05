@@ -90,7 +90,6 @@ extension SettingPlaceViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		if indexPath.section == 0 {
 			let editAction = UIContextualAction(style: .normal, title: "수정") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-//			let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath ) as! PlaceCell
 				guard let self = self else {return}
 				let frequent = self.placeList[indexPath.row]
 				self.viewModel.inputs.detailVC(frequent: frequent)
@@ -165,10 +164,7 @@ class PlaceAddCell: UITableViewCell {
 	@IBOutlet var placeAddButton: UIButton!
 	@IBOutlet var placeAddLabel: UILabel!
 	var viewModel: SettingPlaceViewModel?
-	
-//	func configure(viewModel: SettingPlaceViewModel) {
-//		self.viewModel = viewModel
-//	}
+
 	@IBAction func placeAddButton(_ sender: Any) {
 		viewModel?.inputs.showFrequentsDetailVC()
 	}
@@ -176,14 +172,6 @@ class PlaceAddCell: UITableViewCell {
 }
 
 class PlaceCell: UITableViewCell{
-	
-	
-	
-	func configure(_ frequent: Frequent) {
-        placeNameLabel.text = frequent.name
-		placeAddressLabel.text = frequent.address
-    }
-	
 	@IBOutlet var placeNameLabel: UILabel!
 	@IBOutlet var placeAddressLabel: UILabel!
 	@IBOutlet var placeIconImageView: UIImageView!

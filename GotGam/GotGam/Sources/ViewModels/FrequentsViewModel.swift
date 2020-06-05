@@ -20,7 +20,6 @@ protocol FrequentsViewModelInputs {
 
 	func addFrequents()
 	func updateFrequents()
-	func readFrequents()
 	func moveSearchVC()
 }
 
@@ -80,33 +79,17 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 			
 			storagePlace.updateFrequents(frequent: frequent)
 				.bind { _ in
-					self.readFrequents()
+					self.sceneCoordinator.close(animated: true, completion: nil)
 			}.disposed(by: self.disposeBag)
 			
 		}
 		
 		
 	}
-
-	func readFrequents() {
-		let storage = FrequentsStorage()
-		storage.fetchFrequents()
-			.bind { (frequentsList) in
-				self.frequentsList.onNext(frequentsList)
-				self.sceneCoordinator.close(animated: true, completion: nil)
-			}
-			.disposed(by: disposeBag)
-	}
 	
 	func moveSearchVC(){
 		let movesearchVM = FrequentsSearchViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
-		if frequentOrigin == nil {
-			movesearchVM.frequentsPlaceSearch.bind(to: frequentsPlace).disposed(by: disposeBag)
-		} else {
-//			movesearchVM.frequentsOrigin?.address = frequentOrigin?.address ?? ""
-			movesearchVM.frequentsOrigin = frequentOrigin
-		}
-		
+		movesearchVM.frequentsPlaceSearch.bind(to: frequentsPlace).disposed(by: disposeBag)
         sceneCoordinator.transition(to: .frequentsSearch(movesearchVM), using: .push, animated: true)
 	}
 	
