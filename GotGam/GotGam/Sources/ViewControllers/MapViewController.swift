@@ -185,6 +185,12 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
         self.restoreView.isHidden = true
+		
+		if !gotList.isEmpty {
+            setCard(index: 0)
+        } else {
+            currentCircle = nil
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -198,17 +204,10 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
         self.viewModel.updateList()
         self.viewModel.updateTagList()
+		
+		
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if !gotList.isEmpty {
-            setCard(index: 0)
-        } else {
-            currentCircle = nil
-        }
-    }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
@@ -588,6 +587,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 	
 	func updateAddress() {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
+		//self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: 0, longitude: 0)), animated: true)
 	}
     
     func linkTest(){

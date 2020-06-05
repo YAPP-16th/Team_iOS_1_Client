@@ -98,18 +98,35 @@ struct Got: Equatable {
         self.readyArrive = false
         self.readyDeparture = false
     }
+	
+	public static func ==(lhs: Got, rhs: Got) -> Bool{
+		return lhs.objectId == rhs.objectId
+			&& lhs.tag == rhs.tag
+			&& lhs.title == rhs.title
+			&& lhs.latitude == rhs.latitude
+			&& lhs.longitude == rhs.longitude
+			&& lhs.isDone == rhs.isDone
+			&& lhs.place == rhs.place
+			&& lhs.insertedDate == rhs.insertedDate
+	}
 }
 
-func ==(lhs: Got, rhs: Got) -> Bool{
-    return lhs.id == rhs.id
-        && lhs.tag == rhs.tag
-        && lhs.title == rhs.title
-        && lhs.latitude == rhs.latitude
-        && lhs.longitude == rhs.longitude
-        && lhs.isDone == rhs.isDone
-        && lhs.place == rhs.place
-        && lhs.insertedDate == rhs.insertedDate
-}
+//func ==(lhs: Got, rhs: Got) -> Bool{
+//	return lhs.objectId == rhs.objectId
+////	if lhs.id == "", rhs.id == "" {
+////		return lhs.objectId == rhs.objectId
+////	} else {
+////		return lhs.id == rhs.id
+////			&& lhs.tag == rhs.tag
+////			&& lhs.title == rhs.title
+////			&& lhs.latitude == rhs.latitude
+////			&& lhs.longitude == rhs.longitude
+////			&& lhs.isDone == rhs.isDone
+////			&& lhs.place == rhs.place
+////			&& lhs.insertedDate == rhs.insertedDate
+////	}
+//
+//}
 
 extension Got {
     var mapPoint: MTMapPoint {

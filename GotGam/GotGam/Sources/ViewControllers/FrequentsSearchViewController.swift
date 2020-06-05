@@ -108,7 +108,7 @@ extension FrequentsSearchViewController: UITableViewDataSource{
 			if searchBar.text == "" {
 				return self.historyList.count
 			} else {
-				return 3
+				return historyList.count <= 3 ? historyList.count : 3
 			}
 		}else {
 			if searchBar.text == "" {

@@ -182,7 +182,7 @@ class MapViewModel: CommonViewModel, MapViewModelType, MapViewModelInputs, MapVi
 	
 	func showSearchVC() {
 		let movesearchVM = SearchBarViewModel(sceneCoordinator: sceneCoordinator)
-        sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .fullScreen, animated: false)
+        sceneCoordinator.transition(to: .searchBar(movesearchVM), using: .push, animated: false)
 	}
     
     func showShareList() {

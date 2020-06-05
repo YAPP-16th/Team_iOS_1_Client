@@ -55,7 +55,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value!, id: id)
 
 		storage.createFrequents(frequent: frequent).bind { _ in
-			let backVM = SettingPlaceViewModel(sceneCoordinator: self.sceneCoordinator, storage: self.storage)
+			let backVM = SettingPlaceViewModel(sceneCoordinator: self.sceneCoordinator)
 			self.sceneCoordinator.transition(to: .settingPlace(backVM), using: .push, animated: true)
 			} .disposed(by: disposeBag)
 		print("새로 등록된 값들 🍎", frequent)
@@ -96,7 +96,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	
 	var inputs: FrequentsViewModelInputs { return self }
     var outputs: FrequentsViewModelOutputs { return self }
-	var storagePlace: FrequentsStorageType!
+//	var storagePlace: FrequentsStorageType!
     
 	
 	init(sceneCoordinator: SceneCoordinatorType, frequent: Frequent?) {
