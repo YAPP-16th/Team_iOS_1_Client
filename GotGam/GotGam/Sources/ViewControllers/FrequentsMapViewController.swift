@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CoreLocation
 
-class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTMapViewDelegate {
+class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 
 	var viewModel: FrequentsMapViewModel!
 	var mapView: MTMapView!
@@ -21,9 +21,11 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	@IBOutlet var currentBtn: UIButton!
 	@IBOutlet var okay: UIButton!
 	@IBAction func okay(_ sender: UIButton) {
-		if viewModel?.placeBehavior.value != nil {
-			viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
-		}
+//		if viewModel?.placeBehavior.value != nil {
+//			viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
+//		}
+		viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
+		
 		for controller in self.navigationController!.viewControllers as Array {
 			if controller.isKind(of: FrequentsViewController.self) {
 				_ =  self.navigationController!.popToViewController(controller, animated: true)
@@ -34,6 +36,7 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 	@IBAction func currentBtn(_ sender: Any) {
 		setMyLocation()
 	}
+	@IBOutlet var icImageView: UIImageView!
 	
 	//search value
 	var x: Double = 0.0
@@ -51,11 +54,12 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		okay.layer.cornerRadius = 17
 		currentBtn.layer.cornerRadius = currentBtn.frame.height / 2
 		currentBtn.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
+		
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.addPin()
 		
 		guard let currentLocation = LocationManager.shared.currentLocation else { return }
 		if viewModel.placeBehavior.value == nil {
@@ -75,6 +79,7 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 
 			}
 		}
+		
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -94,6 +99,9 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		mapView.baseMapType = .standard
 		self.view.addSubview(mapView)
 		self.view.sendSubviewToBack(mapView)
+		
+		mapView.currentLocationTrackingMode = .off
+		mapView.showCurrentLocationMarker = false
 	}
 	
 	
@@ -111,6 +119,7 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
 		viewModel.placeBehavior
 			.bind(to: viewModel.frequentsPlaceMap)
 			.disposed(by: disposeBag)
+	
 	}
 	
 	func setMyLocation(){
@@ -124,6 +133,13 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
                 print("설정으로 이동시키기")
             case .authorizedWhenInUse, .authorizedAlways:
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: LocationManager.shared.currentLocation!.latitude, longitude: LocationManager.shared.currentLocation!.longitude)), animated: true)
+				
+				x = LocationManager.shared.currentLocation!.longitude
+				y = LocationManager.shared.currentLocation!.latitude
+				
+				mapView.currentLocationTrackingMode = .off
+				mapView.showCurrentLocationMarker = false
+				
             }
             
         }
@@ -138,10 +154,38 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType, MTM
             let pin = MTMapPOIItem()
 			pin.itemName = placeName
             pin.markerType = .customImage
-            pin.customImage = UIImage(named: "icPin1")
+            pin.customImage = UIImage(named: "icSeed2")
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x))
             mapView.addPOIItems([pin])
     }
 	
 }
 
+extension FrequentsMapViewController: MTMapViewDelegate {
+	func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
+		x = mapCenterPoint.mapPointGeo().longitude
+		y = mapCenterPoint.mapPointGeo().latitude
+		
+		var place = viewModel.placeBehavior.value
+		place?.x = String(x)
+		place?.y = String(y)
+		viewModel.placeBehavior.accept(place)
+		
+		APIManager.shared.getPlace(longitude: x, latitude: y) { [weak self] (place) in
+			if place?.roadAddress != nil {
+				if place?.roadAddress?.buildingName == "" {
+					self?.placeLabel.text = place!.roadAddress?.addressName
+					self?.addressLabel.text = place!.roadAddress?.addressName
+				} else {
+					self?.placeLabel.text = place!.roadAddress?.buildingName
+					self?.addressLabel.text = place!.roadAddress?.addressName
+				}
+			} else {
+					self?.placeLabel.text = place!.address?.addressName
+					self?.addressLabel.text = place!.address?.addressName
+				}
+			
+			self?.viewModel.placeBehavior.accept(place)
+		}
+	}
+}

@@ -188,6 +188,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.quickAddView.isHidden = true
         self.seedImageView.isHidden = true
         self.restoreView.isHidden = true
+		
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -557,6 +559,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: currentLocation.latitude, longitude: currentLocation.longitude)), animated: true)
                 mapView.currentLocationTrackingMode = .onWithoutHeading
                 mapView.showCurrentLocationMarker = true
+				let icon = MTMapLocationMarkerItem()
+				icon.customTrackingImageName = "icCurrent"
+				mapView.updateCurrentLocationMarker(icon)
             @unknown default:
                 break
             }
@@ -582,7 +587,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         let got = gotList[index]
         let geo = MTMapPointGeo(latitude: got.latitude, longitude: got.longitude)
         self.mapView.setMapCenter(MTMapPoint(geoCoord: geo), animated: true)
-        centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
         mapView.removeAllCircles()
         drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: index)
         centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
@@ -594,7 +598,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 	func updateAddress() {
         currentCircle = nil
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
-        
+		currentCircle = nil
+		self.seedImageView.isHidden = false
 	}
     
     func linkTest(){

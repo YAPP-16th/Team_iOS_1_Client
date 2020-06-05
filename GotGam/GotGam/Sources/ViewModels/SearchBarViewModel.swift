@@ -61,7 +61,6 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 	func readFrequents() {
 		storage.fetchFrequents()
 			.bind { (frequentsList) in
-                print(frequentsList)
 				self.collectionItems.onNext(frequentsList)
 		}.disposed(by: disposeBag)
 	}

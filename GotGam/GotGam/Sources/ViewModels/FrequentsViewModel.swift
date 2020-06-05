@@ -96,7 +96,7 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	
 	var inputs: FrequentsViewModelInputs { return self }
     var outputs: FrequentsViewModelOutputs { return self }
-	var storagePlace: FrequentsStorageType!
+//	var storagePlace: FrequentsStorageType!
     
 	
 	init(sceneCoordinator: SceneCoordinatorType, frequent: Frequent?) {

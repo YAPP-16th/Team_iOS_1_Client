@@ -59,7 +59,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		SearchBar.becomeFirstResponder()
-		
+//		navigationItem.hidesBackButton = true
 		self.viewModel.inputs.readKeyword()
 	}
 	
@@ -249,44 +249,40 @@ extension SearchBarViewController: UITableViewDelegate {
 		tableView.deselectRow(at: indexPath, animated: true)
 		if indexPath.section == 2 {
 			let place = self.placeList[indexPath.row]
-
-            if let navVC = self.navigationController {
-                let currentIndex = navVC.viewControllers.count-1
-                if let _ = navVC.viewControllers[currentIndex-1] as? AddMapViewController {
-                    
-                    viewModel.sceneCoordinator.pop(animated: true, completion: {
-                        print("after pop, \(place)")
-                        self.viewModel.placeSubject.onNext(place)
-                    })
-                    
-                }
-            } else if let tabVC = self.presentingViewController as? TabBarController {
-                
-                guard let mapNav = tabVC.viewControllers?.first as? UINavigationController else { return }
-                let currentIndex = mapNav.viewControllers.count-1
-                print(tabVC.viewControllers, currentIndex)
-                if let mapVC = mapNav.viewControllers[currentIndex] as? MapViewController {
-                    mapVC.x = Double(place.x!)!
-                    mapVC.y = Double(place.y!)!
-                    mapVC.placeName = place.placeName!
-                    mapVC.addressName = place.addressName!
-                    
-                    viewModel.sceneCoordinator.close(animated: true) {
-                        print(mapVC, mapVC.x, mapVC.y)
-                        mapVC.updateAddress()
-                    }
-                }
-            }
+			
+			if let navVC = self.navigationController {
+				let currentIndex = navVC.viewControllers.count-1
+				if let addMapVC = navVC.viewControllers[currentIndex-1] as? AddMapViewController {
+					
+					viewModel.sceneCoordinator.pop(animated: true, completion: {
+						self.viewModel.placeSubject.onNext(place)
+					})
+					
+				} else if let mapVC = navVC.viewControllers[currentIndex - 1] as? MapViewController {
+					mapVC.x = Double(place.x!)!
+					mapVC.y = Double(place.y!)!
+					mapVC.placeName = place.placeName!
+					mapVC.addressName = place.addressName!
+					
+					viewModel.sceneCoordinator.pop(animated: true, completion: {
+						mapVC.updateAddress()
+					})
+				}
+			}
 		} else if indexPath.section == 1 {
-			let got = self.gotList[indexPath.row]
-			if let tabVC = self.presentingViewController as? TabBarController{
-				let mapVC = tabVC.viewControllers?.first as? MapViewController
-				mapVC?.x = got.longitude
-				mapVC?.y = got.latitude
-				
-				viewModel.sceneCoordinator.close(animated: true) {
-					let index = self.gotList.firstIndex(of: got)
-					mapVC?.setCard(index: index!)
+			let got = self.filteredList[indexPath.row]
+			if let navVC = self.navigationController{
+				let currentIndex = navVC.viewControllers.count - 1
+				if let mapVC = navVC.viewControllers[currentIndex - 1] as? MapViewController {
+					mapVC.x = got.longitude
+					mapVC.y = got.latitude
+					
+					viewModel.sceneCoordinator.pop(animated: true, completion: {
+						if let index = mapVC.gotList.firstIndex(of: got) {
+							mapVC.setCard(index: index)
+						}
+						
+					})
 				}
 			}
 		}
@@ -332,15 +328,28 @@ extension SearchBarViewController: UICollectionViewDelegateFlowLayout {
 extension SearchBarViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let frequents = self.collectionList[indexPath.row]
-		if let tabVC = self.presentingViewController as? TabBarController{
-			let mapVC = tabVC.viewControllers?.first as? MapViewController
-			mapVC?.x = frequents.latitude
-			mapVC?.y = frequents.longitude
-			mapVC?.placeName = frequents.name
-			mapVC?.addressName = frequents.address
-			viewModel.sceneCoordinator.close(animated: true) {
-				mapVC?.updateAddress()
+		if let navVC = self.navigationController{
+			let currentIndex = navVC.viewControllers.count - 1
+			if let mapVC = navVC.viewControllers[currentIndex - 1] as? MapViewController {
+				
+				viewModel.sceneCoordinator.pop(animated: true, completion: {
+					mapVC.x = frequents.latitude
+					mapVC.y = frequents.longitude
+					mapVC.placeName = frequents.name
+					mapVC.addressName = frequents.address
+					mapVC.updateAddress()
+				})
 			}
 		}
+//		if let tabVC = self.presentingViewController as? TabBarController{
+//			let mapVC = tabVC.viewControllers?.first as? MapViewController
+//			mapVC?.x = frequents.latitude
+//			mapVC?.y = frequents.longitude
+//			mapVC?.placeName = frequents.name
+//			mapVC?.addressName = frequents.address
+//			viewModel.sceneCoordinator.close(animated: true) {
+//				mapVC?.updateAddress()
+//			}
+//		}
 	}
 }
