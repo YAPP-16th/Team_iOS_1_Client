@@ -55,8 +55,7 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
+        //navigationController?.interactivePopGestureRecognizer?.delegate = nil
         configureMapView()
         configureViews()
         configureSlider()
@@ -65,6 +64,13 @@ class AddMapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     // MARK: - Initializing

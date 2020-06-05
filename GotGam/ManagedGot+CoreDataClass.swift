@@ -76,7 +76,7 @@ extension ManagedGot {
         return id == "" ? "\(objectID)_date" : "\(id)_date"
     }
     
-    var requestIds: [String] {
+    var requestIDs: [String] {
         return [arriveID, departureID, dateID]
     }
 }

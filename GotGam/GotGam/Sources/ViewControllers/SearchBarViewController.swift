@@ -17,7 +17,8 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	
 	@IBOutlet var SearchBar: UITextField!
 	@IBAction func moveMap(_ sender: Any) {
-		viewModel.sceneCoordinator.close(animated: true, completion: nil)
+		//viewModel.sceneCoordinator.close(animated: true, completion: nil)
+        viewModel.sceneCoordinator.pop(animated: true, completion: nil)
 	}
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -64,9 +65,16 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+        
 		viewModel.inputs.readFrequents()
 		viewModel.inputs.readGot()
 	}
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
+    }
 	
 	func bindViewModel() {
 		

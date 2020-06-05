@@ -87,6 +87,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 mapView.currentLocationTrackingMode = .off
                 mapView.showCurrentLocationMarker = false
                 sliderBackgroundView.isHidden = false
+                
             } else {
                 mapView.removeAllCircles()
                 sliderBackgroundView.isHidden = true
@@ -149,9 +150,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                     var got = gotList[tag]
                     got.radius = Double(meter)
                     viewModel.updateGot(got: got)
-                } else {
-                    mapView.fitArea(toShow: currentCircle)
                 }
+                mapView.fitArea(toShow: currentCircle)
+                
             default:
                 break
             }
@@ -177,6 +178,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         configureMapView()
         configureSlider()
         configureCardCollectionView()
@@ -190,6 +193,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        
         configureQuickAddView()
         
         LocationManager.shared.startUpdatingLocation()
@@ -198,10 +202,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
         self.viewModel.updateList()
         self.viewModel.updateTagList()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         if !gotList.isEmpty {
             setCard(index: 0)
         } else {
@@ -209,9 +209,17 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let circle = currentCircle {
+            mapView.fitArea(toShow: circle)
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -310,8 +318,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     func bindViewModel() {
         
-        Observable.combineLatest(viewModel.aimToPlace, viewModel.seedState)
-            .subscribe(onNext:{ [weak self] aimToPlace, state in
+        viewModel.seedState
+            .subscribe(onNext:{ [weak self] state in
             guard let self = self else { return }
             
             switch state{
@@ -320,12 +328,12 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             case .seeding:
                 self.setSeedingStateUI()
             case .adding:
-                if aimToPlace {
-                    let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
-                    let location = CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude)
-                    self.viewModel.input.savePlace(location: location)
-                    return
-                }
+//                if aimToPlace {
+//                    let centerPoint = self.mapView.mapCenterPoint.mapPointGeo()
+//                    let location = CLLocationCoordinate2D(latitude: centerPoint.latitude, longitude: centerPoint.longitude)
+//                    self.viewModel.input.savePlace(location: location)
+//                    return
+//                }
                 self.setAddingStateUI()
             }
             self.state = state
@@ -379,8 +387,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                         self.viewModel.deleteGot(got: cell.got!)
                         self.currentCircle = nil
                     }).disposed(by: cell.disposeBag)
-                
-                self.setCard(index: 0)
             }.disposed(by: self.disposeBag)
         
         viewModel.output.tagList
@@ -579,11 +585,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         mapView.removeAllCircles()
         drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: index)
         centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
-        if let currentCircle = currentCircle {
-            mapView.fitArea(toShow: currentCircle)
-            
-        }
-        
+//        if let currentCircle = currentCircle {
+//            mapView.fitArea(toShow: currentCircle)
+//        }
     }
 	
 	func updateAddress() {
@@ -599,6 +603,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 
 extension MapViewController: MTMapViewDelegate{
     func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
+        print(mapPoint.mapPointGeo())
         if self.quickAddView.addField.isFirstResponder{
             self.quickAddView.addField.resignFirstResponder()
             self.quickAddView.isHidden = true
@@ -647,8 +652,7 @@ extension MapViewController: MTMapViewDelegate{
         }
         mapView?.removeAllCircles()
         drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: poiItem.tag)
-        
-        
+        setCard(index: poiItem.tag)
         
         return true
     }

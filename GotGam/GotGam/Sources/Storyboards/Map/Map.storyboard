@@ -331,12 +331,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCl-hk-Fex" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1700" y="-883"/>
+            <point key="canvasLocation" x="2610.144927536232" y="-883.25892857142856"/>
         </scene>
         <!--상세 심기 설정-->
         <scene sceneID="xwa-ip-OSW">
             <objects>
-                <viewController storyboardIdentifier="AddVC" id="9o4-1I-vlQ" customClass="AddPlantViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9o4-1I-vlQ" customClass="AddPlantViewController" customModule="GotGam" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RV1-gH-Au6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -569,7 +569,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="41C-cp-0Sd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="G8P-GZ-ujz"/>
             </objects>
-            <point key="canvasLocation" x="3560.8695652173915" y="-883.25892857142856"/>
+            <point key="canvasLocation" x="4471.0144927536239" y="-883.25892857142856"/>
         </scene>
         <!--태그 설정-->
         <scene sceneID="IMK-wr-d6a">
@@ -709,7 +709,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SYr-XP-BjH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4410.144927536232" y="-883.25892857142856"/>
+            <point key="canvasLocation" x="5320.289855072464" y="-883.25892857142856"/>
         </scene>
         <!--Add Map View Controller-->
         <scene sceneID="LqK-jL-X4q">
@@ -945,7 +945,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZYr-v7-fDI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5168.115942028986" y="-883.25892857142856"/>
+            <point key="canvasLocation" x="6078.2608695652179" y="-883.25892857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QES-eD-tsS">
@@ -963,7 +963,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9i-AW-abp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2834.7826086956525" y="-883.25892857142856"/>
+            <point key="canvasLocation" x="3744.9275362318845" y="-883.25892857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FUN-1y-6fQ">
@@ -1018,7 +1018,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zg9-1V-htD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="992.75362318840587" y="-882.58928571428567"/>
+            <point key="canvasLocation" x="1902.8985507246377" y="-882.58928571428567"/>
         </scene>
     </scenes>
     <resources>

@@ -106,6 +106,7 @@ class AlarmManager {
             switch type {
             case .arrive:
                 if got.onArrive {
+                    center.removePendingNotificationRequests(withIdentifiers: [triggerID])
                     center.add(request) { (error) in
                         if let error = error {
                             print(error.localizedDescription)
@@ -118,6 +119,7 @@ class AlarmManager {
                 }
             case .departure:
                 if got.onDeparture {
+                    center.removePendingNotificationRequests(withIdentifiers: [triggerID])
                     center.add(request) { (error) in
                         if let error = error {
                             print(error.localizedDescription)
@@ -140,8 +142,8 @@ class AlarmManager {
                 print("push auth granted")
             }
 
-            center.removePendingNotificationRequests(withIdentifiers: got.requestIds)
-            print("✅ remove All PendingNotificationRequets of \(got.requestIds)")
+            center.removePendingNotificationRequests(withIdentifiers: got.requestIDs)
+            print("✅ remove All PendingNotificationRequets of \(got.requestIDs)")
         }
     }
     

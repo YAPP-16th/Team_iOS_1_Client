@@ -98,17 +98,12 @@ struct Got: Equatable {
         self.readyArrive = false
         self.readyDeparture = false
     }
-}
+    
+    public static func ==(lhs: Got, rhs: Got) -> Bool {
+        return lhs.objectId == rhs.objectId
+    }
 
-func ==(lhs: Got, rhs: Got) -> Bool{
-    return lhs.id == rhs.id
-        && lhs.tag == rhs.tag
-        && lhs.title == rhs.title
-        && lhs.latitude == rhs.latitude
-        && lhs.longitude == rhs.longitude
-        && lhs.isDone == rhs.isDone
-        && lhs.place == rhs.place
-        && lhs.insertedDate == rhs.insertedDate
+    
 }
 
 extension Got {
