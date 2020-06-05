@@ -64,18 +64,18 @@ extension SettingAlarmViewController: UITableViewDelegate {
         return view
     }
 	
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		settingAlarmTableView.deselectRow(at: indexPath, animated: true)
-		if indexPath.row == 0 {
+//	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//		settingAlarmTableView.deselectRow(at: indexPath, animated: true)
+//		if indexPath.row == 0 {
 			//설정 알림으로 보내버리기
 //			if #available(iOS 10.0, *) {
 //				let settingsUrl = NSURL(string:UIApplication.openSettingsURLString)! as URL
 //				UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
 //			}
-		} else {
-			fatalError()
-		}
-	}
+//		} else {
+//			fatalError()
+//		}
+//	}
 	
 }
 
