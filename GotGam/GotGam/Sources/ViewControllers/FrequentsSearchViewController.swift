@@ -55,20 +55,34 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 	}
 	
 	func bindViewModel() {
+		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
+		.subscribe(onNext: { text in
+			if text.isEmpty {
+				self.placeList = []
+			} else {
+				self.searchKeyword(keyword: text)
+			}
+			
+		}).disposed(by: self.disposeBag)
+		
 		searchBar.rx.controlEvent(.primaryActionTriggered)
 			.subscribe(onNext: {
 				let keyword = self.searchBar.text ?? ""
 				if !keyword.isEmpty && keyword != ""{
-					self.viewModel.inputs.addKeyword(keyword: keyword)
-					self.searchKeyword(keyword: keyword)
 					self.historyList.insert(keyword, at: 0)
+					self.searchKeyword(keyword: keyword)
 				}
 			}) .disposed(by: disposeBag)
 		
-		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
-			.subscribe(onNext: { text in
-				self.searchKeyword(keyword: text)
-			}).disposed(by: self.disposeBag)
+		self.searchBar.rx.controlEvent(.primaryActionTriggered)
+			.subscribe(onNext: {
+				let keyword = self.searchBar.text ?? ""
+				if !keyword.isEmpty && keyword != ""{
+					self.viewModel.inputs.addKeyword(keyword: keyword)
+				}
+			}) .disposed(by: disposeBag)
+		
+		
 		
 		viewModel.outputs.keywords
 			.bind { (List) in
