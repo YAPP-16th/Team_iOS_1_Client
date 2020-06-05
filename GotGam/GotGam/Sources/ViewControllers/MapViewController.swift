@@ -587,7 +587,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     }
 	
 	func updateAddress() {
+        currentCircle = nil
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
+        
 	}
     
     func linkTest(){

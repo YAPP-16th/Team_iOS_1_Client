@@ -247,19 +247,26 @@ extension SearchBarViewController: UITableViewDelegate {
                 if let _ = navVC.viewControllers[currentIndex-1] as? AddMapViewController {
                     
                     viewModel.sceneCoordinator.pop(animated: true, completion: {
+                        print("after pop, \(place)")
                         self.viewModel.placeSubject.onNext(place)
                     })
                     
                 }
             } else if let tabVC = self.presentingViewController as? TabBarController {
-				let mapVC = tabVC.viewControllers?.first as? MapViewController
-				mapVC?.x = Double(place.x!)!
-				mapVC?.y = Double(place.y!)!
-				mapVC?.placeName = place.placeName!
-				mapVC?.addressName = place.addressName!
-				
-				viewModel.sceneCoordinator.close(animated: true) {
-					mapVC?.updateAddress()
+                
+                guard let mapNav = tabVC.viewControllers?.first as? UINavigationController else { return }
+                let currentIndex = mapNav.viewControllers.count-1
+                print(tabVC.viewControllers, currentIndex)
+                if let mapVC = mapNav.viewControllers[currentIndex] as? MapViewController {
+                    mapVC.x = Double(place.x!)!
+                    mapVC.y = Double(place.y!)!
+                    mapVC.placeName = place.placeName!
+                    mapVC.addressName = place.addressName!
+                    
+                    viewModel.sceneCoordinator.close(animated: true) {
+                        print(mapVC, mapVC.x, mapVC.y)
+                        mapVC.updateAddress()
+                    }
                 }
             }
 		} else if indexPath.section == 1 {
