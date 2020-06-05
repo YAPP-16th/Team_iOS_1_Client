@@ -14,6 +14,7 @@ protocol FrequentsSearchViewModelInputs {
 	func addKeyword(keyword: String)
 	func readKeyword()
 	func showMapVC()
+	func moveFrequentsVC()
 	var placeBehavior: BehaviorRelay<Place?> { get set }
 }
 
@@ -53,6 +54,11 @@ class FrequentsSearchViewModel: CommonViewModel, FrequentsSearchViewModelInputs,
 		sceneCoordinator.transition(to: .frequentsMap(movemapVM), using: .push, animated: true)
 	}
 	
+	func moveFrequentsVC() {
+		let moveFrequentsVM = FrequentsViewModel(sceneCoordinator: sceneCoordinator, storage: storage)
+		moveFrequentsVM.frequentsPlace.accept(frequentsPlaceSearch.value)
+		sceneCoordinator.pop(animated: true)
+	}
 	
 	var inputs: FrequentsSearchViewModelInputs { return self }
     var outputs: FrequentsSearchViewModelOutputs { return self }

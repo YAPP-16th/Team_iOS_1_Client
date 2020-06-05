@@ -57,6 +57,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 				if !keyword.isEmpty && keyword != ""{
 					self.viewModel.inputs.addKeyword(keyword: keyword)
 					self.searchKeyword(keyword: keyword)
+					self.historyList.insert(keyword, at: 0)
 				}
 			}) .disposed(by: disposeBag)
 		
@@ -81,6 +82,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 					self?.searchKeyword(keyword: keyword)
 				}
 			}).disposed(by: disposeBag)
+		
 	}
 	
 	func searchKeyword(keyword: String){
@@ -181,7 +183,15 @@ extension FrequentsSearchViewController: UICollectionViewDataSource{
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if indexPath.row == 0{
-			viewModel.inputs.showMapVC()
+			guard let currentLocation = LocationManager.shared.currentLocation else { return }
+			APIManager.shared.getPlace(longitude: currentLocation.longitude, latitude: currentLocation.latitude) { [weak self] (place) in
+				var tempPlace = place
+				tempPlace?.x = String(currentLocation.latitude)
+				tempPlace?.y = String(currentLocation.longitude)
+				self?.viewModel.frequentsPlaceSearch.accept(tempPlace)
+				
+				self?.viewModel.moveFrequentsVC()
+			}
 		}else {
 			viewModel.inputs.showMapVC()
 		}

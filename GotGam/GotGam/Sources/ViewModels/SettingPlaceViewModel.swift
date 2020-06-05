@@ -16,14 +16,10 @@ protocol SettingPlaceViewModelInputs {
 	func readFrequents()
 	func detailVC(frequent: Frequent)
 	func removeFrequents(indexPath: IndexPath, frequent: Frequent)
-	
-	var placeName: BehaviorRelay<String> { get set }
-	var placeAddress: BehaviorRelay<String> { get set }
 }
 
 protocol SettingPlaceViewModelOutputs {
 	var frequentsList: BehaviorSubject<[Frequent]> { get set }
-	var placeText: BehaviorRelay<String> { get }
 }
 
 protocol SettingPlaceViewModelType {
@@ -33,9 +29,6 @@ protocol SettingPlaceViewModelType {
 
 
 class SettingPlaceViewModel: CommonViewModel, SettingPlaceViewModelType, SettingPlaceViewModelInputs, SettingPlaceViewModelOutputs {
-	var placeName = BehaviorRelay<String>(value: "")
-	var placeAddress = BehaviorRelay<String>(value: "")
-	var placeText = BehaviorRelay<String>(value: "")
 	var frequentsList: BehaviorSubject<[Frequent]> = BehaviorSubject<[Frequent]>(value: [])
 	
 	func showFrequentsDetailVC() {

@@ -29,8 +29,6 @@ class FrequentsMapViewModel: CommonViewModel, FrequentsMapViewModelInputs, Frequ
 	var inputs: FrequentsMapViewModelInputs { return self }
     var outputs: FrequentsMapViewModelOutputs { return self }
 	var frequentsPlaceMap = BehaviorRelay<Place?>(value:nil)
-	var currentPlace = BehaviorRelay<Place?>(value:nil)
-	
 	var placeBehavior = BehaviorRelay<Place?>(value: nil)
 	
 }

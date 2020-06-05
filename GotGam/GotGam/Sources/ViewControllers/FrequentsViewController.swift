@@ -51,8 +51,7 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 		placeAddress.layer.borderColor = UIColor.saffron.cgColor
 		placeAddress.layer.borderWidth = 1.0
 		placeAddress.layer.cornerRadius = 17
-		
-		
+
 		if var frequents = self.viewModel.frequentOrigin{
 			//Update logic
 			placeName.text = frequents.name
@@ -80,8 +79,8 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 			.disposed(by: disposeBag)
 		
 		placeAddress.rx.text.orEmpty
-		.bind(to: viewModel.inputs.addressPlace)
-		.disposed(by: disposeBag)
+			.bind(to: viewModel.inputs.addressPlace)
+			.disposed(by: disposeBag)
 
 		placeAddress.rx.controlEvent(.touchDown)
 			.asObservable().subscribe(onNext:{ _ in
@@ -100,26 +99,42 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 				}
 			}).disposed(by: disposeBag)
 
+		//도로명 주소 있을 때
 		viewModel.frequentsPlace
 			.compactMap { $0?.addressName }
 			.bind(to: placeAddress.rx.text)
 			.disposed(by: disposeBag)
-		
+
 		viewModel.frequentsPlace
 			.compactMap { $0?.addressName }
 			.bind(to: viewModel.addressPlace)
 			.disposed(by: disposeBag)
+
+		//도로명 주소 없을 때
+		viewModel.frequentsPlace
+			.compactMap { $0?.address?.addressName }
+			.bind(to: placeAddress.rx.text)
+			.disposed(by: disposeBag)
 		
+		viewModel.frequentsPlace
+			.compactMap { $0?.address?.addressName }
+			.bind(to: viewModel.addressPlace)
+			.disposed(by: disposeBag)
+		
+		//경도 위도 
 		viewModel.frequentsPlace
 			.compactMap { $0?.x }
 			.bind(to: viewModel.latitudePlace)
 			.disposed(by: disposeBag)
-			
+
 		viewModel.frequentsPlace
 			.compactMap { $0?.y }
 			.bind(to: viewModel.longitudePlace)
 			.disposed(by: disposeBag)
 		
+		viewModel.addressPlace
+			.bind(to: placeAddress.rx.text)
+			.disposed(by: disposeBag)
 		
 		icHomeBtn.rx.tap
 			.subscribe({ [weak self] _ in
@@ -162,6 +177,16 @@ class FrequentsViewController: BaseViewController, ViewModelBindableType {
 				self?.textNum.text = "\(text!.count)"
 			}).disposed(by: disposeBag)
 		
+		Observable.combineLatest(viewModel.namePlace, viewModel.addressPlace, viewModel.inputs.typePlace)
+		.subscribe(onNext: {[weak self] name, address, type in
+			print(name, address, type)
+			if name.isEmpty || address.isEmpty || type == nil{
+				self?.addFrequents.isEnabled = false
+			} else {
+				self?.addFrequents.isEnabled = true
+			}
+		})
+		.disposed(by: disposeBag)
 	}
 	
 

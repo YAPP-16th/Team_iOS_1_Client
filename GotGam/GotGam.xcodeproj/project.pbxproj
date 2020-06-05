@@ -1466,7 +1466,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = N23K7ZS482;
+				DEVELOPMENT_TEAM = 97C96KP84G;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",
