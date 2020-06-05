@@ -79,6 +79,7 @@ struct Got: Equatable {
         self.title = updatedTitle
     }
     
+    //빠른심기 사용시 사용
     init(id: String, title: String, latitude: Double, longitude: Double, radius: Double = 150, place: String, insertDate: Date? = nil, tag: Tag? = nil){
         self.id = id
         self.createdDate = Date()

@@ -20,30 +20,30 @@ class BaseResponse: Decodable{
     }
 }
 class GotResponse: BaseResponse{
-    var got: GotResponseData
+    var got: [GotResponseData] = []
 
     private enum CodingKeys: String, CodingKey {
-        case got = "task"
+        case got = "tasks"
     }
     required init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        got = try container.decode(GotResponseData.self, forKey: .got)
+        got = try container.decode([GotResponseData].self, forKey: .got)
         try super.init(from: decoder)
         
     }
 }
 // MARK: - Tag
 class TagResponse: BaseResponse {
-    var tag: TagData
+    var tag: [TagData] = []
 
     private enum CodingKeys: String, CodingKey {
-        case tag
+        case tag = "tags"
     }
     required init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        tag = try container.decode(TagData.self, forKey: .tag)
+        tag = try container.decode([TagData].self, forKey: .tag)
         try super.init(from: decoder)
         
     }
@@ -100,9 +100,9 @@ class UserResponse: BaseResponse{
 }
 
 class SyncResponse: BaseResponse{
-    var frequents: [FrequentResponseData]
-    var tags: [TagData]
-    var tasks: [GotResponseData]
+    var frequents: [FrequentResponseData] = []
+    var tags: [TagData] = []
+    var tasks: [GotResponseData] = []
     
     enum CodingKeys: String, CodingKey {
         case frequents
@@ -133,23 +133,24 @@ struct FrequentResponseData: Codable{
 }
 
 struct GotResponseData: Codable{
+    let id: String
     let title: String
     let coordinates: [Double]
     let tag: String?
-    let memo, iconURL: String
+    let iconURL: String
     let isFinished: Bool
-    let dueDate: String?
-    let id: String
-    let isCheckedLeave: Bool
+    let arriveMessage, departureMessage: String
     let address: String
-    let isCheckedArrive: Bool
-    let createdDate: String
-    
+    let isCheckedArrive, isCheckedDeparture, isCheckedDueDate, isReadyArrive: Bool
+    let isReadyDeparture: Bool
+    let createdDate, dueDate: String
+
     enum CodingKeys: String, CodingKey {
-        case title, coordinates, tag, memo, iconURL, isFinished, dueDate
+        case title, coordinates, tag, iconURL, isFinished, arriveMessage, departureMessage, dueDate
         case id = "_id"
-        case isCheckedLeave, address, isCheckedArrive, createdDate
+        case address, isCheckedArrive, isCheckedDeparture, isCheckedDueDate, isReadyArrive, isReadyDeparture, createdDate
     }
+    
 }
 
 struct UserResponseData: Codable {

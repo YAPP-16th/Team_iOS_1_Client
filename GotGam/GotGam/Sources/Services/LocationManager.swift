@@ -99,7 +99,7 @@ extension LocationManager: CLLocationManagerDelegate{
         var body = "기본 바디"
         if regionID == "enterHome"{
             title = "집"
-            body = "집에 접근합니다,"
+            body = "집에 ,,"
         }else if regionID == "enterOther"{
             title = "다른곳"
             body = "집밖에 접근합니다,"
