@@ -16,8 +16,15 @@ class NetworkAPIManager{
     static let shared = NetworkAPIManager()
     
     let storage = Storage()
-    let proviter = MoyaProvider<GotAPIService>()
+    let provider = MoyaProvider<GotAPIService>()
     let disposeBag = DisposeBag()
+    
+    lazy var dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        df.locale = Locale(identifier: "Ko_kr")
+        return df
+    }()
     
     var nickname: String{
         return UserDefaults.standard.string(forDefines: .nickname)!
@@ -62,7 +69,27 @@ class NetworkAPIManager{
                 switch c{
                 case .completed:
                     self.syncTasks().subscribe { completable in
-                        observer(completable)
+                        switch completable{
+                        case .completed:
+                            self.syncronizeAllTags().subscribe { completable in
+                                switch completable{
+                                case .completed:
+                                    self.syncronizeAllTasks().subscribe { completable in
+                                        switch completable{
+                                        case .completed:
+                                            observer(.completed)
+                                        case .error(let error):
+                                            observer(.error(error))
+                                        }
+                                    }.disposed(by: self.disposeBag)
+                                case .error(let error):
+                                    observer(.error(error))
+                                }
+                                
+                            }.disposed(by: self.disposeBag)
+                        case .error(let error):
+                            observer(.error(error))
+                        }
                     }.disposed(by: self.disposeBag)
                 case .error(let error):
                     observer(.error(error))
@@ -71,6 +98,42 @@ class NetworkAPIManager{
             return Disposables.create()
         }
         
+    }
+    
+    func syncronizeAllTags() -> Completable{
+        return Completable.create { observer in
+            self.downloadAllTags().bind { tagDataList in
+                var tagList: [Tag] = []
+                for tagData in tagDataList{
+                    let newTag = Tag(id: tagData.id, name: tagData.name, hex: tagData.color)
+                    tagList.append(newTag)
+                }
+                self.storage.syncAllTag(tagList: tagList).subscribe {  completable in
+                    observer(completable)
+                }.disposed(by: self.disposeBag)
+            }
+        }
+    }
+    
+    func syncronizeAllTasks() -> Completable{
+        return Completable.create { observer in
+            self.downloadAllTasks().bind { taskDataList in
+                var taskList: [Got] = []
+                for v in taskDataList{
+                    var newGot = Got(id: v.id, createdDate: self.dateFormatter.date(from: v.createdDate)!, title: v.title, latitude: v.coordinates[0], longitude: v.coordinates[1], radius: 150, place: v.address, arriveMsg: v.arriveMessage, deparetureMsg: v.departureMessage, insertedDate: nil, onArrive: v.isCheckedArrive, onDeparture: v.isCheckedDeparture, onDate: v.isCheckedDueDate, tag: nil, isDone: v.isFinished, readyArrive: v.isReadyArrive, readyDeparture: v.isReadyDeparture)
+                    if let tagId = v.tag, let tag = self.storage.readTag(id: tagId){
+                        newGot.tag = tag
+                    }
+                    if v.dueDate != "none"{
+                        newGot.insertedDate = self.dateFormatter.date(from: v.dueDate)
+                    }
+                    taskList.append(newGot)
+                }
+                self.storage.syncAllTasks(tasks: taskList).subscribe {  completable in
+                    observer(completable)
+                }.disposed(by: self.disposeBag)
+            }
+        }
     }
     
     func syncTags() -> Completable{
@@ -102,17 +165,32 @@ class NetworkAPIManager{
     func uploadAllTags() -> Observable<[TagData]> {
         return Observable.create { observer -> Disposable in
             self.getMergedUnsyncedTags().bind { (info) in
-                self.proviter.rx.request(.synchronize(["frequents": [], "tasks": [], "tags": info]))
+                self.provider.rx.request(.synchronize(["frequents": [], "tasks": [], "tags": info]))
                     .asObservable()
                     .map { try JSONDecoder().decode(SyncResponse.self, from: $0.data) }
-                .debug()
+                    .debug()
                     .catchErrorJustReturn(nil)
-                .debug()
+                    .debug()
                     .map { $0?.tags ?? [] }
-                .debug()
+                    .debug()
                     .bind(to: observer )
                     .disposed(by: self.disposeBag)
             }.disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
+    
+    private func downloadAllTags() -> Observable<[TagData]>{
+        return Observable.create { observer -> Disposable in
+            self.provider.rx.request(.getTags)
+                .asObservable()
+                .map { try JSONDecoder().decode(TagResponse.self, from: $0.data)}
+            .debug()
+                .catchErrorJustReturn(nil)
+            .debug()
+                .map { $0?.tag ?? [] }
+                .bind(to: observer)
+                .disposed(by: self.disposeBag)
             return Disposables.create()
         }
     }
@@ -126,9 +204,13 @@ class NetworkAPIManager{
                     var syncData: [SyncData<Got>] = []
                     for (i,v) in gotDataList.enumerated(){
                         let task = gotDataList[i]
-                        var newGot = Got(id: v.id, title: v.title, latitude: v.coordinates[0], longitude: v.coordinates[1], place: v.address, insertDate: Date(), tag: nil)
-                        if let tagId = task.tag, let tag = self.storage.read(id: tagId){
+                        var newGot = Got(id: v.id, createdDate: self.dateFormatter.date(from: v.createdDate)!, title: v.title, latitude: v.coordinates[0], longitude: v.coordinates[1], radius: 150, place: v.address, arriveMsg: v.arriveMessage, deparetureMsg: v.departureMessage, insertedDate: nil, onArrive: v.isCheckedArrive, onDeparture: v.isCheckedDeparture, onDate: v.isCheckedDueDate, tag: nil, isDone: v.isFinished, readyArrive: v.isReadyArrive, readyDeparture: v.isReadyDeparture)
+                        
+                        if let tagId = task.tag, let tag = self.storage.readTag(id: tagId){
                             newGot.tag = tag
+                        }
+                        if v.dueDate != "none"{
+                            newGot.insertedDate = self.dateFormatter.date(from: v.dueDate)
                         }
                         syncData.append((gotList[i].objectId!, newGot))
                     }
@@ -143,10 +225,13 @@ class NetworkAPIManager{
     func uploadAllTasks() -> Observable<[GotResponseData]> {
         return Observable.create { observer -> Disposable in
             self.getMergedUnsyncedTasks().bind { info in
-                self.proviter.rx.request(.synchronize(["frequents": [], "tags": [], "tasks": info]))
+                self.provider.rx.request(.synchronize(["frequents": [], "tasks": info, "tags": []]))
                     .asObservable()
-                    .map { try JSONDecoder().decode(SyncResponse.self,from: $0.data) }
+                    .debug()
+                    .map { try JSONDecoder().decode(SyncResponse.self,from: $0.data)}
+                    .debug()
                     .catchErrorJustReturn(nil)
+                    .debug()
                     .map { $0?.tasks ?? [] }
                     .bind(to: observer)
                     .disposed(by: self.disposeBag)
@@ -155,6 +240,20 @@ class NetworkAPIManager{
         }
     }
     
+    private func downloadAllTasks() -> Observable<[GotResponseData]>{
+        return Observable.create { observer -> Disposable in
+            self.provider.rx.request(.getTasks)
+                .asObservable()
+                .map { try JSONDecoder().decode(GotResponse.self, from: $0.data)}
+            .debug()
+                .catchErrorJustReturn(nil)
+            .debug()
+                .map { $0?.got ?? [] }
+                .bind(to: observer)
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
     
     
     //MARK: - Helper
@@ -175,15 +274,19 @@ class NetworkAPIManager{
                 "coordinates": [$0.latitude, $0.longitude],
                 "address": $0.place,
                 "tagName": $0.tag?.name ?? "",
-                "arriveMessage": $0.arriveMsg,
-                "leaveMessage": $0.deparetureMsg,
                 "iconURL": "",
                 "isFinished": $0.isDone,
                 "isCheckedArrive": $0.onArrive,
-                "isCheckedLeave": $0.onDeparture,
+                "isCheckedDeparture": $0.onDeparture,
+                "isCheckedDueDate": $0.onDate,
                 "isReadyArrive": $0.readyArrive,
-                "isReadyDeparture": $0.readyDeparture
+                "isReadyDeparture": $0.readyDeparture,
+                "arriveMessage": $0.arriveMsg,
+                "departureMessage": $0.deparetureMsg,
+                "createdDate": self.dateFormatter.string(from: $0.createdDate),
+                "dueDate": $0.insertedDate != nil ?  self.dateFormatter.string(from: $0.insertedDate!) : "none"
             ]
+            
             }}
     }
     
@@ -196,6 +299,5 @@ class NetworkAPIManager{
         return storage.fetchTaskList()
             .map { $0.filter { $0.id == "" && $0.objectId != nil } }
     }
-    
     
 }

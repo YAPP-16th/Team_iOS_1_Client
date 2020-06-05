@@ -122,6 +122,35 @@ class Storage: StorageType {
       return Disposables.create()
     }
   }
+    
+    func syncAllTasks(tasks: [Got]) -> Completable{
+        return Completable.create { observer in
+            for got in tasks{
+                guard self.readTag(id: got.id) == nil else { continue }
+                let managedGot = ManagedGot(context: self.context)
+                managedGot.fromGot(got: got)
+            }
+            do{
+                try self.context.save()
+                observer(.completed)
+            }catch let error{
+                observer(.error(StorageError.sync(error.localizedDescription)))
+            }
+            return Disposables.create()
+        }
+    }
+    
+    //MARK: - Server
+    func readTask(id: String) -> Got?{
+      let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+      do{
+        let managedTagList = try self.context.fetch(fetchRequest)
+        return managedTagList.first?.toGot()
+      }catch{
+        return nil
+      }
+    }
 }
 
 //MARK: - TagStorageType
@@ -212,9 +241,27 @@ extension Storage{
       }
     }
     
+    func syncAllTag(tagList: [Tag]) -> Completable{
+        return Completable.create { observer in
+            for tag in tagList{
+                guard self.readTag(id: tag.id) == nil else { continue }
+                let managedTag = ManagedTag(context: self.context)
+                managedTag.fromTag(tag: tag)
+            }
+            do{
+                try self.context.save()
+                observer(.completed)
+            }catch let error{
+                observer(.error(StorageError.sync(error.localizedDescription)))
+            }
+            return Disposables.create()
+        }
+    }
+    
     //MARK: - Server
-    func read(id: String) -> Tag?{
+    func readTag(id: String) -> Tag?{
       let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
       do{
         let managedTagList = try self.context.fetch(fetchRequest)
         return managedTagList.first?.toTag()

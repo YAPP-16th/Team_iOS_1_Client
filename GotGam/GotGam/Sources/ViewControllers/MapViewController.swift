@@ -357,6 +357,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.viewModel.output.gotList
             .do(onNext: { [weak self] in self?.gotList = $0})
             .bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { [weak self] (index, got, cell) in
+                print(got)
                 guard let self = self else { return }
                 
                 let swipeGesture = CardSwipeGesture(target: self, action: #selector(self.swipeCard(gesture:)))
