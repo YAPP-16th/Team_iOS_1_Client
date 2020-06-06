@@ -43,7 +43,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Constraints
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
-    
+	@IBOutlet var titleView: UIImageView!
+	@IBOutlet var gotTitle: UILabel!
+	
 	@IBAction func moveSearch(_ sender: UITextField) {
 		if sender.isFirstResponder{
 			sender.resignFirstResponder()
@@ -186,7 +188,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.seedImageView.isHidden = true
         self.restoreView.isHidden = true
 		
-
+		titleView.isHidden = true
+		gotTitle.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -531,6 +534,17 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.latitude, longitude: got.longitude))
             //pin.showAnimationType = .springFromGround
             pin.tag = i
+
+//			pin.markerSelectedType = .customImage
+//			let titleImage = UIImage(named: "icGotTitle")
+//			pin.customSelectedImage = titleImage
+//			pin.customSelectedImageName = got.title
+//			pin.itemName = got.title
+			
+//			pin.customCalloutBalloonView = titleView
+//			pin.customHighlightedCalloutBalloonView = titleView
+//			gotTitle.text = got.title
+			
             mapView.addPOIItems([pin])
         }
     }
@@ -591,6 +605,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
 		currentCircle = nil
 		self.seedImageView.isHidden = false
+		titleView.isHidden = false
+		gotTitle.isHidden = false
 	}
     
     func linkTest(){
@@ -628,6 +644,10 @@ extension MapViewController: MTMapViewDelegate{
         }
         mapView.currentLocationTrackingMode = .off
         mapView.showCurrentLocationMarker = false
+		
+		titleView.isHidden = true
+		gotTitle.isHidden = true
+		gotTitle.text = placeName
     }
     func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
         switch self.state{
@@ -649,7 +669,10 @@ extension MapViewController: MTMapViewDelegate{
         mapView?.removeAllCircles()
         drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: poiItem.tag)
         
-        
+		let pin = MTMapPOIItem()
+		pin.customCalloutBalloonView = titleView
+		pin.customHighlightedCalloutBalloonView = titleView
+		gotTitle.text = got.title
         
         return true
     }
