@@ -36,6 +36,8 @@ class MapCardCollectionViewCell: UICollectionViewCell{
             dueDateLabel.text = self.dateFormatter.string(from: got.insertedDate ?? Date())
             if !(got.arriveMsg.isEmpty && got.deparetureMsg.isEmpty) {
                 memoLabel.text = got.arriveMsg == "" ? got.deparetureMsg : got.arriveMsg
+            } else {
+                memoLabel.text = "메모 미지정"
             }
             
             
