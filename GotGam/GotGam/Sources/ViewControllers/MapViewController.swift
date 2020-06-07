@@ -590,9 +590,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         mapView.removeAllCircles()
         drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: index)
         centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
-//        if let currentCircle = currentCircle {
-//            mapView.fitArea(toShow: currentCircle)
-//        }
+        if let currentCircle = currentCircle {
+            mapView.fitArea(toShow: currentCircle)
+        }
     }
 	
 	func updateAddress() {
