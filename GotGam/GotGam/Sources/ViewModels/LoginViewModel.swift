@@ -11,6 +11,7 @@ import Moya
 import FacebookLogin
 import FacebookCore
 import FBSDKLoginKit
+import AuthenticationServices
 
 protocol LoginViewModelInputs {
     func checkLoginStatus()
@@ -136,5 +137,64 @@ extension LoginViewModel: LoginButtonDelegate{
     
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         print("페이스북 로그아웃 완료")
+    }
+}
+extension LoginViewModel: ASAuthorizationControllerPresentationContextProviding{
+    @available(iOS 13.0, *)
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return UIApplication.shared.keyWindow!
+    }
+}
+@available(iOS 13.0, *)
+extension LoginViewModel: ASAuthorizationControllerDelegate{
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("authorization error")
+        guard let error = error as? ASAuthorizationError else { return }
+        switch error.code {
+        case .canceled:
+            print("Canceled")
+        case .unknown:
+            print("unKnown")
+        case .invalidResponse:
+            print("invalidResponse")
+        case .notHandled:
+            print("notHandled")
+        case .failed:
+            print("failed")
+        @unknown default:
+            print("default")
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential{
+            let userID = appleIDCredential.user
+            let email = appleIDCredential.email
+            let givenName = appleIDCredential.fullName?.givenName
+            let familyName = appleIDCredential.fullName?.familyName
+            let nickName = appleIDCredential.fullName?.nickname
+            
+            //서버에 보낼 값
+            var identityToken: String?
+            if let token = appleIDCredential.identityToken{
+                identityToken = String(bytes: token, encoding: .utf8)
+            }
+            
+            var authorizationCode: String?
+            if let code = appleIDCredential.authorizationCode{
+                authorizationCode = String(bytes: code, encoding: .utf8)
+            }
+            
+            print("userID: ", userID)
+            
+            if let email = email, let givenName = givenName, let familyName = familyName{
+                let loginInfo = SocialLoginInfo(id: userID, email: email, token: familyName + givenName)
+                doLogin(.apple(loginInfo))
+            }else{
+                let loginInfo = SocialLoginInfo(id: userID, email: "", token: "")
+                doLogin(.apple(loginInfo))
+            }
+            UserDefaults.standard.set(userID, forDefines: .userID)
+        }
     }
 }

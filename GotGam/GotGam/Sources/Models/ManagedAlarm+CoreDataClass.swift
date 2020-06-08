@@ -56,7 +56,7 @@ public class ManagedAlarm: NSManagedObject {
             do {
                 let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
                 let p1 =
-                    NSPredicate(format: "id == %lld", gotID)
+                    NSPredicate(format: "id == %@", gotID)
                 fetchRequest.predicate = p1
                 let results = try context.fetch(fetchRequest)
                 if let managedGot = results.first {

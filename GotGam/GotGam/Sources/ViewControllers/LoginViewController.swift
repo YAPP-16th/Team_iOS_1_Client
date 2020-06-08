@@ -17,6 +17,7 @@ enum LoginType{
     case google(SocialLoginInfo)
     case kakao(SocialLoginInfo)
     case facebook(SocialLoginInfo)
+    case apple(SocialLoginInfo)
 }
 
 struct SocialLoginInfo{
@@ -110,8 +111,8 @@ class LoginViewController: UIViewController, ViewModelBindableType{
         let request = provider.createRequest()
         request.requestedScopes = [.email, .fullName]
         let authController = ASAuthorizationController(authorizationRequests: [request])
-        authController.presentationContextProvider = self
-        authController.delegate = self
+        authController.presentationContextProvider = self.viewModel
+        authController.delegate = self.viewModel
         authController.performRequests()
     }
     @objc func kakaoLoginTapped(){
@@ -248,65 +249,7 @@ extension LoginViewController{
     }
 }
 
-extension LoginViewController: ASAuthorizationControllerPresentationContextProviding{
-    @available(iOS 13.0, *)
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
-    }
-}
-@available(iOS 13.0, *)
-extension LoginViewController: ASAuthorizationControllerDelegate{
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("authorization error")
-        guard let error = error as? ASAuthorizationError else { return }
-        switch error.code {
-        case .canceled:
-            print("Canceled")
-        case .unknown:
-            print("unKnown")
-        case .invalidResponse:
-            print("invalidResponse")
-        case .notHandled:
-            print("notHandled")
-        case .failed:
-            print("failed")
-        @unknown default:
-            print("default")
-        }
-    }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential{
-            let userID = appleIDCredential.user
-            let email = appleIDCredential.email
-            let givenName = appleIDCredential.fullName?.givenName
-            let familyName = appleIDCredential.fullName?.familyName
-            let nickName = appleIDCredential.fullName?.nickname
-            
-            //서버에 보낼 값
-            var identityToken: String?
-            if let token = appleIDCredential.identityToken{
-                identityToken = String(bytes: token, encoding: .utf8)
-            }
-            
-            var authorizationCode: String?
-            if let code = appleIDCredential.authorizationCode{
-                authorizationCode = String(bytes: code, encoding: .utf8)
-            }
-            
-            print("userID: ", userID)
-            print("email: ", email)
-            print("givenName: ", givenName)
-            print("familyName: ", familyName)
-            print("nickName: ", nickName)
-            print("identityToken: ", identityToken)
-            print("authorizationCode: ", authorizationCode)
-            
-            
-            UserDefaults.standard.set(userID, forDefines: .userID)
-        }
-    }
-}
+
 
 
 class FacebookButton: FBLoginButton {

@@ -55,6 +55,8 @@ extension GotAPIService: TargetType{
                 return "users/kakao"
             case .facebook:
                 return "users/facebook"
+            case .apple:
+                return "users/apple"
             }
         case .getUser(let email):
             return "users/\(email)"
@@ -153,6 +155,16 @@ extension GotAPIService: TargetType{
                         "id":"\(info.id)",
                         "email":info.email,
                         "access_token":info.token,
+                        
+                    ],
+                    encoding: JSONEncoding.default)
+            case .apple(let info):
+                return .requestParameters(
+                    parameters:
+                    [
+                        "id":"\(info.id)",
+                        "email":info.email,
+                        "nickname":info.token,
                         
                     ],
                     encoding: JSONEncoding.default)

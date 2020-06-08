@@ -35,12 +35,20 @@ class StartViewController: UIViewController{
     
     @IBAction func startWithLogin(){
         UserDefaults.standard.set(true, forDefines: .tutorialShown)
-        delegate?.startWithLogin()
+        guard let tvc = self.presentingViewController as? TutorialPageViewController else { return }
+        tvc.isSkipped = false
+        self.dismiss(animated: true) {
+            tvc.viewModel.showLoginVC()
+        }
     }
     
     @IBAction func startWithoutLogin(){
         UserDefaults.standard.set(true, forDefines: .tutorialShown)
-        delegate?.start()
+        guard let tvc = self.presentingViewController as? TutorialPageViewController else { return }
+        tvc.isSkipped = false
+        self.dismiss(animated: true){
+            tvc.viewModel.showMain()
+        }
     }
     
     

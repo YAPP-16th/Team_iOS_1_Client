@@ -47,6 +47,9 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
     
     
     func getProfileImage(url: String) {
+        if url == "default"{
+            return
+        }
         NetworkAPIManager.shared.downloadImage(url: url).bind(to: self.profileImage)
             .disposed(by: self.disposeBag)
     }

@@ -54,7 +54,7 @@ class DBManager {
     
     func fetchGot(id: Int64) -> ManagedGot? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
-        fetchRequest.predicate = NSPredicate(format: "id = %lld", id)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
         do {
             let fetchObjects = try context.fetch(fetchRequest) as? [ManagedGot]
             return fetchObjects?.first
