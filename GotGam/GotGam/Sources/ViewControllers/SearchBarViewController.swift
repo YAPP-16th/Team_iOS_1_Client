@@ -58,12 +58,15 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		SearchBar.becomeFirstResponder()
-//		navigationItem.hidesBackButton = true
+		navigationItem.hidesBackButton = true
+		navigationController?.isNavigationBarHidden = true
 		self.viewModel.inputs.readKeyword()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		navigationController?.isNavigationBarHidden = true
+		
 		viewModel.inputs.readFrequents()
 		viewModel.inputs.readGot()
 	}
@@ -156,7 +159,7 @@ extension SearchBarViewController: UITableViewDataSource{
 			if SearchBar.text == "" {
 				return self.historyList.count
 			} else {
-				return historyList.count <= 3 ? historyList.count : 3
+				return 0
 			}
 		}else if section == 1 {
 			if SearchBar.text == "" {
@@ -333,15 +336,5 @@ extension SearchBarViewController: UICollectionViewDelegate {
 				})
 			}
 		}
-//		if let tabVC = self.presentingViewController as? TabBarController{
-//			let mapVC = tabVC.viewControllers?.first as? MapViewController
-//			mapVC?.x = frequents.latitude
-//			mapVC?.y = frequents.longitude
-//			mapVC?.placeName = frequents.name
-//			mapVC?.addressName = frequents.address
-//			viewModel.sceneCoordinator.close(animated: true) {
-//				mapVC?.updateAddress()
-//			}
-//		}
 	}
 }

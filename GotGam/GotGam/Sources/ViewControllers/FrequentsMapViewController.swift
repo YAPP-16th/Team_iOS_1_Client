@@ -20,11 +20,7 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 	@IBOutlet var addressLabel: UILabel!
 	@IBOutlet var currentBtn: UIButton!
 	@IBOutlet var okay: UIButton!
-	@IBAction func okay(_ sender: UIButton) {
-//		if viewModel?.placeBehavior.value != nil {
-//			viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
-//		}
-		viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
+	@IBAction func okay(_ sender: UIButton) {	viewModel.frequentsPlaceMap.accept(viewModel?.placeBehavior.value)
 		
 		for controller in self.navigationController!.viewControllers as Array {
 			if controller.isKind(of: FrequentsViewController.self) {
@@ -37,6 +33,8 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 		setMyLocation()
 	}
 	@IBOutlet var icImageView: UIImageView!
+	@IBOutlet var titleTopView: UIImageView!
+	@IBOutlet var titleText: UITextField!
 	
 	//search value
 	var x: Double = 0.0
@@ -46,7 +44,7 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
+		navigationController?.isNavigationBarHidden = false
 		configureMapView()
 		
 		addressView.layer.masksToBounds = true
@@ -55,7 +53,11 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 		currentBtn.layer.cornerRadius = currentBtn.frame.height / 2
 		currentBtn.shadow(radius: 3, color: .black, offset: .init(width: 0, height: 2), opacity: 0.16)
 		
+		mapView.currentLocationTrackingMode = .off
+        mapView.showCurrentLocationMarker = false
 		
+		titleText.isHidden = true
+		titleTopView.isHidden = true
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -87,6 +89,7 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 		if let place = viewModel.placeBehavior.value, let pX = place.x, let pY = place.y {
 			x = Double(pX)!
 			y = Double(pY)!
+			titleText.text = place.placeName
 			updateAddress()
 		} else {
 			setMyLocation()
@@ -137,9 +140,11 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 				x = LocationManager.shared.currentLocation!.longitude
 				y = LocationManager.shared.currentLocation!.latitude
 				
-				mapView.currentLocationTrackingMode = .off
-				mapView.showCurrentLocationMarker = false
-				
+				mapView.currentLocationTrackingMode = .onWithoutHeading
+				mapView.showCurrentLocationMarker = true
+				let icon = MTMapLocationMarkerItem()
+				icon.customTrackingImageName = "icCurrent"
+				mapView.updateCurrentLocationMarker(icon)
             }
             
         }
@@ -147,6 +152,8 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 	
 	func updateAddress() {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
+		titleText.isHidden = false
+		titleTopView.isHidden = false
 	}
 	
 	func addPin(){
@@ -187,5 +194,21 @@ extension FrequentsMapViewController: MTMapViewDelegate {
 			
 			self?.viewModel.placeBehavior.accept(place)
 		}
+	}
+	func mapView(_ mapView: MTMapView!, dragEndedOn mapPoint: MTMapPoint!) {
+
+        mapView.currentLocationTrackingMode = .off
+        mapView.showCurrentLocationMarker = false
+		
+		titleText.isHidden = true
+		titleTopView.isHidden = true
+    }
+	
+	func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
+		mapView.currentLocationTrackingMode = .off
+        mapView.showCurrentLocationMarker = false
+		
+		titleText.isHidden = true
+		titleTopView.isHidden = true
 	}
 }

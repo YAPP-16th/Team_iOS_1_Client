@@ -43,8 +43,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     // MARK: - Constraints
     @IBOutlet weak var cardCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var quickAddViewBottomConstraint: NSLayoutConstraint!
-	@IBOutlet var titleView: UIImageView!
-	@IBOutlet var gotTitle: UILabel!
+	
+	@IBOutlet var titleTopView: UIImageView!
+	@IBOutlet var titleText: UITextField!
 	
 	@IBAction func moveSearch(_ sender: UITextField) {
 		if sender.isFirstResponder{
@@ -178,7 +179,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+		
         configureMapView()
         configureSlider()
         configureCardCollectionView()
@@ -188,8 +189,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.seedImageView.isHidden = true
         self.restoreView.isHidden = true
 		
-		titleView.isHidden = true
-		gotTitle.isHidden = true
+		titleText.isHidden = true
+		titleTopView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -210,7 +211,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
 			currentCircle = nil
 		}
     }
-
+	
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
@@ -221,6 +222,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+		navigationController?.isNavigationBarHidden = false
+		navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -534,17 +537,12 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             pin.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: got.latitude, longitude: got.longitude))
             //pin.showAnimationType = .springFromGround
             pin.tag = i
-
-//			pin.markerSelectedType = .customImage
-//			let titleImage = UIImage(named: "icGotTitle")
-//			pin.customSelectedImage = titleImage
-//			pin.customSelectedImageName = got.title
-//			pin.itemName = got.title
 			
-//			pin.customCalloutBalloonView = titleView
-//			pin.customHighlightedCalloutBalloonView = titleView
-//			gotTitle.text = got.title
-			
+			pin.showDisclosureButtonOnCalloutBalloon = false
+//			let icView = CGRect(titleText.x: 0.0, y: 0.0, width: 100.0, height: 30.0)
+//			let icUIView = UIView(frame: icView)
+//			icUIView.backgroundColor = .black
+//			pin.customCalloutBalloonView = icUIView
             mapView.addPOIItems([pin])
         }
     }
@@ -598,15 +596,15 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             mapView.fitArea(toShow: currentCircle)
             
         }
-        
     }
 	
 	func updateAddress() {
 		self.mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude: y, longitude: x)), animated: true)
 		currentCircle = nil
 		self.seedImageView.isHidden = false
-		titleView.isHidden = false
-		gotTitle.isHidden = false
+		titleText.isHidden = false
+		titleTopView.isHidden = false
+		titleText.text = placeName
 	}
     
     func linkTest(){
@@ -624,6 +622,8 @@ extension MapViewController: MTMapViewDelegate{
             currentCircle = nil
             viewModel.seedState.onNext(.none)
         }
+		titleText.isHidden = true
+		titleTopView.isHidden = true
     }
     func mapView(_ mapView: MTMapView!, centerPointMovedTo mapCenterPoint: MTMapPoint!) {
         switch self.state {
@@ -645,9 +645,8 @@ extension MapViewController: MTMapViewDelegate{
         mapView.currentLocationTrackingMode = .off
         mapView.showCurrentLocationMarker = false
 		
-		titleView.isHidden = true
-		gotTitle.isHidden = true
-		gotTitle.text = placeName
+		titleText.isHidden = true
+		titleTopView.isHidden = true
     }
     func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
         switch self.state{
@@ -668,14 +667,14 @@ extension MapViewController: MTMapViewDelegate{
         }
         mapView?.removeAllCircles()
         drawCircle(latitude: got.latitude, longitude: got.longitude, radius: Float(got.radius), tag: poiItem.tag)
-        
-		let pin = MTMapPOIItem()
-		pin.customCalloutBalloonView = titleView
-		pin.customHighlightedCalloutBalloonView = titleView
-		gotTitle.text = got.title
-        
+
         return true
     }
+	
+	func mapView(_ mapView: MTMapView!, touchedCalloutBalloonOf poiItem: MTMapPOIItem!) {
+		poiItem.customCalloutBalloonView = titleTopView
+		poiItem.customCalloutBalloonView = titleText
+	}
 }
 
 // MARK: - UICollectionView Delegate

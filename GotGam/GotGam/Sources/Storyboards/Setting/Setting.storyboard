@@ -824,15 +824,33 @@
                                     <constraint firstAttribute="height" constant="60" id="oX4-8G-b8Z"/>
                                 </constraints>
                             </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yUK-sq-yhz">
+                                <rect key="frame" x="191" y="489" width="32" height="34"/>
+                                <color key="backgroundColor" name="black"/>
+                                <color key="textColor" name="white"/>
+                                <fontDescription key="fontDescription" name="SpoqaHanSans-Bold" family="SpoqaHanSans" pointSize="12"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icTitleTop" translatesAutoresizingMaskIntoConstraints="NO" id="AH5-hn-CYp">
+                                <rect key="frame" x="192" y="479" width="30" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="Jxf-v2-WIK"/>
+                                    <constraint firstAttribute="height" constant="10" id="f6j-Hj-MFu"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="pPy-1f-JOH" firstAttribute="top" secondItem="VX3-oz-I9S" secondAttribute="bottom" constant="22" id="0Zu-ra-Siy"/>
                             <constraint firstItem="pPy-1f-JOH" firstAttribute="centerX" secondItem="uKB-Rd-vyJ" secondAttribute="centerX" id="4fl-aa-qqq"/>
                             <constraint firstItem="16J-2J-vAz" firstAttribute="centerY" secondItem="uKB-Rd-vyJ" secondAttribute="centerY" id="9DE-Q4-Wa3"/>
+                            <constraint firstItem="yUK-sq-yhz" firstAttribute="top" secondItem="AH5-hn-CYp" secondAttribute="bottom" id="AiL-MA-FYG"/>
                             <constraint firstItem="16J-2J-vAz" firstAttribute="centerX" secondItem="uKB-Rd-vyJ" secondAttribute="centerX" id="CMR-u0-0FO"/>
                             <constraint firstItem="mHq-r6-C0D" firstAttribute="bottom" secondItem="pPy-1f-JOH" secondAttribute="bottom" constant="43" id="FbW-Zd-evk"/>
+                            <constraint firstItem="AH5-hn-CYp" firstAttribute="centerX" secondItem="16J-2J-vAz" secondAttribute="centerX" id="J6G-nD-5Go"/>
+                            <constraint firstItem="yUK-sq-yhz" firstAttribute="centerX" secondItem="16J-2J-vAz" secondAttribute="centerX" id="fCP-8C-rQN"/>
                             <constraint firstItem="VX3-oz-I9S" firstAttribute="trailing" secondItem="pPy-1f-JOH" secondAttribute="trailing" id="mPf-SK-xCb"/>
+                            <constraint firstItem="AH5-hn-CYp" firstAttribute="top" secondItem="16J-2J-vAz" secondAttribute="bottom" constant="1" id="s7F-Hw-i8e"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mHq-r6-C0D"/>
                     </view>
@@ -844,6 +862,8 @@
                         <outlet property="icImageView" destination="16J-2J-vAz" id="EU7-nt-v6E"/>
                         <outlet property="okay" destination="lxq-n9-HKz" id="gTr-Qi-hNI"/>
                         <outlet property="placeLabel" destination="ExJ-wk-X4c" id="Vlg-K9-xEc"/>
+                        <outlet property="titleText" destination="yUK-sq-yhz" id="beI-aY-IzY"/>
+                        <outlet property="titleTopView" destination="AH5-hn-CYp" id="cky-Jo-yRD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGs-WX-jr3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1012,7 +1032,7 @@
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="YDp-ya-fgi">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="103.5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1179,6 +1199,7 @@
         <image name="icSearchBtn" width="13" height="13"/>
         <image name="icSearchBtnBack" width="9" height="16"/>
         <image name="icSeed2" width="54" height="81"/>
+        <image name="icTitleTop" width="18.5" height="6"/>
         <image name="icsettingLogin" width="60" height="60"/>
         <image name="tab_map_active" width="17" height="24"/>
         <namedColor name="black">

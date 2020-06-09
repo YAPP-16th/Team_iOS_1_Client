@@ -54,6 +54,10 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		navigationController?.isNavigationBarHidden = true
 	}
 	
+	override func viewDidDisappear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = false
+	}
+	
 	func bindViewModel() {
 		searchBar.rx.text.orEmpty.debounce(.seconds(1), scheduler: MainScheduler.instance)
 		.subscribe(onNext: { text in
@@ -126,7 +130,7 @@ extension FrequentsSearchViewController: UITableViewDataSource{
 			if searchBar.text == "" {
 				return self.historyList.count
 			} else {
-				return historyList.count <= 3 ? historyList.count : 3
+				return 0
 			}
 		}else {
 			if searchBar.text == "" {
