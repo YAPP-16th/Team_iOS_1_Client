@@ -58,6 +58,7 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 		
 		titleText.isHidden = true
 		titleTopView.isHidden = true
+		icImageView.isHidden = false
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -145,6 +146,8 @@ class FrequentsMapViewController: BaseViewController, ViewModelBindableType {
 				let icon = MTMapLocationMarkerItem()
 				icon.customTrackingImageName = "icCurrent"
 				mapView.updateCurrentLocationMarker(icon)
+				
+				icImageView.isHidden = true
             }
             
         }
@@ -202,6 +205,8 @@ extension FrequentsMapViewController: MTMapViewDelegate {
 		
 		titleText.isHidden = true
 		titleTopView.isHidden = true
+		
+		icImageView.isHidden = false
     }
 	
 	func mapView(_ mapView: MTMapView!, singleTapOn mapPoint: MTMapPoint!) {
@@ -210,5 +215,7 @@ extension FrequentsMapViewController: MTMapViewDelegate {
 		
 		titleText.isHidden = true
 		titleTopView.isHidden = true
+		
+		icImageView.isHidden = false
 	}
 }

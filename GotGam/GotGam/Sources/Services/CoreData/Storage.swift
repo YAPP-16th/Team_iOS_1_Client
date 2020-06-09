@@ -331,9 +331,24 @@ extension Storage{
             print("history를 읽을 수 없습니다. error: ", error.userInfo)
             return .error(error)
         }
-        
-        
     }
+	
+	func deleteKeyword(keyword: String) -> Observable<String> {
+		let history = History(context: self.context)
+//		let last = history.keyword[indexPath]
+		let last = history.keyword
+		if  last == keyword {
+			self.context.delete(history)
+		} else {
+			return .error(FrequentsStorageError.fetchError("해당 데이터에 대한 History 값을 찾을 수 없음"))
+		}
+		do{
+		  try self.context.save()
+		  return .just(keyword)
+		}catch let error{
+		  return .error(StorageError.delete(error.localizedDescription))
+		}
+	}
 }
 //MARK: - AlarmStorageType
 extension Storage{

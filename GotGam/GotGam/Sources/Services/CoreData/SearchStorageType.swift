@@ -15,4 +15,7 @@ protocol SearchStorageType{
 	
 	@discardableResult
 	func fetchKeyword() -> Observable<[String]>
+	
+	@discardableResult
+	func deleteKeyword(keyword: String) -> Observable<String>
 }

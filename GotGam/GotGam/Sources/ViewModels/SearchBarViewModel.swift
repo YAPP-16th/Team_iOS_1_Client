@@ -17,6 +17,7 @@ protocol SearchBarViewModelInputs {
 	func readKeyword()
 	func readFrequents()
 	func readGot()
+	func removeHistory(indexPath: IndexPath, history: String)
 	
 	var filteredGotSubject: BehaviorRelay<String> { get set }
 	var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
@@ -72,6 +73,18 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 		}.disposed(by: disposeBag)
 	}
 	
+	func removeHistory(indexPath: IndexPath, history: String) {
+//		let index = keywords.value().count - indexPath - 1
+//		storage.deleteKeyword(indexPath: index, keyword: history)
+		storage.deleteKeyword(keyword: history)
+			.subscribe({ _ in
+				if var list = try? self.keywords.value() {
+					list.remove(at: indexPath.row)
+					self.keywords.onNext(list)
+				}
+			})
+			.disposed(by: disposeBag)
+	}
 	
 	
 	var inputs: SearchBarViewModelInputs { return self }

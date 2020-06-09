@@ -292,6 +292,20 @@ extension SearchBarViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		return 0.1
 	}
+	
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		if indexPath.section == 0 {
+			let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+				guard let self = self else {return}
+				let history = self.historyList[indexPath.row]
+				self.viewModel.inputs.removeHistory(indexPath: indexPath, history: history)
+				success(true)
+			}
+			return UISwipeActionsConfiguration(actions: [deleteAction])
+		} else {
+			return UISwipeActionsConfiguration()
+		}
+	}
 }
 
 extension SearchBarViewController: UICollectionViewDataSource {
