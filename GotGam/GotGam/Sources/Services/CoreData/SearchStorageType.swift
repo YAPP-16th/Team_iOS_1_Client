@@ -8,14 +8,15 @@
 
 import Foundation
 import RxSwift
+import CoreData
 
 protocol SearchStorageType{
 	@discardableResult
-	func createKeyword(keyword: String) -> Observable<String>
+	func createKeyword(history: History) -> Observable<History>
 	
 	@discardableResult
-	func fetchKeyword() -> Observable<[String]>
+	func fetchKeyword() -> Observable<[History]>
 	
 	@discardableResult
-	func deleteKeyword(keyword: String) -> Observable<String>
+	func deleteKeyword(historyObjectId: NSManagedObjectID) -> Completable
 }

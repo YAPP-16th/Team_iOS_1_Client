@@ -670,11 +670,6 @@ extension MapViewController: MTMapViewDelegate{
 
         return true
     }
-	
-	func mapView(_ mapView: MTMapView!, touchedCalloutBalloonOf poiItem: MTMapPOIItem!) {
-		poiItem.customCalloutBalloonView = titleTopView
-		poiItem.customCalloutBalloonView = titleText
-	}
 }
 
 // MARK: - UICollectionView Delegate

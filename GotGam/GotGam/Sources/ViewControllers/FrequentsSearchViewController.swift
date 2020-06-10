@@ -27,7 +27,7 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 			}
 		}
 	}
-	var historyList: [String] = [] {
+	var historyList: [History] = [] {
 		didSet{
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
@@ -72,21 +72,12 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		searchBar.rx.controlEvent(.primaryActionTriggered)
 			.subscribe(onNext: {
 				let keyword = self.searchBar.text ?? ""
+				let history = History.init(keyword: keyword)
 				if !keyword.isEmpty && keyword != ""{
-					self.historyList.insert(keyword, at: 0)
+					self.viewModel.inputs.addKeyword(history: history)
 					self.searchKeyword(keyword: keyword)
 				}
 			}) .disposed(by: disposeBag)
-		
-		self.searchBar.rx.controlEvent(.primaryActionTriggered)
-			.subscribe(onNext: {
-				let keyword = self.searchBar.text ?? ""
-				if !keyword.isEmpty && keyword != ""{
-					self.viewModel.inputs.addKeyword(keyword: keyword)
-				}
-			}) .disposed(by: disposeBag)
-		
-		
 		
 		viewModel.outputs.keywords
 			.bind { (List) in
@@ -96,10 +87,11 @@ class FrequentsSearchViewController: BaseViewController, ViewModelBindableType{
 		tableView.rx.itemSelected
 			.subscribe(onNext: { [weak self] (indexPath) in
 				if indexPath.section == 0{
-					self?.searchBar.text = self?.historyList[indexPath.row]
+					self?.searchBar.text = self?.historyList[indexPath.row].keyword
 					let keyword = self?.searchBar.text ?? ""
+					let history = History.init(keyword: keyword)
 					if !keyword.isEmpty && keyword != ""{
-						self?.viewModel.inputs.addKeyword(keyword: keyword)
+						self?.viewModel.inputs.addKeyword(history: history)
 					}
 					self?.searchKeyword(keyword: keyword)
 				}
@@ -144,7 +136,7 @@ extension FrequentsSearchViewController: UITableViewDataSource{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "historyFCell", for: indexPath) as! FrequentHistoryCell
-			cell.historyLabel.text = historyList[indexPath.row]
+			cell.historyLabel.text = historyList[indexPath.row].keyword
 			return cell
 		}else {
 			let place = placeList[indexPath.row]
@@ -187,6 +179,19 @@ extension FrequentsSearchViewController: UITableViewDelegate{
 		return 0.5
 	}
 	
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		if indexPath.section == 0 {
+			let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+				guard let self = self else {return}
+				let history = self.historyList[indexPath.row]
+				self.viewModel.inputs.removeHistory(indexPath: indexPath, history: history)
+				success(true)
+			}
+			return UISwipeActionsConfiguration(actions: [deleteAction])
+		} else {
+			return UISwipeActionsConfiguration()
+		}
+	}
 }
 
 extension FrequentsSearchViewController: UICollectionViewDataSource{

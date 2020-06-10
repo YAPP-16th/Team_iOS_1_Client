@@ -13,18 +13,18 @@ import RxDataSources
 
 protocol SearchBarViewModelInputs {
     var placeSubject: PublishSubject<Place> { get set }
-	func addKeyword(keyword: String)
+	func addKeyword(history: History)
 	func readKeyword()
 	func readFrequents()
 	func readGot()
-	func removeHistory(indexPath: IndexPath, history: String)
+	func removeHistory(indexPath: IndexPath, history: History)
 	
 	var filteredGotSubject: BehaviorRelay<String> { get set }
 	var filteredTagSubject: BehaviorRelay<[Tag]> { get set }
 }
 
 protocol SearchBarViewModelOutputs {
-	var keywords: BehaviorSubject<[String]> { get set }
+	var keywords: BehaviorSubject<[History]> { get set }
 	var collectionItems: BehaviorSubject<[Frequent]> { get set }
 	var gotSections: BehaviorRelay<[ListSectionModel]> { get }
 }
@@ -37,7 +37,7 @@ protocol SearchBarViewModelType {
 class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarViewModelOutputs, SearchBarViewModelType {
     var placeSubject = PublishSubject<Place>()
     
-	var keywords: BehaviorSubject<[String]> = BehaviorSubject<[String]>(value: [])
+	var keywords = BehaviorSubject<[History]>(value: [])
 	var collectionItems = BehaviorSubject<[Frequent]>(value: [])
 	var gotList = BehaviorRelay<[Got]>(value: [])
 	var gotLists = BehaviorRelay<[Got]>(value: [])
@@ -46,9 +46,10 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 	var filteredGotSubject = BehaviorRelay<String>(value: "")
 	var filteredTagSubject = BehaviorRelay<[Tag]>(value: [])
 		
-	func addKeyword(keyword: String) {
+	func addKeyword(history: History) {
 		let storage = Storage()
-		storage.createKeyword(keyword: keyword).bind { _ in
+		storage.createKeyword(history: history)
+			.bind { _ in
 			self.readKeyword()
 			} .disposed(by: disposeBag)
 	}
@@ -73,22 +74,15 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 		}.disposed(by: disposeBag)
 	}
 	
-	func removeHistory(indexPath: IndexPath, history: String) {
-//		let index = keywords.value().count - indexPath - 1
-//		storage.deleteKeyword(indexPath: index, keyword: history)
-//		storage.deleteKeyword(keyword: history)
-//			.subscribe({ _ in
-//				if var list = try? self.keywords.value() {
-//					list.remove(at: indexPath.row)
-//					self.keywords.onNext(list)
-//				}
-//			})
-//			.disposed(by: disposeBag)
-		if var list = try? self.keywords.value() {
-			list.remove(at: indexPath.row)
-			self.keywords.onNext(list)
+	func removeHistory(indexPath: IndexPath, history: History) {
+		storage.deleteKeyword(historyObjectId: history.objectId!)
+			.subscribe { [weak self] keyword in
+				if var list = try? self?.keywords.value() {
+					list.remove(at: indexPath.row)
+					self?.keywords.onNext(list)
+				}
 		}
-		print("not yet :(")
+		.disposed(by: disposeBag)
 	}
 	
 	

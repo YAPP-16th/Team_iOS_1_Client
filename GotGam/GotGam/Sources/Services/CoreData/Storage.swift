@@ -306,47 +306,41 @@ extension Storage{
 }
 //MARK: - Search StorageType
 extension Storage{
-    func createKeyword(keyword: String) -> Observable<String> {
-        let history = History(context: self.context)
-        history.keyword = keyword
+    func createKeyword(history: History) -> Observable<History> {
+        let managedHistory = ManagedHistory(context: self.context)
+        managedHistory.fromHistory(history: history)
+		
         do{
             try self.context.save()
-            return .just(keyword)
+			return .just(managedHistory.toHistory())
         }catch let error as NSError{
             print("history를 생성할 수 없습니다. error: ", error.userInfo)
             return .error(error)
         }
     }
     
-    func fetchKeyword() -> Observable<[String]> {
-        let fetchRequest = NSFetchRequest<History>(entityName: "History")
+    func fetchKeyword() -> Observable<[History]> {
+        let fetchRequest = NSFetchRequest<ManagedHistory>(entityName: "ManagedHistory")
         do {
-            let results = try self.context.fetch(fetchRequest)
-            var keywords: [String] = []
-            for h in results{
-                keywords.append(h.keyword!)
-            }
-            return .just(keywords)
+            let managedHistoryList = try self.context.fetch(fetchRequest)
+			let historyList = managedHistoryList.map { $0.toHistory() }
+            return .just(historyList)
         }catch let error as NSError{
             print("history를 읽을 수 없습니다. error: ", error.userInfo)
             return .error(error)
         }
     }
 	
-	func deleteKeyword(keyword: String) -> Observable<String> {
-		let history = History(context: self.context)
-//		let last = history.keyword[indexPath]
-		let last = history.keyword
-		if  last == keyword {
-			self.context.delete(history)
-		} else {
-			return .error(FrequentsStorageError.fetchError("해당 데이터에 대한 History 값을 찾을 수 없음"))
+	func deleteKeyword(historyObjectId: NSManagedObjectID) -> Completable {
+		guard let managedHistory = self.context.object(with: historyObjectId) as? ManagedHistory else {
+			return .error(StorageError.read("ObjectId 오류"))
 		}
-		do{
-		  try self.context.save()
-		  return .just(keyword)
-		}catch let error{
-		  return .error(StorageError.delete(error.localizedDescription))
+			self.context.delete(managedHistory)
+		do {
+			try self.context.save()
+			return .empty()
+		} catch let error{
+			return .error(StorageError.delete(error.localizedDescription))
 		}
 	}
 }
