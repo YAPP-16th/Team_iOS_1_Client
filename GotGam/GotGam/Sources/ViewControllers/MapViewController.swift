@@ -222,12 +222,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-		navigationController?.isNavigationBarHidden = false
-		navigationController?.interactivePopGestureRecognizer?.delegate = nil
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.seedButton.layer.applySketchShadow(color: .black, alpha: 0.3, x: 0, y: 2, blur: 10, spread: 0)

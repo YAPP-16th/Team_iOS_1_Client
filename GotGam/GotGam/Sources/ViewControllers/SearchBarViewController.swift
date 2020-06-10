@@ -17,7 +17,6 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	
 	@IBOutlet var SearchBar: UITextField!
 	@IBAction func moveMap(_ sender: Any) {
-		//viewModel.sceneCoordinator.close(animated: true, completion: nil)
         viewModel.sceneCoordinator.pop(animated: true, completion: nil)
 	}
 	@IBOutlet weak var tableView: UITableView!
@@ -60,7 +59,6 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		super.viewDidLoad()
 		SearchBar.becomeFirstResponder()
 		navigationItem.hidesBackButton = true
-		navigationController?.isNavigationBarHidden = true
 		self.viewModel.inputs.readKeyword()
 	}
 	
