@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CoreData
 enum IconType: Int16 {
 	case home = 0
 	case office
@@ -35,7 +35,8 @@ struct Frequent: Equatable {
     var longitude: Double
 	var type: IconType
 	var id: String
-	
+    var objectId: NSManagedObjectID?
+    
 	init(
 		name: String,
 		address: String,

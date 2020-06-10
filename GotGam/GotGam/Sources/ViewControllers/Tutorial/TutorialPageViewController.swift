@@ -105,6 +105,7 @@ class TutorialPageViewController: UIPageViewController, ViewModelBindableType{
     }
     func bindViewModel() {
         self.skipButton.rx.tap.bind { _ in
+            UserDefaults.standard.set(true, forDefines: .tutorialShown)
             self.isSkipped = true
             self.viewModel.showLoginVC()
         }.disposed(by: self.disposeBag)
