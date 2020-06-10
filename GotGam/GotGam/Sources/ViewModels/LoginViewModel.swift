@@ -74,16 +74,15 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
         }
     }
     func close(){
-        self.sceneCoordinator.close(animated: true, completion: {
-            NetworkAPIManager.shared.synchronize().subscribe { completable in
-                switch completable{
-                case .completed:
-                    print("동기화 성공")
-                case .error(let error):
-                    print("동기화 실패, \(error.localizedDescription)")
-                }
-            }.disposed(by: self.disposeBag)
-        })
+        NetworkAPIManager.shared.synchronize().subscribe { completable in
+            switch completable{
+            case .completed:
+                self.sceneCoordinator.close(animated: true, completion: nil)
+            case .error(let error):
+                print("동기화 실패, \(error.localizedDescription)")
+            }
+        }.disposed(by: self.disposeBag)
+        
     }
     
     //MARK: - Helper

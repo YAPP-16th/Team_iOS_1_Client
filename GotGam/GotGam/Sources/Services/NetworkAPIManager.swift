@@ -87,40 +87,10 @@ class NetworkAPIManager{
     
     //MARK: - Synchronization
     func synchronize() -> Completable{
-        return Completable.create { observer in
-            self.syncTags().subscribe { c in
-                switch c{
-                case .completed:
-                    self.syncTasks().subscribe { completable in
-                        switch completable{
-                        case .completed:
-                            self.syncronizeAllTags().subscribe { completable in
-                                switch completable{
-                                case .completed:
-                                    self.syncronizeAllTasks().subscribe { completable in
-                                        switch completable{
-                                        case .completed:
-                                            observer(.completed)
-                                        case .error(let error):
-                                            observer(.error(error))
-                                        }
-                                    }.disposed(by: self.disposeBag)
-                                case .error(let error):
-                                    observer(.error(error))
-                                }
-                                
-                            }.disposed(by: self.disposeBag)
-                        case .error(let error):
-                            observer(.error(error))
-                        }
-                    }.disposed(by: self.disposeBag)
-                case .error(let error):
-                    observer(.error(error))
-                }
-            }.disposed(by: self.disposeBag)
-            return Disposables.create()
-        }
-        
+        return self.syncTags()
+        .andThen(self.syncTasks())
+        .andThen(self.syncronizeAllTags())
+        .andThen(self.syncronizeAllTasks())
     }
     
     func syncronizeAllTags() -> Completable{
@@ -278,6 +248,18 @@ class NetworkAPIManager{
         }
     }
     
+    func syncFrequents() -> Completable{
+        return Completable.create { _ in
+            return Disposables.create()
+        }
+    }
+    
+    func uploadAllFrequents() -> Observable<[FrequentResponseData]>{
+        return Observable.create { ovserver in
+            return Disposables.create()
+        }
+    }
+    
     
     //MARK: - Helper
     private func getMergedUnsyncedTags() -> Observable<[[String: Any]]>{
@@ -322,5 +304,10 @@ class NetworkAPIManager{
         return storage.fetchTaskList()
             .map { $0.filter { $0.id == "" && $0.objectId != nil } }
     }
+    
+//    private func getAllUnsyncedFrequents() -> Observable<[Frequent]>{
+//        return storage.fetchFrequents()
+//            .map { $0.filter( { $0.id == ""})}
+//    }
     
 }
