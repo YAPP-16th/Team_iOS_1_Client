@@ -88,7 +88,8 @@ class TagColorCollectionViewCell: UICollectionViewCell {
             .map { $0 == tagColor.hex }
             .subscribe(onNext: { [unowned self] isPick in
                 if isPick {
-                    self.layer.shadowOpacity = 0.3
+                    self.layer.shadowOpacity = 3
+					self.addInnerShadow()
                 } else {
                     self.layer.shadowOpacity = 0
                 }
@@ -98,8 +99,31 @@ class TagColorCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.shadow(radius: 10, color: .black, offset: .zero, opacity: 0)
+//		self.shadow(radius: 10, color: .saffron, offset: .zero, opacity: 0)
+		
     }
+	
+	private func addInnerShadow() {
+		let innerShadow = CALayer()
+		innerShadow.frame = bounds
+
+		// Shadow path (1pt ring around bounds)
+		let radius = self.frame.size.height/2
+		let path = UIBezierPath(roundedRect: innerShadow.bounds.insetBy(dx: -1, dy:-1), cornerRadius:radius)
+		let cutout = UIBezierPath(roundedRect: innerShadow.bounds, cornerRadius:radius).reversing()
+
+
+		path.append(cutout)
+		innerShadow.shadowPath = path.cgPath
+		innerShadow.masksToBounds = true
+		// Shadow properties
+		innerShadow.shadowColor = UIColor.black.cgColor
+		innerShadow.shadowOffset = .zero
+		innerShadow.shadowOpacity = 8
+		innerShadow.shadowRadius = 5
+		innerShadow.cornerRadius = self.frame.size.height/2
+		layer.addSublayer(innerShadow)
+	}
 }
 
 

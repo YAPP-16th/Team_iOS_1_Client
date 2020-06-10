@@ -76,14 +76,19 @@ class SearchBarViewModel: CommonViewModel, SearchBarViewModelInputs, SearchBarVi
 	func removeHistory(indexPath: IndexPath, history: String) {
 //		let index = keywords.value().count - indexPath - 1
 //		storage.deleteKeyword(indexPath: index, keyword: history)
-		storage.deleteKeyword(keyword: history)
-			.subscribe({ _ in
-				if var list = try? self.keywords.value() {
-					list.remove(at: indexPath.row)
-					self.keywords.onNext(list)
-				}
-			})
-			.disposed(by: disposeBag)
+//		storage.deleteKeyword(keyword: history)
+//			.subscribe({ _ in
+//				if var list = try? self.keywords.value() {
+//					list.remove(at: indexPath.row)
+//					self.keywords.onNext(list)
+//				}
+//			})
+//			.disposed(by: disposeBag)
+		if var list = try? self.keywords.value() {
+			list.remove(at: indexPath.row)
+			self.keywords.onNext(list)
+		}
+		print("not yet :(")
 	}
 	
 	
