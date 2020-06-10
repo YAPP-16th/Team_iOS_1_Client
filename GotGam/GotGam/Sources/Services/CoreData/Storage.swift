@@ -126,7 +126,7 @@ class Storage: StorageType {
     func syncAllTasks(tasks: [Got]) -> Completable{
         return Completable.create { observer in
             for got in tasks{
-                guard self.readTag(id: got.id) == nil else { continue }
+                guard self.readTask(id: got.id) == nil else { continue }
                 let managedGot = ManagedGot(context: self.context)
                 managedGot.fromGot(got: got)
             }
