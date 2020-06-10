@@ -20,6 +20,7 @@ class Storage: StorageType {
   func createTask(task: Got) -> Observable<Got> {
     let managedGot = ManagedGot(context: self.context)
     managedGot.fromGot(got: task)
+    managedGot.objectIDString = managedGot.objectID.uriRepresentation().absoluteString
     do{
       try self.context.save()
       let got = managedGot.toGot()
@@ -193,6 +194,20 @@ extension Storage{
         return .error(StorageError.read("ObjectId 오류"))
       }
       return .just(managedTag.toTag())
+    }
+    
+    func fetchTag(hex: String) -> Observable<Tag> {
+        let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+        fetchRequest.predicate = NSPredicate(format: "hex == %@", hex)
+        do {
+            if let managedTag = try self.context.fetch(fetchRequest).first {
+                return .just(managedTag.toTag())
+            }
+            return .empty()
+        } catch let error {
+            print(error.localizedDescription)
+            return .empty()
+        }
     }
     
     func updateTag(tagObjectId: NSManagedObjectID, toUpdate: Tag) -> Observable<Tag> {
@@ -384,13 +399,13 @@ extension Storage{
 }
 //MARK: - AlarmStorageType
 extension Storage{
-    func createAlarm(_ alarm: Alarm) -> Observable<Alarm> {
+    func createAlarm(_ alarm: ManagedAlarm) -> Observable<ManagedAlarm> {
         do {
             var alarm = alarm
             //self.createId(alarm: &alarm)
             let managedAlarm = ManagedAlarm(context: self.context)
-            managedAlarm.fromAlarm(alarm)
-            alarm.id = managedAlarm.objectID
+            //managedAlarm.fromAlarm(alarm)
+            //alarm.id = managedAlarm.objectID.uriRepresentation().absoluteString
             try self.context.save()
             return .just(alarm)
         } catch let error {
@@ -398,11 +413,11 @@ extension Storage{
         }
     }
     
-    func fetchAlarmList() -> Observable<[Alarm]> {
+    func fetchAlarmList() -> Observable<[ManagedAlarm]> {
         do{
             let fetchRequest = NSFetchRequest<ManagedAlarm>(entityName: "ManagedAlarm")
             let results = try self.context.fetch(fetchRequest).reversed()
-            let alarmList = results.map { $0.toAlarm() }
+            let alarmList = results.map { $0 }
             
             return .just(alarmList)
         }catch{
@@ -410,22 +425,22 @@ extension Storage{
         }
     }
     
-    func fetchAlarm(id: NSManagedObjectID) -> Observable<Alarm> {
+    func fetchAlarm(id: NSManagedObjectID) -> Observable<ManagedAlarm> {
         if let managedAlarm = self.context.object(with: id) as? ManagedAlarm {
-            return .just(managedAlarm.toAlarm())
+            return .just(managedAlarm)
         } else {
             return .error(StorageError.read("해당 alarm을 찾을 수 없음"))
         }
     }
     
-    func updateAlarm(to alarm: Alarm) -> Observable<Alarm> {
-        guard let id = alarm.id else { return .error(StorageError.read("Alarm의 ID를 찾을 수 없음"))}
+    func updateAlarm(to alarm: ManagedAlarm) -> Observable<ManagedAlarm> {
+        //guard let id = alarm.id else { return .error(StorageError.read("Alarm의 ID를 찾을 수 없음"))}
         
-        if let managedAlarm = context.object(with: id) as? ManagedAlarm {
-            managedAlarm.fromAlarm(alarm)
+        if let managedAlarm = context.object(with: alarm.objectID) as? ManagedAlarm {
+            //managedAlarm
             do{
                 try self.context.save()
-                return .just(alarm)
+                return .just(managedAlarm)
             }catch let error{
                 return .error(error)
             }
@@ -434,10 +449,10 @@ extension Storage{
         }
     }
     
-    func deleteAlarm(id: NSManagedObjectID) -> Observable<Alarm> {
+    func deleteAlarm(id: NSManagedObjectID) -> Observable<ManagedAlarm> {
         
         if let managedAlarm = context.object(with: id) as? ManagedAlarm {
-            let alarm = managedAlarm.toAlarm()
+            let alarm = managedAlarm
             self.context.delete(managedAlarm)
             do{
                 try self.context.save()
@@ -450,10 +465,10 @@ extension Storage{
         }
     }
     
-    func deleteAlarm(alarm: Alarm) -> Observable<Alarm> {
-        guard let id = alarm.id else { return .error(StorageError.read("Alarm의 ID를 찾을 수 없음"))}
+    func deleteAlarm(alarm: ManagedAlarm) -> Observable<ManagedAlarm> {
+        //guard let id = alarm.id else { return .error(StorageError.read("Alarm의 ID를 찾을 수 없음"))}
         
-        return deleteAlarm(id: id)
+        return deleteAlarm(id: alarm.objectID)
     }
     
 }

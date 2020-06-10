@@ -30,6 +30,7 @@ struct Got: Equatable {
     var readyArrive: Bool = true
     var readyDeparture: Bool = false
     // ManagedGot을 가져오기 위한
+    var objectIDString: String? = ""
     var objectId: NSManagedObjectID?
     
     init(
@@ -68,7 +69,6 @@ struct Got: Equatable {
         self.isDone = isDone
         self.readyArrive = readyArrive
         self.readyDeparture = readyDeparture
-        
     }
     
 	
@@ -77,6 +77,7 @@ struct Got: Equatable {
     init(original: Got, updatedTitle: String){
         self = original
         self.title = updatedTitle
+        
     }
     
     //빠른심기 사용시 사용
@@ -98,6 +99,7 @@ struct Got: Equatable {
         self.isDone = false
         self.readyArrive = false
         self.readyDeparture = false
+        self.objectIDString = ""
     }
     
     public static func ==(lhs: Got, rhs: Got) -> Bool {

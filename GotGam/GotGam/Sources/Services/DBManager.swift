@@ -52,14 +52,47 @@ class DBManager {
         }
     }
     
-    func fetchGot(id: Int64) -> ManagedGot? {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
-        fetchRequest.predicate = NSPredicate(format: "id = %lld", id)
+//    func fetchGot(id: Int64) -> ManagedGot? {
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedGot")
+//        fetchRequest.predicate = NSPredicate(format: "id = %lld", id)
+//        do {
+//            let fetchObjects = try context.fetch(fetchRequest) as? [ManagedGot]
+//            return fetchObjects?.first
+//        } catch let error {
+//            print("🚨 Could not fetch Got. \(error.localizedDescription)")
+//            return nil
+//        }
+//    }
+    
+    func fetchGot(objectID: NSManagedObjectID?) -> ManagedGot? {
+        guard let id = objectID else { return nil }
+        return context.object(with: id) as? ManagedGot
+    }
+    
+    func fetchGot(objectIDString: String) -> ManagedGot? {
+        
+        
+        let fetchRequest = NSFetchRequest<ManagedGot>(entityName: "ManagedGot")
+        fetchRequest.predicate = NSPredicate(format: "objectIDString == %@", objectIDString)
+        
         do {
-            let fetchObjects = try context.fetch(fetchRequest) as? [ManagedGot]
-            return fetchObjects?.first
+            let managedGot = try context.fetch(fetchRequest)
+            return managedGot.first
         } catch let error {
-            print("🚨 Could not fetch Got. \(error.localizedDescription)")
+            print("🚨 Could not fetch objects. \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func fetchTag(hex: String) -> ManagedTag? {
+        let fetchRequest = NSFetchRequest<ManagedTag>(entityName: "ManagedTag")
+        fetchRequest.predicate = NSPredicate(format: "hex == %@", hex)
+        
+        do {
+            let managedTag = try context.fetch(fetchRequest)
+            return managedTag.first
+        } catch let error {
+            print("🚨 Could not fetch objects. \(error.localizedDescription)")
             return nil
         }
     }

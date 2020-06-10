@@ -44,12 +44,12 @@
 		4269388924306B68007B60FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4269388824306B68007B60FD /* Assets.xcassets */; };
 		4269388C24306B68007B60FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4269388A24306B68007B60FD /* LaunchScreen.storyboard */; };
 		4C00F8DF24796045006AD726 /* Scene+target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C00F8DE24796045006AD726 /* Scene+target.swift */; };
+		4C0FE14D24909B61000008FD /* ManagedAlarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0FE14B24909B61000008FD /* ManagedAlarm+CoreDataClass.swift */; };
+		4C0FE14E24909B61000008FD /* ManagedAlarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0FE14C24909B61000008FD /* ManagedAlarm+CoreDataProperties.swift */; };
 		4C1FCB2C2487DA7E0094F9EC /* AddMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1FCB2B2487DA7E0094F9EC /* AddMapViewController.swift */; };
 		4C1FCB2E2487E9900094F9EC /* UINavigationController+completion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1FCB2D2487E9900094F9EC /* UINavigationController+completion.swift */; };
 		4C487319247D4237008503BC /* AlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C487318247D4237008503BC /* AlarmManager.swift */; };
 		4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */; };
-		4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */; };
-		4C5185ED2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */; };
 		4C5185EF247550B8009E1B08 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5185EE247550B8009E1B08 /* Alarm.swift */; };
 		4C5F0F5B24652EC500C7A6E9 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */; };
 		4C5F0F5D24652ED400C7A6E9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */; };
@@ -236,12 +236,12 @@
 		4269388B24306B68007B60FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4269388D24306B68007B60FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "GotGam/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		4C00F8DE24796045006AD726 /* Scene+target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scene+target.swift"; sourceTree = "<group>"; };
+		4C0FE14B24909B61000008FD /* ManagedAlarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4C0FE14C24909B61000008FD /* ManagedAlarm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4C1FCB2B2487DA7E0094F9EC /* AddMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMapViewController.swift; sourceTree = "<group>"; };
 		4C1FCB2D2487E9900094F9EC /* UINavigationController+completion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+completion.swift"; sourceTree = "<group>"; };
 		4C487318247D4237008503BC /* AlarmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmManager.swift; sourceTree = "<group>"; };
 		4C5185DB24725AA8009E1B08 /* UITextView+centerVertically.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+centerVertically.swift"; sourceTree = "<group>"; };
-		4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataClass.swift"; sourceTree = "<group>"; };
-		4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedAlarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4C5185EE247550B8009E1B08 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		4C5F0F5A24652EC500C7A6E9 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		4C5F0F5C24652ED400C7A6E9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -577,14 +577,14 @@
 		4CE037CC2438BCB70093E39D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4C0FE14B24909B61000008FD /* ManagedAlarm+CoreDataClass.swift */,
+				4C0FE14C24909B61000008FD /* ManagedAlarm+CoreDataProperties.swift */,
 				A1DF6390247EC0A100444175 /* Network */,
 				29618DAE247C4C6F008E112E /* ManagedFrequents+CoreDataClass.swift */,
 				29618DAF247C4C70008E112E /* ManagedFrequents+CoreDataProperties.swift */,
 				A1B618452485182F00844BEB /* Got */,
 				A1B618442485181B00844BEB /* Tag */,
 				4C5185EE247550B8009E1B08 /* Alarm.swift */,
-				4C5185EA2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift */,
-				4C5185EB2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift */,
 				4CA2352724758F8D005323EF /* History+CoreDataClass.swift */,
 				4CA2352624758F8D005323EF /* History+CoreDataProperties.swift */,
 				A159DBF52459C1DD004FCA66 /* Gotgam.xcdatamodeld */,
@@ -1112,12 +1112,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0FE14E24909B61000008FD /* ManagedAlarm+CoreDataProperties.swift in Sources */,
 				A1B618532487C10E00844BEB /* ManagedGot+CoreDataProperties.swift in Sources */,
 				A1A5DF5C2477D52700AFA9D5 /* LoginViewModel.swift in Sources */,
 				A127E717246D4BA7005137D3 /* ManagedTag+CoreDataProperties.swift in Sources */,
 				4CE037EB2438CD470093E39D /* MapViewController.swift in Sources */,
 				2972784B2473C9CB00B75AC7 /* SettingOtherViewModel.swift in Sources */,
 				A1B6184D2487B7AC00844BEB /* TaskStorageType.swift in Sources */,
+				4C0FE14D24909B61000008FD /* ManagedAlarm+CoreDataClass.swift in Sources */,
 				A1B6184B2487B70900844BEB /* SearchStorageType.swift in Sources */,
 				A1B618382483738F00844BEB /* StorageType.swift in Sources */,
 				295C03C52464655100789967 /* SearchBarViewModel.swift in Sources */,
@@ -1172,7 +1174,6 @@
 				A17CD90F248279B700F0C30E /* TutorialPageViewController.swift in Sources */,
 				4C620D12246C370300B25B86 /* PaddingLabel.swift in Sources */,
 				4CF1D0AF244AA41D00B45751 /* Tab.swift in Sources */,
-				4C5185ED2475505C009E1B08 /* ManagedAlarm+CoreDataProperties.swift in Sources */,
 				4C5F0F682465503200C7A6E9 /* AlarmDepartureTableViewCell.swift in Sources */,
 				4269388024306B66007B60FD /* AppDelegate.swift in Sources */,
 				4C96D372247A7FFE0014101F /* ShareListTableViewCell.swift in Sources */,
@@ -1194,7 +1195,6 @@
 				4C65BFA924630F0F00FF17BC /* CreateTextFieldTableViewCell.swift in Sources */,
 				4C5185DC24725AA8009E1B08 /* UITextView+centerVertically.swift in Sources */,
 				4C792B6B2484EAF8002ADB33 /* RadiusSliderView.swift in Sources */,
-				4C5185EC2475505C009E1B08 /* ManagedAlarm+CoreDataClass.swift in Sources */,
 				4CE037E32438CAF20093E39D /* CommonViewModel.swift in Sources */,
 				29727819246FDAAE00B75AC7 /* APIManager.swift in Sources */,
 				4CA2352324758F1F005323EF /* SettingLoginViewModel.swift in Sources */,
@@ -1383,7 +1383,7 @@
 				CODE_SIGN_ENTITLEMENTS = GotGam/GotGam.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = 97C96KP84G;
+				DEVELOPMENT_TEAM = N23K7ZS482;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GotGam/Supporting\\ Files",

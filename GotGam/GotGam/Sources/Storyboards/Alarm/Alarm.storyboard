@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -408,20 +408,20 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="alarmShareCell" id="nz3-22-1i1" customClass="AlarmShareTableViewCell" customModule="GotGam" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="194" width="414" height="256.5"/>
+                                        <rect key="frame" x="0.0" y="194" width="414" height="261"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nz3-22-1i1" id="9Kw-C6-oGQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="256.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="261"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="MSX-cM-6XY">
-                                                    <rect key="frame" x="20" y="11" width="374" height="234.5"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="239"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1SE-Xp-pon">
-                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="78"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="79.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="곳감님이 알아서 찾아가라알아서 찾아가라알아서 찾아가라알아서 찾아가라알아서 찾아가라알아서 찾아가라알아서 찾아가라 태그를 공유했습니다" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHP-Or-dol">
-                                                                    <rect key="frame" x="0.0" y="14.5" width="374" height="49"/>
+                                                                    <rect key="frame" x="0.0" y="15.5" width="374" height="49"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -437,10 +437,10 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PGj-ud-fmO">
-                                                            <rect key="frame" x="0.0" y="78" width="374" height="78.5"/>
+                                                            <rect key="frame" x="0.0" y="79.5" width="374" height="80"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수락하시겠습니까?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oS-vO-7Aj">
-                                                                    <rect key="frame" x="0.0" y="31" width="374" height="16.5"/>
+                                                                    <rect key="frame" x="0.0" y="32" width="374" height="16.5"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -456,16 +456,16 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W9s-nm-uO7">
-                                                            <rect key="frame" x="0.0" y="156.5" width="374" height="78"/>
+                                                            <rect key="frame" x="0.0" y="159.5" width="374" height="79.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIME 분" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaA-Al-ITo">
-                                                                    <rect key="frame" x="0.0" y="30.5" width="48.5" height="16.5"/>
+                                                                    <rect key="frame" x="0.0" y="31.5" width="48.5" height="16.5"/>
                                                                     <fontDescription key="fontDescription" name="SpoqaHanSans-Regular" family="SpoqaHanSans" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Y6-wI-ybm">
-                                                                    <rect key="frame" x="326" y="27" width="48" height="24"/>
+                                                                    <rect key="frame" x="326" y="27.5" width="48" height="24"/>
                                                                     <color key="backgroundColor" red="1" green="0.65417033430000004" blue="0.065232805909999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="48" id="3Bp-pa-n7Y"/>
@@ -475,7 +475,7 @@
                                                                     <state key="normal" title="수락"/>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FZV-e3-zGZ">
-                                                                    <rect key="frame" x="266" y="27" width="48" height="24"/>
+                                                                    <rect key="frame" x="266" y="27.5" width="48" height="24"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="24" id="j5B-h5-MSa"/>
@@ -519,16 +519,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKV-xg-jlW">
-                                <rect key="frame" x="364" y="88" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="Vik-Oa-8Ax"/>
-                                </constraints>
-                                <state key="normal" title="알림"/>
-                                <connections>
-                                    <action selector="didTapTestAlarm:" destination="Tzo-cJ-4eF" eventType="touchUpInside" id="IPA-JH-XOn"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -536,12 +526,9 @@
                             <constraint firstItem="bQg-pU-FSA" firstAttribute="bottom" secondItem="k4l-7c-Rev" secondAttribute="bottom" id="4ug-6e-7pY"/>
                             <constraint firstItem="5xi-Mn-R9l" firstAttribute="trailing" secondItem="AWn-vZ-kXB" secondAttribute="trailing" id="6MP-aL-41X"/>
                             <constraint firstItem="k4l-7c-Rev" firstAttribute="top" secondItem="5xi-Mn-R9l" secondAttribute="top" id="7FE-i2-dal"/>
-                            <constraint firstItem="AWn-vZ-kXB" firstAttribute="top" secondItem="RKV-xg-jlW" secondAttribute="bottom" id="Aht-Qp-cHG"/>
                             <constraint firstItem="5xi-Mn-R9l" firstAttribute="bottom" secondItem="AWn-vZ-kXB" secondAttribute="bottom" id="IZ0-Iq-uME"/>
                             <constraint firstItem="AWn-vZ-kXB" firstAttribute="leading" secondItem="5xi-Mn-R9l" secondAttribute="leading" id="Nvd-8e-kTN"/>
-                            <constraint firstItem="5xi-Mn-R9l" firstAttribute="trailing" secondItem="RKV-xg-jlW" secondAttribute="trailing" id="bbA-nD-VBI"/>
                             <constraint firstItem="AWn-vZ-kXB" firstAttribute="top" secondItem="k4l-7c-Rev" secondAttribute="bottom" id="iqi-63-29T"/>
-                            <constraint firstItem="RKV-xg-jlW" firstAttribute="top" secondItem="5xi-Mn-R9l" secondAttribute="top" id="lDK-bc-W2u"/>
                             <constraint firstItem="bQg-pU-FSA" firstAttribute="leading" secondItem="k4l-7c-Rev" secondAttribute="leading" id="t8g-Jb-LBE"/>
                             <constraint firstItem="bQg-pU-FSA" firstAttribute="width" secondItem="cPd-tT-Yay" secondAttribute="width" id="wOC-1F-IVe"/>
                         </constraints>

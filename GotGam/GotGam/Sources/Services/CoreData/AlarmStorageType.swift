@@ -20,25 +20,25 @@ enum AlarmStorageError: Error{
 protocol AlarmStorageType {
     
     @discardableResult
-    func createAlarm(_ alarm: Alarm) -> Observable<Alarm>
+    func createAlarm(_ alarm: ManagedAlarm) -> Observable<ManagedAlarm>
     
     @discardableResult
-    func fetchAlarmList() -> Observable<[Alarm]>
+    func fetchAlarmList() -> Observable<[ManagedAlarm]>
     
     @discardableResult
-    func fetchAlarm(id: NSManagedObjectID) -> Observable<Alarm>
+    func fetchAlarm(id: NSManagedObjectID) -> Observable<ManagedAlarm>
     
 //    @discardableResult
 //    func fetchAlarm(date: Date) -> Observable<[Alarm]>
     
     @discardableResult
-    func updateAlarm(to alarm: Alarm) -> Observable<Alarm>
+    func updateAlarm(to alarm: ManagedAlarm) -> Observable<ManagedAlarm>
     
     @discardableResult
-    func deleteAlarm(id: NSManagedObjectID) -> Observable<Alarm>
+    func deleteAlarm(id: NSManagedObjectID) -> Observable<ManagedAlarm>
     
     @discardableResult
-    func deleteAlarm(alarm: Alarm) -> Observable<Alarm>
+    func deleteAlarm(alarm: ManagedAlarm) -> Observable<ManagedAlarm>
     
 }
 

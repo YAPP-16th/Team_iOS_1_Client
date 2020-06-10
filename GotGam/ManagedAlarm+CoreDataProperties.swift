@@ -2,7 +2,7 @@
 //  ManagedAlarm+CoreDataProperties.swift
 //  GotGam
 //
-//  Created by woong on 20/05/2020.
+//  Created by woong on 2020/06/10.
 //  Copyright © 2020 손병근. All rights reserved.
 //
 //
@@ -17,10 +17,13 @@ extension ManagedAlarm {
         return NSFetchRequest<ManagedAlarm>(entityName: "ManagedAlarm")
     }
 
-    @NSManaged public var type: Int16
-    @NSManaged public var createdDate: Date
-    @NSManaged public var isChecked: Bool
     @NSManaged public var checkedDate: Date?
-    @NSManaged public var got: ManagedGot
+    @NSManaged public var createdDate: Date
+    @NSManaged public var insertedDate: Date?
+    @NSManaged public var isChecked: Bool
+    @NSManaged var type: AlarmType
+    @NSManaged public var title: String
+    @NSManaged public var message: String
+    @NSManaged public var tag: String?
 
 }
