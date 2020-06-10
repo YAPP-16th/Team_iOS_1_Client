@@ -64,6 +64,10 @@ extension SettingAlarmViewController: UITableViewDelegate {
         return view
     }
 	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		settingAlarmTableView.deselectRow(at: indexPath, animated: true)
+	}
+	
 //	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //		settingAlarmTableView.deselectRow(at: indexPath, animated: true)
 //		if indexPath.row == 0 {

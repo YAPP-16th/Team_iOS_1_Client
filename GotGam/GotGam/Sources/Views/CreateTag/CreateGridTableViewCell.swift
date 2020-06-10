@@ -88,7 +88,7 @@ class TagColorCollectionViewCell: UICollectionViewCell {
             .map { $0 == tagColor.hex }
             .subscribe(onNext: { [unowned self] isPick in
                 if isPick {
-                    self.layer.shadowOpacity = 0.3
+                    self.layer.shadowOpacity = 3
                 } else {
                     self.layer.shadowOpacity = 0
                 }
@@ -98,8 +98,10 @@ class TagColorCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.shadow(radius: 10, color: .black, offset: .zero, opacity: 0)
+		self.shadow(radius: 10, color: .black, offset: .zero, opacity: 0)
+		
     }
+	
 }
 
 

@@ -30,7 +30,7 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		}
 	}
 	
-	var historyList: [String] = [] {
+	var historyList: [History] = [] {
 		didSet{
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
@@ -59,14 +59,15 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		SearchBar.becomeFirstResponder()
-//		navigationItem.hidesBackButton = true
+		navigationItem.hidesBackButton = true
+		navigationController?.isNavigationBarHidden = true
 		self.viewModel.inputs.readKeyword()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-        
+		navigationController?.isNavigationBarHidden = true
+		
 		viewModel.inputs.readFrequents()
 		viewModel.inputs.readGot()
 	}
@@ -84,25 +85,19 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 			}).disposed(by: self.disposeBag)
 		
 		SearchBar.rx.controlEvent(.primaryActionTriggered)
-			.subscribe(onNext: {
-				let text = self.SearchBar.text ?? ""
+			.subscribe(onNext: { [weak self] in
+				
+				let text = self?.SearchBar.text ?? ""
+				let history = History.init(keyword: text)
 				if !text.isEmpty && text != ""{
-					self.historyList.insert(text, at: 0)
-					self.searchKeyword(keyword: text)
+					self?.viewModel.inputs.addKeyword(history: history)
+					self?.searchKeyword(keyword: text)
 				}
 			}).disposed(by: disposeBag)
 		
 		self.viewModel.outputs.keywords.bind { (List) in
 			self.historyList = List
 			} .disposed(by: disposeBag)
-		
-		self.SearchBar.rx.controlEvent(.primaryActionTriggered)
-			.subscribe(onNext: {
-				let keyword = self.SearchBar.text ?? ""
-				if !keyword.isEmpty && keyword != ""{
-					self.viewModel.inputs.addKeyword(keyword: keyword)
-				}
-			}) .disposed(by: disposeBag)
 		
 		viewModel.outputs.collectionItems
 			.subscribe(onNext: { [weak self] frequents in
@@ -113,10 +108,11 @@ class SearchBarViewController: BaseViewController, ViewModelBindableType {
 		tableView.rx.itemSelected
 			.subscribe(onNext: { [weak self] (indexPath) in
 				if indexPath.section == 0{
-					self?.SearchBar.text = self?.historyList[indexPath.row]
+					self?.SearchBar.text = self?.historyList[indexPath.row].keyword
 					let keyword = self?.SearchBar.text ?? ""
+					let history = History.init(keyword: keyword)
 					if !keyword.isEmpty && keyword != ""{
-						self?.viewModel.inputs.addKeyword(keyword: keyword)
+						self?.viewModel.inputs.addKeyword(history: history)
 					}
 					self?.searchKeyword(keyword: keyword)
 				}
@@ -164,7 +160,7 @@ extension SearchBarViewController: UITableViewDataSource{
 			if SearchBar.text == "" {
 				return self.historyList.count
 			} else {
-				return historyList.count <= 3 ? historyList.count : 3
+				return 0
 			}
 		}else if section == 1 {
 			if SearchBar.text == "" {
@@ -189,7 +185,7 @@ extension SearchBarViewController: UITableViewDataSource{
 		if indexPath.section == 0{
 			let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! SearchHistoryCell
 			guard indexPath.row < historyList.count else {return UITableViewCell()}
-			cell.historyLabel.text = historyList[indexPath.row]
+			cell.historyLabel.text = historyList[indexPath.row].keyword
 			return cell
 		}else if indexPath.section == 2 {
 			let place = placeList[indexPath.row]
@@ -297,6 +293,20 @@ extension SearchBarViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		return 0.1
 	}
+	
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		if indexPath.section == 0 {
+			let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+				guard let self = self else {return}
+				let history = self.historyList[indexPath.row]
+				self.viewModel.inputs.removeHistory(indexPath: indexPath, history: history)
+				success(true)
+			}
+			return UISwipeActionsConfiguration(actions: [deleteAction])
+		} else {
+			return UISwipeActionsConfiguration()
+		}
+	}
 }
 
 extension SearchBarViewController: UICollectionViewDataSource {
@@ -341,15 +351,5 @@ extension SearchBarViewController: UICollectionViewDelegate {
 				})
 			}
 		}
-//		if let tabVC = self.presentingViewController as? TabBarController{
-//			let mapVC = tabVC.viewControllers?.first as? MapViewController
-//			mapVC?.x = frequents.latitude
-//			mapVC?.y = frequents.longitude
-//			mapVC?.placeName = frequents.name
-//			mapVC?.addressName = frequents.address
-//			viewModel.sceneCoordinator.close(animated: true) {
-//				mapVC?.updateAddress()
-//			}
-//		}
 	}
 }
