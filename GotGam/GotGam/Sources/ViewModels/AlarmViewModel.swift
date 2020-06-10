@@ -19,8 +19,8 @@ enum AlarmCategoryType {
 
 protocol AlarmViewModelInputs {
     func fetchAlarmList()
-    func removeAlarm(indexPath: IndexPath, alarm: Alarm)
-    var checkAlarm: PublishSubject<Alarm> { get set }
+    func removeAlarm(indexPath: IndexPath, alarm: ManagedAlarm)
+    var checkAlarm: PublishSubject<ManagedAlarm> { get set }
     var tappedActive: PublishSubject<Void> { get set }
     var tappedShare: PublishSubject<Void> { get set }
 }
@@ -59,7 +59,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
             .disposed(by: disposeBag)
     }
     
-    func removeAlarm(indexPath: IndexPath, alarm: Alarm) {
+    func removeAlarm(indexPath: IndexPath, alarm: ManagedAlarm) {
         
 //        if alarm.type != .share
 //             {
@@ -94,7 +94,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     
     }
     
-    var checkAlarm = PublishSubject<Alarm>()
+    var checkAlarm = PublishSubject<ManagedAlarm>()
     
     // MARK: Outputs
     
@@ -107,19 +107,19 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     
     // MARK: - Methods
     
-    func makeAlarm(_ gotList: [Got]) -> [Alarm] {
-        var alarmList = [Alarm]()
-        for got in gotList {
-            if got.onArrive == true {
-                alarmList.append(Alarm(type: .arrive, got: got))
-            }
-            
-            if got.onDeparture == true {
-                alarmList.append(Alarm(type: .departure, got: got))
-            }
-        }
-        return alarmList
-    }
+//    func makeAlarm(_ gotList: [Got]) -> [Alarm] {
+//        var alarmList = [Alarm]()
+//        for got in gotList {
+//            if got.onArrive == true {
+//                alarmList.append(Alarm(type: .arrive, got: got))
+//            }
+//
+//            if got.onDeparture == true {
+//                alarmList.append(Alarm(type: .departure, got: got))
+//            }
+//        }
+//        return alarmList
+//    }
     
     func setCheckAlarm() {
         
@@ -127,8 +127,8 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
     
     // MARK: Initializing
     
-    private var activeAlarmList = BehaviorRelay<[Alarm]>(value: [])
-    private var sharedAlarmList = BehaviorRelay<[Alarm]>(value: [])
+    private var activeAlarmList = BehaviorRelay<[ManagedAlarm]>(value: [])
+    private var sharedAlarmList = BehaviorRelay<[ManagedAlarm]>(value: [])
     private var activeDataSource = BehaviorRelay<[AlarmSectionModel]>(value: [])
     private var sharedDataSource = BehaviorRelay<[AlarmSectionModel]>(value: [])
     
@@ -216,7 +216,7 @@ class AlarmViewModel: CommonViewModel, AlarmViewModelType, AlarmViewModelInputs,
             .disposed(by: disposeBag)
     }
     
-    func configureDataSource(_ alarmList: [Alarm]) -> [AlarmSectionModel] {
+    func configureDataSource(_ alarmList: [ManagedAlarm]) -> [AlarmSectionModel] {
         var alarmSection = [AlarmSectionModel]()
         var todayItems = [AlarmItem]()
         var yesterdayItems = [AlarmItem]()
@@ -279,17 +279,17 @@ enum AlarmItem: IdentifiableType, Equatable {
     typealias Identity = NSManagedObjectID
     var identity: Identity {
         switch self {
-        case let .ArriveItem(alarm): return alarm.id!
-        case let .DepartureItem(alarm): return alarm.id!
-        case let .ShareItem(alarm): return alarm.id!
+        case let .ArriveItem(alarm): return alarm.objectID
+        case let .DepartureItem(alarm): return alarm.objectID
+        case let .ShareItem(alarm): return alarm.objectID
         }
     }
     
-    case ArriveItem(alarm: Alarm)
-    case DepartureItem(alarm: Alarm)
-    case ShareItem(alarm: Alarm)
+    case ArriveItem(alarm: ManagedAlarm)
+    case DepartureItem(alarm: ManagedAlarm)
+    case ShareItem(alarm: ManagedAlarm)
     
-    init(alarm: Alarm) {
+    init(alarm: ManagedAlarm) {
         switch alarm.type {
         case .arrive: self = .ArriveItem(alarm: alarm)
         case .departure: self = .DepartureItem(alarm: alarm)

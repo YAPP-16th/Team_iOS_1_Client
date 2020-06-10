@@ -21,6 +21,9 @@ protocol TagStorageType{
     func fetchEmptyTagList() -> Observable<[Tag]>
     
     @discardableResult
+    func fetchTag(hex: String) -> Observable<Tag>
+    
+    @discardableResult
     func fetchTag(tagObjectId: NSManagedObjectID) -> Observable<Tag>
     
     @discardableResult

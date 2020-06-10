@@ -46,6 +46,7 @@ class TabBarController: UITabBarController, ViewModelBindableType {
     func bindViewModel() {
         
         viewModel.alarmBadgeCount
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] count in
                 self?.tabBar.items?[2].badgeValue = count == 0 ? nil : "\(count)"
             })

@@ -12,10 +12,18 @@ class AlarmShareTableViewCell: UITableViewCell {
     
     var viewModel: AlarmViewModel!
     
-    func configure(viewModel: AlarmViewModel, alarm: Alarm) {
+    func configure(viewModel: AlarmViewModel, alarm: ManagedAlarm) {
         self.viewModel = viewModel
         
-        guard let tagName = alarm.got.tag?.name else { return }
+        
+        //viewModel.storage.fetchTag(hex: alarm.tag)
+        guard let tagHex = alarm.tag,
+            let tag = DBManager.share.fetchTag(hex: tagHex)?.toTag() else {
+                return
+        }
+        
+        
+        let tagName = tag.name
         let userName = "슬기로운곳감생활"
         shareTagLabel.text = "\(userName)님이 '\(tagName)'태그를 공유했습니다."
         

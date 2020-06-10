@@ -14,16 +14,16 @@ class AlarmArriveTableViewCell: UITableViewCell {
     var viewModel: AlarmViewModel!
     var disposeBag = DisposeBag()
     
-    func configure(viewModel: AlarmViewModel, alarm: Alarm) {
+    func configure(viewModel: AlarmViewModel, alarm: ManagedAlarm) {
         self.viewModel = viewModel
         
-        let got = alarm.got
+        //let got = alarm.got
         
-        titleLabel.text = got.title
-        memoLabel.text = got.arriveMsg
-        tagView.backgroundColor = got.tag?.hex.hexToColor()
+        titleLabel.text = alarm.title
+        memoLabel.text = alarm.message
+        tagView.backgroundColor = alarm.tag?.hexToColor()
         
-        if let date = got.insertedDate {
+        if let date = alarm.insertedDate {
             insertedDateLabel.text = date.endTime
             dateDescriptionLabel.text = "까지 방문해야 합니다."
         } else {

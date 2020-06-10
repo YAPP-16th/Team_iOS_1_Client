@@ -31,7 +31,9 @@ public class ManagedGot: NSManagedObject {
         isDone: isDone,
         readyArrive: readyArrive,
         readyDeparture: readyDeparture)
+    
     got.objectId = objectID
+    got.objectIDString = objectIDString
     return got
   }
   
@@ -58,25 +60,41 @@ public class ManagedGot: NSManagedObject {
     self.onDate = got.onDate
     self.readyArrive = got.readyArrive
     self.readyDeparture = got.readyDeparture
-    
-    AlarmManager.shared.setLocationTrigger(got: self)
+    //self.objectIDString = objectID.uriRepresentation().absoluteString
+//    AlarmManager.shared.setLocationTrigger(got: self)
   }
 }
 
 extension ManagedGot {
     var arriveID: String {
-        return id == "" ? "\(objectID)_arrive" : "\(id)_arrive"
+        guard let objectIDString = objectIDString else {
+            print("😢 Not Found objectIDString")
+            return ""
+        }
+        return id == "" ? "\(objectIDString)_arrive" : "\(id)_arrive"
     }
     
     var departureID: String {
-        return id == "" ? "\(objectID)_departure" : "\(id)_departure"
+        guard let objectIDString = objectIDString else {
+            print("😢 Not Found objectIDString")
+            return ""
+        }
+        return id == "" ? "\(objectIDString)_departure" : "\(id)_departure"
     }
     
     var dateID: String {
-        return id == "" ? "\(objectID)_date" : "\(id)_date"
+        guard let objectIDString = objectIDString else {
+            print("😢 Not Found objectIDString")
+            return ""
+        }
+        return id == "" ? "\(objectIDString)_date" : "\(id)_date"
     }
     
     var requestIDs: [String] {
         return [arriveID, departureID, dateID]
     }
+    
+//    var objectIDString: String {
+//        return objectID.uriRepresentation().absoluteString
+//    }
 }

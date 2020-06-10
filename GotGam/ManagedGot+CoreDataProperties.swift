@@ -33,24 +33,7 @@ extension ManagedGot {
     @NSManaged public var readyArrive: Bool
     @NSManaged public var readyDeparture: Bool
     @NSManaged public var title: String
-    @NSManaged public var alarms: NSSet
     @NSManaged public var tag: ManagedTag?
-
-}
-
-// MARK: Generated accessors for alarms
-extension ManagedGot {
-
-    @objc(addAlarmsObject:)
-    @NSManaged public func addToAlarms(_ value: ManagedAlarm)
-
-    @objc(removeAlarmsObject:)
-    @NSManaged public func removeFromAlarms(_ value: ManagedAlarm)
-
-    @objc(addAlarms:)
-    @NSManaged public func addToAlarms(_ values: NSSet)
-
-    @objc(removeAlarms:)
-    @NSManaged public func removeFromAlarms(_ values: NSSet)
-
+    @NSManaged public var objectIDString: String?
+    
 }

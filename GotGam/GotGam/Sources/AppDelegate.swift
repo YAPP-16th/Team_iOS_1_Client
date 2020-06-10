@@ -18,6 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+//        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+//        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        //LocationManager.shared.startMonitoringSignificantLocationChanges()
+        
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         GIDSignIn.sharedInstance().clientID = "842168227804-t42u931svmolch20us3n495m7mtj0o45.apps.googleusercontent.com"
@@ -43,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             coordinator.transition(to: .tutorial(tutorialViewModel), using: .root, animated: false)
         }
         
+        
+        UNUserNotificationCenter.current().delegate = self
         
         return true
     }
@@ -83,10 +90,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         KOSession.handleDidEnterBackground()
-        LocationManager.shared.startBackgroundUpdates()
+        //LocationManager.shared.startBackgroundUpdates()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UIApplication.shared.applicationIconBadgeNumber = 0
         KOSession.handleDidBecomeActive()
     }
     
@@ -141,5 +150,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
         //구글 사용자가 로그아웃 했을시 해당 메소드 호출됨. 후처리해주기
         
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("🔴 didReceive notification")
+    }
+    
+    
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        print("🔴 notification in willPresent \(notification.request.identifier)")
+        completionHandler([.alert, .sound])
     }
 }

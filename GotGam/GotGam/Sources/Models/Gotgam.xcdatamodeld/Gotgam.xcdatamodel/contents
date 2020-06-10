@@ -2,10 +2,13 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ManagedAlarm" representedClassName="ManagedAlarm" syncable="YES">
         <attribute name="checkedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="insertedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="tag" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="got" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedGot" inverseName="alarms" inverseEntity="ManagedGot"/>
     </entity>
     <entity name="ManagedFrequents" representedClassName="ManagedFrequents" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String"/>
@@ -24,6 +27,7 @@
         <attribute name="isDone" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="objectIDString" optional="YES" attributeType="String"/>
         <attribute name="onArrive" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="onDate" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="onDeparture" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -32,7 +36,6 @@
         <attribute name="readyArrive" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="readyDeparture" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="alarms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ManagedAlarm" inverseName="got" inverseEntity="ManagedAlarm"/>
         <relationship name="tag" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="ManagedTag" inverseName="got" inverseEntity="ManagedTag"/>
     </entity>
     <entity name="ManagedHistory" representedClassName="ManagedHistory" syncable="YES">

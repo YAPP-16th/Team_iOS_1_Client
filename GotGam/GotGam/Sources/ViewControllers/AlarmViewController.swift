@@ -14,9 +14,6 @@ import CoreLocation
 
 class AlarmViewController: BaseViewController, ViewModelBindableType {
     
-    let locationManager = CLLocationManager()
-    var currentLocation: CLLocationCoordinate2D?
-    
     var viewModel: AlarmViewModel!
     
     // MARK: - Methods
@@ -33,93 +30,12 @@ class AlarmViewController: BaseViewController, ViewModelBindableType {
         }
     }
     
-    @IBAction func didTapTestAlarm(_ sender: UIButton) {
-        showTestAlart()
-    }
-    
-    func addNotification(to location: CLLocation, title: String) {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
-            
-            if granted {
-                print("push auth granted")
-            }
-            let content = UNMutableNotificationContent()
-            content.title = title
-            //content.body = "테스트 중"
-            content.sound = .default
-            content.badge = 1
-            //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-            
-            
-            let region = CLCircularRegion(center: location.coordinate, radius: 100, identifier: title)
-            region.notifyOnEntry = true
-            region.notifyOnExit = true
-            let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
-            let request = UNNotificationRequest(identifier: "alarm",
-                                                content: content, trigger: trigger)
-            
-            // Schedule the request with the system.
-            //let notificationCenter = UNUserNotificationCenter.current()
-            print("👀 create noti at \(region)")
-            center.add(request) { (error) in
-                if error != nil {
-                    print(error?.localizedDescription)
-                    // Handle any errors.
-                }
-            }
-        }
-    }
-    
-    func showTestAlart() {
-        let alert = UIAlertController(title: "test", message: nil, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "확인", style: .default) { (action) in
-            
-            if
-                let latText = alert.textFields?[0].text,
-                let lat = Double(latText),
-                let longText = alert.textFields?[1].text,
-                let long = Double(longText) {
-                let location = CLLocation(latitude: lat, longitude: long)
-                let title = alert.textFields?[2].text
-                //AlarmManager.shared.createAlarm(from: location)
-                self.addNotification(to: location, title: title!)
-                
-            } else {
-                print("위치가 이상해요")
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .destructive) { (action) in
-        }
-
-        alert.addTextField()
-        alert.addTextField()
-        alert.addTextField()
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
-    }
-    
-    
-    
-    
     // MARK: - Initializing
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         navigationController?.isNavigationBarHidden = true
         alarmTableView.layer.borderWidth = 0.2
-        
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -295,12 +211,5 @@ extension AlarmViewController: UITableViewDelegate {
         
         deleteAction.backgroundColor = .saffron
         return .init(actions: [deleteAction])
-    }
-}
-
-extension AlarmViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        self.currentLocation = locValue
     }
 }

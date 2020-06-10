@@ -63,7 +63,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     var gotList: [Got] = []{
         didSet{
             DispatchQueue.main.async {
-                print(self.gotList)
                 self.cardCollectionViewHeightConstraint.constant = self.gotList.isEmpty ? 0 : 170
                 self.cardCollectionView.reloadData()
                 self.addPin()
@@ -71,6 +70,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
             if gotList.isEmpty {
                 currentCircle = nil
             }
+            
+            LocationManager.shared.updateLocation()
         }
     }
     var currentCircle: MTMapCircle? {
@@ -199,8 +200,9 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         navigationController?.isNavigationBarHidden = true
         
         configureQuickAddView()
-        
-        LocationManager.shared.startUpdatingLocation()
+        //LocationManager.shared.startUpdatingLocation()
+        LocationManager.shared.startMonitoringSignificantLocationChanges()
+    
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -219,6 +221,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        mapView.currentLocationTrackingMode = .off
+        mapView.showCurrentLocationMarker = false
         
     }
     
@@ -360,7 +364,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         self.viewModel.output.gotList
             .do(onNext: { [weak self] in self?.gotList = $0})
             .bind(to: cardCollectionView.rx.items(cellIdentifier: MapCardCollectionViewCell.reuseIdenfier, cellType: MapCardCollectionViewCell.self)) { [weak self] (index, got, cell) in
-                print(got)
                 guard let self = self else { return }
                 
                 let swipeGesture = CardSwipeGesture(target: self, action: #selector(self.swipeCard(gesture:)))
@@ -468,6 +471,7 @@ class MapViewController: BaseViewController, ViewModelBindableType {
                 var tmpGot = got
                 tmpGot.isDone = false
                 self.viewModel.input.updateGot(got: tmpGot)
+                self.currentCircle = nil
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 self.viewModel.updateList()
@@ -517,6 +521,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         
     }
     
+    // MARK: Set Methods
+    
     func addPin(){
         mapView.removeAllPOIItems()
         for (i, got) in gotList.enumerated() {
@@ -543,7 +549,8 @@ class MapViewController: BaseViewController, ViewModelBindableType {
     }
     func setMyLocation(){
         viewModel.seedState.onNext(.none)
-        LocationManager.shared.requestAuthorization()
+        //LocationManager.shared.requestAuthorization()
+        LocationManager.shared.updateLocation()
         if LocationManager.shared.locationServicesEnabled {
             let status = LocationManager.shared.authorizationStatus
             switch status{
@@ -589,7 +596,6 @@ class MapViewController: BaseViewController, ViewModelBindableType {
         centeredCollectionViewFlowLayout.scrollToPage(index: index, animated: true)
         if let currentCircle = currentCircle {
             mapView.fitArea(toShow: currentCircle)
-            
         }
     }
 	

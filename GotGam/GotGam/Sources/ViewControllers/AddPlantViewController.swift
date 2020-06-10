@@ -20,6 +20,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     var currentCenter: MTMapPoint = MTMapPoint(geoCoord: .init(latitude: 37.42462158203125, longitude: 126.74259919223122))
     var currentCenterLocation = CLLocationCoordinate2D(latitude: 37.42462158203125, longitude: 126.74259919223122)
     let locationManager = CLLocationManager()
+    /// 셀의 섹션 index를 키보드 태그로 한다. 해당하지 않을 경우 -1
     var responseKeyboardTag = -1
 
     // MARK: - Methods
@@ -77,6 +78,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     }
 
     @objc func keyboardWillShow(_ notification: Notification) {
+        guard responseKeyboardTag != -1 else { return }
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardHeight = keyboardFrame.cgRectValue.height
         if inputTableView.frame.height - 50 < keyboardHeight {
@@ -90,7 +92,7 @@ class AddPlantViewController: BaseViewController, ViewModelBindableType {
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        
+        guard responseKeyboardTag != -1 else { return }
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue else {return}
         
         if inputTableView.frame.height - 50 < keyboardFrame.cgRectValue.height {
