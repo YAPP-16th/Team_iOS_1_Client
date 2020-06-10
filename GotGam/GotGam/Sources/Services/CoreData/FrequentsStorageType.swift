@@ -8,7 +8,7 @@
 
 import Foundation
 import RxSwift
-
+import CoreData
 enum FrequentsStorageError: Error{
     case fetchError(String)
     case createError(String)
@@ -27,7 +27,7 @@ protocol FrequentsStorageType{
 	func updateFrequents(frequent: Frequent) -> Observable<Frequent>
 
 	@discardableResult
-	func deleteFrequents(id: String) -> Observable<Frequent>
+	func deleteFrequents(objectId: NSManagedObjectID) -> Observable<Frequent>
 
 	@discardableResult
 	func deleteFrequents(frequent: Frequent) -> Observable<Frequent>

@@ -19,6 +19,23 @@ class BaseResponse: Decodable{
         baseResponseDescription = try container.decode(String.self, forKey: .baseResponseDescription)
     }
 }
+
+class FrequentResponse: BaseResponse{
+    var frequents: [FrequentResponseData] = []
+    
+    private enum CodingKeys: String, CodingKey {
+        case frequents = "frequents"
+    }
+    
+    required init(from decoder: Decoder) throws {
+           
+           let container = try decoder.container(keyedBy: CodingKeys.self)
+           frequents = try container.decode([FrequentResponseData   ].self, forKey: .frequents)
+           try super.init(from: decoder)
+           
+       }
+}
+
 class GotResponse: BaseResponse{
     var got: [GotResponseData] = []
 
@@ -120,15 +137,13 @@ class SyncResponse: BaseResponse{
 }
 
 struct FrequentResponseData: Codable{
-    let taskIDS: [String]
-    let id, name: String
-    let creator: Creator
-    let color: String
-
+    let id, name, address: String
+    let coordinates: [Double]
+    
     enum CodingKeys: String, CodingKey {
-        case taskIDS = "taskIds"
         case id = "_id"
-        case name, creator, color
+        case name, address
+        case coordinates
     }
 }
 

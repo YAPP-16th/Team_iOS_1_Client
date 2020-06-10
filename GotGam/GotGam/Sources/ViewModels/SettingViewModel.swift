@@ -17,6 +17,7 @@ protocol SettingViewModelInputs {
 	func showOtherDetailVC()
 	func showPlaceDetailVC()
 	func showLoginDetailVC()
+    func syncData()
 }
 
 protocol SettingViewModelOutputs {
@@ -81,6 +82,20 @@ class SettingViewModel: CommonViewModel, SettingViewModelType, SettingViewModelI
         }
 		
 	}
+    
+    func syncData(){
+        if UserDefaults.standard.bool(forDefines: .isLogined){
+            NetworkAPIManager.shared.synchronize().subscribe { completable in
+                switch completable{
+                case .completed:
+                    print("동기화 성공")
+                case .error(let error):
+                    print("동기화 실패, \(error.localizedDescription)")
+                }
+            }.disposed(by: self.disposeBag)
+        }
+        
+    }
 	
 	var settingMenu = Observable<[String]>.just(["푸시 알람 설정", "자주 가는 장소 설정", "약관 및 정책"])
 	

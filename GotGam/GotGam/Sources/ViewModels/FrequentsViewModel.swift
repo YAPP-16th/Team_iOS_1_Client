@@ -49,10 +49,10 @@ class FrequentsViewModel: CommonViewModel, FrequentsViewModelInputs, FrequentsVi
 	
 	func addFrequents(){
 		let storage = Storage()
-		let id = String(Date().timeIntervalSince1970)
+		
 		guard let la = Double(latitudePlace.value) else { return  }
 		guard let lo = Double(longitudePlace.value) else { return  }
-		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value!, id: id)
+		let frequent = Frequent(name: namePlace.value, address: addressPlace.value, latitude: la, longitude: lo, type: typePlace.value!, id: "")
 
 		storage.createFrequents(frequent: frequent).bind { _ in
 			let backVM = SettingPlaceViewModel(sceneCoordinator: self.sceneCoordinator)

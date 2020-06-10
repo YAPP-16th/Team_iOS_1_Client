@@ -88,9 +88,11 @@ class NetworkAPIManager{
     //MARK: - Synchronization
     func synchronize() -> Completable{
         return self.syncTags()
-        .andThen(self.syncTasks())
-        .andThen(self.syncronizeAllTags())
-        .andThen(self.syncronizeAllTasks())
+            .andThen(self.syncTasks())
+            .andThen(self.syncFrequents())
+            .andThen(self.syncronizeAllTags())
+            .andThen(self.syncronizeAllTasks())
+            .andThen(self.syncronizeAllFrequents())
     }
     
     func syncronizeAllTags() -> Completable{
@@ -123,6 +125,21 @@ class NetworkAPIManager{
                     taskList.append(newGot)
                 }
                 self.storage.syncAllTasks(tasks: taskList).subscribe {  completable in
+                    observer(completable)
+                }.disposed(by: self.disposeBag)
+            }
+        }
+    }
+    
+    func syncronizeAllFrequents() -> Completable{
+        return Completable.create { observer in
+            self.downloadAllFrequents().bind { frequentDataList in
+                var frequentsList: [Frequent] = []
+                for frequentData in frequentDataList{
+                    let newFrequent = Frequent(name: frequentData.name, address: frequentData.address, latitude: frequentData.coordinates[0], longitude: frequentData.coordinates[1], type: .home, id: frequentData.id)
+                    frequentsList.append(newFrequent)
+                }
+                self.storage.syncAllFrequents(frequentsList: frequentsList).subscribe {  completable in
                     observer(completable)
                 }.disposed(by: self.disposeBag)
             }
@@ -249,17 +266,59 @@ class NetworkAPIManager{
     }
     
     func syncFrequents() -> Completable{
-        return Completable.create { _ in
+        return Completable.create { observer in
+            Observable.zip(self.getAllUnsyncedFrequents(),self.uploadAllFrequents())
+                .filter { $0.0.count == $0.1.count }
+                .filter { $0.0.filter { $0.objectId == nil }.isEmpty }
+                .bind { (frequentsList, frequentsDataList) in
+                    var syncData: [SyncData<Frequent>] = []
+                    for (i,v) in frequentsDataList.enumerated(){
+                        let frequents = frequentsList[i]
+                        var coordinates = v.coordinates
+                        if coordinates.isEmpty{
+                            coordinates = [0,0]
+                        }
+                        let newFrequents = Frequent(name: v.name, address: v.address, latitude: coordinates[0], longitude:
+                            coordinates[1], type: .home, id: v.id)
+                        
+                        syncData.append((frequents.objectId!, newFrequents))
+                    }
+                    self.storage.syncFrequents(syncData).subscribe { completable in
+                        observer(completable)
+                    }.disposed(by: self.disposeBag)
+            }.disposed(by: self.disposeBag)
             return Disposables.create()
         }
     }
-    
     func uploadAllFrequents() -> Observable<[FrequentResponseData]>{
-        return Observable.create { ovserver in
+        return Observable.create { observer in
+            self.getMergedUnsyncedFrequents().bind { info in
+                self.provider.rx.request(.synchronize(["frequents": info, "tasks": [], "tags": []]))
+                    .asObservable()
+                .debug()
+                    .map { try JSONDecoder().decode(SyncResponse.self, from: $0.data)}
+                .debug()
+                    .catchErrorJustReturn(nil)
+                    .map { $0?.frequents ?? [] }
+                    .bind(to: observer)
+                    .disposed(by: self.disposeBag)
+            }.disposed(by: self.disposeBag)
             return Disposables.create()
         }
     }
     
+    private func downloadAllFrequents() -> Observable<[FrequentResponseData]>{
+        return Observable.create { observer -> Disposable in
+            self.provider.rx.request(.getFrequents)
+                .asObservable()
+                .map { try JSONDecoder().decode(FrequentResponse.self, from: $0.data)}
+                .catchErrorJustReturn(nil)
+                .map { $0?.frequents ?? [] }
+                .bind(to: observer)
+                .disposed(by: self.disposeBag)
+            return Disposables.create()
+        }
+    }
     
     //MARK: - Helper
     private func getMergedUnsyncedTags() -> Observable<[[String: Any]]>{
@@ -295,6 +354,17 @@ class NetworkAPIManager{
             }}
     }
     
+    private func getMergedUnsyncedFrequents() -> Observable<[[String: Any]]> {
+        return getAllUnsyncedFrequents().map { $0.map{
+            [
+                "name": $0.name,
+                "address": $0.address,
+                "coordinates": [$0.latitude, $0.longitude]
+            ]
+            }
+        }
+    }
+    
     private func getAllUnsyncedTags() -> Observable<[Tag]>{
         return storage.fetchTagList()
             .map { $0.filter { $0.id == "" && $0.objectId != nil } }
@@ -305,9 +375,9 @@ class NetworkAPIManager{
             .map { $0.filter { $0.id == "" && $0.objectId != nil } }
     }
     
-//    private func getAllUnsyncedFrequents() -> Observable<[Frequent]>{
-//        return storage.fetchFrequents()
-//            .map { $0.filter( { $0.id == ""})}
-//    }
+    private func getAllUnsyncedFrequents() -> Observable<[Frequent]>{
+        return storage.fetchFrequents()
+            .map { $0.filter { $0.id == "" && $0.objectId != nil } }
+    }
     
 }

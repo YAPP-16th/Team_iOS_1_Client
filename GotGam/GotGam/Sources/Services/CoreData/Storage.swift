@@ -127,7 +127,7 @@ class Storage: StorageType {
     func syncAllTasks(tasks: [Got]) -> Completable{
         return Completable.create { observer in
             for got in tasks{
-                guard self.readTag(id: got.id) == nil else { continue }
+                guard self.readTask(id: got.id) == nil else { continue }
                 let managedGot = ManagedGot(context: self.context)
                 managedGot.fromGot(got: got)
             }
@@ -290,12 +290,7 @@ extension Storage{
 extension Storage{
     func createFrequents(frequent: Frequent) -> Observable<Frequent>{
         let managedFrequents = ManagedFrequents(context: self.context)
-        managedFrequents.name = frequent.name
-        managedFrequents.address = frequent.address
-        managedFrequents.latitude = frequent.latitude
-        managedFrequents.longitude = frequent.longitude
-        managedFrequents.type = frequent.type.rawValue
-        managedFrequents.id = frequent.id
+        managedFrequents.fromFrequents(frequent: frequent)
         do{
             try self.context.save()
             return .just(managedFrequents.toFrequents())
@@ -319,51 +314,82 @@ extension Storage{
     
     func updateFrequents(frequent: Frequent) -> Observable<Frequent> {
         do{
-            let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
-            fetchRequest.predicate = NSPredicate(format: "id == %@", frequent.id)
-            let results = try self.context.fetch(fetchRequest)
-            if let managedFrequents = results.first {
-                do{
-                    managedFrequents.fromFrequents(frequent: frequent)
-                    try self.context.save()
-                    return .just(managedFrequents.toFrequents())
-                }catch let error{
-                    return .error(error)
-                }
-            }else{
-                print("해당 데이터에 대한 Frequents을 찾을 수 없음. error: ")
-                return .error(FrequentsStorageError.updateError("Error"))
+            guard let objectId = frequent.objectId, let managedFrequents = self.context.object(with: objectId) as? ManagedFrequents else {
+                return .error(StorageError.update("프리퀀트 id가 존재하지 않음"))
             }
-        } catch let error as NSError{
-            print("error: ", error.localizedDescription)
-            return .error(error)
+            managedFrequents.fromFrequents(frequent: frequent)
+            try self.context.save()
+            return .just(managedFrequents.toFrequents())
+        
+        } catch let error{
+            return .error(StorageError.update(error.localizedDescription))
         }
     }
     
-    func deleteFrequents(id: String) -> Observable<Frequent> {
+    func deleteFrequents(objectId: NSManagedObjectID) -> Observable<Frequent> {
         do{
-            let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
-            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-            let results = try self.context.fetch(fetchRequest)
-            if let managedFrequents = results.first {
-                let frequents = managedFrequents.toFrequents()
-                self.context.delete(managedFrequents)
-                do{
-                    try self.context.save()
-                    return .just(frequents)
-                }catch{
-                    return .error(FrequentsStorageError.deleteError("id이 \(id)인 Frequents을 제거하는데 오류 발생"))
-                }
-            }else{
-                return .error(FrequentsStorageError.fetchError("해당 데이터에 대한 Frequents을 찾을 수 없음"))
+            guard let managedFrequents = self.context.object(with: objectId) as? ManagedFrequents else {
+                return .error(StorageError.update("프리퀀트 id가 존재하지 않음"))
             }
+            let frequents = managedFrequents.toFrequents()
+            self.context.delete(managedFrequents)
+            try self.context.save()
+            return .just(frequents)
         }catch let error{
-            return .error(FrequentsStorageError.deleteError(error.localizedDescription))
+            return .error(StorageError.delete(error.localizedDescription))
         }
     }
     
     func deleteFrequents(frequent: Frequent) -> Observable<Frequent> {
-        deleteFrequents(id: frequent.id)
+        deleteFrequents(objectId: frequent.objectId!)
+    }
+    
+    
+    func syncFrequents(_ dataList: [SyncData<Frequent>]) -> Completable{
+      return Completable.create { observer in
+        for d in dataList{
+          guard let managedFrequents = self.context.object(with: d.0) as? ManagedFrequents else {
+            observer(.error(StorageError.sync("objectId에 해당하는 데이터가 없음")))
+            return Disposables.create()
+          }
+            managedFrequents.fromFrequents(frequent: d.1)
+        }
+        do{
+          try self.context.save()
+          observer(.completed)
+        }catch let error{
+          observer(.error(StorageError.sync(error.localizedDescription)))
+        }
+        return Disposables.create()
+      }
+    }
+    
+    func readFrequents(id: String) -> Frequent?{
+      let fetchRequest = NSFetchRequest<ManagedFrequents>(entityName: "ManagedFrequents")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+      do{
+        let managedFrequentList = try self.context.fetch(fetchRequest)
+        return managedFrequentList.first?.toFrequents()
+      }catch{
+        return nil
+      }
+    }
+    
+    func syncAllFrequents(frequentsList: [Frequent]) -> Completable{
+        return Completable.create { observer in
+            for frequents in frequentsList{
+                guard self.readFrequents(id: frequents.id) == nil else { continue }
+                let managedFrequents = ManagedFrequents(context: self.context)
+                managedFrequents.fromFrequents(frequent: frequents)
+            }
+            do{
+                try self.context.save()
+                observer(.completed)
+            }catch let error{
+                observer(.error(StorageError.sync(error.localizedDescription)))
+            }
+            return Disposables.create()
+        }
     }
 }
 //MARK: - Search StorageType

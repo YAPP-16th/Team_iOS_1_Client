@@ -13,14 +13,16 @@ import CoreData
 @objc(ManagedFrequents)
 public class ManagedFrequents: NSManagedObject {
 	func toFrequents() -> Frequent {
-        return .init(
-			name: name,
-			address: address,
-			latitude: latitude,
-			longitude: longitude,
-			type: IconType(rawValue: type)!,
-			id: id
+        var frequent:Frequent = .init(
+        name: name,
+        address: address,
+        latitude: latitude,
+        longitude: longitude,
+        type: IconType(rawValue: type)!,
+        id: id
         )
+        frequent.objectId = objectID
+        return frequent
     }
 	
 	func fromFrequents(frequent: Frequent) {
