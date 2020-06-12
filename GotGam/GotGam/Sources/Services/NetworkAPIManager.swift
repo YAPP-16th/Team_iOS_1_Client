@@ -380,4 +380,10 @@ class NetworkAPIManager{
             .map { $0.filter { $0.id == "" && $0.objectId != nil } }
     }
     
+    
+    
+    func leave() -> Observable<Response>{
+        guard let email = UserDefaults.standard.string(forDefines: .userID) else { return .error(NetworkAPIManagerError.some("탈퇴 실패")) }
+        return provider.rx.request(.deleteUser(email)).asObservable()
+    }
 }

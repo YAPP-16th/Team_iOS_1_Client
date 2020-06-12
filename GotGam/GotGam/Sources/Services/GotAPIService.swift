@@ -16,7 +16,7 @@ enum GotAPIService{
     //User
     case login(LoginType)
     case getUser(String)
-    
+    case deleteUser(String)
     //Task
     case createTask([String: Any])
     case getTasks
@@ -60,6 +60,8 @@ extension GotAPIService: TargetType{
             }
         case .getUser(let email):
             return "users/\(email)"
+        case .deleteUser(let email):
+            return "users/\(email)"
             //Task
         case .createTask, .getTasks:
             return "tasks"
@@ -95,6 +97,8 @@ extension GotAPIService: TargetType{
             return .post
         case .getUser:
             return .get
+        case .deleteUser:
+            return .delete
             //Task
         case .createTask:
             return .post
@@ -171,6 +175,8 @@ extension GotAPIService: TargetType{
             }
         case .getUser:
             return .requestPlain
+        case .deleteUser:
+            return .requestPlain
             //Task
         case .createTask(let info):
             return .requestParameters(
@@ -215,7 +221,7 @@ extension GotAPIService: TargetType{
     }
     var headers: [String : String]? {
         switch self{
-        case .getUser, .createTask, .getTasks, .getTask, .createTag, .getTags, .getTag, .createFrequents, .getFrequents, .getFrequent, .synchronize, .updateTag, .updateTask, .deleteTask, .deleteTag:
+        case .getUser, .createTask, .getTasks, .getTask, .createTag, .getTags, .getTag, .createFrequents, .getFrequents, .getFrequent, .synchronize, .updateTag, .updateTask, .deleteTask, .deleteTag, .deleteUser:
              guard let token = UserDefaults.standard.string(forDefines: .userToken) else {
                 return [:]
             }

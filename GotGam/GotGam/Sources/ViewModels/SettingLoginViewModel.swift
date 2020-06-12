@@ -10,10 +10,12 @@ import Foundation
 import RxSwift
 import FBSDKLoginKit
 import GoogleSignIn
+
 protocol SettingLoginViewModelInputs {
     func getUserInfo()
     func getProfileImage(url: String)
     func logout()
+    func leave()
 }
 
 protocol SettingLoginViewModelOutputs {
@@ -77,6 +79,21 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
                 break
             }
         }
+        
+        
+    }
+    
+    func leave() {
+        NetworkAPIManager.shared.leave().bind { response in
+            print(response)
+            
+            UserDefaults.standard.set(false, forDefines: .isLogined)
+            UserDefaults.standard.set(nil, forDefines: .userID)
+            UserDefaults.standard.set(nil, forDefines: .nickname)
+            UserDefaults.standard.set(nil, forDefines: .loginType)
+            self.sceneCoordinator.close(animated: true, completion: nil)
+        }.disposed(by: self.disposeBag)
+        
         
         
     }

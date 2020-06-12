@@ -66,6 +66,14 @@ extension SettingLoginViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0{
             self.viewModel.inputs.logout()
+        }else if indexPath.row == 1{
+            let alert = UIAlertController(title: "경고", message: "회원탈퇴 하시겠습니까?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "네", style: .default, handler: { (_) in
+                self.viewModel.inputs.leave()
+            }))
+            alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+            self.present(alert, animated: false, completion: nil)
+
         }
 		settingLoginTableView.deselectRow(at: indexPath, animated: true)
 	}
