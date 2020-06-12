@@ -12,6 +12,8 @@ import FacebookCore
 import FacebookLogin
 import FBSDKLoginKit
 import GoogleSignIn
+import RxSwift
+import RxCocoa
 
 enum LoginType{
     case google(SocialLoginInfo)
@@ -29,7 +31,7 @@ struct SocialLoginInfo{
 class LoginViewController: UIViewController, ViewModelBindableType{
     
     var viewModel: LoginViewModel!
-    
+    var disposeBag = DisposeBag()
     //MARK: Views
     lazy var logoImageView: UIImageView = {
         let iv = UIImageView()
@@ -54,25 +56,27 @@ class LoginViewController: UIViewController, ViewModelBindableType{
         return btn
     }()
     
-    lazy var facebookLoginButton: FBLoginButton = {
-        let b = FBLoginButton(frame: .zero, permissions: [.publicProfile])
-        b.delegate = self.viewModel
+    lazy var facebookLoginButton: UIButton = {
+        let b = UIButton(type: .system)
+        b.setImage(UIImage(named: "icBtnLoginFacebook")?.withRenderingMode(.alwaysOriginal), for: .normal)
         b.translatesAutoresizingMaskIntoConstraints = false
         return b
     }()
     
-    lazy var kakaoLoginButton: KOLoginButton = {
-        let b = KOLoginButton(type: .system)
+    lazy var kakaoLoginButton: UIButton = {
+        let b = UIButton(type: .system)
         b.tintColor = .black
+        b.setImage(UIImage(named: "icBtnLoginKakao")?.withRenderingMode(.alwaysOriginal), for: .normal)
         b.translatesAutoresizingMaskIntoConstraints = false
         b.addTarget(self, action: #selector(kakaoLoginTapped), for: .touchUpInside)
         return b
     }()
     
-    lazy var googleLoginButton: GIDSignInButton = {
-        let b = GIDSignInButton()
+    lazy var googleLoginButton: UIButton = {
+        let b = UIButton(type: .system)
         b.translatesAutoresizingMaskIntoConstraints = false
-//        b.addTarget(self, action: #selector(googleLoginTapped), for: .touchUpInside)
+        b.setImage(UIImage(named: "icBtnLoginGoogle")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        b.addTarget(self, action: #selector(googleLoginTapped), for: .touchUpInside)
         return b
     }()
     
@@ -140,7 +144,9 @@ class LoginViewController: UIViewController, ViewModelBindableType{
     }
     
     func bindViewModel() {
-        
+        self.facebookLoginButton.rx.tap.bind { _ in
+            self.viewModel.inputs.facebookLogin(vc: self)
+        }.disposed(by: self.disposeBag)
     }
 }
 
@@ -163,7 +169,7 @@ extension LoginViewController{
             cancelLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
             cancelLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
             cancelLoginButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
-            cancelLoginButton.heightAnchor.constraint(equalToConstant: 45)
+            cancelLoginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     private func prepareLoginImageView(){
@@ -180,7 +186,7 @@ extension LoginViewController{
             kakaoLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
             kakaoLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
             kakaoLoginButton.bottomAnchor.constraint(equalTo: self.facebookLoginButton.topAnchor, constant: -8),
-            kakaoLoginButton.heightAnchor.constraint(equalToConstant: 45)
+            kakaoLoginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     
@@ -197,14 +203,15 @@ extension LoginViewController{
             facebookLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
             facebookLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
             facebookLoginButton.bottomAnchor.constraint(equalTo: self.cancelLoginButton.topAnchor, constant: -8),
-            facebookLoginButton.heightAnchor.constraint(equalToConstant: 45)
+            facebookLoginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
-        facebookLoginButton.permissions = ["public_profile", "email"]
+        
+        
     }
     
     private func prepareSignInGoogle(){
         GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+//        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
         
         self.view.addSubview(googleLoginButton)
         
@@ -212,7 +219,7 @@ extension LoginViewController{
             googleLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
             googleLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
             googleLoginButton.bottomAnchor.constraint(equalTo: self.kakaoLoginButton.topAnchor, constant: -8),
-            googleLoginButton.heightAnchor.constraint(equalToConstant: 45)
+            googleLoginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     
@@ -225,7 +232,7 @@ extension LoginViewController{
             siwaButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
             siwaButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
             siwaButton.bottomAnchor.constraint(equalTo: self.googleLoginButton.topAnchor, constant: -8),
-            siwaButton.heightAnchor.constraint(equalToConstant: 45)
+            siwaButton.heightAnchor.constraint(equalToConstant: 48)
         ])
         
         siwaButton.addTarget(self, action: #selector(appleSignInTapped), for: .touchUpInside)
@@ -252,40 +259,40 @@ extension LoginViewController{
 
 
 
-class FacebookButton: FBLoginButton {
-    
-    override func updateConstraints() {
-        // deactivate height constraints added by the facebook sdk (we'll force our own instrinsic height)
-        for contraint in constraints {
-            if contraint.firstAttribute == .height, contraint.constant < 45 {
-                // deactivate this constraint
-                contraint.isActive = false
-            }
-        }
-        super.updateConstraints()
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: 45)
-    }
-    
-    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
-        let logoSize: CGFloat = 24.0
-        let centerY = contentRect.midY
-        let y: CGFloat = centerY - (logoSize / 2.0)
-        return CGRect(x: y, y: y, width: logoSize, height: logoSize)
-    }
-    
-    override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
-        if isHidden || bounds.isEmpty {
-            return .zero
-        }
-        
-        let imageRect = self.imageRect(forContentRect: contentRect)
-        let titleX = imageRect.maxX
-        let titleRect = CGRect(x: titleX, y: 0, width: contentRect.width - titleX - titleX, height: contentRect.height)
-        return titleRect
-    }
-    
-}
+//class FacebookButton: FBLoginButton {
+//
+//    override func updateConstraints() {
+//        // deactivate height constraints added by the facebook sdk (we'll force our own instrinsic height)
+//        for contraint in constraints {
+//            if contraint.firstAttribute == .height, contraint.constant < 45 {
+//                // deactivate this constraint
+//                contraint.isActive = false
+//            }
+//        }
+//        super.updateConstraints()
+//    }
+//
+//    override var intrinsicContentSize: CGSize {
+//        return CGSize(width: UIView.noIntrinsicMetric, height: 45)
+//    }
+//
+//    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
+//        let logoSize: CGFloat = 24.0
+//        let centerY = contentRect.midY
+//        let y: CGFloat = centerY - (logoSize / 2.0)
+//        return CGRect(x: y, y: y, width: logoSize, height: logoSize)
+//    }
+//
+//    override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
+//        if isHidden || bounds.isEmpty {
+//            return .zero
+//        }
+//
+//        let imageRect = self.imageRect(forContentRect: contentRect)
+//        let titleX = imageRect.maxX
+//        let titleRect = CGRect(x: titleX, y: 0, width: contentRect.width - titleX - titleX, height: contentRect.height)
+//        return titleRect
+//    }
+//
+//}
 

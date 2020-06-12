@@ -16,6 +16,7 @@ import AuthenticationServices
 protocol LoginViewModelInputs {
     func checkLoginStatus()
     func kakaoLogin()
+    func facebookLogin(vc: UIViewController)
 }
 
 protocol LoginViewModelOutputs {
@@ -41,6 +42,28 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
         
     }
     //MARK: - Login Helper
+    
+    func facebookLogin(vc: UIViewController) {
+        LoginManager().logIn(permissions:  ["public_profile", "email"], from: vc) { (result, error) in
+            guard let token = result?.token else { return }
+            let graphRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
+            parameters: ["fields": "email, name"],
+            tokenString: token.tokenString,
+            version: nil,
+            httpMethod: .get)
+            graphRequest.start { (connection, result, error) -> Void in
+                if error == nil {
+                    let tokenString = token.tokenString
+                    let id = token.userID
+                    let email = (result as! [String: Any])["email"] as! String
+                    let info = SocialLoginInfo(id: id, email: email, token: tokenString)
+                    self.doLogin(.facebook(info))
+                }else {
+                    print("error \(error)")
+                }
+            }
+        }
+    }
     func kakaoLogin(){
         KOSession.shared()?.close()
         KOSession.shared()?.open(completionHandler: { [weak self] (error) in
@@ -87,6 +110,16 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
     
     //MARK: - Helper
     func doLogin(_ type: LoginType){
+        switch type {
+        case .apple:
+            UserDefaults.standard.set("apple", forDefines: .loginType)
+        case .facebook:
+            UserDefaults.standard.set("facebook", forDefines: .loginType)
+        case .google:
+            UserDefaults.standard.set("google", forDefines: .loginType)
+        case .kakao:
+            UserDefaults.standard.set("kakao", forDefines: .loginType)
+        }
         let provider = MoyaProvider<GotAPIService>()
         provider.request(.login(type)) { (result) in
             self.processLoginResponse(result: result)
@@ -111,31 +144,6 @@ class LoginViewModel: CommonViewModel, LoginViewModelType, LoginViewModelInputs,
         case .failure(let error):
             print(error.localizedDescription)
         }
-    }
-}
-extension LoginViewModel: LoginButtonDelegate{
-    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
-        guard let token = result?.token else { return }
-            let graphRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
-            parameters: ["fields": "email, name"],
-            tokenString: token.tokenString,
-            version: nil,
-            httpMethod: .get)
-            graphRequest.start { (connection, result, error) -> Void in
-                if error == nil {
-                    let tokenString = token.tokenString
-                    let id = token.userID
-                    let email = (result as! [String: Any])["email"] as! String
-                    let info = SocialLoginInfo(id: id, email: email, token: tokenString)
-                    self.doLogin(.facebook(info))
-                }else {
-                    print("error \(error)")
-                }
-            }
-    }
-    
-    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-        print("페이스북 로그아웃 완료")
     }
 }
 extension LoginViewModel: ASAuthorizationControllerPresentationContextProviding{

@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 import FBSDKLoginKit
-
+import GoogleSignIn
 protocol SettingLoginViewModelInputs {
     func getUserInfo()
     func getProfileImage(url: String)
@@ -56,11 +56,29 @@ class SettingLoginViewModel: CommonViewModel, SettingLoginViewModelType, Setting
         UserDefaults.standard.set(false, forDefines: .isLogined)
         UserDefaults.standard.set(nil, forDefines: .userID)
         UserDefaults.standard.set(nil, forDefines: .nickname)
-        let loginManager = LoginManager()
-        loginManager.logOut()
-        KOSession.shared()?.logoutAndClose(completionHandler: { (state, error) in
-          self.sceneCoordinator.close(animated: true, completion: nil)
-        })
+        
+        if let loginType = UserDefaults.standard.string(forDefines: .loginType){
+            UserDefaults.standard.set(nil, forDefines: .loginType)
+            switch loginType{
+            case "apple":
+                self.sceneCoordinator.close(animated: true, completion: nil)
+            case "google":
+                GIDSignIn.sharedInstance()?.signOut()
+                self.sceneCoordinator.close(animated: true, completion: nil)
+            case "facebook":
+                let loginManager = LoginManager()
+                loginManager.logOut()
+                self.sceneCoordinator.close(animated: true, completion: nil)
+            case "kakao":
+                KOSession.shared()?.logoutAndClose(completionHandler: { (state, error) in
+                  self.sceneCoordinator.close(animated: true, completion: nil)
+                })
+            default:
+                break
+            }
+        }
+        
+        
     }
     
 }
